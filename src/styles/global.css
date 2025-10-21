@@ -1,0 +1,91 @@
+/* yjp main colours:
+yjp secondary colours 
+font type
+font size
+dark vs light mode TBD*/
+
+:root {
+    --main-bg-light: #fff9ed;
+    --main-orange: #ff9224;
+    --main-purple: #9c49ea;
+    --main-teal: #4bc9b4;
+    --main-yellow: #f6d246;
+    --main-pink: #ff449b;
+    --main-brown-light: #582b1c;
+    --main-brown-dark: #2d160e;
+
+    --accent-dark-teal: #124941;
+    --accent-mid-teal: #1c7568;
+    --accent-mid-purple: #6e17c0;
+    --accent-dark-purple: #400b60;
+    --accent-mid-orange: #e47200;
+    --accent-dark-orange: #7d3e00;
+    --accent-mid-yellow: #d8af0a;
+    --accent-dark-yellow: #6c5705;
+    --accent-mid-pink: #d80066;
+    --accent-dark-pink: #83003d;
+    
+    --black: #302f2c;
+    --grey: #4a4844;
+    --shadow-grey: #4a484470;
+
+    --font-title: "Titan One", sans-serif;
+    --font-body: "Red Rose", sans-serif;
+    --font-hw: "Shantell Sans", sans-serif;
+
+
+
+}
+
+@font-face {
+    font-family: "Red Rose";
+    src: 
+    local("RedRose"),
+    url("RedRose-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "Titan One";
+    src: 
+    local("TitanOne-Regular"),
+    url("TitanOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Shantelle Sans";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf");
+
+}
+
+body {
+    background-color: var(--main-bg-light);
+    font: var(--black);
+    margin: 0;
+
+
+    h1, h2 {
+        font-family: var(--font-title);
+        font-weight: 100;
+    } 
+
+    p {
+        font-family: var(--font-body);
+        font-weight: 200;
+
+    }
+
+}
+
+#pageHeader {
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#mainBody {
+    min-height: 100vh;
+    flex-grow: 1;
+}

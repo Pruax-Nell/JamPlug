@@ -1,0 +1,86 @@
+header {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: 1fr .5fr 3fr;
+    column-gap: 2ch;
+    height:75px;
+    width: 100%;
+    box-shadow: -0 1px 5px var(--shadow-grey);
+    border-radius: 0 10px;
+    background-color: var(--main-bg-light);
+    /* position: sticky; */
+
+}
+
+
+
+/* Main logo in header */
+
+#homeLogo {
+  filter: drop-shadow(0 5px 1px var(--shadow-grey));
+
+}
+
+#headLogo {
+    width: 75px;
+    position: fixed;
+    top: 17px;
+    left: 20px;
+    
+}
+
+
+/* Main Navigation menu */
+
+
+#mainNav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+
+nav {
+font-family: 'red rose';
+    font-weight: 600;
+    letter-spacing: .1ch;
+    text-align: center;
+
+}
+
+nav {
+    display: flex;
+    justify-items: space-between;
+    padding: 1ch;
+}
+
+a {
+    padding: 0 1ch;
+    flex-wrap: nowrap;
+    text-decoration: none;
+    /* color: #000; */
+    /* color: var(--black); */
+    color: var(--main-brown-dark);
+    
+}
+
+/* Primary call To action button */
+
+#CTA {
+    padding: 2ch;
+    border-radius: 10px 5px 5px 5px;
+    border: .2px solid var(--shadow-grey);
+
+}
+
+@media (max-width: 750px) {
+    
+    #CTA { display: none;}
+
+    #mainNav {
+        /* justify-items: stretch; */
+        width: 100%;
+    }
+
+}
