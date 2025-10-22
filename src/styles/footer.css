@@ -12,6 +12,8 @@ footer {
 
 
 }
+
+
 #mainFooter {
     background-color: var(--main-brown-light);
     box-sizing: border-box;
@@ -36,5 +38,18 @@ footer {
     /* height: 10px; */
     width: 80px;
     padding: 2ch;
+
+}
+
+a {
+    color: var(--main-bg-light);
+    text-decoration: underline var(--accent-mid-orange);
+    text-underline-offset: .7ch;
+}
+
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }

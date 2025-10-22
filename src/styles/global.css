@@ -78,14 +78,30 @@ body {
 
 }
 
-#pageHeader {
+body {
+    display: grid;
+    grid-template-areas: 
+    "header"
+    "body"
+    "footer";
+}
+
+#mainHeader {
     flex-shrink: 0;
     position: sticky;
     top: 0;
     z-index: 10;
+    grid-area: header;
 }
 
 #mainBody {
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    min-height: calc(100vh - var(--js-head-height));
+    /* turn this into a calculated vh. body - header (consider responsive) */
     flex-grow: 1;
+    grid-area: body;
+}
+
+#mainFooter {
+    grid-area: footer;
 }

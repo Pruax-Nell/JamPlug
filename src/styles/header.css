@@ -71,6 +71,19 @@ a {
     padding: 2ch;
     border-radius: 10px 5px 5px 5px;
     border: .2px solid var(--shadow-grey);
+    background-color: var(--main-teal);
+    box-shadow: 3px 3px 8px 1px var(--shadow-grey);
+    /* background:  */
+    /* radial-gradient(ellipse at top, var(--main-teal, transparent)); */
+    
+    
+}
+
+#CTA:hover {
+    cursor: pointer;
+    color: var(--main-bg-light);
+    background-color: var(--accent-mid-teal);
+
 
 }
 
@@ -82,5 +95,11 @@ a {
         /* justify-items: stretch; */
         width: 100%;
     }
+
+}
+
+:root {
+    --js-head-height:var(--js-head-height)
+
 
 }

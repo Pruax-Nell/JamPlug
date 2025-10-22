@@ -1,37 +1,38 @@
 ---
-import "../styles/footer.css"
-import socials from "../components/socials.astro" 
+import "../styles/footer.css";
+import Socials from "../components/socials.astro" ;
+
 ---
 
 <footer>
 
 
     <section id="upperFoot" class="grid">
-        <div> . </div>
+        <div> </div>
         <div>
             <!-- <h3>{}</h3> -->
             <img src="src/assets/alt-bloat-1.svg" alt="Logo 2" id="endLogo">
         </div>
-        <div> Socials bar tbd 
-            <socials />  
+        <div class="socialLinks">
+        
+            <Socials />
         </div>
         
     </section>
     <section id="lowerFoot" class="grid">
         <div>
             <p>Your Jam Plug UK ®
-                Established 2023 [Terms of Use], 
-                [Privacy Policy], 
+                Established 2023 [<a href="../pages/termsOfUse">Terms of Use</a>]  - 
+                [<a href="../pages/privacyPolicy">Privacy Policy</a>]
             </p>
         </div>
         <div>
             <p>
-                YOURJAMPLUG.UK is a collective that helps skaters find what they need to enjoy the hobby they love... etc etc etc
+                YOURJAMPLUG.UK is a collective that helps skaters find what they need to enjoy the hobby they love.
             </p>
         </div>
         <div>
-            <p> contact: </p>
-            <p>Email address: ...</p>
+            <p>Email us here: <a href="...">email@yourjamplug.com</a></p>
         </div>
     </section>
 </footer>
