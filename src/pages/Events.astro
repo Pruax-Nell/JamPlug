@@ -1,18 +1,25 @@
 ---
+import BaseLayout from "../layouts/baseLayout.astro";
+import "../styles/event.css" ;
+
 
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
+<BaseLayout>
+	<section id="darkWrap">
 
-		<style> </style>
-	</body>
-</html>
+		<section id="calendar">
+			<div> calendar component </div>
+			<div> side menu etc component</div>
+			
+			</section>
+			<section id="eventList">
+				<div> title and filter component</div>
+				<section> card holder 
+					<div> cards component</div>
+				</section>
+			</section>
+		<section id="spare"></section>
+	</section>
+ 
+</BaseLayout>

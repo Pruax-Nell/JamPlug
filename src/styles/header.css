@@ -55,7 +55,7 @@ nav {
     padding: 1ch;
 }
 
-a {
+#mainHeader a {
     padding: 0 1ch;
     flex-wrap: nowrap;
     text-decoration: none;

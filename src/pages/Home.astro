@@ -1,0 +1,42 @@
+---
+const Brand = "Your Jam Plug .UK";
+import "../styles/global.css";
+// import Socials from "../Components/socials.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ToTop from "../components/toTop.astro";
+
+
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{Brand}</title>
+	</head>
+	<body>
+		<section id="mainHeader"> 
+			<Header />
+			
+		</section>
+		<section id="mainBody">
+			
+			<h1>{Brand}</h1>
+			
+			<ToTop />
+		</section>
+		<section id="mainFooter">
+			<!-- <Socials />  -->
+			<Footer /> 
+		</section>
+		<style> </style>
+	</body>
+	<script>
+        import "../function/basic.js";
+    </script>
+	</html>
+

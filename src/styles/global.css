@@ -33,8 +33,6 @@ dark vs light mode TBD*/
     --font-body: "Red Rose", sans-serif;
     --font-hw: "Shantell Sans", sans-serif;
 
-
-
 }
 
 @font-face {
@@ -63,6 +61,7 @@ body {
     background-color: var(--main-bg-light);
     font: var(--black);
     margin: 0;
+    letter-spacing: .2ch;
 
 
     h1, h2 {
@@ -86,6 +85,31 @@ body {
     "footer";
 }
 
+/* to add -
+button { curser/hover}
+transition speed */
+
+.topBttn {
+    position: sticky;
+    bottom: 20px;
+    right: 15px;
+    justify-items: center;
+    align-content: center;
+
+}
+
+#ToTop {
+    background: var(--accent-mid-yellow);
+    height: 30px;
+    width: 30px;
+    border: var(--shadow-grey);
+    transition: 0.25ms;
+    border-radius: 10px 5px 5px 5px;
+    justify-content: center;
+    align-content: center;
+
+}
+
 #mainHeader {
     flex-shrink: 0;
     position: sticky;
@@ -105,3 +129,4 @@ body {
 #mainFooter {
     grid-area: footer;
 }
+

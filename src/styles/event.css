@@ -1,0 +1,25 @@
+/* darker page prefered  */
+/* top of the tree for further event page filtering */
+
+:root {
+    /* --dark-bg: ; */
+}
+
+/* #darkWrap {
+    background-color: var(--grey);
+    color: var(--main-bg-light);
+} */
+
+#calendar {
+    height: 80vh;
+    
+}
+
+#eventlist {
+    height: 100vh;
+
+}
+
+#spare {
+    height: 100px;
+}

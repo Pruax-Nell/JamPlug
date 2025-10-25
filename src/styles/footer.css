@@ -4,24 +4,22 @@ footer {
     display: grid;
     grid-template-rows: 1fr;
 
-
     > * {
         font-family: 'red rose';
     }
-    
-
 
 }
-
 
 #mainFooter {
     background-color: var(--main-brown-light);
     box-sizing: border-box;
     padding: 3ch;
     width: 100%;
+    min-height: 85vh;
     margin-top: 2ch;
 
 }
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr );
@@ -41,7 +39,7 @@ footer {
 
 }
 
-a {
+#mainFooter a {
     color: var(--main-bg-light);
     text-decoration: underline var(--accent-mid-orange);
     text-underline-offset: .7ch;
