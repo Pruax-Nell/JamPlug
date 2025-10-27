@@ -1,10 +1,11 @@
-/* yjp main colours:
-yjp secondary colours 
-font type
-font size
-dark vs light mode TBD*/
+/* || --------------------Insert title here------------------ */
+/* ----insert title here 2---- */
+/* small  notes */
 
+
+/* || -----------------------Brand and Project colours-------------- */
 :root {
+    /* YJP brand colours - main */
     --main-bg-light: #fff9ed;
     --main-orange: #ff9224;
     --main-purple: #9c49ea;
@@ -13,7 +14,8 @@ dark vs light mode TBD*/
     --main-pink: #ff449b;
     --main-brown-light: #582b1c;
     --main-brown-dark: #2d160e;
-
+    
+    /* YJP brand colours - accent */
     --accent-dark-teal: #124941;
     --accent-mid-teal: #1c7568;
     --accent-mid-purple: #6e17c0;
@@ -27,21 +29,36 @@ dark vs light mode TBD*/
     
     --black: #302f2c;
     --grey: #4a4844;
+    
+    /* technical colours */
+    --highlight: #ebe9e5;
+    --highlight2:rgba(235, 233, 229, 0.644)5;
     --shadow-grey: #4a484470;
+    --shadow-light: #cdc9c270;
+    
+    
+}
 
+/* || --------------------Text and Typography------------------ */
+:root {
+    
     --font-title: "Titan One", sans-serif;
     --font-body: "Red Rose", sans-serif;
     --font-hw: "Shantell Sans", sans-serif;
-
+    
+    --text-white: ;
+    --text-black: ;
+    
+    --text-bg-orange: ;
+    --text-bg-yellow: ;
+    --text-bg-teal: ;
+    --text-bg-pink: ;
+    --text-bg-purple: ;
+    --text-bg-brown: ;
 }
 
-@font-face {
-    font-family: "Red Rose";
-    src: 
-    local("RedRose"),
-    url("RedRose-VariableFont_wght.ttf");
-}
 
+/* Headers and brand main */
 @font-face {
     font-family: "Titan One";
     src: 
@@ -49,34 +66,24 @@ dark vs light mode TBD*/
     url("TitanOne-Regular.ttf");
 }
 
+/* body */
+@font-face {
+    font-family: "Red Rose";
+    src: 
+    local("RedRose"),
+    url("RedRose-VariableFont_wght.ttf");
+}
+
+/* side notes */
 @font-face {
     font-family: "Shantelle Sans";
     src:
     local("ShantellSans"),
     url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf");
-
+    
 }
 
-body {
-    background-color: var(--main-bg-light);
-    font: var(--black);
-    margin: 0;
-    letter-spacing: .2ch;
-
-
-    h1, h2 {
-        font-family: var(--font-title);
-        font-weight: 100;
-    } 
-
-    p {
-        font-family: var(--font-body);
-        font-weight: 200;
-
-    }
-
-}
-
+/* --------------------Structure and foundation------------------ */
 body {
     display: grid;
     grid-template-areas: 
@@ -85,48 +92,113 @@ body {
     "footer";
 }
 
-/* to add -
-button { curser/hover}
-transition speed */
+body {
+    background-color: var(--main-bg-light);
+    font: var(--black);
+    margin: 0;
+    letter-spacing: .2ch;
+    
+    
+    /* ----text foundation styles---- */
+    h1, h2 {
+        font-family: var(--font-title);
+        font-weight: 100;
+    } 
 
-.topBttn {
-    position: sticky;
-    bottom: 20px;
-    right: 15px;
-    justify-items: center;
-    align-content: center;
-
+    p {
+        font-family: var(--font-body);
+        font-weight: 200;
+        
+    }
+    
 }
 
-#ToTop {
-    background: var(--accent-mid-yellow);
-    height: 30px;
-    width: 30px;
-    border: var(--shadow-grey);
-    transition: 0.25ms;
-    border-radius: 10px 5px 5px 5px;
-    justify-content: center;
-    align-content: center;
-
-}
-
+/* || --------------------Template set up------------------ */
 #mainHeader {
-    flex-shrink: 0;
+    grid-area: header;
     position: sticky;
+    flex-shrink: 0;
     top: 0;
     z-index: 10;
-    grid-area: header;
 }
 
-#mainBody {
-    /* min-height: 100vh; */
-    min-height: calc(100vh - var(--js-head-height));
-    /* turn this into a calculated vh. body - header (consider responsive) */
-    flex-grow: 1;
-    grid-area: body;
+.fullView {
+    height: 100vh;
+
 }
+
+.midView {
+    height: 60vh;
+
+}
+/* media query for 1030< to shrink the nav to pop out */
+
+#mainBody {
+    grid-area: body;
+    min-height: 100vh;
+    flex-grow: 1;
+    padding: 1ch;
+}
+
+/* media query to stack footer 1030< */
 
 #mainFooter {
     grid-area: footer;
 }
 
+
+
+/* || --------------------Utilities------------------ */
+
+button { cursor: pointer;}
+
+a {text-decoration: none;}
+a:visited {opacity: 90%;}
+
+
+/* || --------------------SITEWIDE------------------ */
+
+/* ----Return to top button---- */
+/* .topBttn   { */
+#toTop   {
+    z-index: 99;
+    position: fixed;
+    width: 35px;
+    height: 50px;
+    bottom: 40px;
+    right: 30px;
+    background-color: var(--accent-mid-yellow);
+    border-radius: 10px 5px 5px 5px;
+    opacity: 80%;
+    margin: .2ch;
+    padding: 1ch;
+    justify-items: center;
+    align-content: center;
+    border: var(--shadow-grey);
+    color: var(--black);
+    font-size: .5rem;
+    
+}
+
+#toTop:hover {
+    opacity: 100%;
+}
+
+#toTop > img {
+    height: 20px;
+    width: 20px;
+    justify-self: center;
+    padding: .1ch;
+
+
+}
+
+
+
+/* ----Return to top button---- */
+
+/* ... */
+
+/* || --------------------Buttons------------------ */
+/* ----insert title here 2---- */
+/* small  notes */

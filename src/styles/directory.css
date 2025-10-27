@@ -53,38 +53,6 @@
     display: flex;
 }
 
-#menuFloat {
-    /* z-index: 9;
-    grid-column: 2;
-    grid-row: 2;
-    height: max-content;
-    position: sticky;
-    top: 100px;
-    justify-self: end;
-    padding: .5ch;
-    width: 12rem;
-    border-radius: 3px;
-    background-color: var(--main-brown-light);
-    box-shadow: 2px 5px 8px var(--shadow-grey);
-    font-family: 'Red Rose';
-     */
-}
-
-#menuFloat h5 {
-    /* margin: 0;
-    padding: 2ch;
-    justify-self: center;
-    letter-spacing: .3ch; */
-}
-
-#menuFloat a {
-    /* text-decoration: none;
-    color: var(--main-bg-light);
-    letter-spacing: .2ch; */
-
-
-}
-
 
 #pageTop {
     grid-row: 1;
@@ -95,6 +63,8 @@
 #contentTop {
     grid-row: 3;
     grid-column: 2 / 3;
+    height: 100svh;
+    overflow: scroll;
     padding: 2ch;
     background:  var(--accent-mid-orange);
     border-radius: 8px;
@@ -106,8 +76,6 @@
     display: grid;
     border-bottom: 3px solid var(--main-orange);
     margin-bottom: 5ch;
-    /* grid-template-rows: auto auto; */
-    /* width: auto; */
 }
 
 .regionName {
@@ -121,9 +89,6 @@
 }
 
 .listBlocks {
-    /* display: grid; */
-    /* column-width: auto; */
-    /* columns: 3; */
     margin: 1ch 0;
     margin-bottom: 3ch;
 }
@@ -142,9 +107,6 @@
     column-width: auto;
     columns: 3; 
     widows: 0;
-    /* orphans: 0; */
-    /* column-gap: 2em; */
-    /* column-span: all; */
     column-rule: 3px dotted var(--main-bg-light);
     padding: 1ch 3ch;
 
@@ -152,7 +114,6 @@
 
 .blockList li {
     width: 1fr;
-    /* width: 8rem; */
     text-wrap: pretty;
     padding: 1ch;
     -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
@@ -178,6 +139,13 @@ a {
 a:hover {
     cursor: pointer;
     text-decoration: dotted var(--main-bg-light);
+    /* text-decoration: underline var(--accent-dark-purple);  */
+    color: var(--accent-mid-teal); 
+    color: var(--main-bg-light); 
+    text-underline-offset: .2ch;
+    /* text-shadow: 1px 0 .5px var(--shadow-light); */
+    text-shadow: 1px 5px .5px var(--highlight2);
+
 
 
 }

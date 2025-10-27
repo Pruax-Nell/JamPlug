@@ -43,7 +43,6 @@ import Socials from "../components/socials.astro" ;
 		<section id="mainBody">
 
 			<slot />
-			<ToTop />
 		</section>
 		<section id="mainFooter">
 			<footer>
@@ -54,7 +53,7 @@ import Socials from "../components/socials.astro" ;
 						<img src="../src/assets/alt-bloat-1.svg" alt="Logo 2" id="endLogo">
 					</div>
 					<div class="socialLinks">
-					
+						
 						<Socials />
 					</div>
 					
@@ -78,11 +77,15 @@ import Socials from "../components/socials.astro" ;
 				</section>
 			</footer>
 		</section>
-		<style> </style>
+		<ToTop />
 	</body>
-	
 	<script>
         import "../function/basic.js"
     </script>
 </html>
 
+<style>
+	#mainBody {
+		padding: 1ch;
+	}
+</style>
