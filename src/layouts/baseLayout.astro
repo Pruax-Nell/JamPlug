@@ -1,14 +1,13 @@
 ---
 const Brand = "Your Jam Plug";
-import "../styles/global.css";
-import "../styles/footer.css";
-import "../styles/header.css"
 
-// import Header from "../components/Header.astro";
-// import Footer from "../components/Footer.astro";
-import Navigation from "../components/navigation.astro";
+import "../styles/global.css";
+import "../styles/header.css"
+import "../styles/footer.css";
+
 import ToTop from "../components/toTop.astro";
 import Socials from "../components/socials.astro" ;
+
 
 ---
 
@@ -20,37 +19,51 @@ import Socials from "../components/socials.astro" ;
 		<meta name="generator" content={Astro.generator} />
 		<title>Your Jam Plug</title>
 	</head>
+
 	<body>
 		<section id="mainHeader"> 
+			<!-- || Menu toggle button -->
+			<button aria-controls="mainNav" aria-expanded="false" class="mobileNavToggle"><span class="srOnly">Menu</span></button>
+
+			<!-- || page head and Nav -->
 			<header>
+				<!-- A -->
 				<div id="homeLogo">
 					<a href="/index/"><img src="../branding/shine-orange-lug-2.svg" alt="your Jam Plug" id="headLogo"></a>
 				</div>
-				<div>
-				<small></small>
+				<!-- B -->
+				<div id=theNav">
+					<nav>
+						<ul id="mainNav" data-visible="false">
+							<li><a href="/Home/">Home</a></li>
+							<li><a href="/Events/">Events</a></li>
+							<li><a href="/Directory/">Directory</a></li>
+							<li><a href="/About/">About Us</a></li>
+							<li><a href="#">Spare</a></li>
+						</ul>
+					</nav>
 				</div>
-				<div id="mainNav">
-				<nav>
-					<Navigation />
-				</nav>
-				<div>
-					<button id="CTA">For Skaters</button>
-				</div>
+				<!-- C -->
+				<div id="theCall">
+					<a href="#" id="CTA">For Skaters <span class="srOnly">Newsletter sign up</span></a>
+					
 				</div>
 			</header>
-
 		</section>
-		<section id="mainBody">
 
+
+		<section id="mainBody">
+			<!-- || Content slot -->
 			<slot />
 			<ToTop />
 		</section>
+
+
 		<section id="mainFooter">
 			<footer>
 				<section id="upperFoot" class="grid">
 					<div> </div>
 					<div>
-						<!-- <h3>{}</h3> -->
 						<img src="../src/assets/alt-bloat-1.svg" alt="Logo 2" id="endLogo">
 					</div>
 					<div class="socialLinks">
@@ -60,29 +73,32 @@ import Socials from "../components/socials.astro" ;
 					
 				</section>
 				<section id="lowerFoot" class="grid">
-					<div>
+					<div class="row2 toe">
 						<p>Your Jam Plug UK ®
-							Established 2023 [<a href="/termsOfUse/">Terms of Use</a>]  - 
+							Established 2023 <br> [<a href="/termsOfUse/">Terms of Use</a>]  - 
 							[<a href="/privacyPolicy/">Privacy Policy</a>]
 						</p>
 					</div>
-					<div>
+					<div class="row3 toe">
 						<p>
 							YOURJAMPLUG.UK is a collective that helps skaters find what they need to enjoy the hobby they love.
 						</p>
 					</div>
-					<div>
+					<div class="row1 toe">
 						<p>Email us here: <br> <a href="...">email@yourjamplug.com</a>
 						</p>
 					</div>
 				</section>
 			</footer>
 		</section>
+
+
 		<style> </style>
 	</body>
 	
 	<script>
         import "../function/basic.js"
     </script>
+
 </html>
 

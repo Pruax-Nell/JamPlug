@@ -2,6 +2,34 @@
 /* ----insert title here 2---- */
 /* small  notes */
 
+/* Headers and brand main */
+@font-face {
+    font-family: "Titan One";
+    src: 
+    local("TitanOne-Regular"),
+    url("TitanOne-Regular.ttf");
+}
+
+/* body */
+@font-face {
+    font-family: "Red Rose";
+    src: 
+    local("RedRose"),
+    url("RedRose-VariableFont_wght.ttf");
+}
+
+/* 5 font weights bold - light - medium - regular - semibold */
+
+/* side notes */
+@font-face {
+    font-family: "Shantelle Sans";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf");
+    
+}
+
+/* 12 weights including italic */
 
 /* || -----------------------Brand and Project colours-------------- */
 :root {
@@ -55,33 +83,12 @@
     --text-bg-pink: ;
     --text-bg-purple: ;
     --text-bg-brown: ;
+    --bg-orange-1: #e47200a7;
+    --bg-orange-2: #ff9124bf;
 }
 
 
-/* Headers and brand main */
-@font-face {
-    font-family: "Titan One";
-    src: 
-    local("TitanOne-Regular"),
-    url("TitanOne-Regular.ttf");
-}
 
-/* body */
-@font-face {
-    font-family: "Red Rose";
-    src: 
-    local("RedRose"),
-    url("RedRose-VariableFont_wght.ttf");
-}
-
-/* side notes */
-@font-face {
-    font-family: "Shantelle Sans";
-    src:
-    local("ShantellSans"),
-    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf");
-    
-}
 
 /* --------------------Structure and foundation------------------ */
 body {
@@ -97,6 +104,8 @@ body {
     font: var(--black);
     margin: 0;
     letter-spacing: .2ch;
+
+    overflow-x: hidden;
     
     
     /* ----text foundation styles---- */
@@ -112,6 +121,7 @@ body {
     }
     
 }
+
 
 /* || --------------------Template set up------------------ */
 #mainHeader {
@@ -153,7 +163,9 @@ body {
 button { cursor: pointer;}
 
 a {text-decoration: none;}
-a:visited {opacity: 90%;}
+a:visited {opacity: 90%; }
+
+.srOnly {display: none;}
 
 
 /* || --------------------SITEWIDE------------------ */
@@ -161,7 +173,7 @@ a:visited {opacity: 90%;}
 /* ----Return to top button---- */
 /* .topBttn   { */
 #toTop   {
-    z-index: 99;
+    z-index: 1000;
     position: fixed;
     width: 35px;
     height: 50px;

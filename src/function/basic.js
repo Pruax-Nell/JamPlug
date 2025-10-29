@@ -21,6 +21,23 @@ function scrollTop() {
 topButton.addEventListener('click', scrollTop)
 
 
+// Nav Menu open/close button
+
+const primaryNav = document.querySelector('#mainNav');
+const navToggle = document.querySelector('.mobileNavToggle');
+
+navToggle.addEventListener('click', () => {
+    const visibility = primaryNav.getAttribute('data-visible');
+        if (visibility === 'false') {
+            primaryNav.setAttribute('data-visible', 'true');
+            navToggle.setAttribute('aria-expanded', 'true');
+        } else if (visibility === 'true') {
+            primaryNav.setAttribute('data-visible', 'false');
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
+
+    console.log(visibility);
+});
 
 
 
