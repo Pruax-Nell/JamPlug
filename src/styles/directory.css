@@ -7,7 +7,7 @@
 
 #pageGrid {
     display: grid;
-    grid-template-columns: auto 80vw auto;
+    grid-template-columns: auto 90vw auto;
     grid-template-rows: auto auto auto auto;
     /* height: 100vh; */
 }
@@ -49,11 +49,6 @@
     margin: 1ch;
 }
 
-.flex {
-    display: flex;
-}
-
-
 #pageTop {
     grid-row: 1;
     grid-column: 2;
@@ -63,8 +58,6 @@
 #contentTop {
     grid-row: 3;
     grid-column: 2 / 3;
-    /* height: 100svh; */
-    /* overflow: scroll; */
     padding: 2ch;
     background:  var(--accent-mid-orange);
     border-radius: 8px;
@@ -84,7 +77,7 @@
     margin: .5ch;
     font-family: 'Red Rose';
     font-size: 1.5rem;
-    font-size: 1.5rem;
+    font-weight: 100;
     letter-spacing: .2ch;
 }
 
@@ -145,8 +138,6 @@ a:hover {
     text-underline-offset: .2ch;
     /* text-shadow: 1px 0 .5px var(--shadow-light); */
     text-shadow: 1px 5px .5px var(--highlight2);
-
-
 
 }
 

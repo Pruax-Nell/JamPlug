@@ -4,8 +4,8 @@ header {
     display: grid;
     box-sizing: border-box;
     grid-template-columns: minmax(100px, 120px) auto max-content;
-    column-gap: 2%;
-    height:75px;
+    column-gap: 2% 1%;
+    height:var(--head-height);
     width: 100%;
     box-shadow: -0 1px 5px var(--shadow-grey);
     border-radius: 0 10px;
@@ -29,11 +29,9 @@ header {
     align-content: center;
     justify-content: center;
     justify-items: center;
-    /* padding-inline-end: 1rem; */
 }
 
 #CTA {
-    /* align-items: center; */
     justify-items: center;
     width: 1fr;
     padding-block: 1.2ch;
@@ -54,8 +52,6 @@ header {
     cursor: pointer;
     color: var(--main-bg-light);
     background-color: var(--accent-mid-teal);
-
-
 }
 
 

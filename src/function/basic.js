@@ -1,4 +1,4 @@
-// scroll to top button 
+// || scroll to top button 
 
 let topButton = document.getElementById("toTop");
 
@@ -21,7 +21,7 @@ function scrollTop() {
 topButton.addEventListener('click', scrollTop)
 
 
-// Nav Menu open/close button
+// || Nav Menu open/close button
 
 const primaryNav = document.querySelector('#mainNav');
 const navToggle = document.querySelector('.mobileNavToggle');
@@ -41,7 +41,7 @@ navToggle.addEventListener('click', () => {
 
 
 
-// to calculate the vh minus the header with responsive design in mind
+// || to calculate the vh minus the header with responsive design in mind
 const mainHeader = document.getElementById('mainHeader');
 
 function updateSize() {
@@ -56,5 +56,10 @@ function updateSize() {
 window.addEventListener('resize', updateSize);
 window.onload = updateSize; 
 
-// next one below //
+// || header text shrink on scroll //
+window.addEventListener('scroll', () => {
+    document.querySelector('pageTitle').style.fontsize=((document.body.scrollTop *.05)+14)+'px';
+})
+
+// || next one below //
 

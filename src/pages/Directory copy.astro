@@ -1,0 +1,143 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro";
+import "../styles/directory.css";
+import Menu from "../components/directMenu.astro";
+const pageTitle = "UK Skate Directory";
+
+---
+<!-- // sticky scrolling headings that overlap as you go down. 
+//sectional by region
+//'jump to' side bar - js maybe -->
+<BaseLayout>
+	<section id="pageGrid">
+		
+		<!-- ------------------Sticky Bar menu--------------------->
+		<div id="menuBar"> 
+			<a href="#England-region"><button>England</button></a>
+			<a href="#Scotland-region"><button>Scotland</button></a>
+			<a href="#Nireland-region"><button>Northern Ireland</button></a>
+			<a href="#Republic-region"><button>Republic of Ireland</button></a>
+		</div>
+		
+		<!-- ------------------Page title--------------------->
+		<section id="pageTop">
+			<div></div>
+			<div>
+				<h1>{pageTitle}</h1>
+			</div>
+			<div></div>
+		</section>
+		<section id="contentTop">
+			
+			<!-- Main contnent  -->
+		<section id="directory">
+			<!-- ---------------England section--------------- -->
+			<div class="regionBlock" id="England-region">
+				<h3 class="regionName" > England </h3>
+				<div class="listBlocks rinks">
+					<h5 class="blockTitle">Rinks</h5>
+					<ul class="blockList ">
+						<li><a href="">Rink 1</a></li>
+						<li><a href="">Rec Rink - Huston</a></li>
+						<li><a href="">it's the supercali fragilistic expiali docious</a></li>
+						<li><a href="">Roller Nation - London</a></li>
+						<li><a href="">Rink 4</a></li>
+						<li><a href="">Rink 4</a></li>
+						<li><a href="">Rink 4</a></li>
+						<li><a href="">Rink 4</a></li>
+						<li class="liDraft"><a href="">Rink</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks shops">
+					<h5 class="blockTitle">Skate Shops</h5>
+					<ul class="blockList ">
+						<li><a>Shop</a></li>
+						<li class="liDraft"><a>Shop</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks groups">
+					<h5 class="blockTitle ">Groups</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a>Group</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- ---------------Scotland section--------------- -->
+			<div class="regionBlock" id="Scotland-region">
+				<h3 class="regionName" > Scotland </h3>
+				<div class="listBlocks rinks">
+					<h5 class="blockTitle">Rinks</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a href="">Rink</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks shops">
+					<h5 class="blockTitle">Skate Shops</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a>Shop</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks groups">
+					<h5 class="blockTitle ">Groups</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a>Group</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- ---------------Northern IRL section--------------- -->
+			<div class="regionBlock" id="Nireland-region">
+				<h3 class="regionName" > Nothern Ireland </h3>
+				<div class="listBlocks rinks">
+					<h5 class="blockTitle">Rinks</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a href="">Rink</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks shops">
+					<h5 class="blockTitle">Skate Shops</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a>Shop</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks groups">
+					<h5 class="blockTitle ">Groups</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a>Group</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- ---------------Rep. Ireland section--------------- -->
+			<div class="regionBlock" id="Republic-region">
+				<h3 class="regionName" > Republic of Ireland </h3>
+				<div class="listBlocks rinks">
+					<h5 class="blockTitle">Rinks</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a href="">Rink</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks shops">
+					<h5 class="blockTitle">Skate Shops</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a>Shop</a></li>
+					</ul>
+				</div>
+				<div class="listBlocks groups">
+					<h5 class="blockTitle ">Groups</h5>
+					<ul class="blockList ">
+						<li class="liDraft"><a>Group</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</section>
+</section>
+
+
+</BaseLayout>
+
+<style>
+	section {
+		width: 100%;
+	}
+
+</style>

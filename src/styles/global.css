@@ -1,13 +1,12 @@
-/* || --------------------Insert title here------------------ */
-/* ----insert title here 2---- */
-/* small  notes */
-
-/* Headers and brand main */
+/* || --------- Fonts ------------- */
+/* Titles */
 @font-face {
     font-family: "Titan One";
     src: 
     local("TitanOne-Regular"),
     url("TitanOne-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
 }
 
 /* body */
@@ -15,21 +14,147 @@
     font-family: "Red Rose";
     src: 
     local("RedRose"),
-    url("RedRose-VariableFont_wght.ttf");
+    url("RedRose-VariableFont_wght.woff2") format("Woff2 supports variations"),
+    url("RedRose-VariableFont_wght.woff2") format("woff2-variations");
+    font-weight: 0 700;
 }
-
-/* 5 font weights bold - light - medium - regular - semibold */
 
 /* side notes */
 @font-face {
     font-family: "Shantelle Sans";
     src:
     local("ShantellSans"),
-    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf");
+    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'),
+    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf-variations');
+    font-weight: 0 900;
     
 }
 
-/* 12 weights including italic */
+/* || --------------------Text and Typography------------------ */
+:root {
+    
+    --font-title: "Titan One", sans-serif;
+
+    --font-body: "Red Rose", sans-serif;
+    /* --font-body-light: "Red Rose light", sans-serif;
+    --font-body-reg: "Red Rose regular", sans-serif;
+    --font-body-mid: "Red Rose medium", sans-serif;
+    --font-body-semi: "Red Rose semibold", sans-serif;
+    --font-body-bold: "Red Rose bold", sans-serif; */
+
+    --font-handwriten: "Shantell Sans", sans-serif;
+    /* --font-handwriten-light: "Shantell Sans light", sans-serif;
+    --font-handwriten-reg: "Shantell Sans regular", sans-serif;
+    --font-handwriten-med: "Shantell Sans medium", sans-serif;
+    --font-handwriten-semi: "Shantell Sans semibold", sans-serif;
+    --font-handwriten-bold: "Shantell Sans bold", sans-serif;
+    --font-handwriten-extra: "Shantell Sans extrabold", sans-serif; */
+
+    --letter-space-titan: .15ch;
+    --letter-space-rose: .2ch;
+    --letter-space-shantell: .35ch;
+    
+    --fs-title: clamp(2rem, 7vw + .2rem, 3.5rem);
+    --fs-title-2: clamp(1.845rem, 3vw + .2rem, 3.1rem);
+    
+    --fs-heading-xl: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+    --fs-heading-large: clamp(1.3rem, 2vw + 1rem, 2.1rem);
+    --fs-heading-mid: clamp(1.225rem, 2vw + 1rem, 1.758rem);
+    --fs-heading-small: clamp(1.1rem, 2vw + 1rem, 1.5rem);
+    
+    --fs-p1: clamp(1.5rem, 2vw + 1rem, 1.5rem);
+    --fs-p2: clamp(1.25rem, 2vw + 1rem, 1.3rem);
+    --fs-p3: clamp(1.125rem, 2vw + 1rem, 1.1rem);
+    --fs-caption: clamp(.625rem, 2vw + 1rem, 1rem);
+    
+    --fs-note-large: clamp(.8rem, .2rem, .1.3rem);
+    --fs-note-small: clamp(.5rem, .2rem, 1rem);
+    
+    
+}
+
+h1 {
+    font-family: var(--font-title);
+    font-size: var(--fs-title);
+    letter-spacing: var(--letter-space-titan);
+    
+}
+
+h2 {
+    font-family: var(--font-body);
+    font-size: var(--fs-title-2);
+    letter-spacing: var(--letter-space-titan);
+    font-weight: 900;
+    text-transform: uppercase;
+    
+}
+
+h3 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-xl);
+    font-weight: 700;
+    letter-spacing: var(--letter-space-rose);
+    font-style: bold;
+}
+
+h4 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-large);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 600;
+}
+
+h5 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-mid);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 500;
+}
+
+h6 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-small);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+p {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 400;
+    
+}
+
+.p1 {
+    font-weight: 700;
+    font-size: var(--fs-p1);
+}
+.p2 {
+    font-weight: 500;
+    font-size: var(--fs-p2);
+}
+.p3 {
+    font-weight: 400;
+    font-size: var(--fs-p3);
+}
+
+.caption {
+    font-size: var(--fs-caption);
+    text-transform: uppercase;
+    font-size: .6rem;
+    font-weight: 500;
+}
+
+.note {
+    font-family: var(--font-handwriten);
+    letter-spacing: var(--letter-space-shantell);
+    font-weight: 500;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+
 
 /* || -----------------------Brand and Project colours-------------- */
 :root {
@@ -64,16 +189,6 @@
     --shadow-grey: #4a484470;
     --shadow-light: #cdc9c270;
     
-    
-}
-
-/* || --------------------Text and Typography------------------ */
-:root {
-    
-    --font-title: "Titan One", sans-serif;
-    --font-body: "Red Rose", sans-serif;
-    --font-hw: "Shantell Sans", sans-serif;
-    
     --text-white: ;
     --text-black: ;
     
@@ -85,12 +200,29 @@
     --text-bg-brown: ;
     --bg-orange-1: #e47200a7;
     --bg-orange-2: #ff9124bf;
+    
 }
 
 
+/* || --------------------Utilities------------------ */
+
+button { cursor: pointer;}
+
+ul {list-style: none;}
+a {text-decoration: none;}
+a:visited {opacity: 90%; }
+
+.srOnly {display: none;}
+
+.flex {display: flex;}
+.grid {display: grid;} 
 
 
 /* --------------------Structure and foundation------------------ */
+:root {
+    --head-height: clamp(72px, 15vh, 80px);
+}
+
 body {
     display: grid;
     grid-template-areas: 
@@ -101,28 +233,12 @@ body {
 
 body {
     background-color: var(--main-bg-light);
-    font: var(--black);
+    font: var(--main-brown-dark);
     margin: 0;
-    letter-spacing: .2ch;
 
     overflow-x: hidden;
+}   
     
-    
-    /* ----text foundation styles---- */
-    h1, h2 {
-        font-family: var(--font-title);
-        font-weight: 100;
-    } 
-
-    p {
-        font-family: var(--font-body);
-        font-weight: 200;
-        
-    }
-    
-}
-
-
 /* || --------------------Template set up------------------ */
 #mainHeader {
     grid-area: header;
@@ -141,7 +257,6 @@ body {
     height: 60vh;
 
 }
-/* media query for 1030< to shrink the nav to pop out */
 
 #mainBody {
     grid-area: body;
@@ -150,28 +265,13 @@ body {
     padding: 1ch;
 }
 
-/* media query to stack footer 1030< */
-
 #mainFooter {
     grid-area: footer;
 }
 
-
-
-/* || --------------------Utilities------------------ */
-
-button { cursor: pointer;}
-
-a {text-decoration: none;}
-a:visited {opacity: 90%; }
-
-.srOnly {display: none;}
-
-
 /* || --------------------SITEWIDE------------------ */
 
 /* ----Return to top button---- */
-/* .topBttn   { */
 #toTop   {
     z-index: 1000;
     position: fixed;
@@ -205,7 +305,9 @@ a:visited {opacity: 90%; }
 
 }
 
-
+/* || --------------------Insert title here------------------ */
+/* ----insert title here 2---- */
+/* small  notes */
 
 /* ----Return to top button---- */
 

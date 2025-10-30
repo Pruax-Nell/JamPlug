@@ -10,136 +10,123 @@ const pageTitle = "UK Skate Directory";
 //'jump to' side bar - js maybe -->
 <BaseLayout>
 	<section id="pageGrid">
-		<!-- ------------------floating x menu--------------------->
-		
-		<!-- ------------------Sticky Bar menu--------------------->
-		<div id="menuBar"> 
-			<a href="#England-region"><button>England</button></a>
-			<a href="#Scotland-region"><button>Scotland</button></a>
-			<a href="#Nireland-region"><button>Northern Ireland</button></a>
-			<a href="#Republic-region"><button>Republic of Ireland</button></a>
-
-			<!-- <ul id="menuList" class="flex"> -->
-			<!-- <li><a href="#England-region">England</a></li>
-				<li><a href="#Scottland-region">Scotland</a></li>
-				<li><a href="#Nireland-region">Northern Ireland</a></li>
-				<li><a href="#Republic-region">Republic of Ireland</a></li> -->
-			</ul>
-		</div>
-
+		<!-- ------------------Page title--------------------->
 		<section id="pageTop">
-			<div></div>
 			<div>
-				<h1>{pageTitle}</h1>
+				<h1 class="PageTitle">{pageTitle}</h1>
 			</div>
-			<div></div>
+			<!-- ------------------Sticky Bar menu--------------------->
+			<div id="menuBar"> 
+				<a href="#England-region"><button>England</button></a>
+				<a href="#Scotland-region"><button>Scotland</button></a>
+				<a href="#Nireland-region"><button>Northern Ireland</button></a>
+				<a href="#Republic-region"><button>Republic of Ireland</button></a>
+			</div>
 		</section>
+		<!-- ------------------ Content--------------------->
 		<section id="contentTop">
-			
-			<!-- Main contnent  -->
-		<section id="directory">
-			<!-- ---------------England section--------------- -->
-			<div class="regionBlock" id="England-region">
-				<h3 class="regionName" > England </h3>
-				<div class="listBlocks rinks">
-					<h5 class="blockTitle">Rinks</h5>
-					<ul class="blockList ">
-						<li><a href="">Rink 1</a></li>
-						<li><a href="">Rec Rink - Huston</a></li>
-						<li><a href="">it's the supercali fragilistic expiali docious</a></li>
-						<li><a href="">Roller Nation - London</a></li>
-						<li><a href="">Rink 4</a></li>
-						<li><a href="">Rink 4</a></li>
-						<li><a href="">Rink 4</a></li>
-						<li><a href="">Rink 4</a></li>
-						<li class="liDraft"><a href="">Rink</a></li>
-					</ul>
+			<!-- Directory sections  -->
+			<section id="directory">
+				<!-- ---------------England section--------------- -->
+				<div class="regionBlock" id="England-region">
+					<h3 class="regionName" > England </h3>
+					<div class="listBlocks rinks">
+						<h5 class="blockTitle">Rinks</h5>
+						<ul class="blockList ">
+							<li><a href="">Rink 1</a></li>
+							<li><a href="">Rec Rink - Huston</a></li>
+							<li><a href="">it's the supercali fragilistic expiali docious</a></li>
+							<li><a href="">Roller Nation - London</a></li>
+							<li><a href="">Rink 4</a></li>
+							<li><a href="">Rink 4</a></li>
+							<li><a href="">Rink 4</a></li>
+							<li><a href="">Rink 4</a></li>
+							<li class="liDraft"><a href="">Rink</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks shops">
+						<h5 class="blockTitle">Skate Shops</h5>
+						<ul class="blockList ">
+							<li><a>Shop</a></li>
+							<li class="liDraft"><a>Shop</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks groups">
+						<h5 class="blockTitle ">Groups</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a>Group</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="listBlocks shops">
-					<h5 class="blockTitle">Skate Shops</h5>
-					<ul class="blockList ">
-						<li><a>Shop</a></li>
-						<li class="liDraft"><a>Shop</a></li>
-					</ul>
+				<!-- ---------------Scotland section--------------- -->
+				<div class="regionBlock" id="Scotland-region">
+					<h3 class="regionName" > Scotland </h3>
+					<div class="listBlocks rinks">
+						<h5 class="blockTitle">Rinks</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a href="">Rink</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks shops">
+						<h5 class="blockTitle">Skate Shops</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a>Shop</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks groups">
+						<h5 class="blockTitle ">Groups</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a>Group</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="listBlocks groups">
-					<h5 class="blockTitle ">Groups</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a>Group</a></li>
-					</ul>
+				<!-- ---------------Northern IRL section--------------- -->
+				<div class="regionBlock" id="Nireland-region">
+					<h3 class="regionName" > Nothern Ireland </h3>
+					<div class="listBlocks rinks">
+						<h5 class="blockTitle">Rinks</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a href="">Rink</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks shops">
+						<h5 class="blockTitle">Skate Shops</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a>Shop</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks groups">
+						<h5 class="blockTitle ">Groups</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a>Group</a></li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			<!-- ---------------Scotland section--------------- -->
-			<div class="regionBlock" id="Scotland-region">
-				<h3 class="regionName" > Scotland </h3>
-				<div class="listBlocks rinks">
-					<h5 class="blockTitle">Rinks</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a href="">Rink</a></li>
-					</ul>
+				<!-- ---------------Rep. Ireland section--------------- -->
+				<div class="regionBlock" id="Republic-region">
+					<h3 class="regionName" > Republic of Ireland </h3>
+					<div class="listBlocks rinks">
+						<h5 class="blockTitle">Rinks</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a href="">Rink</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks shops">
+						<h5 class="blockTitle">Skate Shops</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a>Shop</a></li>
+						</ul>
+					</div>
+					<div class="listBlocks groups">
+						<h5 class="blockTitle ">Groups</h5>
+						<ul class="blockList ">
+							<li class="liDraft"><a>Group</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="listBlocks shops">
-					<h5 class="blockTitle">Skate Shops</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a>Shop</a></li>
-					</ul>
-				</div>
-				<div class="listBlocks groups">
-					<h5 class="blockTitle ">Groups</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a>Group</a></li>
-					</ul>
-				</div>
-			</div>
-			<!-- ---------------Northern IRL section--------------- -->
-			<div class="regionBlock" id="Nireland-region">
-				<h3 class="regionName" > Nothern Ireland </h3>
-				<div class="listBlocks rinks">
-					<h5 class="blockTitle">Rinks</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a href="">Rink</a></li>
-					</ul>
-				</div>
-				<div class="listBlocks shops">
-					<h5 class="blockTitle">Skate Shops</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a>Shop</a></li>
-					</ul>
-				</div>
-				<div class="listBlocks groups">
-					<h5 class="blockTitle ">Groups</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a>Group</a></li>
-					</ul>
-				</div>
-			</div>
-			<!-- ---------------Rep. Ireland section--------------- -->
-			<div class="regionBlock" id="Republic-region">
-				<h3 class="regionName" > Republic of Ireland </h3>
-				<div class="listBlocks rinks">
-					<h5 class="blockTitle">Rinks</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a href="">Rink</a></li>
-					</ul>
-				</div>
-				<div class="listBlocks shops">
-					<h5 class="blockTitle">Skate Shops</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a>Shop</a></li>
-					</ul>
-				</div>
-				<div class="listBlocks groups">
-					<h5 class="blockTitle ">Groups</h5>
-					<ul class="blockList ">
-						<li class="liDraft"><a>Group</a></li>
-					</ul>
-				</div>
-			</div>
+			</section>
 		</section>
 	</section>
-</section>
-
-
 </BaseLayout>
 
 <style>

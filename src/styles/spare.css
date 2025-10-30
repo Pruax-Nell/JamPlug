@@ -1,0 +1,107 @@
+/* red rose */
+
+
+@font-face {
+    font-family: "Red Rose light";
+    src: 
+    local("RedRose"),
+    url("RedRose-Light.ttf");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Red Rose Regular";
+    src: 
+    local("RedRose"),
+    url("RedRose-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Red Rose Medium";
+    src: 
+    local("RedRose"),
+    url("RedRose-Medium.ttf");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Red Rose SemiBold";
+    src: 
+    local("RedRose"),
+    url("RedRose-SemiBold.ttf");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Red Rose bold";
+    src: 
+    local("RedRose"),
+    url("RedRose-Bold.ttf");
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+/* shantelle */
+
+@font-face {
+    font-family: "Shantelle Sans light";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-Light.ttf");
+    font-weight: 300;
+    
+}
+
+@font-face {
+    font-family: "Shantelle Sans regular";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+    
+}
+@font-face {
+    font-family: "Shantelle Sans medium";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-Medium.ttf");
+    font-weight: 500;
+    font-style: normal;
+    
+}
+@font-face {
+    font-family: "Shantelle Sans semibold";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-SemiBold.ttf");
+    font-weight: 600;
+    font-style: normal;
+    
+}
+
+@font-face {
+    font-family: "Shantelle Sans bold";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-Bold.ttf");
+    font-weight: 700;
+    font-style: normal;
+    
+}
+
+@font-face {
+    font-family: "Shantelle Sans extrabold";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-ExtraBold.ttf");
+    font-weight: 800;
+    font-style: normal;
+    
+}
