@@ -13,6 +13,7 @@ header {
 
 }
 
+
 /* Main logo*/
 #headLogo {
     filter: drop-shadow(0 5px 1px var(--shadow-grey));
@@ -45,6 +46,9 @@ header {
     color: var(--main-brown-dark);
     letter-spacing: .3ch;
     font-weight: 600;
+    transition:
+        background-color .5s,
+        color .4s;
     
 }
 

@@ -5,11 +5,11 @@
     box-sizing: border-box;
     padding: 3ch;
     width: 100%;
-    height: 90vh;
+    height: min(max-content);
     margin-top: 2ch;
     text-align: center;
     font-family: 'red rose';
-    letter-spacing: .2ch;
+    letter-spacing: var(--letter-space-rose);
     line-height: 2.4ch;
 
 }
@@ -25,6 +25,10 @@
     color: var(--accent-mid-orange);
 }
 
+#mainFooter p {
+    font-size: var(--fs-footer);
+
+}
 /* footer logo */
 #endLogo {
     width: 80px;

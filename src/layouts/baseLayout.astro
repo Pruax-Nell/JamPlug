@@ -1,5 +1,6 @@
 ---
 const Brand = "Your Jam Plug";
+const {pageTitle} = Astro.props; 
 
 import "../styles/global.css";
 import "../styles/header.css"
@@ -17,7 +18,8 @@ import Socials from "../components/socials.astro" ;
 		<link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Your Jam Plug</title>
+		<title>{pageTitle}</title>
+		<!-- <title>Your Jam Plug</title> -->
 	</head>
 
 	<body>
@@ -39,7 +41,7 @@ import Socials from "../components/socials.astro" ;
 							<li><a href="/Events/">Events</a></li>
 							<li><a href="/Directory/">Directory</a></li>
 							<li><a href="/About/">About Us</a></li>
-							<li><a href="#">Spare</a></li>
+							<li><a href="/blog">Blog</a></li>
 						</ul>
 					</nav>
 				</div>

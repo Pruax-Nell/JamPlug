@@ -9,20 +9,25 @@ const pageTitle = "UK Skate Directory";
 //sectional by region
 //'jump to' side bar - js maybe -->
 <BaseLayout>
-	<section id="pageGrid">
+	<!-- <section id="pageGrid"> -->
 		<!-- ------------------Page title--------------------->
 		<section id="pageTop">
 			<div>
 				<h1 class="PageTitle">{pageTitle}</h1>
 			</div>
-			<!-- ------------------Sticky Bar menu--------------------->
-			<div id="menuBar"> 
-				<a href="#England-region"><button>England</button></a>
-				<a href="#Scotland-region"><button>Scotland</button></a>
-				<a href="#Nireland-region"><button>Northern Ireland</button></a>
-				<a href="#Republic-region"><button>Republic of Ireland</button></a>
-			</div>
 		</section>
+			<!-- ------------------Sticky Bar menu--------------------->
+		<section id="menuBar">
+			<div > 
+				<a href="#England-region"  class="scroll-link"><button>England</button></a>
+				<a href="#Scotland-region" class="scroll-link"><button>Scotland</button></a>
+				<a href="#Nireland-region" class="scroll-link"><button>Northern Ireland</button></a>
+				<a href="#Republic-region" class="scroll-link"><button>Republic of Ireland</button></a>
+			</div>
+		</section>	
+		<div class="scrollWatch backBlur">
+
+		</div>
 		<!-- ------------------ Content--------------------->
 		<section id="contentTop">
 			<!-- Directory sections  -->
@@ -124,9 +129,10 @@ const pageTitle = "UK Skate Directory";
 						</ul>
 					</div>
 				</div>
+				<div class="scrollWatch"></div>
 			</section>
 		</section>
-	</section>
+	<!-- </section> -->
 </BaseLayout>
 
 <style>

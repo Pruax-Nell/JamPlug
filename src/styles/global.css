@@ -66,10 +66,13 @@
     --fs-p2: clamp(1.25rem, 2vw + 1rem, 1.3rem);
     --fs-p3: clamp(1.125rem, 2vw + 1rem, 1.1rem);
     --fs-caption: clamp(.625rem, 2vw + 1rem, 1rem);
+
+    --fs-footer: clamp(.21rem, 2vw + 1rem, .95rem);
     
     --fs-note-large: clamp(.8rem, .2rem, .1.3rem);
     --fs-note-small: clamp(.5rem, .2rem, 1rem);
     
+    --fs-bttn: clamp(.1rem, 1vw + 1rem, 1rem);
     
 }
 
@@ -189,22 +192,40 @@ p {
     --shadow-grey: #4a484470;
     --shadow-light: #cdc9c270;
     
-    --text-white: ;
+    --text-white: #ebe9e5;
     --text-black: ;
     
-    --text-bg-orange: ;
-    --text-bg-yellow: ;
-    --text-bg-teal: ;
-    --text-bg-pink: ;
-    --text-bg-purple: ;
-    --text-bg-brown: ;
+    --text-bg-white: #fff9ed44;
+    --text-bg-orange: #ff9224;
+    --text-bg-yellow: #f6d246;
+    --text-bg-teal: #4bc9b4;
+    --text-bg-pink: #ff449b;
+    --text-bg-purple: #9c49ea;
+    --text-bg-brown: #582b1c37;
     --bg-orange-1: #e47200a7;
     --bg-orange-2: #ff9124bf;
+    
+    --shadow-yellow: #f6d3466e;
+    --box-orange: #e4720087;
+    --shadow-teal: #4bc9b453;
+    --box-teal: #1c7568b4;
+    
     
 }
 
 
 /* || --------------------Utilities------------------ */
+
+:root {
+    --mobile-screen-size: (max-width: 768px);
+    --tablet-screen-size: (min-width: 769px);
+    --desktop-screen-size: (min-width: 992px);
+    --xl-screen-size: (min-width: 1200px);
+    
+}
+
+.flex {display: flex;}
+.grid {display: grid;} 
 
 button { cursor: pointer;}
 
@@ -212,11 +233,71 @@ ul {list-style: none;}
 a {text-decoration: none;}
 a:visited {opacity: 90%; }
 
-.srOnly {display: none;}
+* {scroll-behavior: smooth;}
 
-.flex {display: flex;}
-.grid {display: grid;} 
+.srOnly {
+    display: none;
+    
+}
+.srOnly {
+    display: none;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 
+}
+
+.srText {
+    clip: rect(1px, 1px, 1px, 1px);
+    word-wrap: normal !important;
+    border: 0;
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    overflow-wrap: normal !important;
+    padding: 0;
+    position: absolute !important;
+    width: 1px;
+}
+
+
+/* .devOnly {display: none;} */
+
+/* --------------------BUTTONS------------------ */
+.button {
+    letter-spacing: .2ch;
+    font-family: 'red rose';
+    font-weight: 400;
+    margin: 15px 20px;
+
+}
+
+.btn-primary {
+    border-radius: 8px 5px 5px 5px;
+    border: 1.2px solid var(--main-bg-light);
+    background-color: var(--accent-dark-pink);
+    color: var(--text-white);
+    padding: 16px;
+}
+.btn-secondary {
+    border-radius: 5px;
+    border: 1.2px solid var(--bg-orange-2);
+    padding: 16px;
+    background-color: var(--accent-dark-purple);
+    color: var(--text-white);
+}
+.btn-tirtary {
+    border-radius: 8px 3px 8px 3px;
+    border: 1.2px solid var(--accent-mid-pink);
+    padding: 16px;
+    background-color: var(--accent-dark-teal);
+    color: var(--text-white);
+}
 
 /* --------------------Structure and foundation------------------ */
 :root {
@@ -229,14 +310,16 @@ body {
     "header"
     "body"
     "footer";
-}
-
-body {
+    
     background-color: var(--main-bg-light);
     font: var(--main-brown-dark);
     margin: 0;
-
+    
     overflow-x: hidden;
+}
+
+body *{
+    scroll-margin-top: 165px;
 }   
     
 /* || --------------------Template set up------------------ */
@@ -263,6 +346,7 @@ body {
     min-height: 100vh;
     flex-grow: 1;
     padding: 1ch;
+    scroll-behavior: smooth;
 }
 
 #mainFooter {
@@ -289,6 +373,7 @@ body {
     border: var(--shadow-grey);
     color: var(--black);
     font-size: .5rem;
+    transition: display .5s, opacity .4s;
     
 }
 

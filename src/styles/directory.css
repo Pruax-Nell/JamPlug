@@ -3,68 +3,85 @@
     --North-Ireland: #Nireland-region;
     --Republic-Ireland: #Republic-Region;
     --Scottland: #Scottland-region;
+    --menu-position: clamp(78px, 17vh, 80px);
+    --background-light: var(--main-bg-orange);
+    --background-dark: var(--main-bg-white);
+    --background-mid: var(--main-bg-white);
 }
+
+/* -------------------- || page set up */
 
 #pageGrid {
     display: grid;
-    grid-template-columns: auto 90vw auto;
     grid-template-rows: auto auto auto auto;
-    /* height: 100vh; */
 }
 
-#menuBar {
-    grid-column: 2;
-    grid-row: 2;
-    position: sticky;
-    top: 75px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--main-brown-light);
-    width: 100%;
-    border-radius: 3px;
-    box-shadow: 2px 5px 8px var(--shadow-grey);
-    z-index: 8;
-}
-
-#menuBar button {
-    background-color: var(--main-brown-light);
-    color: var(--main-bg-light);
-    font-family: 'Red Rose';
-    letter-spacing: .2ch;
-    border-radius: 3px;
-    border-width: 0;
-    padding: 1em;
-    font-size: 1.2rem;
-}
-
-#menuBar a {
-    width: 1fr;
-
-}
-
-#menuList {
-    justify-content: space-evenly;
-    padding: 1ch 2ch;
-    margin: 1ch;
-}
-
+/* -------------------- || page title section */
 #pageTop {
+    position: sticky;
+    top: -20px;
     grid-row: 1;
     grid-column: 2;
     justify-items: center;
 }
 
+/* -------------------- || sticky menu */
+#menuBar {
+    display: flex;
+    position: sticky;
+    top: var(--menu-position);
+    padding: 2ch 0 1ch 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 3px;
+    z-index: 8;
+
+}
+
+@supports (backdrop-filter: blur(.9rem)) {
+    #menuBar {
+        backdrop-filter: blur(.3rem);
+    }
+
+}
+
+
+#menuBar button {
+    font-family: 'Red Rose';
+    font-size: var(--fs-bttn);
+    box-shadow: 2px 5px 8px var(--shadow-grey);
+    letter-spacing: .2ch;
+    border-radius: 3px;
+    border-width: 0;
+    padding: 1em;
+    background-color: var(--main-brown-light);
+    color: var(--main-bg-light);
+    transition: background-color .6s;
+}
+
+#menuBar button:hover {
+    background-color: var(--main-brown-dark);
+}
+
+
+/* -------------------- || Directory content */
 #contentTop {
     grid-row: 3;
     grid-column: 2 / 3;
     padding: 2ch;
-    background:  var(--accent-mid-orange);
+    background:  var(--accent-mid-orange); 
     border-radius: 8px;
     box-sizing: border-box;
-
+    margin-top: 15px;
+    
 }
 
+/* #directory {
+    padding-inline: 1vw;
+} */
+
+/* ------------------- || Directory content */
 .regionBlock {
     display: grid;
     border-bottom: 3px solid var(--main-orange);
@@ -126,22 +143,15 @@ a {
     font-weight: 600;
     letter-spacing: .2ch;
     color: var(--main-brown-dark);
-    /* color: #000; */
 }
 
 a:hover {
     cursor: pointer;
     text-decoration: dotted var(--main-bg-light);
-    /* text-decoration: underline var(--accent-dark-purple);  */
     color: var(--accent-mid-teal); 
     color: var(--main-bg-light); 
     text-underline-offset: .2ch;
-    /* text-shadow: 1px 0 .5px var(--shadow-light); */
     text-shadow: 1px 5px .5px var(--highlight2);
-
-}
-
-#menuList a {
 
 }
 

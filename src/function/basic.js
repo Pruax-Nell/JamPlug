@@ -39,23 +39,6 @@ navToggle.addEventListener('click', () => {
     console.log(visibility);
 });
 
-
-
-// || to calculate the vh minus the header with responsive design in mind
-const mainHeader = document.getElementById('mainHeader');
-
-function updateSize() {
-    const headHeight = mainHeader.offsetHeight;
-
-        document.body.style.setProperty('--js-head-height', `${headHeight}px`);
-    
-        
-    console.log(`updated --js-head-height to: ${headHeight}px`);
-}
-
-window.addEventListener('resize', updateSize);
-window.onload = updateSize; 
-
 // || header text shrink on scroll //
 window.addEventListener('scroll', () => {
     document.querySelector('pageTitle').style.fontsize=((document.body.scrollTop *.05)+14)+'px';
