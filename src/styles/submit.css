@@ -1,0 +1,17 @@
+
+.primary-container {
+    max-width: 1240px, 80vw;
+    margin: auto;
+
+}
+
+@media (min-width: 768px){
+    .primary-container {
+        width: 90vw;
+    }
+}
+
+.half-container {
+    width: minmax(min(40%), 100%);
+}
+ 

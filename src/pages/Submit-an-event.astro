@@ -1,25 +1,21 @@
 ---
-const Brand = "Your Jam Plug .UK";
-
 import BaseLayout from "../layouts/baseLayout.astro";
-
 import "../styles/global.css";
 import "../styles/submit.css";
-
 ---
-
 <BaseLayout>
-    <section class="pageTop">
-        <div><h1>Submit your Event</h1></div>
+     <section class="pageTop">
+        <div class="primary-container"><h1>Submit your Event</h1></div>
     </section>
+    <!-- ||------------------------------ form section -->
     <section class="dual-field">
-        <div class="info">
+        <div class="info half-container">
             <div>
                 <h2>How it works</h2>
                 <p>use this form to submit your events</p>
             </div>
         </div>
-        <div class="form-wrap">
+        <div class="form-wrap half-container">
             <div class="event-form">
                 <div class="btn-wrap">
                     <a href="#" class="button" target="_self">Submit</a>
@@ -27,6 +23,7 @@ import "../styles/submit.css";
             </div>
         </div>
     </section>
-    <section class="carosel"></section>
-
+    <section class="carosel primary-container">
+        <div> <p>carosel or other... </p> </div>
+    </section>
 </BaseLayout>
