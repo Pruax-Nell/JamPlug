@@ -8,6 +8,7 @@
 @media (min-width: 768px){
     .primary-container {
         width: 90vw;
+        min-height: max-content;
     }
 }
 
