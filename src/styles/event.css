@@ -53,45 +53,56 @@
 
 .event-item {
     display: grid;
-    grid-template-rows: subgrid;
+    grid-template-rows: 50% 20% 30%;
+    grid-template-columns: 100%;
     gap: .1rem;
     grid-row: span 3;
     border-radius: 6px;
+    width: minmax(100%, 280px);
 }
 
 .list-link {
     display: grid;
     grid-template-rows: subgrid;
+    grid-template-columns: subgrid;
     grid-row: span 3;
+    grid-column: 100%;
 }
+
 
 /* CARD SECTIONS */
 
 /* ||---------------------------------------------EVENT ITEMS */
 /* CARD */
 .event-item {
-    /* display: flex; */
-    /* flex-direction: column; */
     border-radius: 5px;
     justify-content: flex-start; 
     height: 400px;
     background-color: var(--black);
     color: var(--text-white);
-    /* background-color: var(--black), #fff; */
-    /* box-shadow: 0 0 4px 0 var(--box-orange),0 0 40px 0 var(--shadow-yellow); */
     box-shadow: 0 0 4px 0 var(--box-teal),0 0 40px 0 var(--shadow-teal);
     overflow: hidden;
     transition: all .3s ease-in-out;
 }
 
 .event-item:hover {
-    scale: 1.05;
-
+    scale: 1.03;
+    box-shadow: 0 0 4px 0 var(--box-orange),0 0 20px 0 var(--shadow-yellow);
  
 }
 
-.img-wrapper:hover {
+.event-item:hover .img-wrapper{
     scale: 1.1;
+ 
+}
+
+.event-item:hover .event-name {
+    color: var(--grey);
+
+}
+.event-item:hover .content-wrapper {
+    color: var(--grey);
+
 }
 
 .event-name {
@@ -105,6 +116,7 @@
 
 .eg-2 {
     height: max-content;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -135,9 +147,6 @@
     width: 100%;
     -o-object-fit: cover;
     object-fit: cover;
-    /* position: absolute; */
-    /* left: 0; */
-    /* top: 0; */
     transform: scale(1.001);
     transition: all .3s ease-in-out;
     background-color: var(--shadow-grey);
@@ -146,10 +155,9 @@
 
 /* CONTENT */
 .content-wrapper{
-    padding: 20px 30px;
+    padding: 10px 15px;
+    margin-bottom: 5px;
     color: var(--text-white);
-
-    
 }
 
 .title-wrapper .h4 {
