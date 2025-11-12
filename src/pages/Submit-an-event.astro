@@ -4,26 +4,404 @@ import "../styles/global.css";
 import "../styles/submit.css";
 ---
 <BaseLayout>
-     <section class="pageTop">
+    <!-- || ------------------------------------------PAGE TOP -->
+    <section class="pageTop primary-container S1">
         <div class="primary-container"><h1>Submit your Event</h1></div>
     </section>
-    <!-- ||------------------------------ form section -->
-    <section class="dual-field">
-        <div class="info half-container">
+    <!-- ||------------------------------------- FORM SECTION  -->
+    <section class=" primary-container dual-field">
+
+        <!-- ||------------------------- DIRECTIONS  -->
+        <div class="info half-container S2">
             <div>
-                <h2>How it works</h2>
+                <h2 class="half-title">How it works</h2>
                 <p>use this form to submit your events</p>
             </div>
-        </div>
-        <div class="form-wrap half-container">
-            <div class="event-form">
-                <div class="btn-wrap">
-                    <a href="#" class="button" target="_self">Submit</a>
+            <div>
+                <h3 class="half-title">Event type</h3>
+                <div>
+                    <label for="event-type"></label>
+                    <select name="" id="event-type">
+                        <option value="none">-- Please Choose an Event Type --</option>
+                        <option value="Festival">Skate Festival</option>
+                        <option value="night">Skate Night</option>
+                        <option value="social">Skate Social</option> 
+                        <option value="workshop">Workshop</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
+                
             </div>
         </div>
+
+        <!-- -||----------------------- FORM FIELD  -->
+        <div class="form-wrap half-container S3">
+            <div class="event-form">
+                
+                <!-- DEFAULT PLACEHOLDER/HINT -->
+                <div id="placeholder-form">
+                    <p>Select an Event Type above to reveal the appropriate submission form.</p>
+                </div>
+                
+                <!-- SKATE FESTIVAL SUBMISSION FORM -->
+                <div id="festival-form" class="hidden hide-form">
+
+                </div>
+
+                <!-- SKATE WEEKENDER SUBMISSION FORM -->
+                <div id="weekend-form" class="hidden hide-form">
+
+                </div>
+
+                <!-- SKATE NIGHT (PARTY) SUBMISSION FORM -->
+                <div id="night-form" class="hidden hide-form">
+
+                </div>
+
+                <!-- WORKSHOP SUBMISSION FORM -->
+                <div id="workshop-form" class="hidden hide-form">
+
+                </div>
+
+                <!-- SOCIAL EVENT (NON-SKATE) SUBMISSION FORM -->
+                <div id="social-form" class="hidden hide-form">
+
+                </div>
+
+                <!-- GENERIC EVENT SUBMISSION FORM-->
+                <div id="general-form" class="hidden hide-form">
+                    <!-- ORGANISER -->
+                    <div class="row-1 span-full">
+                        <lable class="fitted"> Organiser
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div >
+                            <input type="text" class="long-fit field-box">
+                        </div>
+                    </div>
+                    
+
+                    <!-- SKATES OR NO change to check -->
+                    <fieldset class="row-3 span-half time-container">
+                        <legend>
+                            Skates or Shoes?
+                            <!-- <span><span>*</span></span> -->
+                        </legend>
+                        <div class="time-field">
+                            <div>
+                                <input type="radio" id="skates-on" name="skates-on">
+                                <label class="" for="skates-on">Skates</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="skates-off" name="skates-on">
+                                <label class="" for="skates-off">Shoes</label>                            
+                            </div>
+                            <div>
+                                <input type="radio" id="hybrid" name="skates-on">
+                                <label class="" for="hybrid">Both</label>                            
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- SKATES OR NO change to check -->
+                    <fieldset class="row-3 span-half time-container">
+                        <legend>
+                            Minimum Age
+                            <!-- <span><span>*</span></span> -->
+                        </legend>
+                        <div class="time-field">
+                            <!-- <div>
+                                <input type="radio" id="5-plus" name="age-req">
+                                <label class="" for="5-plus">5+</label>
+                            </div> -->
+                            
+                            <div>
+                                <input type="radio" id="18-plus" name="age-req">
+                                <label class="" for="18-plus">18+</label>                            
+                            </div>
+                            <div>
+                                <input type="radio" id="21-plus" name="age-req">
+                                <label class="" for="21-plus">21+</label>                            
+                            </div>
+                            <div>
+                                <input type="radio" id="other-age" name="age-req">
+                                <label class="" for="other-age">Other</label>                            
+                            </div>
+                        </div>
+                    </fieldset>
+                                
+                                
+                    <!-- ABILITY REQUIREMENT change to check-->
+                    <div class="row-2 span-full " >
+                        <lable> Level requirement
+                            <!-- <span>
+                                <span>*</span>
+                            </span> -->
+                        </lable>
+                        <div>
+                            <select name="" id="" class="small-fit field-box" aria-required="true" aria-invalid="false">
+                                <option value="Beginner-level">Beginner friendly</option>
+                                <option value="Intermediate-level">Intermediate</option>
+                                <option value="Advance-level">Advance only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- EVENT NAME -->
+                    <div class="row-2 span-full">
+                        <lable class="fitted"> Event Name
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div >
+                            <input type="text" class="long-fit field-box">
+                        </div>
+                    </div>
+
+                    <!-- START DATE -->
+                    <div class="row-2 span-half">
+                        <lable>Start Date
+                            <span><span>*</span></span>
+                        </lable>
+                        <div>
+                            <input type="text" class="field-box">
+                        </div>
+                        <!-- pop up calendar to select dates -->
+                        <input type="hidden">
+                    </div>
+                    
+                    <!-- END DATE -->
+                    <div class="row-2 span-half">
+                        <lable>End Date
+                            <span><span>*</span></span>
+                        </lable>
+                        <div>
+                            <input type="text" class="field-box">
+                        </div>
+                        <!-- pop up calendar to select dates -->
+                        <input type="hidden">
+                    </div>
+
+                    <!-- START TIME -->
+                    <fieldset class="row-3 span-half time-container">
+                        <legend>
+                            Start Time
+                            <span><span>*</span></span>
+                        </legend>
+                        <div class="time-field">
+                            <div>
+                                <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                <label class="srOnly" for="">Hours</label>
+                            </div>
+                            <div>:</div>
+                            <div>
+                                <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                <label class="srOnly" for="">Minutes</label>                            
+                            </div>
+                            <div class="#">
+                                <select name="InputAP" id="#" class="field-box-2">
+                                    <option value="am">AM</option>
+                                    <option value="pm">PM</option>
+                                </select> 
+                                <label class="am-pm-label srOnly" for="">AM/PM</label>                                
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    
+                    <!-- END TIME -->
+                    <fieldset class="row-3 span-half time-container">
+                        <legend>
+                            End Time
+                            <span><span>*</span></span>
+                        </legend>
+                        <div class="time-field">
+                            <div>
+                                <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                <label class="srOnly" for="input_6_29_1">Hours</label>
+                            </div>
+                            <div>:</div>
+                            <div>
+                                <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                <label class="srOnly" for="input_6_29_1">Minutes</label>                            
+                            </div>
+                            <div class="#">
+                                <select name="InputAP" id="#" class="field-box-2">
+                                    <option value="am">AM</option>
+                                    <option value="pm">PM</option>
+                                </select> 
+                                <label class="am-pm-label srOnly" for="input_6_29_3">AM/PM</label>                                
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="row-14 span-full" >
+                        <lable> Event Type
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <!-- <input type="text"> -->
+                            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                                <option value="">Skate Night</option>
+                                <option value="">Open session</option>
+                                <option value="">Workshop</option>
+                                <option value="">Street skate</option>
+                                <option value="">Skate games</option>
+                                <option value="">Competition</option>
+                                <option value="">Audition</option>
+                                <option value="">Social</option>
+                                <option value="">Other</option>
+                            </select>
+                            
+                        </div>
+                    </div>
+
+                    <div class="row-14 span-full" >
+                        <lable> Skate dicipline
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <!-- <input type="text"> -->
+                            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                                <option value="">Artistic</option>
+                                <option value="">Roller Derby</option>
+                                <option value="">Roller Hockey</option>
+                                <option value="">Speed Skate</option>
+                                <option value="">Street</option>
+                                <option value="">Ramps</option>
+                                <option value="">Dance</option>
+                                <option value="">Other</option>
+                            </select>
+                            
+                        </div>
+                    </div>
+
+
+
+                    <!-- EVENT NAME -->
+                    <div class="row-4 span-full" >
+                        <lable> Location / Venue Name
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <input type="text" class="long-fit field-box">
+                        </div>
+                    </div>
+                    
+                    <!-- Address -->
+                    <div class="row-5 span-full">
+                        <lable> Address Line 1</lable>
+                        <div>
+                            <input type="text" class="long-fit field-box">
+                        </div>
+                    </div>
+                    <div class="row-6 span-full">
+                        <lable> Address Line 2</lable>
+                        <div>
+                            <input type="text" class="long-fit field-box">
+                        </div>
+                    </div>
+                    
+                    <div class="row-7 span-full">
+                        <lable> Town/City
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <input type="text" class="long-fit field-box">
+                        </div>
+                    </div>
+                    
+                    <div class="row-8 span-full">
+                        <lable> PostCode</lable>
+                        <div>
+                            <input type="text" class="field-box">
+                        </div>
+                    </div>
+
+                    <!-- UPLOAD IMAGE -->
+                    <div id="#" class="row-9 span-full" data-js-reload="#">
+                        <label class="#" for="#">Event image or poster
+                            <span class="gfield_required">
+                                <span class="gfield_required gfield_required_asterisk">*</span>
+                            </span>
+                        </label>
+                        <div class="#">
+                            <input type="hidden" name="MAX_FILE_SIZE" value="#">
+                            <input name="#" id="#" type="file" class="field-box-2" aria-describedby="#" onchange="">
+                            <span class="#" id="#">Max. file size: 16 MB.</span>
+                            <div class="#" id="#"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="row-10 span-full">
+                        <lable> Event Information
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <input type="text" class="describe-it field-box">
+                        </div>
+                    </div>
+                    <div class="row-11 span-full">
+                        <lable> URL or social media 1
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <input type="text" class="small-fit field-box">
+                        </div>
+                    </div>
+                    <div class="row-12 span-full" >
+                        <lable> URL or social media 2
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <input type="text" class="small-fit field-box">
+                        </div>
+                    </div>
+                    <div class="row-13 span-full" >
+                        <lable> URL or social media 3
+                            <span>
+                                <span>*</span>
+                            </span>
+                        </lable>
+                        <div>
+                            <input type="text" class="small-fit field-box">
+                        </div>
+                    </div>
+                    
+                    <!-- SUBMIT BUTTON -->
+                    <div class="long-fit row-15 span-full">
+                        <div class="btn-wrap">
+                            <a href="#" class="button btn-tertiary" target="_self">Submit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                
+        </div>
     </section>
-    <section class="carosel primary-container">
+
+
+
+    <!-- ||---------------------------------------- CAROSEL SECTION -->
+    <section class="carosel primary-container S4">
         <div> <p>carosel or other... </p> </div>
     </section>
 </BaseLayout>

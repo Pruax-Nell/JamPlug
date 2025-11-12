@@ -1,10 +1,11 @@
-
-.primary-container {
-    max-width: 1240px, 80vw;
-    margin: auto;
-
+/* PRIMARY CONTAINER */
+@media (max-width: 767px) {
+    .primary-container {
+        max-width: 1240px, 80vw;
+        margin: auto;
+    }
 }
-
+    
 @media (min-width: 768px){
     .primary-container {
         width: 90vw;
@@ -12,7 +13,146 @@
     }
 }
 
-.half-container {
-    width: minmax(min(40%), 100%);
+/* FIELD SECTIONS */
+@media (max-width: 774px) {
+    .dual-field {
+        display: flex;
+        flex-direction: column;
+    }
 }
+
+@media (min-width: 775px) {
+    .dual-field {
+        display: grid;
+        grid-template-columns: auto 60%;
+        grid-template-rows: auto;
+    }
+}
+
+/* DUAL CONTAINERS */
+.half-container {
+    width: minmax(280px, 50%);
+}
+
+/* INFO CONTAINER */
+.info {
+    min-width: 400px;
+}
+
+.info > * {
+    width: minmax(max-content, 1fr);
+    padding: 1ch;
+    margin-inline: 2ch;
+}
+
+.info p {
+    width: max-content;
+    text-wrap: wrap;
+}
+
+/* ||------------------------------------------------- FORM SECTION */
+/* FORM FIELD */
+
+.hidden {
+    display: none;
+}
+
+.hide-form {
+    display: none;
+}
+
+.form-wrap {
+    width: 3fr;
+    /* width: minmax(50%, 80%); */
+}
+
+.half-title {
+    font-size: var(--fs-heading-small);
+    width: max-content;
+}
+
+/* ||----------------------------------------- GRID & LAYOUT */
+
+.event-form {
+    /* display: grid; */
+    grid-template-columns: repeat(12, auto);
+    grid-template-rows: repeat(18, auto);
+    gap: 5px;
+    padding-inline: 30px;
+    padding-block: 20px;
+}
+
+.row-1 {grid-row-start: 1;}
+.row-2 {grid-row-start: 2;}
+.row-3 {grid-row-start: 3;}
+.row-4 {grid-row-start: 4;}
+.row-5 {grid-row-start: 5;}
+.row-6 {grid-row-start: 6;}
+.row-7 {grid-row-start: 7;}
+.row-8 {grid-row-start: 8;}
+.row-9 {grid-row-start: 9;}
+.row-10 {grid-row-start: 10;}
+.row-11 {grid-row-start: 11;}
+.row-12 {grid-row-start: 12;}
+.row-13 {grid-row-start: 13;}
+.row-14 {grid-row-start: 14;}
+.row-15 {grid-row-start: 15;}
  
+.span-half {grid-column: span 6; width: 50%;}
+.span-full {grid-column: span 12; width: 100%;}
+
+.fitted {
+    width: max-content;
+    margin-block: 2ch;
+}
+
+.long-fit {
+    width: 100%;
+}
+
+.mid-fit {
+    width: 70%;
+}
+
+.small-fit {
+    width: 30%;
+}
+
+.describe-it {
+    width: 100%;
+    min-height: 10ch;
+    overflow-y: scroll;
+}
+
+.field-box {
+    /* background-color: blueviolet; */
+    height: 25px;
+    border-radius: 8px 5px 5px 5px;
+
+}
+.field-box-2 {
+    /* background-color: blueviolet; */
+    height: 20px;
+    border-radius: 3px;
+
+}
+
+.time-container {
+    width: max-content;
+}
+
+.time-field {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* justify-content: space-evenly; */
+    gap: 1ch;
+    
+}
+
+/* just for visuals */
+
+.S1 {border: 3px solid green;}
+.S2 {border: 2px solid hotpink;}
+.S3 {border: 5px solid goldenrod}
+.S4 {border: 2px solid red}
