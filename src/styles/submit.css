@@ -51,19 +51,22 @@
 }
 
 /* ||------------------------------------------------- FORM SECTION */
-/* FORM FIELD */
+/* ||---------------------------------------- PLACEHOLDER */
 
-.hidden {
-    display: none;
+#placeholder-form {
+    background-color: var(--shadow-grey);
+    border-radius: 7px;
+    padding: 2ch;
+    justify-items: center;
+    text-justify: center;
+    text-align: center;
+    margin-inline: 5ch;
+    margin-block: 3ch;
 }
-
-.hide-form {
-    display: none;
-}
+/* ||---------------------------------------------- FORM DECOR */
 
 .form-wrap {
     width: 3fr;
-    /* width: minmax(50%, 80%); */
 }
 
 .half-title {
@@ -73,8 +76,12 @@
 
 /* ||----------------------------------------- GRID & LAYOUT */
 
+.form-field {
+    min-height: 80vh;
+}
+
 .event-form {
-    /* display: grid; */
+    display: grid;
     grid-template-columns: repeat(12, auto);
     grid-template-rows: repeat(18, auto);
     gap: 5px;
@@ -97,10 +104,25 @@
 .row-13 {grid-row-start: 13;}
 .row-14 {grid-row-start: 14;}
 .row-15 {grid-row-start: 15;}
+.row-16 {grid-row-start: 16;}
+.row-17 {grid-row-start: 17;}
+.row-18 {grid-row-start: 18;}
+.row-19 {grid-row-start: 19;}
+.row-last {grid-row: end;}
  
-.span-half {grid-column: span 6; width: 50%;}
-.span-full {grid-column: span 12; width: 100%;}
+.span-half {
+    grid-column: span 6; 
+    /* width: 50%; */
+}
+.span-full {
+    grid-column: span 12; 
+    /* width: 100%; */
+}
 
+.cell-block{
+    margin-block: .35rem;
+}
+  
 .fitted {
     width: max-content;
     margin-block: 2ch;
