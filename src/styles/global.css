@@ -230,6 +230,7 @@ p {
 .grid {display: grid;} 
 .self-center {justify-self: center;}
 .content-center {justify-content: center;}
+.items-center {justify-items: center;}
 
 button { cursor: pointer;}
 

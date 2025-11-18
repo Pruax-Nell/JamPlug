@@ -30,13 +30,12 @@
 }
 
 /* DUAL CONTAINERS */
-.half-container {
-    width: minmax(280px, 50%);
-}
+
 
 /* INFO CONTAINER */
 .info {
     min-width: 400px;
+    margin-bottom: 1rem;
 }
 
 .info > * {
@@ -77,13 +76,14 @@
 /* ||----------------------------------------- GRID & LAYOUT */
 
 .form-field {
-    min-height: 80vh;
+    min-height: max-content;
+    /* min-height: 80vh; */
 }
 
 .event-form {
     display: grid;
     grid-template-columns: repeat(12, auto);
-    grid-template-rows: repeat(18, auto);
+    grid-template-rows: repeat(19, auto);
     gap: 5px;
     padding-inline: 30px;
     padding-block: 20px;
@@ -108,6 +108,7 @@
 .row-17 {grid-row-start: 17;}
 .row-18 {grid-row-start: 18;}
 .row-19 {grid-row-start: 19;}
+.row-20 {grid-row-start: 20;}
 .row-last {grid-row: end;}
  
 .span-half {
@@ -125,7 +126,8 @@
   
 .fitted {
     width: max-content;
-    margin-block: 2ch;
+    margin-block: 1rem;
+    /* margin-block: 2ch; */
 }
 
 .long-fit {
@@ -172,7 +174,18 @@
     
 }
 
-/* just for visuals */
+.dynamic-field {
+    display: flex;
+    gap: 8px;
+    margin-block: .3rem;
+}
+
+.remove-field-btn {
+    padding-inline: 1ch;
+}
+
+
+/* just for building */
 
 .S1 {border: 3px solid green;}
 .S2 {border: 2px solid hotpink;}

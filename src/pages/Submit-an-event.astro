@@ -4,24 +4,27 @@ import "../styles/global.css";
 import "../styles/submit.css";
 ---
 <BaseLayout>
+
     <!-- || ------------------------------------------PAGE TOP -->
-    <section class="pageTop primary-container S1">
+    <section class="pageTop primary-container">
         <div class="primary-container"><h1>Submit your Event</h1></div>
     </section>
+
+
     <!-- ||------------------------------------- FORM SECTION  -->
     <section class=" primary-container dual-field">
 
         <!-- ||------------------------- DIRECTIONS  -->
-        <div class="info half-container S2">
+        <div class="info half-container">
             <div>
                 <h2 class="half-title">How it works</h2>
-                <p>use this form to submit your events</p>
+                <p>Select a form to submit your community event</p>
             </div>
             <div>
-                <h3 class="half-title">Event type</h3>
+                <!-- <h3 class="half-title">Event type</h3> -->
                 <div>
-                    <label for="event-type"></label>
-                    <select name="" id="event-type">
+                    <label for="event-type">What type of event are you hosting?</label>
+                    <select name="event-type" id="event-type" class="mid-fit fitted">
                         <option value="none">-- Please Choose an Event Type --</option>
                         <option value="festival-form">Skate Festival</option>
                         <option value="night-form">Skate Night</option>
@@ -40,44 +43,719 @@ import "../styles/submit.css";
             <div class="form-field">
                 
                 <!-- DEFAULT PLACEHOLDER/HINT -->
-                <div id="placeholder-form" class="hidden">
-                    <div class=""><p>Select an Event Type above to reveal the appropriate submission form.</p></div>
+                <div id="placeholder-form" class="">
+                    <div class=""><h3 class="srOnly">Placeholder</h3><p>Select an Event Type above to reveal the appropriate submission form.</p></div>
                 </div>
                 
                 <!-- SKATE FESTIVAL SUBMISSION FORM -->
                 <div id="festival-form" class="hidden">
-                    <div class="event-form"><p>skate festivals</p></div>
+                    <div class="event-form">
+
+                        <!-- TITLE INFO -->
+                         <div class="row-1 span-full cell-block">
+                             <h3 class=" field-title fitted self-center">Skate Festival Submission Form</h3>
+                            <span>3+ days of skate joy</span>
+                         </div>
+                    
+                        <!-- ORGANISER -->
+                        <div class="row-2 span-full cell-block">
+                            <lable class="fitted" for="organiser-name"> Organiser
+                                <!-- <span><span>*</span></span> -->
+                            </lable>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="Main Organiser and/or Group">
+                            </div>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-email" data-tooltip="Lead organiser contact email" placeholder="Email for internal use Only">
+                            </div>
+                        </div>
+
+                        <!-- EVENT NAME -->
+                        <div class="row-3 span-full cell-block">
+                            <lable class="fitted"> Event Name
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div >
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- START DATE -->
+                        <div class="row-4 span-half cell-block">
+                            <lable>Start Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+                        
+                        <!-- END DATE -->
+                        <div class="row-4 span-half cell-block">
+                            <lable>End Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+
+                        
+                        <!-- FREQUENCY -->
+                        <fieldset class="row-5 span-half">
+                            <legend>How frequent is your event?</legend>
+                            <div>
+                                
+                                <input type="checkbox" name="annual-box">  
+                                <label for="annual-box">Annually</label> 
+                            </div>
+                            
+                            <div>
+                                <input type="checkbox" name="biannual-box">  
+                                <label for="biannual-box">Bi-Annually</label> 
+                            </div>
+                            
+                            <div>
+                                <input type="checkbox" name="seasonal-box">  
+                                <label for="seasonal-box">Quarterly</label> 
+                            </div>
+                            
+                            <div>
+                                <input type="checkbox" name="biennial-box">  
+                                <label for="biennial-box">Every 2 years</label> 
+                            </div>
+                        
+                            <div>
+                                <input type="checkbox" name="other-box">  
+                                <label for="other-box">Other</label> 
+                            </div>
+                            
+                            <div>
+                                <input type="text" placeholder="Other Frequency">
+                            </div>
+                        </fieldset>
+
+
+                        <!-- WHAT'S ON FIELDSET -->
+                         <fieldset class="row-5 span-half">
+                            <legend> What's on :
+                            
+                            </legend>    
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Skate Party</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Day Party</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Workshops</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Street Skate</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Talks/Conference</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Marketplace</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Off-skate Socials</label>
+                            </div>
+                         </fieldset>   
+                                           
+                        
+
+                        <!-- SKATE DISCIPLINE -->
+                        <div class="row-8 span-half cell-block" >
+                            <fieldset class="row-5 span-half">
+                            <legend> For ___ Skaters :
+                            
+                            </legend>    
+                            
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Jam / Dance</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Artistic</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Street</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Ramps / Vert</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Speed</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Roller Derby</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Roller Hockey</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">All</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="type">
+                                <label for="type">Other</label>
+                                <input type="text" placeholder="...">
+                            </div>
+                         </fieldset>
+                            
+                        </div>
+
+                        <div class="row-8 span-half cell-block">
+                            <div class="mid-fit self-center">
+                                <p>Think of your workshops and venue space, what skate disciplin does it cater to?</p>
+                            </div>
+                        </div>
+
+                        
+                        <!-- CITY LOCATION -->
+                        <div class="row-9 span-half cell-block" >
+                            <lable> City
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div class="span-half">
+                                <input type="text" class="mid-fit field-box" placeholder=" City/Town">
+                            </div>
+                        </div>
+                        
+                        <!-- COUNTRY LOCATION -->
+                        <div class="row-9 span-half cell-block" >
+                            <lable> Country
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div class="span-half">
+                                <input type="text" class="mid-fit field-box" placeholder=" City/Town">
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        <!-- POSTCODE -->
+                        <div class="row-14 span-half cell-block">
+                            <lable> PostCode</lable>
+                            <div>
+                                <input type="text" class="field-box">
+                            </div>
+                        </div>
+
+                        <!-- UPLOAD IMAGE -->
+                        <div id="#" class="row-15 span-full cell-block" data-js-reload="#">
+                            <label class="#" for="#">Event image or poster
+                                <span class="gfield_required">
+                                    <span class="gfield_required gfield_required_asterisk">*</span>
+                                </span>
+                            </label>
+                            <div class="#">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="#">
+                                <input name="#" id="#" type="file" multiple="multiple" class="field-box-2" aria-describedby="#" onchange="">
+                                <span class="#" id="#">Max. file size: 16 MB.</span>
+                                <div class="#" id="#"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- EVENT INFO BLOCK -->
+                        <div class="row-16 span-full cell-block">
+                            <lable> Event Information
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="describe-it field-box">
+                            </div>
+                        </div>
+
+                        <!-- SOCIALS URL -->
+                        <div class="row-17 span-full cell-block">
+                            <lable> URL or social media 1
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- SOCIALS URL -->
+                        <div class="row-18 span-full cell-block" >
+                            <lable> URL or social media 2
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- SOCIALS URL-->
+                        <div class="row-19 span-full cell-block" >
+                            <lable> URL or social media 3
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <div class="long-fit row-last span-full cell-block">
+                            <div class="btn-wrap">
+                                <!-- <a href="#" class="button btn-tertiary self-center" target="_self">Submit</a> -->
+                                <input type="submit" class="button btn-tertiary self-center">
+                            </div>
+                        </div>
+
+                        <!-- SKATE FESTIVAL form end -->
+                    </div>
                 </div>
 
                 <!-- SKATE NIGHT (PARTY) SUBMISSION FORM -->
                 <div id="night-form" class="hidden">
 
-                    <div class="event-form"><p>test skate nights</p></div>
+                    <div class="event-form">
+                        <!-- TITLE INFO -->
+                         <div class="row-1 span-full cell-block">
+                             <h3 class="field-title fitted self-center">Skate Night</h3>
+                            <span class="content-center">Adult Skate Night</span>
+                         </div>
+
+                         <!-- EVENT NAME -->
+                         <div class="row-2 span-full cell-block">
+                            <lable class="fitted" for="organiser-name"> Event Name
+                                <span><span>*</span></span>
+                            </lable>
+                            <div >
+                                <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="Who is coaching the workshop?">
+                                
+                            </div>
+                        </div>
+                        
+                        <!-- ORGANISER -->
+                        <div class="row-3 span-full cell-block">
+                            <lable class="fitted" for="organiser-name"> Organiser
+                                <!-- <span><span>*</span></span> -->
+                            </lable>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="Main Organiser and/or Group">
+                            </div>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-email" data-tooltip="Lead organiser contact email" placeholder="Email for internal use Only">
+                            </div>
+                        </div>
+
+                        <!-- AGE MIN -->
+                        <fieldset class="row-4 span-half time-container cell-block">
+                            <legend>
+                                Minimum Age
+                                <!-- <span><span>*</span></span> -->
+                            </legend>
+                            <div class="time-field">
+                                                                
+                                <div>
+                                    <input type="radio" id="18-plus" name="age-req">
+                                    <label class="" for="18-plus">18+</label>                            
+                                </div>
+                                <div>
+                                    <input type="radio" id="21-plus" name="age-req">
+                                    <label class="" for="21-plus">21+</label>                            
+                                </div>
+                                <div>
+                                    <input type="radio" id="other-age" name="age-req">
+                                    <label class="" for="other-age">Other</label>  
+                                    <input type="text">                          
+                                </div>
+                            </div>
+                        </fieldset>
+                                                                     
+                        <!-- START DATE -->
+                        <div class="row-5 span-half cell-block">
+                            <lable>Start Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+                    
+                        <!-- END DATE -->
+                        <div class="row-5 span-half cell-block">
+                            <lable>End Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+
+                        <!-- START TIME -->
+                        <fieldset class="row-6 span-half time-container cell-block">
+                            <legend>
+                                Start Time
+                                <span><span>*</span></span>
+                            </legend>
+                            <div class="time-field">
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="">Hours</label>
+                                </div>
+                                <div>:</div>
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="">Minutes</label>                            
+                                </div>
+                                <div class="#">
+                                    <select name="InputAP" id="#" class="field-box-2">
+                                        <option value="am">AM</option>
+                                        <option value="pm">PM</option>
+                                    </select> 
+                                    <label class="am-pm-label srOnly" for="">AM/PM</label>                                
+                                </div>
+                            </div>
+                        </fieldset>
+                    
+                        <!-- END TIME -->
+                        <fieldset class="row-6 span-half time-container cell-block">
+                            <legend>
+                                End Time
+                                <span><span>*</span></span>
+                            </legend>
+                            <div class="time-field">
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="input_6_29_1">Hours</label>
+                                </div>
+                                <div>:</div>
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="input_6_29_1">Minutes</label>                            
+                                </div>
+                                <div class="#">
+                                    <select name="InputAP" id="#" class="field-box-2">
+                                        <option value="am">AM</option>
+                                        <option value="pm">PM</option>
+                                    </select> 
+                                    <label class="am-pm-label srOnly" for="input_6_29_3">AM/PM</label>                                
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- LOCATION / VENUE NAME -->
+                        <div class="row-7 span-full cell-block" >
+                            <lable> Rink / Venue Name
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                        
+                        <!-- Address -->
+                        <div class="row-8 span-full cell-block">
+                            <lable> Address Line 1</lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                        
+                        <!-- Address 2 -->
+                        <div class="row-9 span-full cell-block">
+                            <lable> Address Line 2</lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                        
+                        <!-- TOWN / CITY -->
+                        <div class="row-10 span-full cell-block">
+                            <lable> Town/City
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                    
+                        <!-- POSTCODE -->
+                        <div class="row-11 span-half cell-block">
+                            <lable> PostCode</lable>
+                            <div>
+                                <input type="text" class="field-box">
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC FIELD - DJS-->
+                        <div id="dynamic-fields-container" class="span-full row-12">
+                            <p>DJs</p>
+                             <div class="dynamic-field span-full">
+
+                                 <input type="text" placeholder="DJ Name" class="field-box small-fit">
+                                 <input type="text" placeholder="Socials URL" class="field-box small-fit">
+                                 <!-- <button class="remove-field-btn">-X-</button> -->
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC BUTTON -->
+                        <button type="button" id="add-field-button" class="row-13">
+                            <!-- <svg xmlns="" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg> -->
+                            <span>Add field</span>
+                        </button>
+
+                        <!-- UPLOAD IMAGE -->
+                        <div id="#" class="row-14 span-full cell-block" data-js-reload="#">
+                            <label class="#" for="#">Event image or poster
+                                <span class="gfield_required">
+                                    <span class="gfield_required gfield_required_asterisk">*</span>
+                                </span>
+                            </label>
+                            <div class="#">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="#">
+                                <input name="#" id="#" type="file" class="field-box-2" aria-describedby="#" onchange="">
+                                <span class="#" id="#">Max. file size: 16 MB.</span>
+                                <div class="#" id="#"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- EVENT INFO BLOCK -->
+                        <div class="row-15 span-full cell-block">
+                            <lable> Event Information
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="describe-it field-box">
+                            </div>
+                        </div>
+
+                        <!-- SOCIALS URL -->
+                        <div class="row-16 span-full cell-block">
+                            <lable> URL or social media 1
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- SOCIALS URL -->
+                        <div class="row-17 span-full cell-block" >
+                            <lable> URL or social media 2
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- SOCIALS URL-->
+                        <div class="row-18 span-full cell-block" >
+                            <lable> URL or social media 3
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+                    
+                        <!-- SUBMIT BUTTON -->
+                        <div class="long-fit row-last span-full cell-block">
+                            <div class="btn-wrap">
+                                <!-- <a href="#" class="button btn-tertiary self-center" target="_self">Submit</a> -->
+                                <input type="submit" class="button btn-tertiary self-center">
+                            </div>
+                        </div>
+                    </div>
+                <!-- SKATE NIGHT form end -->
                 </div>
 
                 <!-- SOCIAL EVENT (NON-SKATE) SUBMISSION FORM -->
                 <div id="social-form" class="hidden">
-                    <div class="event-form"></div><p>test socials nights</p></div>
-                    <!-- SOCIAL form end -->
+                    <div class="event-form">
+                        <!-- TITLE INFO -->
+                         <div class="row-1 span-full cell-block">
+                             <h3 class="field-title fitted self-center">Social Event Submission Form</h3>
+                            <span>3+ days of skate joy</span>
+                         </div>
+                    
+                        <!-- ORGANISER -->
+                        <div class="row-2 span-full cell-block">
+                            <lable class="fitted" for="organiser-name"> Organiser
+                                <!-- <span><span>*</span></span> -->
+                            </lable>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="Main Organiser and/or Group">
+                            </div>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-email" data-tooltip="Lead organiser contact email" placeholder="Email for internal use Only">
+                            </div>
+                        </div>
+
+                        <!-- EVENT NAME -->
+                        <div class="row-3 span-full cell-block">
+                            <lable class="fitted"> Event Name
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div >
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- START DATE -->
+                        <div class="row-4 span-half cell-block">
+                            <lable>Start Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+                        
+                        <!-- END DATE -->
+                        <div class="row-4 span-half cell-block">
+                            <lable>End Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+                    </div>
+                <!-- SOCIAL form end -->
                 </div>
 
                 <!-- SKATE WEEKENDER SUBMISSION FORM -->
                 <div id="weekend-form" class="hidden">
 
                     <div class="event-form">
+                        <!-- TITLE INFO -->
+                         <div class="row-1 span-full cell-block">
+                             <h3 class="field-title fitted self-center">Skate Weekender</h3>
+                            <span>An overnight skate trip - 2 days of fun</span>
+                         </div>
+                    
+                        <!-- ORGANISER -->
+                        <div class="row-2 span-full cell-block">
+                            <lable class="fitted" for="organiser-name"> Organiser
+                                <!-- <span><span>*</span></span> -->
+                            </lable>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="Main Organiser and/or Group">
+                            </div>
+                            <div class="cell-block">
+                                <input type="text" class="long-fit field-box" name="organiser-email" data-tooltip="Lead organiser contact email" placeholder="Email for internal use Only">
+                            </div>
+                        </div>
 
+                        <!-- EVENT NAME -->
+                        <div class="row-3 span-full cell-block">
+                            <lable class="fitted"> Event Name
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div >
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
 
+                        <!-- START DATE -->
+                        <div class="row-4 span-half cell-block">
+                            <lable>Start Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+                        
+                        <!-- END DATE -->
+                        <div class="row-4 span-half cell-block">
+                            <lable>End Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        </div>
+                        
                     </div>
 
                     <!-- SOCIAL form end -->
                 </div>
 
-
                 <!-- WORKSHOP SUBMISSION FORM -->
                 <div id="workshop-form" class="hidden">
                     <div class="event-form">
                     <!--------------------------- FORM START -->
-                        <div class="row-1 span-full cell-block">
+
+                        <!-- TITLE INFO -->
+                         <div class="row-1 span-full cell-block">
+                             <h3 class="field-title fitted self-center">Skate Workshop</h3>
+                            <span>Developing skate technique</span>
+                         </div>
+
+                         <!-- Host / Coach -->
+                        <div class="row-2 span-full cell-block">
                             <lable class="fitted" for="organiser-name"> Worshop Coach
                                 <span><span>*</span></span>
                             </lable>
@@ -87,17 +765,19 @@ import "../styles/submit.css";
                             </div>
                         </div>
                         
-                        <div class="row-2 span-full cell-block">
+                        <!-- ORGANISER -->
+                        <div class="row-3 span-full cell-block">
                             <lable class="fitted" for="organiser-name"> Organiser
                                 <!-- <span><span>*</span></span> -->
                             </lable>
                             <div >
                                 <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="If different from coach">
+                                <input type="email" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="organiser@email.com">
                             </div>
                         </div>
 
                         <!-- SKATES OR NO change to check -->
-                        <fieldset class="row-3 span-half time-container cell-block">
+                        <fieldset class="row-4 span-half time-container cell-block">
                             <legend>
                                 Skates or Shoes?
                                 <!-- <span><span>*</span></span> -->
@@ -119,7 +799,7 @@ import "../styles/submit.css";
                         </fieldset>
 
                         <!-- SKATES OR NO change to check -->
-                        <fieldset class="row-3 span-half time-container cell-block">
+                        <fieldset class="row-4 span-half time-container cell-block">
                             <legend>
                                 Minimum Age
                                 <!-- <span><span>*</span></span> -->
@@ -146,7 +826,7 @@ import "../styles/submit.css";
                         </fieldset>
                                     
                         <!-- EVENT NAME -->
-                        <div class="row-4 span-full cell-block">
+                        <div class="row-5 span-full cell-block">
                             <lable class="fitted"> Event Name
                                 <span>
                                     <span>*</span>
@@ -156,269 +836,274 @@ import "../styles/submit.css";
                                 <input type="text" class="long-fit field-box">
                             </div>
                         </div>
-                                        
                                               
-                    <!-- START DATE -->
-                    <div class="row-5 span-half cell-block">
-                        <lable>Start Date
-                            <span><span>*</span></span>
-                        </lable>
-                        <div>
-                            <input type="date" class="field-box">
+                        <!-- START DATE -->
+                        <div class="row-6 span-half cell-block">
+                            <lable>Start Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
                         </div>
-                        <!-- pop up calendar to select dates -->
-                        <input type="hidden">
-                    </div>
                     
-                    <!-- END DATE -->
-                    <div class="row-5 span-half cell-block">
-                        <lable>End Date
-                            <span><span>*</span></span>
-                        </lable>
-                        <div>
-                            <input type="date" class="field-box">
+                        <!-- END DATE -->
+                        <div class="row-6 span-half cell-block">
+                            <lable>End Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
                         </div>
-                        <!-- pop up calendar to select dates -->
-                        <input type="hidden">
-                    </div>
 
-                    <!-- START TIME -->
-                    <fieldset class="row-6 span-half time-container cell-block">
-                        <legend>
-                            Start Time
-                            <span><span>*</span></span>
-                        </legend>
-                        <div class="time-field">
-                            <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
-                                <label class="srOnly" for="">Hours</label>
+                        <!-- START TIME -->
+                        <fieldset class="row-7 span-half time-container cell-block">
+                            <legend>
+                                Start Time
+                                <span><span>*</span></span>
+                            </legend>
+                            <div class="time-field">
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="">Hours</label>
+                                </div>
+                                <div>:</div>
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="">Minutes</label>                            
+                                </div>
+                                <div class="#">
+                                    <select name="InputAP" id="#" class="field-box-2">
+                                        <option value="am">AM</option>
+                                        <option value="pm">PM</option>
+                                    </select> 
+                                    <label class="am-pm-label srOnly" for="">AM/PM</label>                                
+                                </div>
                             </div>
-                            <div>:</div>
-                            <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
-                                <label class="srOnly" for="">Minutes</label>                            
+                        </fieldset>
+                    
+                        <!-- END TIME -->
+                        <fieldset class="row-7 span-half time-container cell-block">
+                            <legend>
+                                End Time
+                                <span><span>*</span></span>
+                            </legend>
+                            <div class="time-field">
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="input_6_29_1">Hours</label>
+                                </div>
+                                <div>:</div>
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="input_6_29_1">Minutes</label>                            
+                                </div>
+                                <div class="#">
+                                    <select name="InputAP" id="#" class="field-box-2">
+                                        <option value="am">AM</option>
+                                        <option value="pm">PM</option>
+                                    </select> 
+                                    <label class="am-pm-label srOnly" for="input_6_29_3">AM/PM</label>                                
+                                </div>
                             </div>
-                            <div class="#">
-                                <select name="InputAP" id="#" class="field-box-2">
-                                    <option value="am">AM</option>
-                                    <option value="pm">PM</option>
-                                </select> 
-                                <label class="am-pm-label srOnly" for="">AM/PM</label>                                
+                        </fieldset>
+                        
+                        <!-- LEVEL REQ -->
+                        <div class="row-8 span-full cell-block" >
+                            <lable> Level pre requisite
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <!-- <input type="text"> -->
+                                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                                    <option value="">no requirement / beginner learn to skate</option>
+                                    <option value="">Beginner ability: stand, stop, glide</option>
+                                    <option value="">Beg-inter ability: one-foot balance</option>
+                                    <option value="">intermediate ability: strong stops, </option>
+                                    <option value="">Skate games</option>
+                                </select>
                             </div>
                         </div>
-                    </fieldset>
-                    
-                    
-                    <!-- END TIME -->
-                    <fieldset class="row-6 span-half time-container cell-block">
-                        <legend>
-                            End Time
-                            <span><span>*</span></span>
-                        </legend>
-                        <div class="time-field">
-                            <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
-                                <label class="srOnly" for="input_6_29_1">Hours</label>
-                            </div>
-                            <div>:</div>
-                            <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
-                                <label class="srOnly" for="input_6_29_1">Minutes</label>                            
-                            </div>
-                            <div class="#">
-                                <select name="InputAP" id="#" class="field-box-2">
-                                    <option value="am">AM</option>
-                                    <option value="pm">PM</option>
-                                </select> 
-                                <label class="am-pm-label srOnly" for="input_6_29_3">AM/PM</label>                                
-                            </div>
-                        </div>
-                    </fieldset>
-                    
-                    <div class="row-7 span-full cell-block" >
-                        <lable> Level pre requisite
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <!-- <input type="text"> -->
-                            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
-                                <option value="">no requirement / beginner learn to skate</option>
-                                <option value="">Beginner ability: stand, stop, glide</option>
-                                <option value="">Beg-inter ability: one-foot balance</option>
-                                <option value="">intermediate ability: strong stops, </option>
-                                <option value="">Skate games</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="row-8 span-full cell-block" >
-                        <lable> Skate dicipline
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <!-- <input type="text"> -->
-                            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
-                                <option value="">Artistic</option>
-                                <option value="">Roller Derby</option>
-                                <option value="">Roller Hockey</option>
-                                <option value="">Speed Skate</option>
-                                <option value="">Street</option>
-                                <option value="">Ramps</option>
-                                <option value="">Dance</option>
-                                <option value="">Other</option>
-                            </select>
+                        <!-- LEVEL REQ -->
+                        <div class="row-9 span-full cell-block" >
+                            <lable> Skate dicipline
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <!-- <input type="text"> -->
+                                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                                    <option value="">Artistic</option>
+                                    <option value="">Roller Derby</option>
+                                    <option value="">Roller Hockey</option>
+                                    <option value="">Speed Skate</option>
+                                    <option value="">Street</option>
+                                    <option value="">Ramps</option>
+                                    <option value="">Dance</option>
+                                    <option value="">Other</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row-9 span-full cell-block" >
-                        <lable> Workshop Type
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <!-- <input type="text"> -->
-                            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
-                                <option value="">Skate Night</option>
-                                <option value="">Open session</option>
-                                <option value="">Workshop</option>
-                                <option value="">Street skate</option>
-                                <option value="">Skate games</option>
-                                <option value="">Competition</option>
-                                <option value="">Audition</option>
-                                <option value="">Social</option>
-                                <option value="">Other</option>
-                            </select>
-                            
+                        <!-- WORKSHOP TYPE -->
+                        <div class="row-10 span-full cell-block" >
+                            <lable> Workshop Type
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <!-- <input type="text"> -->
+                                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                                    <option value="">Skate Night</option>
+                                    <option value="">Open session</option>
+                                    <option value="">Workshop</option>
+                                    <option value="">Street skate</option>
+                                    <option value="">Skate games</option>
+                                    <option value="">Competition</option>
+                                    <option value="">Audition</option>
+                                    <option value="">Social</option>
+                                    <option value="">Other</option>
+                                </select>
+                                
+                            </div>
                         </div>
-                    </div>
 
                         <!-- EVENT NAME -->
-                    <div class="row-10 span-full cell-block" >
-                        <lable> Location / Venue Name
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
+                        <div class="row-11 span-full cell-block" >
+                            <lable> Location / Venue Name
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Address -->
-                    <div class="row-11 span-full cell-block">
-                        <lable> Address Line 1</lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
+                        
+                        <!-- ADDRESS LINES -->
+                        <div class="row-12 span-full cell-block">
+                            <lable> Address Line 1</lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row-12 span-full cell-block">
-                        <lable> Address Line 2</lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
+                        <div class="row-13 span-full cell-block">
+                            <lable> Address Line 2</lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="row-13 span-full cell-block">
-                        <lable> Town/City
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
-                        </div>
-                    </div>
-                    
-                    <div class="row-14 span-half cell-block">
-                        <lable> PostCode</lable>
-                        <div>
-                            <input type="text" class="field-box">
-                        </div>
-                    </div>
 
-                    <!-- UPLOAD IMAGE -->
-                    <div id="#" class="row-15 span-full cell-block" data-js-reload="#">
-                        <label class="#" for="#">Event image or poster
-                            <span class="gfield_required">
-                                <span class="gfield_required gfield_required_asterisk">*</span>
-                            </span>
-                        </label>
-                        <div class="#">
-                            <input type="hidden" name="MAX_FILE_SIZE" value="#">
-                            <input name="#" id="#" type="file" class="field-box-2" aria-describedby="#" onchange="">
-                            <span class="#" id="#">Max. file size: 16 MB.</span>
-                            <div class="#" id="#"></div>
+                        <!-- TOWN/CITY -->
+                        <div class="row-14 span-full cell-block">
+                            <lable> Town/City
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+
+                        <!-- POSTCODE -->
+                        <div class="row-15 span-half cell-block">
+                            <lable> PostCode</lable>
+                            <div>
+                                <input type="text" class="field-box">
+                            </div>
+                        </div>
+
+                        <!-- UPLOAD IMAGE -->
+                        <div id="#" class="row-16 span-full cell-block" data-js-reload="#">
+                            <label class="#" for="#">Event image or poster
+                                <span class="gfield_required">
+                                    <span class="gfield_required gfield_required_asterisk">*</span>
+                                </span>
+                            </label>
+                            <div class="#">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="#">
+                                <input name="#" id="#" type="file" class="field-box-2" aria-describedby="#" onchange="">
+                                <span class="#" id="#">Max. file size: 16 MB.</span>
+                                <div class="#" id="#"></div>
+                            </div>
+                        </div>
+                        
+                         <!-- INFO BOX -->
+                        <div class="row-17 span-full cell-block">
+                            <lable> Event Information
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="describe-it field-box">
+                            </div>
+                        </div>
+                        
+                        <!-- SOCIALS URL 1 -->
+                        <div class="row-18 span-full cell-block">
+                            <lable> URL or social media 1
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+                        <!-- SOCIALS URL 1 -->
+                        <div class="row-19 span-full cell-block" >
+                            <lable> URL or social media 2
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+                        <!-- SOCIALS URL 1 -->
+                        <div class="row-20 span-full cell-block" >
+                            <lable> URL or social media 3
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
+                        </div>
+                        
+                        <!-- SUBMIT BUTTON -->
+                        <div class="long-fit row-last span-full cell-block">
+                            <div class="btn-wrap">
+                                <!-- <a href="#" class="button btn-tertiary self-center" target="_self">Submit</a> -->
+                                <input type="submit" class="button btn-tertiary self-center">
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="row-16 span-full cell-block">
-                        <lable> Event Information
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="describe-it field-box">
-                        </div>
-                    </div>
-                    <div class="row-17 span-full cell-block">
-                        <lable> URL or social media 1
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="small-fit field-box">
-                        </div>
-                    </div>
-                    <div class="row-18 span-full cell-block" >
-                        <lable> URL or social media 2
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="small-fit field-box">
-                        </div>
-                    </div>
-                    <div class="row-19 span-full cell-block" >
-                        <lable> URL or social media 3
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="small-fit field-box">
-                        </div>
-                    </div>
-                    
-                    <!-- SUBMIT BUTTON -->
-                    <div class="long-fit row-last span-full cell-block">
-                        <div class="btn-wrap">
-                            <!-- <a href="#" class="button btn-tertiary self-center" target="_self">Submit</a> -->
-                            <input type="submit" class="button btn-tertiary self-center">
-                        </div>
-                    </div>
-                    </div>
+                <!-- WORKSHOP Form End  -->
                 </div>
-            </div>
-
-
-
-                        <!-- WORKSHOP Form End  -->
-                    </div>
-                </div>
-
 
                 <!-- GENERIC EVENT SUBMISSION FORM-->
                 <div id="general-form" class="hidden">
                     <!-- ORGANISER -->
                     <div class="event-form">
+
+                        <h3 class="srOnly">General Skate event submission form</h3>
+                        
+                        <!-- EVENT NAME -->
                         <div class="row-1 span-full cell-block">
                             <lable class="fitted" for="organiser-name"> Organiser
                                 <span>
@@ -429,9 +1114,8 @@ import "../styles/submit.css";
                                 <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group">
                             </div>
                         </div>
-                    
 
-                        <!-- SKATES OR NO change to check -->
+                        <!-- SKATES OR NO -->
                         <fieldset class="row-3 span-half time-container cell-block">
                             <legend>
                                 Skates or Shoes?
@@ -453,7 +1137,7 @@ import "../styles/submit.css";
                             </div>
                         </fieldset>
 
-                        <!-- SKATES OR NO change to check -->
+                        <!-- MIN AGE -->
                         <fieldset class="row-3 span-half time-container cell-block">
                             <legend>
                                 Minimum Age
@@ -479,7 +1163,6 @@ import "../styles/submit.css";
                                 </div>
                             </div>
                         </fieldset>
-                                    
                                         
                         <!-- ABILITY REQUIREMENT change to check-->
                         <div class="row-4 span-full cell-block" >
@@ -509,252 +1192,261 @@ import "../styles/submit.css";
                             </div>
                         </div>
 
-                    <!-- START DATE -->
-                    <div class="row-6 span-half cell-block">
-                        <lable>Start Date
-                            <span><span>*</span></span>
-                        </lable>
-                        <div>
-                            <input type="date" class="field-box">
+                        <!-- START DATE -->
+                        <div class="row-6 span-half cell-block">
+                            <lable>Start Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
                         </div>
-                        <!-- pop up calendar to select dates -->
-                        <input type="hidden">
-                    </div>
-                    
-                    <!-- END DATE -->
-                    <div class="row-6 span-half cell-block">
-                        <lable>End Date
-                            <span><span>*</span></span>
-                        </lable>
-                        <div>
-                            <input type="date" class="field-box">
+                        
+                        <!-- END DATE -->
+                        <div class="row-6 span-half cell-block">
+                            <lable>End Date
+                                <span><span>*</span></span>
+                            </lable>
+                            <div>
+                                <input type="date" class="field-box">
+                            </div>
+                            <!-- pop up calendar to select dates -->
+                            <input type="hidden">
+                        
                         </div>
-                        <!-- pop up calendar to select dates -->
-                        <input type="hidden">
-                       
-                    </div>
 
-                    <!-- START TIME -->
-                    <fieldset class="row-7 span-half time-container cell-block">
-                        <legend>
-                            Start Time
-                            <span><span>*</span></span>
-                        </legend>
-                        <div class="time-field">
-                            <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
-                                <label class="srOnly" for="">Hours</label>
+                        <!-- START TIME -->
+                        <fieldset class="row-7 span-half time-container cell-block">
+                            <legend>
+                                Start Time
+                                <span><span>*</span></span>
+                            </legend>
+                            <div class="time-field">
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="">Hours</label>
+                                </div>
+                                <div>:</div>
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="">Minutes</label>                            
+                                </div>
+                                <div class="#">
+                                    <select name="InputAP" id="#" class="field-box-2">
+                                        <option value="am">AM</option>
+                                        <option value="pm">PM</option>
+                                    </select> 
+                                    <label class="am-pm-label srOnly" for="">AM/PM</label>                                
+                                </div>
                             </div>
-                            <div>:</div>
-                            <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
-                                <label class="srOnly" for="">Minutes</label>                            
+                        </fieldset>
+                    
+                        <!-- END TIME -->
+                        <fieldset class="row-7 span-half time-container cell-block">
+                            <legend>
+                                End Time
+                                <span><span>*</span></span>
+                            </legend>
+                            <div class="time-field">
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="input_6_29_1">Hours</label>
+                                </div>
+                                <div>:</div>
+                                <div>
+                                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                                    <label class="srOnly" for="input_6_29_1">Minutes</label>                            
+                                </div>
+                                <div class="#">
+                                    <select name="InputAP" id="#" class="field-box-2">
+                                        <option value="am">AM</option>
+                                        <option value="pm">PM</option>
+                                    </select> 
+                                    <label class="am-pm-label srOnly" for="input_6_29_3">AM/PM</label>                                
+                                </div>
                             </div>
+                        </fieldset>
+
+                        <!-- EVENT TYPE -->
+                        <div class="row-8 span-full cell-block" >
+                            <lable> Event Type
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <!-- <input type="text"> -->
+                                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                                    <option value="">Skate Night</option>
+                                    <option value="">Open session</option>
+                                    <option value="">Workshop</option>
+                                    <option value="">Street skate</option>
+                                    <option value="">Skate games</option>
+                                    <option value="">Competition</option>
+                                    <option value="">Audition</option>
+                                    <option value="">Social</option>
+                                    <option value="">Other</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+
+                        <!-- SKATE DISCIPLINE -->
+                        <div class="row-9 span-full cell-block" >
+                            <lable> Skate dicipline
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <!-- <input type="text"> -->
+                                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                                    <option value="">Artistic</option>
+                                    <option value="">Roller Derby</option>
+                                    <option value="">Roller Hockey</option>
+                                    <option value="">Speed Skate</option>
+                                    <option value="">Street</option>
+                                    <option value="">Ramps</option>
+                                    <option value="">Dance</option>
+                                    <option value="">Other</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+
+                        <!-- LOCATION / VENUE NAME -->
+                        <div class="row-10 span-full cell-block" >
+                            <lable> Location / Venue Name
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                        
+                        <!-- Address -->
+                        <div class="row-11 span-full cell-block">
+                            <lable> Address Line 1</lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                        <div class="row-12 span-full cell-block">
+                            <lable> Address Line 2</lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                        
+                        <!-- TOWN / CITY -->
+                        <div class="row-13 span-full cell-block">
+                            <lable> Town/City
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="long-fit field-box">
+                            </div>
+                        </div>
+                    
+                        <!-- POSTCODE -->
+                        <div class="row-14 span-half cell-block">
+                            <lable> PostCode</lable>
+                            <div>
+                                <input type="text" class="field-box">
+                            </div>
+                        </div>
+
+                        <!-- UPLOAD IMAGE -->
+                        <div id="#" class="row-15 span-full cell-block" data-js-reload="#">
+                            <label class="#" for="#">Event image or poster
+                                <span class="gfield_required">
+                                    <span class="gfield_required gfield_required_asterisk">*</span>
+                                </span>
+                            </label>
                             <div class="#">
-                                <select name="InputAP" id="#" class="field-box-2">
-                                    <option value="am">AM</option>
-                                    <option value="pm">PM</option>
-                                </select> 
-                                <label class="am-pm-label srOnly" for="">AM/PM</label>                                
+                                <input type="hidden" name="MAX_FILE_SIZE" value="#">
+                                <input name="#" id="#" type="file" class="field-box-2" aria-describedby="#" onchange="">
+                                <span class="#" id="#">Max. file size: 16 MB.</span>
+                                <div class="#" id="#"></div>
                             </div>
                         </div>
-                    </fieldset>
-                    
-                    
-                    <!-- END TIME -->
-                    <fieldset class="row-7 span-half time-container cell-block">
-                        <legend>
-                            End Time
-                            <span><span>*</span></span>
-                        </legend>
-                        <div class="time-field">
+                        
+                        <!-- EVENT INFO BLOCK -->
+                        <div class="row-16 span-full cell-block">
+                            <lable> Event Information
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
                             <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
-                                <label class="srOnly" for="input_6_29_1">Hours</label>
+                                <input type="text" class="describe-it field-box">
                             </div>
-                            <div>:</div>
+                        </div>
+
+                        <!-- SOCIALS URL -->
+                        <div class="row-17 span-full cell-block">
+                            <lable> URL or social media 1
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
                             <div>
-                                <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
-                                <label class="srOnly" for="input_6_29_1">Minutes</label>                            
-                            </div>
-                            <div class="#">
-                                <select name="InputAP" id="#" class="field-box-2">
-                                    <option value="am">AM</option>
-                                    <option value="pm">PM</option>
-                                </select> 
-                                <label class="am-pm-label srOnly" for="input_6_29_3">AM/PM</label>                                
+                                <input type="text" class="small-fit field-box">
                             </div>
                         </div>
-                    </fieldset>
 
-                    <div class="row-8 span-full cell-block" >
-                        <lable> Event Type
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <!-- <input type="text"> -->
-                            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
-                                <option value="">Skate Night</option>
-                                <option value="">Open session</option>
-                                <option value="">Workshop</option>
-                                <option value="">Street skate</option>
-                                <option value="">Skate games</option>
-                                <option value="">Competition</option>
-                                <option value="">Audition</option>
-                                <option value="">Social</option>
-                                <option value="">Other</option>
-                            </select>
-                            
+                        <!-- SOCIALS URL -->
+                        <div class="row-18 span-full cell-block" >
+                            <lable> URL or social media 2
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row-9 span-full cell-block" >
-                        <lable> Skate dicipline
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <!-- <input type="text"> -->
-                            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
-                                <option value="">Artistic</option>
-                                <option value="">Roller Derby</option>
-                                <option value="">Roller Hockey</option>
-                                <option value="">Speed Skate</option>
-                                <option value="">Street</option>
-                                <option value="">Ramps</option>
-                                <option value="">Dance</option>
-                                <option value="">Other</option>
-                            </select>
-                            
+                        <!-- SOCIALS URL-->
+                        <div class="row-19 span-full cell-block" >
+                            <lable> URL or social media 3
+                                <span>
+                                    <span>*</span>
+                                </span>
+                            </lable>
+                            <div>
+                                <input type="text" class="small-fit field-box">
+                            </div>
                         </div>
-                    </div>
-
-
-
-                    <!-- EVENT NAME -->
-                    <div class="row-10 span-full cell-block" >
-                        <lable> Location / Venue Name
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
-                        </div>
-                    </div>
                     
-                    <!-- Address -->
-                    <div class="row-11 span-full cell-block">
-                        <lable> Address Line 1</lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
+                        <!-- SUBMIT BUTTON -->
+                        <div class="long-fit row-last span-full cell-block">
+                            <div class="btn-wrap">
+                                <!-- <a href="#" class="button btn-tertiary self-center" target="_self">Submit</a> -->
+                                <input type="submit" class="button btn-tertiary self-center">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row-12 span-full cell-block">
-                        <lable> Address Line 2</lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
-                        </div>
-                    </div>
-                    
-                    <div class="row-13 span-full cell-block">
-                        <lable> Town/City
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="long-fit field-box">
-                        </div>
-                    </div>
-                    
-                    <div class="row-14 span-half cell-block">
-                        <lable> PostCode</lable>
-                        <div>
-                            <input type="text" class="field-box">
-                        </div>
-                    </div>
 
-                    <!-- UPLOAD IMAGE -->
-                    <div id="#" class="row-15 span-full cell-block" data-js-reload="#">
-                        <label class="#" for="#">Event image or poster
-                            <span class="gfield_required">
-                                <span class="gfield_required gfield_required_asterisk">*</span>
-                            </span>
-                        </label>
-                        <div class="#">
-                            <input type="hidden" name="MAX_FILE_SIZE" value="#">
-                            <input name="#" id="#" type="file" class="field-box-2" aria-describedby="#" onchange="">
-                            <span class="#" id="#">Max. file size: 16 MB.</span>
-                            <div class="#" id="#"></div>
-                        </div>
+                    <!-- EVENT FORM END -->
                     </div>
-                    
-                    <div class="row-16 span-full cell-block">
-                        <lable> Event Information
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="describe-it field-box">
-                        </div>
-                    </div>
-                    <div class="row-17 span-full cell-block">
-                        <lable> URL or social media 1
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="small-fit field-box">
-                        </div>
-                    </div>
-                    <div class="row-18 span-full cell-block" >
-                        <lable> URL or social media 2
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="small-fit field-box">
-                        </div>
-                    </div>
-                    <div class="row-19 span-full cell-block" >
-                        <lable> URL or social media 3
-                            <span>
-                                <span>*</span>
-                            </span>
-                        </lable>
-                        <div>
-                            <input type="text" class="small-fit field-box">
-                        </div>
-                    </div>
-                    
-                    <!-- SUBMIT BUTTON -->
-                    <div class="long-fit row-last span-full cell-block">
-                        <div class="btn-wrap">
-                            <!-- <a href="#" class="button btn-tertiary self-center" target="_self">Submit</a> -->
-                            <input type="submit" class="button btn-tertiary self-center">
-                        </div>
-                    </div>
-                    </div>
-
-                    <!-- GENERAL form end  -->
+                <!-- GENERAL form end  -->
                 </div>
-            </div>
 
-                
+            <!-- FORM-FIELD END -->
+            </div>
+        <!-- FORM-WRAP END -->
         </div>
+    <!-- FORM-SECTION END -->
     </section>
 
-
-
     <!-- ||---------------------------------------- CAROSEL SECTION -->
-    <section class="carosel primary-container S4">
+    <section class="carosel primary-container">
         <div> <p>carosel or other... </p> </div>
     </section>
 </BaseLayout>

@@ -113,3 +113,51 @@ window.addEventListener('scroll', () => {
                 selector.addEventListener('change', toggleForms);
             }
         };
+
+
+// DYNAMIC SECTION - DJS - SKATE NIGHT
+        
+const field = document.getElementById("dynamic-fields-container");
+// const dynamic = document.getElementsByClassName("dynamic-field");  
+const addButton = document.getElementById("add-field-button");
+
+addButton.addEventListener('click', ()=>{
+
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("span-full");
+    wrapper.classList.add("dynamic-field");
+
+    const newInput1 = document.createElement("input");
+    newInput1.type="text";
+    newInput1.classList.add("field-box");
+    newInput1.classList.add("small-fit");
+    newInput1.placeholder = "DJ name";
+
+    const newInput2 = document.createElement("input");
+    newInput2.type="text";
+    newInput2.classList.add("field-box");
+    newInput2.classList.add("small-fit");
+    newInput2.placeholder = "Socials / URL";
+
+    // const newInput3 = document.createElement("input");
+    // newInput3.type="text";
+    // newInput3.classList.add("field-box");
+    // newInput3.placeholder = "tester space";
+
+    const removeButton = document.createElement("button");
+    removeButton.innerText = "X";
+    removeButton.classList.add("remove-field-btn");
+
+    wrapper.appendChild(newInput1);
+    wrapper.appendChild(newInput2);
+    // wrapper.appendChild(newInput3);
+    wrapper.appendChild(removeButton);
+
+    field.appendChild(wrapper);
+
+    removeButton.addEventListener("click", ()=>{
+        field.removeChild(wrapper);
+    })
+
+});
+    
