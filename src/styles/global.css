@@ -193,6 +193,11 @@ p {
     --highlight2:rgba(235, 233, 229, 0.644)5;
     --shadow-grey: #4a484470;
     --shadow-light: #cdc9c270;
+    --shadow-yellow: #f6d3466e;
+    --shadow-teal: #4bc9b444;
+    --shadow-orange: #ff91244e;
+    --shadow-pink: #ff449b41;
+    --shadow-purple: #9c49ea5a;
     
     --text-white: #ebe9e5;
     --text-black: ;
@@ -206,11 +211,9 @@ p {
     --text-bg-brown: #582b1c37;
     --bg-orange-1: #e47200a7;
     --bg-orange-2: #ff9124bf;
-    
-    --shadow-yellow: #f6d3466e;
-    --box-orange: #e4720087;
-    --shadow-teal: #4bc9b453;
+
     --box-teal: #1c7568b4;
+    --box-orange: #e4720087;
     
     
 }

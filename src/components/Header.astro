@@ -2,12 +2,17 @@
 import Navigation from "../components/navigation.astro";
 import "../styles/header.css"
 
+import {Image} from "astro:assets";
+import logo from "../branding/shine-orange-lug-2.svg";
+
 ---
 <!-- width 750< remove CTA button for space -->
 
 <header>
     <div id="homeLogo">
-        <a href="/index/"><img src="../branding/shine-orange-lug-2.svg" alt="your Jam Plug" id="headLogo"></a>
+      <!-- Image vs img .. https://www.youtube.com/watch?v=XoIHKO6AkoM&list=TLPQMjAxMTIwMjUTZGTRfEE6Og&index=1 -->
+        <a href="/index/"><Image src= {logo} alt="your Jam Plug" id="headLogo"></a>
+        <!-- <a href="/index/"><img src="../branding/shine-orange-lug-2.svg" alt="your Jam Plug" id="headLogo"></a> -->
     </div>
     <div>
       <small></small>

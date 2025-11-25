@@ -1,14 +1,20 @@
 ---
 const Brand = "Your Jam Plug";
-const {pageTitle} = Astro.props; 
+const {Index = 'Home |'} = Astro.props;
+const {title = ' Your Jam Plug UK | Where Roller Skates gather'} = Astro.props; 
 
 import "../styles/global.css";
 import "../styles/header.css"
 import "../styles/footer.css";
+import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
 
 import ToTop from "../components/toTop.astro";
 import Socials from "../components/socials.astro" ;
 
+interface Props {
+	title?: string;
+	Index?: string;
+}
 
 ---
 
@@ -18,8 +24,9 @@ import Socials from "../components/socials.astro" ;
 		<link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-		<!-- <title>Your Jam Plug</title> -->
+		<meta name="description" content= {SITE_DESCRIPTION}>
+		<title>{SITE_TITLE} | {Index} </title>
+		<!-- <title>Your Jam Plug</title> props can be overwritten on each page, cascade based-->
 	</head>
 
 	<body>
@@ -37,10 +44,10 @@ import Socials from "../components/socials.astro" ;
 				<div id=theNav">
 					<nav>
 						<ul id="mainNav" data-visible="false">
-							<li><a href="/Home/">Home</a></li>
-							<li><a href="/Events/">Events</a></li>
-							<li><a href="/Directory/">Directory</a></li>
-							<li><a href="/About/">About Us</a></li>
+							<li><a href="/home/">Home</a></li>
+							<li><a href="/events/">Events</a></li>
+							<li><a href="/directory/">Directory</a></li>
+							<li><a href="/about/">About Us</a></li>
 							<li><a href="/blog">Blog</a></li>
 						</ul>
 					</nav>
@@ -77,8 +84,8 @@ import Socials from "../components/socials.astro" ;
 				<section id="lowerFoot" class="grid">
 					<div class="row2 toe">
 						<p>Your Jam Plug UK ®
-							Established 2023 <br> [<a href="/termsOfUse/">Terms of Use</a>]  - 
-							[<a href="/privacyPolicy/">Privacy Policy</a>]
+							Established 2023 <br> [<a href="/terms-of-use/">Terms of Use</a>]  - 
+							[<a href="/privacy-policy/">Privacy Policy</a>]
 						</p>
 					</div>
 					<div class="row3 toe">

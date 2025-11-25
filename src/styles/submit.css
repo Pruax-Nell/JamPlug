@@ -135,7 +135,7 @@
 }
 
 .mid-fit {
-    width: 70%;
+    width: 85%;
 }
 
 .small-fit {
@@ -184,6 +184,36 @@
     padding-inline: 1ch;
 }
 
+textarea {
+    min-width: 100%;
+    overflow-x: scroll;
+    min-height: 100px;
+    resize: vertical;
+}
+
+input:hover, input:focus, input:active, textarea:hover, textarea:focus, textarea:active, select:hover, select:focus, select:active {
+    box-shadow: 0 0 4px 0 var(--shadow-yellow),0 0 10px 0 var(--shadow-pink);
+    border-color: var(--main-purple);
+
+}
+
+input:required {
+    border-color: var(--shadow-teal);
+}
+
+input:invalid + span::before {
+  /* content: "✖"; */
+  color: red;
+}
+
+input:valid + span::before {
+  /* content: "✓"; */
+  color: green;
+}
+
+input + span {
+  position: relative;
+}
 
 /* just for building */
 

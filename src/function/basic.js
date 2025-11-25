@@ -161,3 +161,28 @@ addButton.addEventListener('click', ()=>{
 
 });
     
+// Form submission
+
+// Conceptual outline of the Astro API route logic
+export async function POST({ request }) {
+    // 1. Parse the request body (which is multipart/form-data)
+    // This part requires a library or native Node.js feature depending on your Astro adapter.
+    const formData = await request.formData(); 
+    const file = formData.get('eventImage');
+    const eventName = formData.get('eventName');
+
+    // 2. Upload the file to Cloudinary
+    // You would use the Cloudinary SDK here to upload the 'file' object.
+    const uploadResult = await cloudinary.uploader.upload(file);
+    const imageUrl = uploadResult.secure_url; // Get the resulting URL
+
+    // 3. Write data to Google Sheet
+    // Use a library like 'google-spreadsheet' to open your sheet 
+    // and append a row with eventName and imageUrl.
+
+    // 4. Respond to the user
+    return new Response(JSON.stringify({ success: true, url: imageUrl }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
