@@ -10,6 +10,7 @@ const { frontmatter } = Astro.props;
     <p>Published on: {frontmatter.published.toString().slice(0,10)}</p>
     <p>{frontmatter.published.toLocaleDateString()}</p>
 
+    <!-- <Content /> -->
     <slot />
 
     <div class="tags">
