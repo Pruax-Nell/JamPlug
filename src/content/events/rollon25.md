@@ -1,11 +1,46 @@
 ---
+layout: 
+status: draft
+isUpcoming: true # is it approaching or past event 
+isFeatured: true #  featured event promo wise 
+postWhen: date... # schedule release 
+removeWhen: date...
+tags: ["UK", "London", "2026", "annual"]
+slug: roll-on-london-2026
+
+eventType: Festival
+category: jam
 eventName: "Roll On London 2026"
+eventLink:
+ticketLink: 
 organiser: "The NC"
+orgLink:
+host: 
+hostLink:
+coach:
+coachLink:
+dj:
+    djLink:
+eventPoster: 
 startDate: 20-6-2026
 endDate: 23-6-2026
-tags: ["UK", "London", "2026", "annual"]
-category: "Festival"
-slug: roll-on-london-2026
+startTime:
+endTime:
+country:
+townCity:
+shortDescription:
+eventImageOther: 
+
+featuredRink:
+venueAddress:
+mapCoordinates:
+repetition: annual/ monthly etc
+startlevel: beginner
+offSkates: true
+minAge:
+maxAge:
+frequency:
+
 ---
 
 # Roll On London 2026

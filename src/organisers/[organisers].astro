@@ -1,0 +1,11 @@
+---
+import { getEntries, getEntry } from 'astro:content';
+
+const orgGroups = await getEntry('blogs', 'organisers');
+
+// Get related posts referenced by `data.relatedPosts`
+// const enterpriseRelatedPosts = await getEntries(orgGroups.data.relatedPosts);
+
+
+---
+

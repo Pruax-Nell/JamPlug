@@ -10,6 +10,7 @@ import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
 
 import ToTop from "../components/toTop.astro";
 import Socials from "../components/socials.astro" ;
+import ThemeIcon from "../components/themeIcon.astro";
 
 interface Props {
 	title?: string;
@@ -62,6 +63,10 @@ interface Props {
 
 
 		<section id="mainBody">
+			<div class="centre flex">
+				<ThemeIcon />
+			</div>
+
 			<!-- || Content slot -->
 			<slot />
 			<ToTop />

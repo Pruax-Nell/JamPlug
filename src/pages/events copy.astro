@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro";
+import "../styles/event.css" ;
+import { getCollection } from "astro:content";
+// import type { collectionEntry } from "astro:content";
+
+// const allEvents: collectionEntry<'events'>[] = await getCollection("events")
+---
+
+<BaseLayout>
+<section class="intro">
+	<!-- <div><img src="#" alt="#"></div> -->
+	<div class="primary-container">
+		<!-- title container -->
+		<div> 
+			<h1>Events</h1>
+		</div>
+	</div>
+</section>
+<section class="scribe">
+	<div class="primary-container">
+		<div>
+			<p>Find Roller skate events happening all over Europe. Small jams, weekend festivals, workshops and more.</p>
+		</div>
+	</div>
+</section>
+<section class="search">
+	<!-- search bar -->
+	<div class="primary-container">
+		<div>
+			<div>
+				<span>Find your next roller skate event </span>
+			</div>
+			<div>
+				<form role="search" method="get" action="https://yourjamplug.uk">
+					<label>
+						<span class="srText"> screen reader text </span>
+						<input  type="search" class="#" placeholder="Search" name="s" title="Search for">
+					</label>
+					<input type="submit" class="#" value="#">
+				</form>
+				<div>
+					<!-- search results / hidden until search results get -->
+				</div>
+			</div>
+		</div>
+		<div>
+			<p>Featured events</p>
+		</div>
+	</div>
+</section>
+<!-- ||-----------------------------------------------EVENTS SECTION -->
+<section class="events-list">
+	<div class="primary-container section-top">
+		<div>
+			<div>
+				<span>Roller skate events</span>
+				<h3>Upcoming Events</h3>
+			</div>
+			<div class="filter-div">
+				<!-- filters -->
+				<span>Filter by: </span>
+				<div class="category-bubbles">
+					<!-- categories -->
+					<!-- <a href="javascript:;" class="button" data-id="#">Community<span class="close-icon"></span></a> -->
+					<!-- <a href="javascript:;" class="button" data-id="#">Jam<span class="close-icon"></span></a> -->
+					<!-- <a href="javascript:;" class="button" data-id="#">Festival<span class="close-icon"></span></a> -->
+				</div>
+				<div class="selections">
+					<div class="drop-list">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ||------------------------------------------EVENTS SECTION -->
+	<div class="primary-container">
+		<div class="events">
+			<div class="event-grid">
+				<!-- event poster etc -->
+				<div class="event-item">
+					<a class="events-list-link list-link" href="#" title="Folkestone – Fire Fest Skate Jam">
+						<div class="img-wrapper">
+							<img class="fit" src="src/assets/test1.JPG" alt="">
+						</div>
+						<div class="eg-2"><h5 class="event-name">Event name</h5></div>
+						<div class="content-wrapper">
+							<div class="meta-wrapper">
+								<div class="cat-wrapper">
+									<svg xmlns="#" width="8" height="8" viewBox="0 0 8 8" fill="none" style="margin-right: 4px;margin-left: 4px;">
+									<circle cx="4" cy="4" r="4" fill="#F7F000"></circle>
+									</svg>
+								</div>
+								<div class="location-wrapper">
+									<svg xmlns="" width="16" height="16" viewBox="0 0 16 16" fill="none">
+										<path fill-rule="evenodd" clip-rule="evenodd" fill="#EB0032"></path>
+									</svg>
+								</div>
+							</div>
+							<div class="title-wrapper">
+								<h4 class="h4">Paris, France</h4>
+							</div>
+							<div class="date-wrapper">8 Nov 2025  </div>
+						</div>
+					</a>
+				</div>
+				<!-- event poster etc -->
+				<div class="event-item">
+					<a class="events-list-link list-link" href="#" title="Folkestone – Fire Fest Skate Jam">
+						<div class="img-wrapper">
+							<img src="#" alt="">
+						</div>
+						<div class="eg-2"><h5 class="event-name">Event name</h5></div>
+						<div class="content-wrapper">
+							<div class="meta-wrapper">
+								<div class="cat-wrapper">
+									<svg xmlns="#" width="8" height="8" viewBox="0 0 8 8" fill="none" style="margin-right: 4px;margin-left: 4px;">
+										<circle cx="4" cy="4" r="4" fill="#F7F000"></circle>
+									</svg>
+								</div>
+								<div class="location-wrapper">
+									<svg xmlns="" width="16" height="16" viewBox="0 0 16 16" fill="none">
+										<path fill-rule="evenodd" clip-rule="evenodd" fill="#EB0032"></path>
+									</svg>
+								</div>
+							</div>
+							<div class="title-wrapper">
+								<h4 class="h4"> somewhere, UK in narnia</h4>
+							</div>
+							<div class="date-wrapper">8 Nov 2025  </div>
+						</div>
+					</a>
+				</div>
+				<!-- event poster etc -->
+				<div class="event-item">
+					<a class="events-list-link list-link" href="#" title="Folkestone – Fire Fest Skate Jam">
+						<div class="img-wrapper">
+							<img src="#" alt="">
+						</div>
+						<div class="eg-2"><h5 class="event-name">Event name</h5></div>
+						<div class="content-wrapper">
+							<div class="meta-wrapper">
+								<div class="cat-wrapper">
+									<svg xmlns="#" width="8" height="8" viewBox="0 0 8 8" fill="none" style="margin-right: 4px;margin-left: 4px;">
+										<circle cx="4" cy="4" r="4" fill="#F7F000"></circle>
+									</svg>
+								</div>
+								<div class="location-wrapper">
+									<svg xmlns="" width="16" height="16" viewBox="0 0 16 16" fill="none">
+										<path fill-rule="evenodd" clip-rule="evenodd" fill="#EB0032"></path>
+									</svg>
+								</div>
+							</div>
+							<div class="title-wrapper">
+								<h4 class="h4">Some roller event - somewhere</h4>
+							</div>
+							<div class="date-wrapper">8 Nov 2025  </div>
+						</div>
+					</a>
+				</div>
+			</div>	
+		</div>
+	</div>
+</section>
+
+<section class="fifty-fifty-section">
+	<!-- 50/50 submit an  -->
+	<div class="primary-container halfbox">
+		<div class="image">
+			<img src="/src/assets/test1.jpg" alt="" id="half-img">
+			
+		</div>
+		<div class="content-wrap">
+			<!-- <div class="pattern">
+				<img src="#" alt="#">
+			</div> -->
+			<div class="inner-wrap">
+				<h2>Submit an Event</h2>
+				<p>Have an Event, Competition, Jam or Tour to tell us about? We aim to add events weekly, so use the button below to spread the word!</p>
+				<div class="btn-wrap">
+					<a class="button btn-primary" href="/submit-an-event" target="_self">SUBMIT</a>                        
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<!-- past events -->
+	<div>
+		<div></div>
+		<div class="primary-container"></div>
+	</div>
+</section>
+</BaseLayout>
