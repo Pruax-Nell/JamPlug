@@ -1,13 +1,28 @@
 ---
-eventName: "Rythm Retreat 2026"
-organiser: "Deno?"
-startDate: 20-6-2026
-endDate: 23-6-2026
-tags: ["UK", "Birmingham", "2026", "annual"]
-category: "Festival"
-slug: Rythm-Retreat-2026
----
+eventName: Rhythm Retreat
+startDate: 2026-09-20
+endDate: 2026-09-23
+tags: ["UK", "Leeds", "2026", "annual"]
+status: "published"
+published: 2025-12-07
+country: England
+townCity: Leeds
+description: a new festival taking the UK by storm
 
+isUpcoming: true # is it approaching or past event 
+isFeatured: true #  featured event promo wise 
+ 
+category: All
+eventType: Festival
+eventPoster: {
+    src: './flyers/another-flyer.png/',
+    alt:  'rhythm retreat tbc',
+}
+
+repetition: ['annual']
+startlevel: beginner
+---
+ 
 # Welcome
 
 We’re excited to announce Rhythm Retreat 2026, the third annual roller skate retreat! Join us from June 12–14, 2026, at the beautiful Statfold Country Park in Tamworth for a weekend that celebrates movement, connection, and community.

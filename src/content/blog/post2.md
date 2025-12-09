@@ -4,16 +4,16 @@ published: 2022-07-02
 status: published
 author: Astro Learner
 description: "After learning some Astro, I couldn't stop!"
-isFeatured: 
-postWhen: 
-removeWhen: 
+isFeatured: false
+# postWhen: 
+# removeWhen: 
 postImage:
     url: "https://docs.astro.build/assets/arc.webp"
     alt: "The Astro logo on a dark background with a purple gradient arc."
 tags: ["astro", "blogging", "learning in public", "successes"]
-slug: 
-relatedPosts: 
-updatedDate: 
+# slug: 
+# relatedPosts: 
+# updatedDate: 
 
 
 ---

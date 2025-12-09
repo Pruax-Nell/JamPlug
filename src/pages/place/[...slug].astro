@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from 'astro:content';
+import EventFocusLayout from '../../layouts/eventFocusLayout.astro';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map(post => ({
+    params: { slug: post.id }, 
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<EventFocusLayout>
+    <Content />
+</EventFocusLayout>

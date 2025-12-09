@@ -1,10 +1,26 @@
 ---
+import "../styles/components.css" ;
 
-const { title, url } = Astro.props;
+
+const { title, url, id, description } = Astro.props;
 ---
 
 <li>
-    <a href={url}>{title}</a>
+    <a href={url}>{title}</a> 
 </li>
 
- 
+<div>
+    <a href={url}>
+        <h5>{title}</h5>
+        <p>{description} ...click here</p>
+    </a>
+</div>
+
+<style>
+    div {
+        border: 2px solid red;
+        border-radius: 8px;
+        padding: 5px;
+        width: 250px;
+    }
+</style>

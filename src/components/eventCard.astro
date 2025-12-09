@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+import '../styles/components.css'; 
+
+
+const { title, url, description, src, area, country, start, end } = Astro.props;
+const {frontmatter, data} = Astro.props;
+ 
+---
+
+<div class="event-item">
+    <a class="events-list-link list-link" href={url} title={title}>
+        <div class="img-wrapper">
+            <img src={src} alt={title}>
+        </div>
+
+        <div class="eg-2">
+            <h5 class="event-name">{title}</h5>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="meta-wrapper">
+                <div class="cat-wrapper">
+                    <svg xmlns="#" width="8" height="8" viewBox="0 0 8 8" fill="none" style="margin-right: 4px;margin-left: 4px;">
+                        <circle cx="4" cy="4" r="4" fill="#F7F000"></circle>
+                    </svg>
+                </div>
+                <div>
+                    <span>{description}</span>
+                </div>
+                <div class="location-wrapper">
+                    <svg xmlns="" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#EB0032"></path>
+                    </svg>
+                </div>
+                <div class="title-wrapper">
+                    <h4 class="h4">{area} - {country}</h4>
+                </div>
+                <div class="date-wrapper">{start}</div>
+                <div class="date-wrapper">{end}</div>
+            </div>
+        </div>
+    </a>
+</div>
+
+
+
+

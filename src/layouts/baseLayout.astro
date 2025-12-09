@@ -1,33 +1,35 @@
 ---
-const Brand = "Your Jam Plug";
-const {Index = 'Home |'} = Astro.props;
-const {title = ' Your Jam Plug UK | Where Roller Skates gather'} = Astro.props; 
+// const Brand = "Your Jam Plug";
+// const {Index = 'Home |'} = Astro.props;
+// const {title = ' Your Jam Plug UK | Where Roller Skates gather'} = Astro.props; 
 
 import "../styles/global.css";
 import "../styles/header.css"
 import "../styles/footer.css";
 import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
 
+import Head from "../components/head.astro";
 import ToTop from "../components/toTop.astro";
 import Socials from "../components/socials.astro" ;
 import ThemeIcon from "../components/themeIcon.astro";
+import Navigation from "../components/navigation.astro";
 
+ 
 interface Props {
-	title?: string;
+	page_title?: string;
+	description?: string;
 	Index?: string;
+	SEO?: string;
 }
 
+const { page_title, Index, description, SEO } = Astro.props;
+const BASE_URL = import.meta.env.BASE_URL
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content= {SITE_DESCRIPTION}>
-		<title>{SITE_TITLE} | {Index} </title>
-		<!-- <title>Your Jam Plug</title> props can be overwritten on each page, cascade based-->
+		<Head />
 	</head>
 
 	<body>
@@ -39,19 +41,11 @@ interface Props {
 			<header>
 				<!-- A -->
 				<div id="homeLogo">
-					<a href="/index/"><img src="../branding/shine-orange-lug-2.svg" alt="your Jam Plug" id="headLogo"></a>
+					<a href="/index/"><img src={BASE_URL + 'public/branding/shine-orange-lug-2.svg'} alt="your Jam Plug" id="headLogo"></a>
 				</div>
 				<!-- B -->
 				<div id=theNav">
-					<nav>
-						<ul id="mainNav" data-visible="false">
-							<li><a href="/home/">Home</a></li>
-							<li><a href="/events/">Events</a></li>
-							<li><a href="/directory/">Directory</a></li>
-							<li><a href="/about/">About Us</a></li>
-							<li><a href="/blog">Blog</a></li>
-						</ul>
-					</nav>
+					<Navigation />
 				</div>
 				<!-- C -->
 				<div id="theCall">
@@ -78,7 +72,7 @@ interface Props {
 				<section id="upperFoot" class="grid">
 					<div> </div>
 					<div>
-						<img src="../src/assets/alt-bloat-1.svg" alt="Logo 2" id="endLogo">
+						<img src={BASE_URL + 'src/assets/alt-bloat-1.svg'} alt="Logo 2" id="endLogo">
 					</div>
 					<div class="socialLinks">
 					

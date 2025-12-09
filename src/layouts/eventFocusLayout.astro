@@ -1,26 +1,27 @@
 ---
 import BaseLayout from './baseLayout.astro';
-const { frontmatter } = Astro.props;
+import '../styles/event.css'
+import '../styles/components.css'
+
+const { frontmatter, data } = Astro.props;
+const BASE_URL = import.meta.env.BASE_URL
+
 ---
-<BaseLayout title={frontmatter.title} >
-  <div id="breadcrumb">
-
-  </div>
-  <div>
-    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
-
-  </div>
+<BaseLayout page_title={frontmatter.eventName} >
 
   <div>
-    <h1>{frontmatter.title}</h1>
-    <h2>Post author: {frontmatter.author}</h2>
+    <!-- <img src={BASE_URL + {frontmatter.eventPoster.src}} width="300" alt={frontmatter.eventPoster.alt} /> -->
+    <img src={frontmatter.eventPoster.src} width="300" alt={frontmatter.eventPoster.alt} />
+
+  </div>
+
+  <div>
     <p><em>{frontmatter.description}</em></p>
-    <p>{frontmatter.pubDate.toString().slice(0,10)}</p>
 
     <slot />
   </div>
 
-  <div>
+  <div class="primary-container">
     <div class="tags">
       {frontmatter.tags.map((tag: string) => (
         <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
@@ -29,15 +30,6 @@ const { frontmatter } = Astro.props;
 
   </div>
 
-
-
-
-
 </BaseLayout>
-
-
-<style>
-
-</style>
 
 

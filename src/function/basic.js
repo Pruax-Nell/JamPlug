@@ -1,3 +1,6 @@
+
+
+
 // || scroll to top button 
 
 let topButton = document.getElementById("toTop");
@@ -44,7 +47,7 @@ window.addEventListener('scroll', () => {
     document.querySelector('pageTitle').style.fontsize=((document.body.scrollTop *.05)+14)+'px';
 })
 
-// EVENT SUBMISSION FORMS 
+// EVENT FORMS 
 
         const selector = document.getElementById('event-type'); 
         const placeholder = document.getElementById('placeholder-form');

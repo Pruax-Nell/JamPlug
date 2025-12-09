@@ -1,0 +1,292 @@
+---
+import "../styles/components.css";
+import "../styles/global.css";
+
+
+
+---
+
+<section id="search-bar-comp" class="grid">
+  <div class="flex column filter-box">
+    <label for="search-country">Country</label>
+    <select name="search-country" id="search-country">
+      <option value="Europe-All"> - Filter by Country - </option>
+      <optgroup label="UK and Ireland">
+        <option value="England">England</option>
+        <option value="Ireland">Ireland</option>
+        <option value="Northern-Ireland">Northern Ireland</option>
+        <option value="Scotland">Scotland</option>
+        <option value="Wales">Wales</option>
+      </optgroup>
+      <optgroup label="Rest of Europe">
+        <option value="Åland Islands">Åland Islands </option>
+        <option value="Albania">Albania </option>
+        <option value="Andorra">Andorra</option>
+        <option value="Andorra">Andorra</option>
+        <option value="Armenia">Armenia</option>
+        <option value="Austria">Austria</option>
+        <option value="Azerbaijan">Azerbaijan</option>
+        <option value="Belarus">Belarus</option>
+        <option value="Belgium">Belgium</option>
+        <option value="Bosnia">Bosnia & Herzegovina</option>
+        <option value="Bulgaria">Bulgaria</option>
+        <option value="Czech">Czech Republic, Czechia </option>
+        <option value="Croatia">Croatia </option>
+        <option value="Denmark">Denmark</option>
+        <option value="Estonia">Estonia</option>
+        <option value="Finland">Finland</option>
+        <option value="France">France</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Germany">Germany</option>
+        <option value="Greece">Greece</option>
+        <option value="Hungary">Hungary</option>
+        <option value="Iceland">Iceland</option>
+        <option value="Italy">Italy</option>
+        <option value="Kazakhstan">Kazakhsta</option>
+        <option value="Lithuania">Lithuania </option>
+        <option value="Luxembourg">Luxembourg </option>
+        <option value="Macedonia">Macedonia</option>
+        <option value="Malta">Malta</option>
+        <option value="Moldova, Republic of">Moldova, Republic of</option>
+        <option value="Monaco">Monaco</option>
+        <option value="Montenegro">Montenegro</option>
+        <option value="Norway">Norway</option>
+        <option value="Netherlands">Netherlands</option>
+        <option value="Poland">Poland</option>
+        <option value="Portugal">Portugal</option>
+        <option value="Romania">Romania</option>
+        <option value="Russia">Russia</option>
+        <option value="San Marino">San Marino</option>
+        <option value="Serbia">Serbia</option>
+        <option value="Slovakia">Slovakia</option>
+        <option value="Slovenia">Slovenia</option>
+        <option value="Spain">Spain</option>
+        <option value="Switzerland">Switzerland</option>
+        <option value="Turkey">Turkey</option>
+        <option value="Ukraine">Ukraine</option>
+        <option value="Vatican City">Vatican City</option>
+      </optgroup>
+
+    </select>
+  </div>
+  <div class="flex column filter-box">
+    <label for="Search-type">Event Type</label>
+    <select name="Search-type" id="Search-type">
+      <option value="">- Filter by Event Type - </option>
+      <option value="festival-event">Skate Festival</option>
+      <option value="night-event">Skate Night</option>
+      <option value="social-event">Skate Social</option> 
+      <option value="weekend-event">Weekend</option>
+      <option value="workshop-event">Workshop</option>
+      <option value="general-event">Other</option>
+    </select>
+  </div>
+  <div class="flex column filter-box">
+    <label for="search-discipline">Discipline</label>
+    <select name="search-discipline" id="search-discipline">
+      <option value=""> - Filter by Discipline - </option>
+      <option value="artistic">Artistic</option>
+      <option value="derby">Roller Derby</option>
+      <option value="hockey">Roller Hockey</option>
+      <option value="speed">Speed Skate</option>
+      <option value="street">Street</option>
+      <option value="ramps">Ramps / Vert</option>
+      <option value="dance">Dance / Jam</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div class="flex column filter-box">
+    <label for="search-age">Age adult/kid</label>
+    <select name="search-age" id="search-age">
+      <option value="no-age-limit"> - Filter by age limit - </option>
+      <option value="5-years">5yrs Minimum</option>
+      <option value="18-years">18+</option>
+      <option value="21-years">21+</option>
+      <option value="other"></option>
+    </select>
+  </div>
+  <div class="flex column filter-box">
+    <label for="search-level">Level</label>
+    <select name="search-level" id="search-level">
+      <option value="no-requriement"> - Filter by level req - </option>
+      <option value="all-levels">Open to All</option>
+      <option value="beginner-level">Beginner</option>
+      <option value="int-level">Intermediate</option>
+      <option value="adv-level">Advance</option>
+      <option value="pro-level">Professional</option>
+    </select>
+  </div>
+  <div class="flex column filter-box">
+    <label for="search-month">Month</label>
+    <select name="search-month" id="search-month">
+      <option value="All"> - Filter by month - </option>
+      <option value="January"> January </option>
+      <option value="February"> February </option>
+      <option value="March"> March </option>
+      <option value="April"> April </option>
+      <option value="May"> May </option>
+      <option value="June"> June </option>
+      <option value="July"> July </option>
+      <option value="August"> August </option>
+      <option value="September"> September </option>
+      <option value="October"> October </option>
+      <option value="November"> November </option>
+      <option value="December"> December </option>
+    </select>
+  </div>
+</section>
+
+<!-- JAVASCRIPT TO ADD LIST AND FILTER EVENTS -->
+<script>
+
+    // List of countries
+  const countriesUK = [
+    "England",
+    "Nothern Ireland",
+    "Ireland",
+    "Scotland",
+    "Wales"
+    
+  ]
+  
+  // List of countries 2
+const countriesEurope = [
+	"Åland Islands",
+	"Albania",
+	"Andorra",
+	"Armenia",
+	"Austria",
+	"Azerbaijan",
+	"Belarus",
+	"Belgium",
+	"Bosnia and Herzegovina",
+	"Bulgaria",
+	"Denmark",
+	"Estonia",
+	// "England",
+	"Finland",
+	"France",
+	"Georgia",
+	"Croatia",
+	"Germany",
+	"Greece",
+	"Hungary",
+	"Iceland",
+	"Ireland",
+	"Italy",
+	"Kazakhstan",
+	"Latvia",
+	"Liechtenstein",
+	"Lithuania",
+	"Luxembourg",
+	"Macedonia, the former Yugoslav Republic of",
+	"Malta",
+	"Moldova, Republic of",
+	"Monaco",
+	"Montenegro",
+	"Norway",
+	"Netherlands",
+	"Poland",
+	"Portugal",
+	"Romania",
+	"Russia",
+	"San Marino",
+	"Scotland",
+	"Serbia",
+	"Slovakia",
+	"Slovenia",
+	"Spain",
+	"Switzerland",
+	"Turkey",
+	"Ukraine",
+	// "GBR",
+	"Vatican City State",
+	"Wales"
+];
+// collective map and class name 
+const countryMap = {
+  "Åland Islands": "Åland Islands",
+	"Albania":	"Albania",
+	"Andorra": "Andorra",
+	"Armenia": "Armenia",
+	"Austria": "Austria",
+	"Azerbaijan": "Azerbaijan",
+	"Belarus": "Belarus",
+	"Belgium": "Belgium",
+	"Bosnia and Herzegovina": "Bosnia",
+	"Bulgaria": "Bulgaria",
+	"Denmark": "Denmark",
+	"Estonia": "Estonia",
+	"England": "England",
+	"Finland":	"Finland",
+	"France":	"France",
+	"Georgia":	"Iceland",
+	"Croatia":	"Georgia",
+	"Germany":	"Croatia",
+	"Greece":	"Germany",
+	"Hungary":	"Greece",
+	"Iceland":	"Hungary",
+	"Ireland":	"Ireland",
+	"Italy": "Italy",
+	"Kazakhstan": 	"Kazakhstan",
+	"Latvia": "Latvia",
+	"Liechtenstein":	"Liechtenstein",
+	"Lithuania": "Lithuania",
+	"Luxembourg":	"Luxembourg",
+	"Macedonia": "Macedonia",
+	"Malta":	"Malta",
+	"Moldova, Republic of": "Moldova, Republic of",
+	"Monaco": "Monaco",
+	"Montenegro": "Montenegro",
+	"Norway": "Norway",
+	"Netherlands": 	"Netherlands",
+	"Poland": 	"Poland",
+	"Portugal": "Portugal",
+	"Romania": 	"Romania",
+	"Russia": 	"Russia",
+	"San Marino": 	"San Marino",
+	"Scotland": 	"Scotland",
+	"Serbia": 	"Serbia",
+	"Slovakia": 	"Slovakia",
+	"Slovenia": "Slovenia",
+	"Spain": "Spain",
+	"Switzerland": "Switzerland",
+	"Turkey": 	"Turkey",
+	"Ukraine": 	"Ukraine",
+	// "GBR": " 	//"GBR",
+	"Vatican City State": "Vatican City",
+	"Wales": "Wales"
+
+};
+// combine all 5 search lists, 
+const countryAll = Object.values(countryMap);
+
+
+  // Each search bar 
+  const searchCountry = document.getElementById('search-country');
+  const searchType = document.getElementById('search-type');
+  const searchDiscipline = document.getElementById('search-discipline');
+  const searchAge = document.getElementById('search-age');
+  const searchLevel = document.getElementById('search-level');
+  const searchMonth = document.getElementById('search-month');
+
+  // all inputs as one to reload displayed events
+ const searchSelection = {
+    searchMonth,
+    searchLevel,
+    searchAge,
+    searchDiscipline,
+    searchCountry,
+    searchType 
+};
+
+
+
+// reload events list selections
+window.onload = () => {
+            if (searchSelection) { 
+                searchSelection.addEventListener('change', filterEvents);
+            }
+        };
+
+</script>

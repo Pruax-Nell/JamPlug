@@ -1,0 +1,21 @@
+/* for all the small compontents */
+
+/* EVENTS SEARCH AND FILTER BAR */
+.filter-box {
+    width: 1fr;
+    gap: .5rem;
+}
+
+#search-bar-comp {
+    gap: 2rem;
+    padding-inline: 1rem;
+    padding-block: 2.3rem;
+}
+
+#search-bar-comp select {
+    height: 2.6rem;
+    border-radius: 6px;
+    text-align: center;
+    font-family: 'red rose';
+    letter-spacing: .1rem;
+}

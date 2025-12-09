@@ -4,17 +4,17 @@ published: 2022-07-01
 status: draft
 author: Astro Learner
 description: "This is the first post of my new Astro blog."
-isFeatured: 
-postWhen: 
-removeWhen: 
+# isFeatured: false
+# postWhen: 
+# removeWhen: 
 postImage:
     url: 'https://docs.astro.build/assets/rose.webp'
     src: 'https://docs.astro.build/assets/rose.webp'
     alt: 'The Astro logo on a dark background with a pink glow.'
 tags: ["astro", "blogging", "learning in public"]
-slug: 
-relatedPosts: 
-updatedDate: 
+# slug: 
+# relatedPosts: 
+# updatedDate: 
 
 
 ---

@@ -32,7 +32,7 @@
 .events-list {
     margin: 60px 0;
     padding-top: 60px;
-    min-height: 100vh;
+    height: max-content;
 }
 
 /* ||-------------------------------------FILTER */
@@ -42,6 +42,11 @@
 
 /* ||---------------------------------------------EVENT GRID */
 /* LAYOUT */
+
+.events {
+    /* min-height: fit-content; */
+    height: 300svh;
+}
 .event-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
@@ -69,8 +74,6 @@
     grid-column: 100%;
 }
 
-
-/* CARD SECTIONS */
 
 /* ||---------------------------------------------EVENT ITEMS */
 /* CARD */
@@ -122,14 +125,14 @@
 @media (max-width: 768px) {
     
 }
+
 @media (min-width: 769px) {
     
 }
+
 @media (min-width: 992px) {
-    /* .event-item {
-        width: 100%;
-    } */
 }
+
 @media (min-width: 1200px) {
     
 }

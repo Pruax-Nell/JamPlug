@@ -571,6 +571,7 @@ function(n) {
 }(jQuery);
 var win = $(window)
   , allMods = $(".module");
+
 function white_pattern_adjust() {
     var e, s = $(".has-white-bg");
     s.length && (e = $(".has-white-bg").first().offset().top,
@@ -581,6 +582,7 @@ function white_pattern_adjust() {
         top: e
     }))
 }
+
 function matchDivHeightsInSection(e) {
     const s = e.querySelectorAll(".match-height-child");
     let a = 0;
@@ -599,6 +601,7 @@ function matchDivHeightsInSection(e) {
     ),
     console.log("maxHeight =" + a + "px")
 }
+
 function matchDivHeightsOnLoadAndResize() {
     const e = document.querySelectorAll(".match-height-parent");
     e.forEach(e => {

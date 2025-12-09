@@ -1,0 +1,24 @@
+---
+import BaseLayout from "./baseLayout.astro"
+
+const { frontmatter } = Astro.props;
+const { data } = Astro.props;
+
+---
+
+<BaseLayout>
+<div>
+    <h1>{data.organiserName}</h1>
+    <p></p>
+</div>
+<div>
+    <div> 
+        <span> Related events: </span>
+    
+    </div>
+    <div>
+        Events go here ~
+    </div>
+</div>
+
+</BaseLayout>

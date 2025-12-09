@@ -7,6 +7,10 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  prefetch: true
+  prefetch: true,
+  base: '/',
+  trailingSlash: 'always'
+
+
 });
 

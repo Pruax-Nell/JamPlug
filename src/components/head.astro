@@ -1,0 +1,38 @@
+---
+import Favicon from "../../public/astro.svg";
+import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
+
+
+const { title = "Your Jam Plug UK", ...props } = Astro.props;
+
+interface Props {
+	title?: string;
+	description?: string;
+	Index?: string;
+	SEO?: string;
+}
+
+const { Index, description, SEO } = Astro.props;
+
+---
+<link rel="sitemap" href="/sitemap-index.xml">
+<title>{title}</title>
+<meta name="description" content="Welcome to my new Astro site!">
+
+<!-- Web analytics -->
+<!-- <script data-goatcounter="https://my-account.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
+
+<!-- Open Graph tags -->
+ <link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<meta name="description" content= {description}>
+<meta name="SEO" content={SEO}>
+<title>{SITE_TITLE} | {Index} </title>
+<meta property="og:title" content={SITE_TITLE} />
+<meta property="og:type" content="website" />
+<!-- <meta property="og:url" content="http://www.example.com/" /> -->
+<meta property="og:description" content={SITE_DESCRIPTION} />
+<!-- <meta property="og:image" content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"> -->
+<!-- <meta property="og:image:alt" content=""> -->
+
