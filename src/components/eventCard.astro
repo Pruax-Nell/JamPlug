@@ -2,20 +2,48 @@
 import '../styles/global.css';
 import '../styles/components.css'; 
 
+import Image from 'astro/components/Image.astro';
 
-const { title, url, description, poster, src, area, country, start, end } = Astro.props;
+const { title, url, description, poster, area, country, start, end, category, type } = Astro.props;
 const {frontmatter, data} = Astro.props;
+const BASE_URL = import.meta.env.BASE_URL
+
+const formattedDate = start.toLocaleDateString('en-GB', { 
+    day: '2-digit',      // DD
+    month: 'long',    // MM
+    year: '2-digit'      // YY
+});
+
+const formattedEndDate = end.toLocaleDateString('en-GB', { 
+    day: '2-digit',      // DD
+    month: 'long',    // MM
+    year: '2-digit'      // YY
+});
  
+const formattedTime = start.toLocaleTimeString('en-GB', { 
+    hour: '2-digit',     // HH
+    minute: '2-digit',   // MM
+    hour12: false        // Ensures 24-hour clock (e.g., 14:30 instead of 2:30 PM)
+});
+const formattedEndTime = end.toLocaleTimeString('en-GB', { 
+    hour: '2-digit',     // HH
+    minute: '2-digit',   // MM
+    hour12: false        // Ensures 24-hour clock (e.g., 14:30 instead of 2:30 PM)
+});
 ---
 
 <div class="event-item">
     <a class="events-list-link list-link" href={url} title={title}>
         <div class="img-wrapper">
-            <img src={poster} alt={title}>
+            <Image src={poster} alt={title} class="eventcard-poster" />
         </div>
 
         <div class="eg-2">
-            <h5 class="event-name">{title}</h5>
+            <h6 class="event-name">{title}</h6>
+        </div>
+        <div>
+            <div class="cat-tag">{category}</div>
+            <div class="cat-tag">{type}</div>
         </div>
 
         <div class="content-wrapper">
@@ -24,15 +52,16 @@ const {frontmatter, data} = Astro.props;
                     <span>{description}</span>
                 </div>
                 <div class="location-wrapper">
-                    <svg xmlns="" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#EB0032"></path>
-                    </svg>
+                    <p class="location">{area} - {country}</p>
                 </div>
-                <div class="title-wrapper">
-                    <h4 class="h4">{area} - {country}</h4>
+                <div class="date-wrapper">
+                    <span>
+                        Date: <span>{formattedDate}</span> to <span>{formattedEndDate}</span>
+                    </span>
+                    <span>
+                        Times: <span>{formattedTime}</span> to <span>{formattedEndTime}</span>
+                    </span>
                 </div>
-                <div class="date-wrapper">{start}</div>
-                <div class="date-wrapper">{end}</div>
             </div>
         </div>
     </a>

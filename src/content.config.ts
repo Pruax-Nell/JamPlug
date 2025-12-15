@@ -3,14 +3,13 @@ import { glob } from "astro/loaders";
  
 const events = defineCollection({
     loader: glob({pattern: "**/[^_]*.{md,mdx}", base: "./src/content/events"}),
-    schema: z.object ({
+    schema: ({ image }) =>  z.object ({
         eventName: z.string(),
         startDate: z.coerce.date().min(new Date(), { message: "Start date must be in the future." }), 
         endDate: z.coerce.date().min(new Date(), { message: "End date must be in the future." }),
         tags: z.array(z.string()).default(['new']),
         status: z.enum(['draft', 'pending', 'published']).default('draft'),
         published: z.coerce.date(), 
-        poster: z.string(),
         
         country: z.string(),
         townCity: z.string(),
@@ -22,10 +21,7 @@ const events = defineCollection({
 
         category: z.enum(['Street', 'Jam/Dance', 'Artistic', 'Ramps/Vert', 'Speed', 'Roller Hockey', 'All', 'Other']),
         eventType: z.enum(['Skate Party', 'Day Party', 'Festival', 'Workshop','Social', 'Weekend', 'Other']),
-        eventPoster: z.object({
-            src: z.string().default('/public/'),
-            alt: z.string().default('Event'),
-        }).optional(),
+        eventPoster: image(),
 
         startTime: z.string().optional(), 
         endTime: z.string().optional(), 
@@ -41,10 +37,7 @@ const events = defineCollection({
         dj: z.string().optional(),
         djLink: z.string().url().optional(),
         
-               // eventImageOther: z.object({
-        //     src: z.string(),
-        //     alt: z.string(),
-        // }).optional(),
+        eventImageOther: image().optional(),
         
         featuredRink: z.string().optional(),
         venueAddress: z.string().optional(),
@@ -66,27 +59,31 @@ const events = defineCollection({
 
 const organisers = defineCollection({
     loader: glob({pattern: "**/[^_]*.{md,mdx}", base: "./src/content/organisers"}),
-    schema: z.object({
+    schema: ({ image }) => z.object({
         name: z.string(),
         portfolio: z.string().url(),
         socials: z.array(z.string().url()).optional(),
-        profileImage: z.object({
-                src: z.string(),
-                alt: z.string(),
-            }).optional(),
-  })
+        coverImage: image().optional(),
+        insert1: image().optional(),
+        insert2: image().optional(),
+        insert3: image().optional(),
+    }),
 });
 
 
 //  BLOGS *** 
 const blogs = defineCollection ({
     loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/blog"}),
-    schema: z.object({
+    schema: ({ image }) => z.object({
         title: z.string(),
         status: z.enum(['draft', 'published']).default('draft'),
         tags: z.array(z.string()).default([]).default(['new']),
         published: z.coerce.date(),
         description: z.string(),
+        coverImage: image().optional(),
+        insert1: image().optional(),
+        insert2: image().optional(),
+        insert3: image().optional(),
     }),
 });
 

@@ -5,7 +5,7 @@ endDate: 2026-09-23
 tags: ["UK", "Leeds", "2026", "annual"]
 status: "published"
 published: 2025-12-07
-poster: ./events/flyers/test-flyer.png/
+eventPoster: "./flyers/rhythm-retreat-26.png"
 country: England
 townCity: Leeds
 description: a new festival taking the UK by storm
@@ -15,10 +15,6 @@ isFeatured: true #  featured event promo wise
  
 category: All
 eventType: Festival
-eventPoster: {
-    src: './flyers/another-flyer.png/',
-    alt:  'rhythm retreat tbc',
-}
 
 repetition: ['annual']
 startlevel: beginner

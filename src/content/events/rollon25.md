@@ -5,7 +5,7 @@ endDate: 2026-06-10
 tags: ["UK", "London", "2026", "annual"]
 status: "published"
 published:  2025-12-08
-poster: ./events/flyers/test-flyer.png/
+eventPoster: "./flyers/NC-tours.png"
 country: England
 townCity: London
 description: hosted by London's greatest
@@ -15,10 +15,6 @@ isFeatured: true #  featured event promo wise
  
 category: Jam/Dance
 eventType: Festival
-eventPoster: {
-    src: './events/flyers/test-flyer.png/',
-    alt:  'roll on london TBC',
-}
 
 startTime: '19:30'
 endTime: '22:45'
@@ -29,7 +25,6 @@ startlevel: beginner
 minAge: 18
 
 ---
-<!-- ![Roll On.](../events/flyers/test-flyer.png) -->
 
 # Roll On London 2026
 

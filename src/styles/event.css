@@ -44,7 +44,6 @@
 /* LAYOUT */
 
 .events {
-    /* min-height: fit-content; */
     height: 300svh;
 }
 .event-grid {
@@ -79,8 +78,8 @@
 /* CARD */
 .event-item {
     border-radius: 5px;
+    height: 520px;
     justify-content: flex-start; 
-    height: 400px;
     background-color: var(--black);
     color: var(--text-white);
     box-shadow: 0 0 4px 0 var(--box-teal),0 0 40px 0 var(--shadow-teal);
@@ -111,15 +110,31 @@
 .event-name {
     color: var(--text-white);
     line-height: 1.5;
-    height: max-content;
     margin: 1rem .2rem;
     padding: 0 1.2ch;
+    text-align: center;
     
 }
 
 .eg-2 {
+    display: flex;
     height: max-content;
     width: 100%;
+    justify-content: center;
+    align-self: center;
+}
+
+.location {
+    text-align: right;
+}
+
+.cat-tag {
+    background-color: aqua;
+    width: max-content;
+    padding-inline: 1ch;
+    padding-block: .3ch;
+    border-radius: 9px;
+    border: 1px solid blue;
 }
 
 @media (max-width: 768px) {
@@ -139,6 +154,10 @@
 
 
 /* IMAGE */
+
+.img-wrapper {
+    overflow: hidden;
+}
 .fit {
     object-fit: cover;
 }
@@ -152,7 +171,7 @@
     object-fit: cover;
     transform: scale(1.001);
     transition: all .3s ease-in-out;
-    background-color: var(--shadow-grey);
+    /* background-color: var(--shadow-grey); */
     padding: 0;
 }
 

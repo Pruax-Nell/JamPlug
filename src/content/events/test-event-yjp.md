@@ -5,7 +5,7 @@
         tags: ['new', 'venue']
         status: "published"
         published: 2025-12-02
-        poster: ./events/flyers/test-flyer.png/
+        eventPoster: "./flyers/rdv-paris.png"
 
         country: "England"
         townCity: "Basildon"
@@ -13,10 +13,6 @@
         
         eventType: Skate Party
         category: "All"
-        eventPoster: {
-                src: '',
-                alt:  'Loading...',
-        }
             
 
 ---
