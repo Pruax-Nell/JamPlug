@@ -6,6 +6,75 @@ import "../styles/event.css" ;
 
 
 <BaseLayout>
+    <section class="about-grid">
+<!-- consider sub-grids for this page -->
+        <h1 class="full-span">About the brand </h1>
+        <span class="full-span">Your Jam Plug UK</span>
+        <!-- might replace with logo image -->
+        
+        <p class="open-statement">Your Jam Plug UK was founded by a London skater who wanted people to miss out less.</p>
+        
+        <h2 class="full-span">The Mission</h2>
+        <p>To build up the world of roller skating, keep the rinks alive and the communities connected</p>
+        
+        <h2 class="full-span">The Founder</h2>
+        
+        <div class="port founder-image">
+            <span>taken by ---</span>
+        </div>
+        <p>Started skating in London, UK back in 2018</p>
+        
+        <h2 class="full-span">The Process</h2>
+        
+        <p>Anyone can submit an event, we'll add it to the website</p>
+        
+        <p>skaters can help by supporting this brand</p>
+        <div class="port process-graphic"></div>
 
-
+        <h3>How you can support</h3>
+        <p>engage and share</p>
+        <p>this page stays alive with the support of the community. At the moment i'm a one-woman-band BUT the aim is to grow!</p>
+    
+    </section>
 </BaseLayout>
+
+<style>
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        /* grid-template-rows: (auto * 13); */
+
+    }
+
+    .full-span {
+        grid-column: 1 / -1;
+
+    }
+
+    .open-statement {
+        grid-column: 1 / 3;
+    }
+
+    .port {
+        
+    }
+    
+    .founder-image {
+        grid-column: 2 / 4;
+        /* grid-row: 4 / 6; */
+        height: 320px;
+        width: 280px;
+        background-color: rgb(94, 175, 104);
+        border-radius: 8px;
+        
+    }
+    
+    .process-graphic {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 210px;
+        background-color: var(--main-orange);
+        border-radius: 8px;
+    }
+</style>

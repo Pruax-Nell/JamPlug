@@ -5,6 +5,7 @@
         tags: ['new', 'venue']
         status: "published"
         published: 2025-12-02
+        poster: ./events/flyers/test-flyer.png/
 
         country: "England"
         townCity: "Basildon"

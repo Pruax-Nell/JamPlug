@@ -1,0 +1,28 @@
+---
+import { Image, Picture } from "astro:assets";
+import HeroImg from "../content/events/flyers/another-flyer.png"
+
+
+---
+
+<div class="hero-seat">
+    <h1 class="welcome"> where we skate </h1>
+    <Image src={HeroImg} priority alt="Skater Welcome" layout='full-width' width={680}/>
+</div>
+
+<style>
+    .hero-seat {
+        width: 1fr;
+        height: max-content;
+    }
+
+    .welcome {
+        margin: .1ch;
+        text-align: center;
+        z-index: 5;
+        position: absolute;
+        top: 400px;
+
+    }
+
+</style>

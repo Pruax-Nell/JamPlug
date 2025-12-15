@@ -4,6 +4,9 @@ const Brand = "Your Jam Plug .UK";
 import BaseLayout from "../layouts/baseLayout.astro";
 
 import "../styles/global.css";
+import Hero from '../components/hero.astro';
+// import { Image } from "astro:assets";
+// import Hero from "../content/events/flyers/another-flyer.png"
 
 const identity = {
 	branding: "your jam plug uk",
@@ -14,24 +17,81 @@ const identity = {
 ---
  
 <BaseLayout>
-	<section>
+	<section  id="hero-section" class="scroll-snap">
+		<Hero />
+	</section>
+	<section id="our-mission" class="scroll-snap">
 		<div>
-			<h1 class="welcome"> {Brand} </h1>
+			<h3>Helping skater's skate</h3>
+			<span>our mission in the skate community</span>
 		</div>
-
 		<div>
-			<h2>welcome back</h2>
-
-			<h3>baddie on my right</h3>
-			<h4> Sup woody</h4>
-			<h5>she said 'hey'</h5>
-			<h6>baddies to the left</h6>
-			<p class="p1"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, totam!</p>
-			<p class="p2"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, totam!</p>
-			<p class="p3"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, totam!</p>
-			<p class="caption"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, totam!</p>
-			<small > super duper </small>
+			<p>how we plan to help skaters, business and all inbetween </p>
+		</div>
+		<div>
+			<div class="cube"></div>
+		</div>
+	</section>
+	<section id="festival-list" class="scroll-snap">
+		<div>
+			<h3>2026 big skate jam list</h3>
+			<span>direct to the list of annual big festivals</span>
+		</div>
+		<div>
+			<p>to be categorised as a festival, it needs to meet the conditions. </p>
+		</div>
+		<div>
+			<div class="cube"></div>
+		</div>
+	</section>
+	<section id="learn-to-skate" class="scroll-snap">
+		<div>
+			<h3>to the directory</h3>
+			<span>groups that offer learn-to-skate courses</span>
+		</div>
+		<div>
+			<p>a link to the directory page</p>
+		</div>
+		<div>
+			<div class="cube"></div>
+			<span>multi image collage or auto carosel.. featured groups? </span>
+		</div>
+	</section>
+	<section id="upcoming-events" >
+		<div>
+			<h3>upcoming events</h3>
+			<span>whats loading</span>
+		</div>
+		<div class="flex">
+			<p>small carosel of some events. maybe featured</p>
+			<p>direct to main event page</p>
+			<div class="cube"></div>
+			<div class="cube"></div>
+			<div class="cube"></div>
+		</div>
+		<div>
+			<span>carosel</span>
+		</div>
+	</section>
+	<section id="skate-news">
+		<div>
+			<h3>skate news</h3>
+			<span>direct to blog page</span>
+			<div class="cube"></div>
+			<div class="cube"></div>
+			<div class="cube"></div>
 		</div>
 	</section>
  
 </BaseLayout>
+
+<style>
+
+	.cube {
+		width: 150px;
+		height: 180px;
+		border: 1.8px solid rgb(61, 61, 35);
+		background-color: rgb(228, 160, 91);
+	}
+
+</style>

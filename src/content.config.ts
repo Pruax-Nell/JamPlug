@@ -10,6 +10,7 @@ const events = defineCollection({
         tags: z.array(z.string()).default(['new']),
         status: z.enum(['draft', 'pending', 'published']).default('draft'),
         published: z.coerce.date(), 
+        poster: z.string(),
         
         country: z.string(),
         townCity: z.string(),
@@ -40,10 +41,10 @@ const events = defineCollection({
         dj: z.string().optional(),
         djLink: z.string().url().optional(),
         
-        eventImageOther: z.object({
-            src: z.string(),
-            alt: z.string(),
-        }).optional(),
+               // eventImageOther: z.object({
+        //     src: z.string(),
+        //     alt: z.string(),
+        // }).optional(),
         
         featuredRink: z.string().optional(),
         venueAddress: z.string().optional(),
