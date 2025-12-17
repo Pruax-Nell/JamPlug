@@ -3,15 +3,38 @@ import "../styles/event.css" ;
 import BaseLayout from "../layouts/baseLayout.astro";
 import { getCollection } from "astro:content";
 
-
 import EventCard from '../components/eventCard.astro';
 import SearchComponent from "../components/searchFilter.astro";
+import { supportsViewTransitions } from "astro:transitions/client";
 
-// const allPosts = await getCollection("events");
-const upcomingPosts = (await getCollection("events")).sort(
-(a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
-);
+const now = new Date();
 
+const publishedEvents = await getCollection('events', ({ data }) => {
+	return data.status === 'published';
+});
+
+const upcomingEvents = (publishedEvents)
+	.filter(
+		event => {
+			return event.data.startDate >= now;
+		})
+	.sort(
+	(a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
+	);
+
+const pastEvents = (publishedEvents)
+	.filter(
+	event => {
+		return event.data.endDate <= now ;
+	})
+	.sort(
+	(a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+	);
+	
+	
+	// const upcomingPosts = (await getCollection("events")).sort(
+	// (a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
+	// );
 ---
 
 <BaseLayout>
@@ -73,8 +96,9 @@ const upcomingPosts = (await getCollection("events")).sort(
 	<!-- ||------------------------------------------EVENTS SECTION -->
 	<div class="primary-container events">
 		<div>
+			{upcomingEvents.length > 0 ? (
 			<div class="event-grid">
-				{upcomingPosts.map((post) => 
+				{upcomingEvents.map((post) => 
 					(<EventCard 
 					url={`/events/${post.id}/`} 
 					title={post.data.eventName} 
@@ -88,7 +112,9 @@ const upcomingPosts = (await getCollection("events")).sort(
 					type={post.data.eventType} 
 					age={post.data.minAge} />)
 					)}
-			</div>	 
+			</div>) : 
+		(<div class="none-returned"><p>no events found</p></div>)
+		}	 
 		</div>
 	</div>
 </section>
@@ -115,11 +141,47 @@ const upcomingPosts = (await getCollection("events")).sort(
 		</div>
 	</div>
 </section>
-<section>
+
+<section class="past-events">
 	<!-- past events -->
-	<div>
-		<div></div>
-		<div class="primary-container"></div>
+	<div class="primary-container">
+		<div>
+			<h3>Past Events</h3>
+		</div>
+		{pastEvents.length > 0 ? (
+		<div class="event-grid"> 
+			{pastEvents.map((post) =>
+				( <EventCard 
+				url={`/events/${post.id}/`} 
+				title={post.data.eventName} 
+				poster={post.data.eventPoster}  
+				description={post.data.description} 
+				area={post.data.townCity} 
+				country={post.data.country} 
+				start={post.data.startDate} 
+				end={post.data.endDate} 
+				category={post.data.category} 
+				type={post.data.eventType} 
+				age={post.data.minAge} />)
+			)}
+		</div>) : 
+		(<div class="none-returned"><p>no events found</p></div>)
+		}
+
 	</div>
 </section>
 </BaseLayout>
+
+<style>
+	.none-returned {
+		display: flex;
+		justify-content: center;
+		justify-self: center;
+		align-items: center;
+		border-radius: 8px;
+		border: 12px double var(--box-teal);
+		background-color: var(--text-bg-teal);
+		background-color: var(--box-teal);
+		width: 70%;
+	}
+</style>

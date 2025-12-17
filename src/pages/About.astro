@@ -19,16 +19,18 @@ const BASE_URL = import.meta.env.BASE_URL
         <span class="full-span"><img src={YJP1} alt="Your Jam Plug UK" class="about-brand-logo">
         </span>
     </div>
-        <!-- might replace with logo image -->
-    <div class="about-welcome">
+    <!-- might replace with logo image -->
+    <div class="about-welcome block">
         <p class="open-statement">Your Jam Plug UK was founded by a London skater who wanted people to miss out less.</p>
     </div>    
-    <div class="about-mission">
+    <span class="separation">...</span>
+    <div class="about-mission block">
         <h2 class="heading-full-width mission-title">The Mission</h2>
         <p class="mission-statement">To build up the world of roller skating, keep the rinks alive and the communities connected</p>
     </div>    
+    <span class="separation">...</span>
     
-    <div class="about-founder">
+    <div class="about-founder block">
         <h2 class="heading-full-width founder-title">The Founder</h2>
         
         <div class="port founder-image">
@@ -40,28 +42,31 @@ const BASE_URL = import.meta.env.BASE_URL
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dignissimos, perferendis minima nostrum tempora doloribus facere illum voluptatem maiores eligendi animi in rem deleniti error ut repudiandae reprehenderit repellat at.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dignissimos, perferendis minima nostrum tempora doloribus facere illum voluptatem maiores eligendi animi in rem deleniti error ut repudiandae reprehenderit repellat at.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dignissimos, perferendis minima nostrum tempora doloribus facere illum voluptatem maiores eligendi animi in rem deleniti error ut repudiandae reprehenderit repellat at.</p>
-
+            
         </div>
     </div>    
+    <span class="separation">...</span>
     
     <div class="about-process">
-        <h2 class="heading-full-width full-span">The Process</h2>
+        <h2 class="heading-full-width full-span block">The Process</h2>
         
         <p>Anyone can submit an event, we'll add it to the website</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis minima quasi nulla minus, recusandae rem dolor totam consequuntur ab beatae quia cum, non tempore molestias exercitationem voluptatem eligendi est assumenda?</p>
         <p>skaters can help by supporting this brand</p>
     </div>    
-
-    <div class="about-process-graphic">
+    
+    <div class="about-process-graphic block">
         <div class="heading-full-width port process-graphic"></div>
     </div>
     
-    <div class="about-support">
+    <span class="separation">...</span>
+    <div class="about-support block">
         <h3 class="heading-small">How you can support</h3>
         <p>engage and share</p>
         <p>this page stays alive with the support of the community. At the moment i'm a one-woman-band BUT the aim is to grow!</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis porro aliquid architecto corporis debitis est eaque. Consequatur molestiae facilis saepe consequuntur? In id magnam reprehenderit voluptate, quam officiis blanditiis itaque.</p>
     </div>    
+    <span class="separation">...</span>
     
 </section>
 </BaseLayout>
@@ -80,8 +85,9 @@ const BASE_URL = import.meta.env.BASE_URL
     }
 
     .heading-small {
-        width: 30%;
+        width: 100%;
         font-size: var(--fs-p2);
+        justify-self: center;
     }
 
     .about-section {
@@ -91,15 +97,22 @@ const BASE_URL = import.meta.env.BASE_URL
 
     }
 
-    .about-section div {
-        margin-block: .3rem;
+    .block {
+        margin-block: 1.8rem;
+        padding-inline: .5rem;
     }
 
+    .separation {
+        font-size: var(--fs-heading-xl);
+        text-align: center;
+        color: var(--box-teal);
+    }
 
     .about-head {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
     .about-title {
         font-size: var(--fs-heading-xl);
@@ -110,12 +123,23 @@ const BASE_URL = import.meta.env.BASE_URL
     .about-brand-logo {
         width: 100px;
         height: max-content;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .about-welcome {
+        margin-bottom: 1rem;
     }
 
     .about-welcome .open-statement {
         padding-inline: 10vw;
         font-size: var(--fs-p2);
+        text-align: center;
 
+    }
+
+    .about-mission {
+        padding: .2rem;
     }
 
     .about-mission .mission-title {
@@ -132,13 +156,39 @@ const BASE_URL = import.meta.env.BASE_URL
 
     .about-founder {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 30px 25% 20% 30px 20% 25% 30px;
         grid-template-rows: repeat(auto ) 3;
 
     }
 
+    @media (max-width: 749px) {
+        .about-founder {
+            display:flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-items: center;
+        }
+
+        .founder-title {
+            text-align: center;
+        }
+
+        .founder-image {
+            margin-block: 1rem;
+        }
+
+        .about-me {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        
+    }
+
     .founder-title {
-        grid-row: 1;
+        grid-row: 1 ;
+        grid-column: 1 / 5;
     }
 
     .founder-image {
@@ -149,14 +199,14 @@ const BASE_URL = import.meta.env.BASE_URL
         height: 320px;
         border-radius: 10px;
         grid-row: 2;
-        grid-column: 2;
-        justify-self: center;
+        grid-column-end: 7;
+        justify-self: end;
         
     }
 
     .about-me {
         grid-row: 2 /4;
-        grid-column: 1;
+        grid-column: 2 / 5;
 
         text-wrap: balance;
 
@@ -169,6 +219,10 @@ const BASE_URL = import.meta.env.BASE_URL
         width: 80ch;
     }
     
+    .about-process-graphic {
+        padding: 1rem;
+    }
+
     .process-graphic {
         width: 80%;
         justify-self: center;
@@ -176,6 +230,14 @@ const BASE_URL = import.meta.env.BASE_URL
 
         background-color: var(--main-orange);
         border-radius: 8px;
+    }
+
+    .about-support {
+        /* margin-inline: 5rem; */
+        /* margin-block: 3rem; */
+        width: 65ch;
+        align-self: center;
+        text-align: center;
     }
 
 </style>

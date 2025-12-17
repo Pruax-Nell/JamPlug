@@ -4,7 +4,7 @@
         endDate: 2026 02 21
         tags: ['new', 'venue']
         status: published
-        Published: 2025 03 12
+        published: 2025 03 12
 
         country: England
         townCity: London
@@ -16,10 +16,7 @@
         
         eventType: ['Skate Party', 'Day Party', 'Festival', 'Workshop','Social', 'Weekend', 'Other']
         category: ['Street', 'Jam/Dance', 'Artistic', 'Ramps/Vert', 'Speed', 'Roller Hockey', 'All', 'Other']
-        eventPoster: {
-            src: ,
-            alt:  ,
-        }  
+        eventPoster: "..."
         startTime:
         endTime:
         
@@ -33,10 +30,7 @@
         coachLink: 
         dj: 
         djLink: 
-        eventImageOther: {
-            src: ,
-            alt: ,
-        }
+        eventImageOther: "..."
         
         featuredRink: 
         venueAddress: 
