@@ -46,8 +46,8 @@ const events = defineCollection({
         repetition: z.array(z.string()).optional(),
         startlevel: z.enum(['beginner', 'intermediate','advanced']).optional(), 
         offSkates: z.boolean().optional(),
-        minAge: z.number().optional(),
-        maxAge: z.number().optional(),
+        minAge: z.string().optional(),
+        maxAge: z.string().optional(),
         frequency: z.string().optional(),
 
         orgPastEvents: z.array(reference('events')).optional(),

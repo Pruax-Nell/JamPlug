@@ -159,6 +159,11 @@ p {
     text-transform: uppercase;
 }
 
+span {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 200;
+}
 
 
 /* || -----------------------Brand and Project colours-------------- */
@@ -172,17 +177,21 @@ p {
     --main-yellow: #f6d246;
     --main-pink: #ff449b;
     --main-brown-light: #582b1c;
-    --main-brown-dark: #2d160e;
+    --main-brown-dark: #33211c;
+    --alt-brown-dark: #2c201c;
+    /* --main-brown-dark: #2d160e; */
     
     /* YJP brand colours - accent */
     --accent-dark-teal: #124941;
-    --accent-mid-teal: #1c7568;
+    --accent-mid-teal: #178c7b;
+    /* --accent-mid-teal: #1c7568; */
     --accent-mid-purple: #6e17c0;
     --accent-dark-purple: #400b60;
     --accent-mid-orange: #e47200;
     --accent-dark-orange: #7d3e00;
     --accent-mid-yellow: #d8af0a;
     --accent-dark-yellow: #6c5705;
+    --accent-new-pink: #bd1563;
     --accent-mid-pink: #d80066;
     --accent-dark-pink: #83003d;
     
@@ -201,7 +210,7 @@ p {
     --shadow-purple: #9c49ea5a;
     
     --text-white: #ebe9e5;
-    --text-black: ;
+    --text-black: #262421;
     
     --text-bg-white: #fff9ed44;
     --text-bg-orange: #ff9224;
@@ -209,12 +218,19 @@ p {
     --text-bg-teal: #4bc9b4;
     --text-bg-pink: #ff449b;
     --text-bg-purple: #9c49ea;
-    --text-bg-brown: #582b1c37;
+    --text-bg-brown: #582b1c;
+    --text-bg-black: #211b15;
     --bg-orange-1: #e47200a7;
     --bg-orange-2: #ff9124bf;
 
     --box-teal: #1c7568b4;
     --box-orange: #e4720087;
+
+    --background-light: #ebe9e5;
+    --background-dark: #262421;
+    --background-mid: #b26e29;
+    /* --background-light: #fff9ed; */
+    /* --background-mid: #7d3e00; */
     
     
 }
@@ -396,7 +412,7 @@ body *{
     position: sticky;
     flex-shrink: 0;
     top: 0;
-    z-index: 10;
+    z-index: 500;
 }
 
 .fullView {
@@ -448,6 +464,11 @@ body *{
     padding: 1ch;
 
 }
+
+/* || --------------------ABOUT PAGE------------------ */
+
+
+
 
 /* || --------------------Insert title here------------------ */
 /* ----insert title here 2---- */

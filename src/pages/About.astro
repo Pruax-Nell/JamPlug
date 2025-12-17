@@ -1,80 +1,181 @@
 ---
+
 import BaseLayout from "../layouts/baseLayout.astro";
 import "../styles/event.css" ;
+import "../styles/global.css" ;
 
+import Image from 'astro/components/Image.astro';
+const YJP1 = "../public/branding/long-logo-orange-lug-2000x550px.svg"
+
+const BASE_URL = import.meta.env.BASE_URL
 ---
 
 
 <BaseLayout>
-    <section class="about-grid">
+<section class="about-section">
 <!-- consider sub-grids for this page -->
-        <h1 class="full-span">About the brand </h1>
-        <span class="full-span">Your Jam Plug UK</span>
+    <div class="about-head">  
+        <h1 class="about-title full-span">About the brand </h1>
+        <span class="full-span"><img src={YJP1} alt="Your Jam Plug UK" class="about-brand-logo">
+        </span>
+    </div>
         <!-- might replace with logo image -->
-        
+    <div class="about-welcome">
         <p class="open-statement">Your Jam Plug UK was founded by a London skater who wanted people to miss out less.</p>
-        
-        <h2 class="full-span">The Mission</h2>
-        <p>To build up the world of roller skating, keep the rinks alive and the communities connected</p>
-        
-        <h2 class="full-span">The Founder</h2>
+    </div>    
+    <div class="about-mission">
+        <h2 class="heading-full-width mission-title">The Mission</h2>
+        <p class="mission-statement">To build up the world of roller skating, keep the rinks alive and the communities connected</p>
+    </div>    
+    
+    <div class="about-founder">
+        <h2 class="heading-full-width founder-title">The Founder</h2>
         
         <div class="port founder-image">
-            <span>taken by ---</span>
+            <Image src="/src/assets/Skater.Shynell.JPG" alt="Me" height={320} width={260}  />
+            <span>taken by Daniel Bridle</span>
         </div>
-        <p>Started skating in London, UK back in 2018</p>
-        
-        <h2 class="full-span">The Process</h2>
+        <div class="about-me">
+            <p>Started skating in London, UK back in 2018...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dignissimos, perferendis minima nostrum tempora doloribus facere illum voluptatem maiores eligendi animi in rem deleniti error ut repudiandae reprehenderit repellat at.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dignissimos, perferendis minima nostrum tempora doloribus facere illum voluptatem maiores eligendi animi in rem deleniti error ut repudiandae reprehenderit repellat at.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dignissimos, perferendis minima nostrum tempora doloribus facere illum voluptatem maiores eligendi animi in rem deleniti error ut repudiandae reprehenderit repellat at.</p>
+
+        </div>
+    </div>    
+    
+    <div class="about-process">
+        <h2 class="heading-full-width full-span">The Process</h2>
         
         <p>Anyone can submit an event, we'll add it to the website</p>
-        
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis minima quasi nulla minus, recusandae rem dolor totam consequuntur ab beatae quia cum, non tempore molestias exercitationem voluptatem eligendi est assumenda?</p>
         <p>skaters can help by supporting this brand</p>
-        <div class="port process-graphic"></div>
+    </div>    
 
-        <h3>How you can support</h3>
+    <div class="about-process-graphic">
+        <div class="heading-full-width port process-graphic"></div>
+    </div>
+    
+    <div class="about-support">
+        <h3 class="heading-small">How you can support</h3>
         <p>engage and share</p>
         <p>this page stays alive with the support of the community. At the moment i'm a one-woman-band BUT the aim is to grow!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis porro aliquid architecto corporis debitis est eaque. Consequatur molestiae facilis saepe consequuntur? In id magnam reprehenderit voluptate, quam officiis blanditiis itaque.</p>
+    </div>    
     
-    </section>
+</section>
 </BaseLayout>
 
 <style>
 
-    .about-grid {
-        display: grid;
-        grid-template-columns: auto auto auto;
-        /* grid-template-rows: (auto * 13); */
+    .heading-full-width {
+        width: 100%;
+        height: max-content;
+
+        line-height: 3ch;
+        font-size: var(--fs-heading-mid);
+        padding-left: .5rem;
+        margin: .5rem 1rem;
 
     }
 
-    .full-span {
-        grid-column: 1 / -1;
+    .heading-small {
+        width: 30%;
+        font-size: var(--fs-p2);
+    }
+
+    .about-section {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4rem;
 
     }
 
-    .open-statement {
-        grid-column: 1 / 3;
+    .about-section div {
+        margin-block: .3rem;
     }
 
-    .port {
-        
+
+    .about-head {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .about-title {
+        font-size: var(--fs-heading-xl);
+        margin: .3ch;
+        text-align: center;
     }
     
+    .about-brand-logo {
+        width: 100px;
+        height: max-content;
+    }
+
+    .about-welcome .open-statement {
+        padding-inline: 10vw;
+        font-size: var(--fs-p2);
+
+    }
+
+    .about-mission .mission-title {
+        text-align: right;
+        justify-self: end;
+        padding-right: 3rem;
+    }
+    .about-mission .mission-statement {
+        text-align: right;
+        justify-self: end;
+        width: 55ch;
+        padding-right: 1rem;
+    }
+
+    .about-founder {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(auto ) 3;
+
+    }
+
+    .founder-title {
+        grid-row: 1;
+    }
+
     .founder-image {
-        grid-column: 2 / 4;
-        /* grid-row: 4 / 6; */
+
+        display: flex;
+        flex-direction: column;
+
         height: 320px;
-        width: 280px;
-        background-color: rgb(94, 175, 104);
-        border-radius: 8px;
+        border-radius: 10px;
+        grid-row: 2;
+        grid-column: 2;
+        justify-self: center;
         
+    }
+
+    .about-me {
+        grid-row: 2 /4;
+        grid-column: 1;
+
+        text-wrap: balance;
+
+    }
+
+    .about-process {
+        text-align: center;
+        justify-items: center;
+        align-self: center;
+        width: 80ch;
     }
     
     .process-graphic {
-        grid-column: 1 / -1;
-        width: 100%;
+        width: 80%;
+        justify-self: center;
         height: 210px;
+
         background-color: var(--main-orange);
         border-radius: 8px;
     }
+
 </style>

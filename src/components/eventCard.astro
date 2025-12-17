@@ -4,19 +4,19 @@ import '../styles/components.css';
 
 import Image from 'astro/components/Image.astro';
 
-const { title, url, description, poster, area, country, start, end, category, type } = Astro.props;
+const { title, url, description, poster, area, country, start, end, category, type, age } = Astro.props;
 const {frontmatter, data} = Astro.props;
 const BASE_URL = import.meta.env.BASE_URL
 
 const formattedDate = start.toLocaleDateString('en-GB', { 
     day: '2-digit',      // DD
-    month: 'long',    // MM
+    month: 'short',    // MM
     year: '2-digit'      // YY
 });
 
 const formattedEndDate = end.toLocaleDateString('en-GB', { 
     day: '2-digit',      // DD
-    month: 'long',    // MM
+    month: 'short',    // MM
     year: '2-digit'      // YY
 });
  
@@ -25,6 +25,7 @@ const formattedTime = start.toLocaleTimeString('en-GB', {
     minute: '2-digit',   // MM
     hour12: false        // Ensures 24-hour clock (e.g., 14:30 instead of 2:30 PM)
 });
+
 const formattedEndTime = end.toLocaleTimeString('en-GB', { 
     hour: '2-digit',     // HH
     minute: '2-digit',   // MM
@@ -32,41 +33,51 @@ const formattedEndTime = end.toLocaleTimeString('en-GB', {
 });
 ---
 
-<div class="event-item">
-    <a class="events-list-link list-link" href={url} title={title}>
-        <div class="img-wrapper">
+<div class="event-item"><a class="list-link" href={url} title={title}>
+
+        <div class="img-wrapper ">
             <Image src={poster} alt={title} class="eventcard-poster" />
         </div>
 
-        <div class="eg-2">
-            <h6 class="event-name">{title}</h6>
-        </div>
-        <div>
-            <div class="cat-tag">{category}</div>
-            <div class="cat-tag">{type}</div>
-        </div>
-
         <div class="content-wrapper">
-            <div class="meta-wrapper">
-                <div>
-                    <span>{description}</span>
+            <div class="title-wrap">
+                <h6 class="event-name">{title}</h6>
+            </div>
+
+            <div class="event-category">
+                <div class="flex cat-box-1">
+                    <div class="cat-tag">{category}</div>
+                    <div class="type-tag">{type}</div>
                 </div>
+                <div class="flex cat-box-2">
+                    {age && <div class="age-tag dataOptional" id="minimum-age-tag">{age}</div>}
+                    
+                </div>
+            </div>
+
+            <div class="meta-wrapper">
                 <div class="location-wrapper">
                     <p class="location">{area} - {country}</p>
                 </div>
+
+                <div class="description-wrapper">
+                    <span class="description">{description}</span>
+                </div>
+
+
                 <div class="date-wrapper">
                     <span>
-                        Date: <span>{formattedDate}</span> to <span>{formattedEndDate}</span>
+                       <span>{formattedDate}</span>
                     </span>
                     <span>
-                        Times: <span>{formattedTime}</span> to <span>{formattedEndTime}</span>
+                        ~
+                    </span>
+                    <span>
+                       <span>{formattedEndDate}</span>
                     </span>
                 </div>
             </div>
         </div>
-    </a>
-</div>
-
-
+</a></div>
 
 

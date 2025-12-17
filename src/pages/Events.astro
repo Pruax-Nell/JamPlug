@@ -7,7 +7,10 @@ import { getCollection } from "astro:content";
 import EventCard from '../components/eventCard.astro';
 import SearchComponent from "../components/searchFilter.astro";
 
-const allPosts = await getCollection("events");
+// const allPosts = await getCollection("events");
+const upcomingPosts = (await getCollection("events")).sort(
+(a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
+);
 
 ---
 
@@ -68,14 +71,23 @@ const allPosts = await getCollection("events");
 		</section>
 	</div>
 	<!-- ||------------------------------------------EVENTS SECTION -->
-	<div class="primary-container">
-		<div class="events">
-			<!-- <div class="event-grid"> -->
-			<div>
-				 <div class="event-grid">
-					{allPosts.map((post) => 
-						(<EventCard url={`/events/${post.id}/`} title={post.data.eventName} poster={post.data.eventPoster}  description={post.data.description} area={post.data.townCity} country={post.data.country} start={post.data.startDate} end={post.data.endDate} category={post.data.category} type={post.data.eventType} />))}
-				 </div>
+	<div class="primary-container events">
+		<div>
+			<div class="event-grid">
+				{upcomingPosts.map((post) => 
+					(<EventCard 
+					url={`/events/${post.id}/`} 
+					title={post.data.eventName} 
+					poster={post.data.eventPoster}  
+					description={post.data.description} 
+					area={post.data.townCity} 
+					country={post.data.country} 
+					start={post.data.startDate} 
+					end={post.data.endDate} 
+					category={post.data.category} 
+					type={post.data.eventType} 
+					age={post.data.minAge} />)
+					)}
 			</div>	 
 		</div>
 	</div>

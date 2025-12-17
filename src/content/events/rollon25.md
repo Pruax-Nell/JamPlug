@@ -22,7 +22,7 @@ endTime: '22:45'
 organiser: The NC
 repetition: ['annual']
 startlevel: beginner
-minAge: 18
+minAge: 18+
 
 ---
 
