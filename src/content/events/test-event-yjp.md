@@ -1,6 +1,6 @@
 ---
         eventName: "baby one"
-        startDate: 2026-02-02
+        startDate: 2026-12-20
         endDate: 2026-02-02
         tags: ['new', 'venue']
         status: "published"
