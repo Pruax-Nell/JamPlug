@@ -5,7 +5,7 @@
         tags: ['new', 'venue']
         status: "published"
         published: 2025-12-02
-        eventPoster: "./flyers/rdv-paris.png"
+        eventPoster: "rdv-paris.png"
 
         country: "England"
         townCity: "Basildon"

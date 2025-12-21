@@ -1,0 +1,234 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro";
+import BigList from "../components/big-list.astro";
+
+import '../styles/components.css'
+import '../styles/global.css'
+import '../styles/events.css'
+
+import { getCollection } from "astro:content";
+const bigEvents = await getCollection('events', ({ data }) => {
+    return data.status === 'published' && data.eventType === 'Festival';
+});
+
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+const monthOrder = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
+const justAdded = (bigEvents)
+.filter(
+    event => {
+        return event.data.published >= thirtyDaysAgo;
+    }
+)
+
+// THE GROUPING LOGIC
+const groupedEvents = bigEvents.reduce((acc, event) => {
+    const month = event.data.startDate.toLocaleString('default', { month: 'long' });
+    
+    // 2. If this month doesn't exist in our object yet, create an empty array for it
+    if (!acc[month]) {
+        acc[month] = [];
+    }
+    
+    // 3. Push the event into the correct month bucket
+    acc[month].push(event);
+    
+    return acc;
+}, {});
+
+// Sort events 
+Object.values(groupedEvents).forEach(monthArray => {
+    monthArray.sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf());
+});
+
+---
+
+<BaseLayout>
+<section class="welcome">
+    <div>
+        <h1>Big Jam List</h1>
+    </div>
+    <div>
+        <p>Festivals are the days we plan in advance for</p>
+        <span>...</span>
+    </div>
+    <div>
+        <div><span>it's overnight</span></div>
+        <div><span>workshops AND parties</span></div>
+        <div><span>what makes it a festival</span></div>
+    </div>
+</section>
+<section>
+    <h3>2026</h3>
+    <p></p>
+    <span></span>
+    <div id="jam-list">
+        <div>
+            {monthOrder.map((month) => {
+            // 1. Try to find events for this month in our grouped object
+            const eventsInMonth = groupedEvents[month] || [];
+
+            return (
+            <div class="month-block">
+                <h2>{month}</h2>
+
+                {eventsInMonth.length > 0 ? (
+                <ul>
+                    {eventsInMonth.map((event) => (
+                    <li class="jam-item"><a href={`/events/${event.id}/`}>
+                            
+                        <div class="jam-content">
+                            <div class="jam-title">
+                            <p>{event.data.eventName} {event.data.published >= thirtyDaysAgo && (
+                                <span class="highlight-new">NEW!</span>
+                            )}</p>
+                            <p>{event.data.description}</p>
+                            </div>
+
+                            <div class="divider"> - </div>
+
+                            <div class="jam-info">
+                                <p>{event.data.townCity} - {event.data.country}</p>
+
+                                <p>{event.data.startDate.toDateString()}</p>
+                            </div>
+                        </div>
+                    </a></li>
+                    ))}
+                </ul>
+                ) : (
+                <p class="no-events">...</p>
+                )}
+            </div>
+            );
+            })}
+        </div>
+        <!-- <div class="list-month-block" >
+            <div >
+             <p class="month-head">January</p>  
+            </div>
+            <div >
+                
+            </div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+              <p class="month-head">February</p>  
+            </div>
+           { <div></div>}
+        </div>
+        <div class="list-month-block" >
+            <div>
+              <p class="month-head">March</p>  
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+               <p class="month-head">April</p> 
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+              <p class="month-head">May</p>  
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+               <p class="month-head">June</p> 
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+              <p class="month-head">July</p>  
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+               <p class="month-head">August</p> 
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+               <p class="month-head">September</p> 
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+              <p class="month-head">October</p>  
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+              <p class="month-head">November</p>  
+            </div>
+            <div></div>
+        </div>
+        <div class="list-month-block" >
+            <div>
+               <p class="month-head">December</p> 
+            </div>
+            <div></div>
+        </div> -->
+    </div>
+</section>
+<section>
+    <div>
+        <p>looking for more events? </p>
+        <button><a href="/events"> go here </a></button>
+    </div>
+</section>
+
+
+</BaseLayout>
+
+<style>
+
+    .highlight-new {
+        height: 40px;
+        width: 60px;
+        color: var(--main-orange);
+    }
+
+    .divider {
+        align-content: center;
+        width: 10%;
+    }
+
+    .jam-item {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .jam-content {
+        display: grid;
+        grid-template-columns: auto auto auto;
+    }
+
+    .jam-content  * {
+        margin: .5rem;
+        padding: 0;
+    }
+
+    .jam-title, .jam-info {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2rem;
+        height: max-content;
+    }
+
+
+
+</style>

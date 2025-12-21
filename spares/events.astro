@@ -1,22 +1,32 @@
 ---
+import React, { useState, useMemo, useEffect } from 'react';
+
 import "../styles/event.css" ;
 import BaseLayout from "../layouts/baseLayout.astro";
-
 import { getCollection } from "astro:content";
-// rebuild in react file
+
 import EventCard from '../components/eventCard.astro';
 import SearchComponent from "../components/searchFilter.astro";
+import { supportsViewTransitions } from "astro:transitions/client";
 
-import UpcomingEvents from '../components/eventPagination'
+// max no. of eventcards per pagination 
+const EVENTS_PER_PAGE = 16;
+const INITIAL_FILTERS = {
+    country: 'All',
+    eventType: 'All',
+    skateDiscipline: 'All',
+    minAge: 'All',
+    skillLevel: 'All',
+    month: 'All',
+};
 
 const now = new Date();
 
-// All events which status is 'published'
 const publishedEvents = await getCollection('events', ({ data }) => {
 	return data.status === 'published';
 });
 
-// all 'published' events that are in the future
+
 const upcomingEvents = (publishedEvents)
 	.filter(
 		event => {
@@ -26,37 +36,16 @@ const upcomingEvents = (publishedEvents)
 	(a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
 	);
 
-	// all published events that are in the past
-const thirtyDaysAgo = new Date();
-thirtyDaysAgo.setDate(now.getDate() - 30);
-
-const pastEvents = publishedEvents
-  .filter(event => {
-    const endDate = new Date(event.data.endDate);
-    // Returns true only if the event ended in the past, 
-    // but specifically within the last 30 days.
-    return endDate <= now && endDate >= thirtyDaysAgo;
-  })
-  .sort((a, b) => {
-    // Sort by start date descending (most recent first)
-    return new Date(b.data.startDate).valueOf() - new Date(a.data.startDate).valueOf();
-  });
-
+const pastEvents = (publishedEvents)
+	.filter(
+	event => {
+		return event.data.endDate <= now ;
+	})
+	.sort(
+	(a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+	);
 	
-// 3. DATA SERIALIZATION (Crucial for React Props)
-// React components must receive data that is JSON-safe. Date objects are NOT JSON-safe.
-// We map the server-side objects to client-safe objects, converting Date objects to ISO strings.
-const clientUpcomingEvents = upcomingEvents.map(event => ({
-    id: event.id,
-    // slug: event.slug,
-    data: {
-        ...event.data,
-        startDate: event.data.startDate.toISOString(),
-        endDate: event.data.endDate ? event.data.endDate.toISOString() : null,
-        // Any other Date objects must be converted here too!
-    },
-}));
-
+	
 ---
 
 <!-- TODO: tidy page start, add CSS  -->
@@ -71,36 +60,56 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 </section>
 <section class="scribe">
 	<div class="primary-container">
+		<div>
 			<p>Find Roller skate events happening all over Europe. Small jams, weekend festivals, workshops and more.</p>
+		</div>
 	</div>
-	<div>
-		<p>what are you looking for?</p>
-		<span>Skate party?</span>
-	</div>
-	<div>
-		<h3>Big Jam List</h3>
-		<button><a href="/festivals">Click here</a></button>
+</section>
+<section class="search">
+	<!-- search bar -->
+	<div class="primary-container">
+		<div>
+			<div>
+				<p>Featured events</p>
+				<div>Event squares go here</div>
+			</div>
+			<div>
+				<span>Find your next roller skate event </span>
+			</div>
+			<div>
+				<form role="search" method="get" action="https://yourjamplug.uk">
+					<label>
+						<span class="srText"> screen reader text </span>
+						<input  type="search" class="#" placeholder="Search" name="s" title="Search for">
+					</label>
+					<input type="submit" class="#" value="#">
+				</form>
+				<div>
+					<!-- search results / hidden until search results get -->
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
 <!-- ||-----------------------------------------------EVENTS SECTION -->
 <section class="events-list">
-	<!-- ||------------------------------------------EVENTS TEST -->
-	<div class="primary-container">
-		
-		<div>
-			<span>Roller skate events</span>
-			<h2>Upcoming Events</h2>
-		</div>
-
-		<UpcomingEvents events={clientUpcomingEvents}
-			client:load
-		/>
-
+	<div class="primary-container section-top">
+		<section>
+			<div>
+				<span>Roller skate events</span>
+				<h3>Upcoming Events</h3>
+			</div>
+			<div class="filter-div">
+				<!-- PLACE SEARCH AND FILTER HERE -->
+				<SearchComponent />
+			</div>
+		</section>
 	</div>
+	<!--TODO: limit the number of events show before page numbers and system are implemented / JS of event filter system-->
 
 	<!-- ||------------------------------------------EVENTS SECTION -->
 	<!-- TODO: temporary solution until pagination works, create a block with scrolling overflow.  -->
-	<!-- <div class="primary-container events">
+	<div class="primary-container events">
 		<div>
 			{upcomingEvents.length > 0 ? (
 			<div class="event-grid">
@@ -122,7 +131,32 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 		(<div class="none-returned"><p>no events found</p></div>)
 		}	 
 		</div>
-	</div> -->
+	</div>
+
+	<!-- TEST SUBJECT FOR FILTRATION -->
+	<div class="primary-container events">
+		<div>
+			{upcomingEvents.length > 0 ? (
+			<div class="event-grid">
+				{upcomingEvents.map((post) => 
+					(<EventCard 
+					url={`/events/${post.id}/`} 
+					title={post.data.eventName} 
+					poster={post.data.eventPoster}  
+					description={post.data.description} 
+					area={post.data.townCity} 
+					country={post.data.country} 
+					start={post.data.startDate} 
+					end={post.data.endDate} 
+					category={post.data.category} 
+					type={post.data.eventType} 
+					age={post.data.minAge} />)
+					)}
+			</div>) : 
+		(<div class="none-returned"><p>no events found</p></div>)
+		}	 
+		</div>
+	</div>
 </section>
 <!-- ||------------------------------------------------50/50 SECTION -->
 
@@ -153,7 +187,7 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 	<!-- past events -->
 	<div class="primary-container">
 		<div>
-			<h3>Last Month's Events</h3>
+			<h3>Past Events</h3>
 		</div>
 		{pastEvents.length > 0 ? (
 		<div class="event-grid"> 
@@ -179,8 +213,7 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 </section>
 </BaseLayout>
 
-<style is:global>
-
+<style>
 	.none-returned {
 		display: flex;
 		justify-content: center;

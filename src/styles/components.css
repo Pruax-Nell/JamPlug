@@ -1,7 +1,7 @@
 /* for all the small compontents */
 
 /* EVENTS SEARCH AND FILTER BAR */
-.filter-box {
+.filter-box { 
     width: 1fr;
     gap: .5rem;
 }

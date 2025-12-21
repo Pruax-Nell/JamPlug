@@ -5,11 +5,6 @@
 
 }
 
-@media (min-width: 768px){
-    .primary-container {
-        /* width: 90vw; */
-    }
-}
 
 /* ||-------------------------------------INTRO AND SCRIBE */
 .intro {
@@ -21,23 +16,13 @@
     border-bottom: 5px solid var(--main-bg-orange);
     
 }
-/* ||------------------------------------------SEARCH BAR */
-.search {
-    margin-bottom: 60px;
-
-}
-
-/* ||-------------------------------------------------FILTER */
-.filter-div {
-    margin-bottom: 50px;
-}
 
 /* ||-------------------------------------------------EVENTS*/
 
 /* -----------------SECTION LAYOUT -----------*/
 .events-list {
-    margin: 60px 0;
-    padding-top: 60px;
+    margin: 20px 0;
+    padding-top: 10px;
     height: max-content;
 }
 
@@ -52,6 +37,48 @@
     gap: 24px;
     justify-content: center;
 }
+
+/* ||-------------------------------------------------FILTER */
+/* EVENTS SEARCH AND FILTER BAR */
+
+#filter-component {
+    display: grid;
+    gap: 2rem;
+    padding-inline: 1rem;
+    padding-block: 2.3rem;
+}
+
+#filter-component select {
+    height: 2.6rem;
+    border-radius: 6px;
+    text-align: center;
+    font-family: 'red rose';
+    letter-spacing: .1rem;
+    width: minmax(25ch, 100%);
+    
+}
+
+.filter-group{
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, 200px); */
+    grid-template-columns: repeat(auto-fit, minmax( 190px, 1fr ));
+
+}
+
+.filter-box { 
+    display: flex;
+    flex-direction: column;
+    /* width: max-content; */
+    padding: 1rem;
+    gap: 2ch;
+}
+
+.filter-return {
+
+}
+
+
+
 
 /* ||---------------------------------------EVENT ITEMS ----*/
 
@@ -127,6 +154,14 @@
 }
 
 .eventcard-poster {
+    object-fit: cover;
+    object-position: center;
+    align-self: center;
+    height: 85%;
+
+}
+.eventcard-poster-alt {
+    background-color: var(--accent-mid-teal);
     object-fit: cover;
     object-position: center;
     align-self: center;
@@ -243,8 +278,6 @@
 }
 
 .age-tag {
-    /* add js for conditional visuals i.e. if empty display:none; */
-    /* background-color: var(--accent-new-pink); */
     padding-block: .3ch;
     padding-inline: .9ch;
     text-align: center;
@@ -262,10 +295,18 @@
     justify-content: space-around;
 }
 
+.location-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
 .location {
-    text-align: right;
+    text-align: left;
     font-size: var(--fs-p3);
     margin: .5ch;
+    width: 100%;
+    text-wrap: balance;
 }
 
 .description-wrapper {

@@ -21,7 +21,7 @@ const events = defineCollection({
 
         category: z.enum(['Street', 'Jam/Dance', 'Artistic', 'Ramps/Vert', 'Speed', 'Roller Hockey', 'All', 'Other']),
         eventType: z.enum(['Skate Party', 'Day Party', 'Festival', 'Workshop','Social', 'Weekend', 'Other']),
-        eventPoster: image(),
+        eventPoster: z.string(),
 
         startTime: z.string().optional(), 
         endTime: z.string().optional(), 

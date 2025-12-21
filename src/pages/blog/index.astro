@@ -3,8 +3,13 @@ import BaseLayout from '../../layouts/baseLayout.astro';
 import BlogPost from '../../components/blogPost.astro'
 
 import { getCollection } from 'astro:content';
+import { object } from 'astro:schema';
 
 const allPosts = await getCollection("blogs");
+const blogPosts = await getCollection('blogs', ({ data }) => {
+	return data.status === 'published';
+});
+
 const pageTitle = "My Astro Learning Blog";
 ---
 <BaseLayout page_title={pageTitle}>
@@ -14,7 +19,7 @@ const pageTitle = "My Astro Learning Blog";
 
   <span>Component test below</span>
   <ul>
-    {allPosts.map((post) => (<BlogPost url={`/blog/${post.id}/`} title={post.data.title} />))}
+    {blogPosts.map((post) => (<BlogPost url={`/blog/${post.id}/`} title={post.data.title} />))}
   </ul>
 
     <p>

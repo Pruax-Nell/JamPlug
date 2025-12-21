@@ -5,7 +5,7 @@ endDate: 2026-09-23
 tags: ["UK", "Leeds", "2026", "annual"]
 status: "published"
 published: 2025-12-07
-eventPoster: "./flyers/rhythm-retreat-26.png"
+eventPoster: "rhythm-retreat-26.png"
 country: England
 townCity: Leeds
 description: a new festival taking the UK by storm

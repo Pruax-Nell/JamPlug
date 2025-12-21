@@ -5,7 +5,7 @@ endDate: 2026-06-10
 tags: ["UK", "London", "2026", "annual"]
 status: "published"
 published:  2025-12-08
-eventPoster: "./flyers/NC-tours.png"
+eventPoster: "NC-tours.png"
 country: England
 townCity: London
 description: hosted by London's greatest

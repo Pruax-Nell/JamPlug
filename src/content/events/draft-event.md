@@ -1,16 +1,16 @@
 ---
         eventName: Shouldn't appear
-        startDate: 2025 12 20
+        startDate: 2026 12 20
         endDate: 2026 02 21
         tags: ['new', 'test']
-        status: draft
+        status: published
         published: 2025-12-08
 
         country: Canada
         townCity: London
         description: test the filter
 
-        eventPoster: "./flyers/practice.png"
+        eventPoster: "practice.png"
         
         eventType: 'Other'
         category: 'Other'
