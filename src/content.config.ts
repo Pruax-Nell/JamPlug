@@ -69,7 +69,7 @@ const organisers = defineCollection({
         insert3: image().optional(),
     }),
 });
-
+ 
 
 //  BLOGS *** 
 const blogs = defineCollection ({

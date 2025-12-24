@@ -54,9 +54,9 @@
     --letter-space-rose: .2ch;
     --letter-space-shantell: .35ch;
     
-    --fs-title: clamp(1.8rem, 7vw + .2rem, 3.23rem);
+    --fs-title: clamp(1.8rem, 6vw + .2rem, 3.23rem);
     /* --fs-title: clamp(2rem, 7vw + .2rem, 3.5rem); */
-    --fs-title-2: clamp(1.58rem, 3vw + .2rem, 3rem);
+    --fs-title-2: clamp(1.58rem, 5vw + .2rem, 3rem);
     /* --fs-title-2: clamp(1.845rem, 3vw + .2rem, 3.1rem); */
     
     --fs-heading-xl: clamp(1.5rem, 2vw + 1rem, 2.5rem);
@@ -75,6 +75,9 @@
     --fs-note-small: clamp(.5rem, .2rem, 1rem);
     
     --fs-bttn: clamp(.1rem, 1vw + 1rem, 1rem);
+
+    --fs-mobile-1: clamp(.4rem, .6rem, 3rem);
+    --fs-mobile-button-1: clamp(.4rem, .6rem, 1rem);
     
 }
 
@@ -215,9 +218,19 @@ label {
     --shadow-light: #cdc9c270;
     --shadow-yellow: #f6d3466e;
     --shadow-teal: #4bc9b444;
-    --shadow-orange: #ff91244e;
+    --shadow-orange: rgba(255, 145, 36, 0.306);
     --shadow-pink: #ff449b41;
     --shadow-purple: #9c49ea5a;
+    --shadow-brown: #33211c6a;
+    --shadow-brown-2: #33211cb5;
+
+    --shadow-grey-2: #4a4844a5;
+    --shadow-light-2: #cdc9c29f;
+    --shadow-yellow-2: #f6d346a1;
+    --shadow-teal-2: #4bc9b489;
+    --shadow-orange-2: rgba(255, 145, 36, 0.493);
+    --shadow-pink-2: #ff449b95;
+    --shadow-purple-2: #9c49ea95;
     
     --text-white: #ebe9e5;
     --text-black: #262421;
@@ -233,8 +246,9 @@ label {
     --bg-orange-1: #e47200a7;
     --bg-orange-2: #ff9124bf;
 
-    --box-teal: #1c7568b4;
+    --box-teal: #1c7568f0;
     --box-orange: #e4720087;
+    --box-brown: #262421;
 
     --background-light: #ebe9e5;
     --background-dark: #262421;
@@ -459,7 +473,15 @@ body *{
 #mainFooter {
     grid-row: 3 / 4;
     grid-column: 1 / -1;
+    
 }
+
+@media (min-width: 765px) {
+    #mainFooter {
+        height: 95svh;
+    }
+}
+    
 
 /* || --------------------SITEWIDE------------------ */
 

@@ -1,12 +1,31 @@
 ---
-const Brand = "Your Jam Plug .UK";
+const Brand = "Your Jam Plug.UK";
 
 import BaseLayout from "../layouts/baseLayout.astro";
+import EventCard from "../components/eventCard.astro";
+import SampleBlogCard from "../components/sampleBlogCard.astro";
+import SampleEventCard from "../components/sampleEventCard.astro";
+
+import EndSamplecard from "../components/endsamplecard.astro"
 
 import "../styles/global.css";
+import "../styles/home.css";
+import "../styles/components.css";
+
+import { getCollection, getEntries } from "astro:content";
+import { Image } from "astro:assets";
+
 import Hero from '../components/hero.astro';
-// import { Image } from "astro:assets";
-// import Hero from "../content/events/flyers/another-flyer.png"
+import Img1 from "../assets/layout/image1.jpg"
+import Img2 from "../assets/layout/image2.jpg"
+import Img3 from "../assets/layout/image3.jpg"
+import Img4 from "../assets/layout/image4.jpg"
+import Img5 from "../assets/layout/image5.jpg"
+import Img6 from "../assets/layout/image6.jpg"
+import Img7 from "../assets/layout/image7.jpg"
+import Img8 from "../assets/layout/image8.jpg"
+import Img9 from "../assets/layout/image9.jpg"
+import Img10 from "../assets/layout/image10.jpg"
 
 const identity = {
 	branding: "your jam plug uk",
@@ -14,75 +33,144 @@ const identity = {
 	targetAudience: ["roller skater", "inline skater", "free skater"]
 };
 
+// GENERAL UTILITY
+const now = new Date();
+now.setHours(0, 0, 0, 0);
+
+const twoweeksTime = new Date();
+twoweeksTime.setDate(now.getDate() + 14);
+
+
+// FEATURED EVENTS
+const features = await getCollection('events', ({ data }) => {
+	return data.isFeatured === true && data.status === 'published';
+});
+
+// UPCOMING EVENTS
+const publishedEvents = await getCollection('events')
+console.log(publishedEvents)
+
+const upcomingEvents = (publishedEvents)
+.filter(
+	event => {
+		return event.data.startDate >= now && + twoweeksTime;
+	})
+	.sort(
+		(a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+	)
+	.slice(7);
+	
+	// BLOG COLLECTION
+	const publishedBlogs = await getCollection('blogs')
+	
+	const recentBlogs = (publishedBlogs)
+	.filter( (post) => post.data.status === 'published')
+	.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf(), )
+	.slice(7);
+	
+	
+
 ---
- 
+	
 <BaseLayout>
-	<section  id="hero-section" class="scroll-snap">
+	<!------------------------------------------ HERO ---------------->
+	<section  id="hero-section" class="section scroll-snap">
 		<Hero />
 	</section>
-	<section id="our-mission" class="scroll-snap">
-		<div>
+	
+	<!------------------------------------------ MISSION ---------------->
+	<section id="our-mission" class=" scroll-snap stack-section stack-1">
+		<div class="l-top heading-banner">
 			<h3>Helping skater's skate</h3>
 			<span>our mission in the skate community</span>
 		</div>
-		<div>
-			<p>how we plan to help skaters, business and all inbetween </p>
+		
+		<div class="l-mid">
+			<div class=" text-box-1">Text <button>click here</button></div>
 		</div>
-		<div>
-			<div class="cube"></div>
-		</div>
+		<!-- <div class="l-bottom">
+			<Image class="box-image-1" src={Img7} alt="a sign" width={500} height={800} />
+		</div> -->
 	</section>
-	<section id="festival-list" class="scroll-snap">
-		<div>
-			<h3>2026 big skate jam list</h3>
-			<span>direct to the list of annual big festivals</span>
+	<!------------------------------------------ JAM LIST ---------------->
+	<section id="festival-list" class="section scroll-snap center-focus">
+		<div class="blur-back-1 center-div">
+			<div >
+				<h3 >2026 big skate jam list</h3>
+				<span>direct to the list of annual big festivals</span>
+			</div>
+			<div>
+				<button><a href="/festivals">Big Jam List of Skate Festivals</a></button>
+			</div>
 		</div>
-		<div>
-			<p>to be categorised as a festival, it needs to meet the conditions. </p>
-		</div>
-		<div>
-			<div class="cube"></div>
-		</div>
+		
 	</section>
-	<section id="learn-to-skate" class="scroll-snap">
-		<div>
-			<h3>to the directory</h3>
-			<span>groups that offer learn-to-skate courses</span>
+	<!------------------------------------------ DIRECTORY ---------------->
+	<section id="learn-to-skate" class=" scroll-snap stack-section stack-2">
+		<div class="l-top heading-banner">
+			<h3>To the directory</h3>
+			<span>The A-to-Z of Skating</span>
+			<p>Find rinks, skate shops and groups who hold lessons or events</p>
 		</div>
-		<div>
-			<p>a link to the directory page</p>
+		<div class="l-mid ">
+			<div class="text-box-1"><a href="/directory">Directory</a></div>
 		</div>
-		<div>
-			<div class="cube"></div>
-			<span>multi image collage or auto carosel.. featured groups? </span>
-		</div>
+		<!-- <div class="l-bottom">
+			<Image class="box-image-1" src={Img3} alt="a sign" width={500} height={800} />
+		</div> -->
 	</section>
-	<section id="upcoming-events" >
-		<div>
-			<h3>upcoming events</h3>
-			<span>whats loading</span>
-		</div>
-		<div class="flex">
+	<!------------------------------------------ UPCOMING ---------------->
+	<section id="upcoming-events" class="section scroll-snap side-by-side" >
+		<div class="side-a">
+			<h3>Upcoming Events</h3>
+			<a href="/events">What's coming up next?</a>
 			<p>small carosel of some events. maybe featured</p>
 			<p>direct to main event page</p>
-			<div class="cube"></div>
-			<div class="cube"></div>
-			<div class="cube"></div>
 		</div>
-		<div>
-			<span>carosel</span>
+		<div class=" event-previews side-b">
+
+			{publishedEvents.length > 0 ? (
+				<div class="carosel"> 
+				{/* map/dynamic list */}
+			{publishedEvents.map((post) =>
+				( <SampleEventCard title={post.data.eventName} url={`/events/${post.id}/`} poster={`/content/flyers/${post.data.eventPoster}`} tags={post.data.category} description={post.data.description} date={post.data.startDate}
+				/>
+			))}
+			{/* add the end card */}
+			<EndSamplecard title="See more Events" url="/events" description="Click me" />
+			</div> ) 
+			: 
+			// OR show none returned
+			(<div class="none-returned"><p>no events found</p></div>)}
+			
+		</div>
+
+	</section>
+	<!------------------------------------------ BLOGS ---------------->
+	<section id="skate-news" class="section scroll-snap side-by-side">
+		<div class="side-a">
+			<h3>Skate News</h3>
+			<span>Direct to blog page</span>
+			<a href="/blog">Blog page</a>
+		</div>
+		<div class="side-b">
+			{publishedBlogs.length > 0 ? (
+				<div class="carosel"> 
+				{/* map/dynamic list */}
+			{publishedBlogs.map((post) =>
+				( <SampleBlogCard title={post.data.title} url={`/blog/${post.id}/`}  tags={post.data.tags} description={post.data.description}
+				/>
+			))}
+			{/* add the end card */}
+			<EndSamplecard title="See more Posts" url="/blog/" description="Click me" />
+			</div> ) 
+			: 
+			// OR show none returned
+			(<div class="none-returned"><p>~No blog posts found~</p></div>)}
+			
 		</div>
 	</section>
-	<section id="skate-news">
-		<div>
-			<h3>skate news</h3>
-			<span>direct to blog page</span>
-			<div class="cube"></div>
-			<div class="cube"></div>
-			<div class="cube"></div>
-		</div>
-	</section>
- 
+	
 </BaseLayout>
 
 <style>

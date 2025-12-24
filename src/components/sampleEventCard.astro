@@ -1,0 +1,20 @@
+---
+import "../styles/components.css" ;
+
+
+const { title, url, poster, tags, date, startDate } = Astro.props;
+
+// const day = startDate.getDate().toString().padStart(2, '0');
+// const month = (startDate.getMonth() + 1).toString().padStart(2, '0');
+---
+
+<div class=" sample-case">
+    <a href={url} class="sample-card">
+        <img src={poster} alt={title} class="mini-poster">
+        <div class="mini-content">
+            <p>{title}</p>
+            <span>{date}</span>
+            {tags && <div>{tags}</div>}
+        </div>
+    </a>
+</div>

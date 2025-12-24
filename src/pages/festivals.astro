@@ -4,7 +4,7 @@ import BigList from "../components/big-list.astro";
 
 import '../styles/components.css'
 import '../styles/global.css'
-import '../styles/events.css'
+import '../styles/event.css'
 
 import { getCollection } from "astro:content";
 const bigEvents = await getCollection('events', ({ data }) => {
@@ -26,16 +26,15 @@ const justAdded = (bigEvents)
     }
 )
 
-// THE GROUPING LOGIC
-const groupedEvents = bigEvents.reduce((acc, event) => {
-    const month = event.data.startDate.toLocaleString('default', { month: 'long' });
+const groupedEvents = bigEvents.reduce((acc: Record<string, any[]>, event) => {
+    const month = event.data.startDate.toLocaleString(['en-GB', 'en-US'], { month: 'long' });
     
-    // 2. If this month doesn't exist in our object yet, create an empty array for it
+    // If this month doesn't exist in our object yet, create an empty array for it
     if (!acc[month]) {
         acc[month] = [];
     }
     
-    // 3. Push the event into the correct month bucket
+    // Push the event into the correct month bucket
     acc[month].push(event);
     
     return acc;
@@ -46,6 +45,17 @@ Object.values(groupedEvents).forEach(monthArray => {
     monthArray.sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf());
 });
 
+const now = new Date();
+
+// Helper function to calculate days left
+function getDaysRemaining(targetDate) {
+    const diffInMs = targetDate.getTime() - now.getTime();
+
+    const days = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+    
+    return days;
+}
+
 ---
 
 <BaseLayout>
@@ -55,18 +65,19 @@ Object.values(groupedEvents).forEach(monthArray => {
     </div>
     <div>
         <p>Festivals are the days we plan in advance for</p>
-        <span>...</span>
     </div>
-    <div>
+    <div class="jam-req">
         <div><span>it's overnight</span></div>
         <div><span>workshops AND parties</span></div>
         <div><span>what makes it a festival</span></div>
     </div>
 </section>
 <section>
-    <h3>2026</h3>
-    <p></p>
-    <span></span>
+    <div class="jam-direct">
+        <span><button class="jam-year-button"> 2025 </button></span>
+        <h2 class="year-title">2026</h2>
+        <span><button class="jam-year-button"> 2027 </button></span>
+    </div>
     <div id="jam-list">
         <div>
             {monthOrder.map((month) => {
@@ -84,13 +95,15 @@ Object.values(groupedEvents).forEach(monthArray => {
                             
                         <div class="jam-content">
                             <div class="jam-title">
-                            <p>{event.data.eventName} {event.data.published >= thirtyDaysAgo && (
-                                <span class="highlight-new">NEW!</span>
-                            )}</p>
-                            <p>{event.data.description}</p>
+                                {event.data.published >= thirtyDaysAgo && (
+                                    <span class="highlight-new">NEW!</span>
+                                )}
+                                    
+                                <p>{event.data.eventName} </p>
+                                <p>{event.data.description}</p>
                             </div>
 
-                            <div class="divider"> - </div>
+                            <div class="divider">  </div>
 
                             <div class="jam-info">
                                 <p>{event.data.townCity} - {event.data.country}</p>
@@ -196,25 +209,78 @@ Object.values(groupedEvents).forEach(monthArray => {
 
 <style>
 
+    .welcome {
+        justify-items: center;
+    }
+
+    .jam-req {
+        display: flex;
+        gap: 24px;
+
+    }
+
+    .jam-direct {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        align-content: center;
+    }
+
+    .jam-direct span {
+        align-content: center;
+    }
+
+    .year-title {
+        justify-self: center;
+        font-size: var(--fs-title);
+    }
+
+    .jam-year-button {
+        border-radius: 4px;
+        letter-spacing: .3ch;
+    }
+
     .highlight-new {
         height: 40px;
-        width: 60px;
-        color: var(--main-orange);
+        width: 100px;
+        padding: 2ch;
+        border-radius: 18px;
+
+        color: var(--black);
+        font-weight: 800;
+        background: linear-gradient(45deg, #f43f5e, #fb923c);
+        text-align: center;
+        align-content: center;
+        justify-self: right;
+
+        animation: pulse 2s infinite;
+
     }
+
+    @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
 
     .divider {
         align-content: center;
-        width: 10%;
+        width: .2fr;
     }
 
     .jam-item {
         display: flex;
         flex-direction: row;
+        width: 100%;
+    }
+
+    .jam-item a {
+        width: 100%;
     }
 
     .jam-content {
         display: grid;
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto 10px auto;
     }
 
     .jam-content  * {
@@ -222,13 +288,25 @@ Object.values(groupedEvents).forEach(monthArray => {
         padding: 0;
     }
 
-    .jam-title, .jam-info {
+    .jam-title  {
         display: flex;
         flex-direction: column;
-        line-height: 1.2rem;
         height: max-content;
+        width: 2fr;
+        justify-content:space-between;
     }
 
+    .jam-info {
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+        width: 1fr;
+    }
+
+    .month-block h2 {
+        justify-self: left;
+        margin-left: 3rem;
+    }
 
 
 </style>

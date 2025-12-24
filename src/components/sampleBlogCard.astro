@@ -1,0 +1,16 @@
+---
+import "../styles/components.css" ;
+
+
+const { title, url, tags, description } = Astro.props;
+---
+
+<div class="sample-case">
+    <a href={url} class="sample-card">
+        <p class="blog-card-title">{title}</p>
+    <div class="mini-content-2">
+        <span>{description}</span>
+        <!-- {tags && <span>{tags}</span>} -->
+    </div>
+    </a>
+</div>

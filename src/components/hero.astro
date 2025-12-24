@@ -1,28 +1,52 @@
 ---
 import { Image, Picture } from "astro:assets";
-import HeroImg from "../content/events/flyers/another-flyer.png"
+import HeroImg from "../assets/layout/image9.jpg"
 
 
----
+--- 
 
 <div class="hero-seat">
-    <h1 class="welcome"> where we skate </h1>
-    <Image src={HeroImg} priority alt="Skater Welcome" layout='full-width' width={680}/>
+    <div class="hero-box">
+        <h1 class="welcome"> where we skate </h1>
+        <!-- <Image class="hero-item" src={HeroImg} priority alt="Skater Welcome" layout='full-width' width={680}/> -->
+    </div>
 </div>
 
 <style>
     .hero-seat {
         width: 1fr;
-        height: max-content;
+        height: 80svh;
+        /* height: max-content; */
+        background-image: 
+        linear-gradient(var(--shadow-brown-2), var(--shadow-brown-2), var(--shadow-orange-2)),
+        url("../assets/layout/image9.jpg");
+        background-size: 200%;
+        background-position: bottom center;
+        /* backdrop-filter: blur(.1rem); */
+    }
+
+    .hero-box{display: grid;
+        grid-template-columns: 5% repeat(5, 18%) 5%;
+        grid-template-rows: .5fr repeat(3, 1fr) .2fr;
+        height: 100%;
+        width: 100%;
+
+        backdrop-filter: blur(.1rem);
     }
 
     .welcome {
+
+        grid-row: 4/5;
+        grid-column: 2 / 5;
         margin: .1ch;
         text-align: center;
+        font-size: var(--fs-title-2);
         z-index: 5;
-        position: absolute;
-        top: 400px;
 
+    }
+
+    .hero-item{
+        width: 100%;
     }
 
 </style>

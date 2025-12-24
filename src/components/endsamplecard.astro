@@ -1,0 +1,16 @@
+---
+import "../styles/components.css" ;
+
+
+const { title, url, description } = Astro.props;
+---
+
+<div class="sample-end-case">
+    <a href={url} class="sample-end-card">
+        <div class="end-card-content">
+            <p>{title}</p>
+            <span>{description}</span>
+            <span>~</span>
+        </div>
+    </a>
+</div>

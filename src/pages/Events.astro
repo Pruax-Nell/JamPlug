@@ -10,6 +10,7 @@ import SearchComponent from "../components/searchFilter.astro";
 import UpcomingEvents from '../components/eventPagination'
 
 const now = new Date();
+now.setHours(0, 0, 0, 0);
 
 // All events which status is 'published'
 const publishedEvents = await getCollection('events', ({ data }) => {
@@ -41,7 +42,7 @@ const pastEvents = publishedEvents
     // Sort by start date descending (most recent first)
     return new Date(b.data.startDate).valueOf() - new Date(a.data.startDate).valueOf();
   });
-
+ 
 	
 // 3. DATA SERIALIZATION (Crucial for React Props)
 // React components must receive data that is JSON-safe. Date objects are NOT JSON-safe.
@@ -159,17 +160,7 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 		<div class="event-grid"> 
 			{pastEvents.map((post) =>
 				( <EventCard 
-				url={`/events/${post.id}/`} 
-				title={post.data.eventName} 
-				poster={post.data.eventPoster}  
-				description={post.data.description} 
-				area={post.data.townCity} 
-				country={post.data.country} 
-				start={post.data.startDate} 
-				end={post.data.endDate} 
-				category={post.data.category} 
-				type={post.data.eventType} 
-				age={post.data.minAge} />)
+				/>)
 			)}
 		</div>) : 
 		(<div class="none-returned"><p>no events found</p></div>)
