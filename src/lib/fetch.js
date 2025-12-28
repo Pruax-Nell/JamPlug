@@ -1,14 +1,20 @@
 import { items } from "@wix/data";
 import { createClient, OAuthStrategy } from "@wix/sdk";
 
-const myWixClient = createClient({
+const WixClient = createClient({
   modules: { items },
-  auth: OAuthStrategy({ clientId: import.meta.env.Wix_CLIENT_ID }),
+  auth: OAuthStrategy({ 
+    clientId: 'e4662f9f-9309-4489-a602-0cbda949df03' }),
 });
 
-const dataItemsList = await myWixClient.items.query({
-  "dataCollectionId": "Members/Badges"
-}).find();
+export default async function fetchEvents() {
+    let query = WixClient.items.queryDataItems({
+        dataCollectionId: "EVENT_ITEM",
+    });
+
+    const events = await query.find();
+    return events.items; 
+}
 
 console.log('My Data Items:');
 console.log('Total: ', dataItemsList.items.length);
@@ -17,11 +23,4 @@ console.log(dataItemsList.items
   .join('\n')
 );
 
-export default async function fetchPosts() {
-    let query = WixClient.items.queryDataItems({
-        dataCollectionId: "Posts",
-    });
 
-    const articles = await query.find();
-    return articles.items; 
-}
