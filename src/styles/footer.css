@@ -1,4 +1,4 @@
-/* SECTION WRAP */
+/* SECTION WRAP - BASELAYOUT*/ 
 #mainFooter {
     background-color: var(--main-brown-light);
     color: var(--main-bg-light);
@@ -14,17 +14,29 @@
 
 }
 
+/* COMPONENT - FOOTER */
+
 /* text links */
-#mainFooter a {
+.bold-links a {
     color: var(--main-bg-light);
     text-decoration: underline var(--accent-mid-orange);
     text-underline-offset: .7ch;
 }
 
-#mainFooter a:hover {
+.bold-links a:hover {
     color: var(--accent-mid-orange);
 }
 
+/* SITE MAP */
+.simple-links a{
+    color: var(--text-white);
+}
+.simple-links a:hover{
+    color: var(--main-pink);
+    font-size: var(--fs-caption);
+}
+
+/* GENERAL */
 #mainFooter p {
     font-size: var(--fs-footer);
 
@@ -58,7 +70,7 @@
 
 footer {
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
 
 }
 
@@ -79,7 +91,7 @@ footer {
 @media (max-width: 751px) {
 
     footer {
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto 1fr auto;
     }
 
     #upperFoot {
@@ -97,4 +109,9 @@ footer {
     .row2 {grid-row-start: 2;}
 
     .row3 { grid-row-start: 3;}
+}
+
+.footer-nav-list{
+    text-align: left;
+    justify-items: left;
 }

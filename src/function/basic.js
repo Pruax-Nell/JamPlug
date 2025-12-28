@@ -1,33 +1,16 @@
-// Eventcard age requirement box 
+// ---------------- CHAPTERS 
+// NAV MENU
+// TO TOP BUTTON
+// EVENT FORMS
+// DYNAMIC FORM Q - DJS
+// FORM SUBMISSION
 
-
-// || scroll to top button 
-
-let topButton = document.getElementById("toTop");
-
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-    if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
-        topButton.style.display = "block";
-    } else {
-        topButton.style.display = "none";
-    }
-}
-
-function scrollTop() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-
-}
-
-topButton.addEventListener('click', scrollTop)
 
 
 // || Nav Menu open/close button
 
-const primaryNav = document.querySelector('#mainNav');
-const navToggle = document.querySelector('.mobileNavToggle');
+const primaryNav = document.querySelector('#expanded-navigation');
+const navToggle = document.querySelector('.nav-toggle');
 
 navToggle.addEventListener('click', () => {
     const visibility = primaryNav.getAttribute('data-visible');
@@ -40,12 +23,74 @@ navToggle.addEventListener('click', () => {
         }
 
     console.log(visibility);
-});
+}); 
+
+// ------------------------------------------------ TOOL KIT
+// || SCROLL TO TOP  
+
+let ToolKit = document.getElementById('tool-kit');
+let topButton = document.getElementById("toTop");
+let themeToggle = document.getElementById('themeToggle');
+
+window.onscroll = function() {activeScroll()};
+
+function activeScroll() {
+const isScrolled = document.body.scrollTop > 100 || document.documentElement.scrollTop > 100;
+
+    if (isScrolled) {
+        topButton.style.opacity = '100%';
+        themeToggle.style.opactiy = '100%';
+    } else {
+        topButton.style.opacity = '30%';
+        themeToggle.style.opactiy = '30%';
+        
+    }
+}
+
+function scrollTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+
+}
+
+topButton.addEventListener('click', scrollTop)
+
+// LIGHT/DARK THEME CHANGE
+  const theme = (() => {
+    const localStorageTheme = localStorage?.getItem("theme") ?? '';
+    if (['dark', 'light'].includes(localStorageTheme)) {
+      return localStorageTheme;
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+      return 'light';
+  })();
+
+  if (theme === 'light') {
+    document.documentElement.classList.remove('dark');
+  } else {
+    document.documentElement.classList.add('dark');
+  }
+
+  window.localStorage.setItem('theme', theme); 
+
+  const handleToggleClick = () => {
+    const element = document.documentElement;
+    element.classList.toggle("dark");
+
+    const isDark = element.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  }
+
+  document.getElementById("themeToggle")?.addEventListener("click", handleToggleClick);
+
+
 
 // || header text shrink on scroll //
-window.addEventListener('scroll', () => {
-    document.querySelector('pageTitle').style.fontsize=((document.body.scrollTop *.05)+14)+'px';
-})
+// window.addEventListener('scroll', () => {
+//     document.querySelector('page_title').style.fontsize=((document.body.scrollTop *.05)+14)+'px';
+// })
 
 // EVENT FORMS 
 
@@ -118,7 +163,7 @@ window.addEventListener('scroll', () => {
         };
 
 
-// DYNAMIC SECTION - DJS - SKATE NIGHT
+// DYNAMIC FORM Q - DJ
         
 const field = document.getElementById("dynamic-fields-container");
 // const dynamic = document.getElementsByClassName("dynamic-field");  
@@ -164,28 +209,5 @@ addButton.addEventListener('click', ()=>{
 
 });
     
-// Form submission
+// FORM SUBMISSION
 
-// Conceptual outline of the Astro API route logic
-export async function POST({ request }) {
-    // 1. Parse the request body (which is multipart/form-data)
-    // This part requires a library or native Node.js feature depending on your Astro adapter.
-    const formData = await request.formData(); 
-    const file = formData.get('eventImage');
-    const eventName = formData.get('eventName');
-
-    // 2. Upload the file to Cloudinary
-    // You would use the Cloudinary SDK here to upload the 'file' object.
-    const uploadResult = await cloudinary.uploader.upload(file);
-    const imageUrl = uploadResult.secure_url; // Get the resulting URL
-
-    // 3. Write data to Google Sheet
-    // Use a library like 'google-spreadsheet' to open your sheet 
-    // and append a row with eventName and imageUrl.
-
-    // 4. Respond to the user
-    return new Response(JSON.stringify({ success: true, url: imageUrl }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
-    });
-}

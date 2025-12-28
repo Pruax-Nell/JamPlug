@@ -1,8 +1,8 @@
 /* PRIMARY CONTAINER */
 @media (max-width: 767px) {
     .primary-container {
-        max-width: 1240px, 80vw;
-        margin: auto;
+        width: 80vw;
+        margin: auto; 
     }
 }
     
@@ -14,39 +14,44 @@
 }
 
 /* FIELD SECTIONS */
-@media (max-width: 774px) {
     .dual-field {
         display: flex;
         flex-direction: column;
     }
-}
 
-@media (min-width: 775px) {
-    .dual-field {
-        display: grid;
-        grid-template-columns: auto 60%;
-        grid-template-rows: auto;
-    }
-}
+
 
 /* DUAL CONTAINERS */
+
+.half-container {
+    padding: 0 2svw;
+    width: minmax(20svw 80svw);
+}
 
 
 /* INFO CONTAINER */
 .info {
-    min-width: 400px;
+    /* min-width: 400px; */
     margin-bottom: 1rem;
 }
 
 .info > * {
-    width: minmax(max-content, 1fr);
+    /* width: minmax(max-content, 1fr); */
     padding: 1ch;
     margin-inline: 2ch;
 }
 
 .info p {
-    width: max-content;
     text-wrap: wrap;
+}
+
+#event-type {
+    height: 2.7rem;
+    box-shadow: 2px 2px var(--grey);
+}
+#event-type::selection {
+    box-shadow: 2px 2px var(--main-pink);
+    
 }
 
 /* ||------------------------------------------------- FORM SECTION */

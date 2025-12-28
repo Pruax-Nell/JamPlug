@@ -4,17 +4,18 @@
 // const {title = ' Your Jam Plug UK | Where Roller Skates gather'} = Astro.props; 
 
 import "../styles/global.css";
+import "../styles/components.css";
 import "../styles/header.css"
 import "../styles/footer.css";
 import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
 
 import Head from "../components/head.astro";
-import ToTop from "../components/toTop.astro";
 import Socials from "../components/socials.astro" ;
-import ThemeIcon from "../components/themeIcon.astro";
+
 import Navigation from "../components/navigation.astro";
 import Toolkit from "../components/toolkit.astro";
-
+import FullNav from "../components/fullNav.astro";
+import PageFooter from "../components/footer.astro";
  
 interface Props {
 	page_title?: string;
@@ -35,26 +36,25 @@ const BASE_URL = import.meta.env.BASE_URL
 
 	<body >
 	<section id="main-container">
-		<!-- <div id="toolkit-field"><Toolkit /></div> -->
-		<section id="mainHeader"> 
-			<!-- || Menu toggle button -->
-			<button aria-controls="mainNav" aria-expanded="false" class="mobileNavToggle"><span class="srOnly">Menu</span></button>
+		<div id="toolkit-container">
+			<Toolkit/>
+		</div>
 
+		<section id="mainHeader"> 
+			
+			
 			<!-- || page head and Nav -->
 			<header>
 				<!-- A -->
-				<div id="homeLogo">
+				<div id="head-logo">
 					<a href="/home/"><img src={BASE_URL + 'public/branding/shine-orange-lug-2.svg'} alt="your Jam Plug" id="headLogo"></a>
 				</div>
 				<!-- B -->
 				<div id=theNav">
 					<Navigation />
+					<FullNav />
 				</div>
-				<!-- C -->
-				<div id="theCall">
-					<a href="#" id="CTA">For Skaters <span class="srOnly">Newsletter sign up</span></a>
-					
-				</div>
+
 			</header>
 		</section>
 
@@ -64,42 +64,14 @@ const BASE_URL = import.meta.env.BASE_URL
 		</section>
 
 		<section id="mainFooter">
-			<footer>
-				<section id="upperFoot" class="grid">
-					<div> </div>
-					<div>
-						<img src={BASE_URL + 'public/branding/alt-bloat-1.svg'} alt="Logo 2" id="endLogo">
-					</div>
-					<div class="socialLinks">
-					
-						<Socials />
-					</div>
-					
-				</section>
-				<section id="lowerFoot" class="grid">
-					<div class="row2 toe">
-						<p>Your Jam Plug UK ®
-							Established 2023 <br> [<a href="/terms-of-use/">Terms of Use</a>]  - 
-							[<a href="/privacy-policy/">Privacy Policy</a>]
-						</p>
-					</div>
-					<div class="row3 toe">
-						<p>
-							YOURJAMPLUG.UK is a collective that helps skaters find what they need to enjoy the hobby they love.
-						</p>
-					</div>
-					<div class="row1 toe">
-						<p>Email us here: <br> <a href="...">email@yourjamplug.com</a>
-						</p>
-					</div>
-				</section>
-			</footer>
+			<PageFooter />
 		</section>
 	</section>
 	</body>
 	
 	<script>
         import "../function/basic.js"
+
     </script>
 
 </html>

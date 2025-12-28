@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro';
 import BlogPost from '../../components/blogPost.astro'
+import fetchPosts from '../../lib/fetch';
 
 import { getCollection } from 'astro:content';
 import { object } from 'astro:schema';

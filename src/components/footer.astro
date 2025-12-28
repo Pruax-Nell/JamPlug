@@ -1,0 +1,59 @@
+---
+import Socials from "../components/socials.astro" ;
+import "../styles/footer.css";
+
+const BASE_URL = import.meta.env.BASE_URL
+
+---
+
+<footer>
+    <section id="upperFoot" class="grid bold-links">
+        <div> </div>
+        <div>
+            <img src={BASE_URL + 'public/branding/alt-bloat-1.svg'} alt="Logo 2" id="endLogo">
+        </div>
+        <div class="socialLinks">
+        
+            <Socials />
+        </div>
+        
+    </section>
+    <section id="lowerFoot" class="grid bold-links">
+        <div class="row2 toe">
+            <p>Your Jam Plug UK ®
+                Established 2023 <br> [<a href="/terms-of-use/">Terms of Use</a>]  - 
+                [<a href="/privacy-policy/">Privacy Policy</a>]
+            </p>
+        </div>
+        <div class="row3 toe">
+            <p>
+                YOURJAMPLUG.UK is a collective that helps skaters find what they need to enjoy the hobby they love.
+            </p>
+        </div>
+        <div class="row1 toe">
+            <p>Email us here: <br> <a href="...">email@yourjamplug.com</a>
+            </p>
+        </div>
+    </section>
+    <section id="endFooter" class="grid simple-links">
+        <!-- <div>
+            <span>Site Map</span>
+            <ul id="footer-nav-list">
+                <li><a href="/home/">Home</a></li>
+                <li><a href="/events/">Events</a></li>
+                <li><a href="/directory/">Directory</a></li>
+                <li><a href="/about/">About Us</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/">Skate Business'</a></li>
+                <li><a href="/submit-an-event/">Submit your Event</a></li>
+                <li><a href="/submit-an-event/">Submit your Business</a></li>
+                <li><a href="/about/">About Us</a></li>
+                <li><a href="/ourProcess/">The Process</a></li>
+                <li><a href="/ourProcess/#YJP=FAQ">F.A.Q.</a></li>
+                <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                <li><a href="/terms-of-use/">Terms of Use</a></li>
+                <li><a href="/">Make an Enquiry</a></li>
+            </ul>
+        </div> -->
+    </section>
+</footer>

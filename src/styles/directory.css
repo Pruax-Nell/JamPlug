@@ -16,10 +16,13 @@
     grid-template-rows: auto auto auto auto;
 }
 
+.title {
+    text-align: center;
+    text-wrap: balance;
+}
+
 /* -------------------- || page title section */
 #pageTop {
-    position: sticky;
-    top: -20px;
     grid-row: 1;
     grid-column: 2;
     justify-items: center;
@@ -44,6 +47,12 @@
         backdrop-filter: blur(.3rem);
     }
 
+}
+
+@media (max-width: 500px) {
+     #menuBar {
+        top: 68px;
+     }
 }
 
 
@@ -139,12 +148,12 @@
 
 }
 
-@media (max-width: 760px) {
+@media (max-width: 848px) {
     .blockList {
         columns: 2;
     }
 }
-@media (max-width: 450px) {
+@media (max-width: 650px) {
     .blockList {
         columns: 1;
     }

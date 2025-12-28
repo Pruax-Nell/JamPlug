@@ -3,11 +3,11 @@ import { Image, Picture } from "astro:assets";
 import HeroImg from "../assets/layout/image9.jpg"
 
 
---- 
+---  
 
 <div class="hero-seat">
     <div class="hero-box">
-        <h1 class="welcome"> where we skate </h1>
+        <h1 class="welcome"> For the Skaters </h1>
         <!-- <Image class="hero-item" src={HeroImg} priority alt="Skater Welcome" layout='full-width' width={680}/> -->
     </div>
 </div>
@@ -15,7 +15,7 @@ import HeroImg from "../assets/layout/image9.jpg"
 <style>
     .hero-seat {
         width: 1fr;
-        height: 80svh;
+        height: 60svh;
         /* height: max-content; */
         background-image: 
         linear-gradient(var(--shadow-brown-2), var(--shadow-brown-2), var(--shadow-orange-2)),
@@ -42,6 +42,10 @@ import HeroImg from "../assets/layout/image9.jpg"
         text-align: center;
         font-size: var(--fs-title-2);
         z-index: 5;
+        text-wrap: nowrap;
+        color: var(--main-bg-light);
+        /* text-shadow: 1px 2px 4px var(--main-bg-light); */
+        -webkit-text-stroke: .9px var(--shadow-brown);
 
     }
 

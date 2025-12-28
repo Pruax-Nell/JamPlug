@@ -37,7 +37,7 @@ const INITIAL_FILTERS = {
   country: 'All',
   eventType: 'All',
   skateDiscipline: 'All',
-  minAge: 'All',
+  minAge: 'All', 
   skillLevel: 'All',
   month: 'All',
 };
@@ -179,7 +179,7 @@ const EventFilters = ({ events }) => {
             {/* clear filters button */}
             <button 
                 onClick={() => setFilters(INITIAL_FILTERS)}
-                className=""
+                className="button reset-button"
             >
                 Clear All Filters
             </button>
@@ -200,7 +200,7 @@ const EventFilters = ({ events }) => {
                 href={`/events/${post.slug || post.id}/`}
                 className="list-link">
 
-                <div class="img-wrapper ">
+                <div className="img-wrapper ">
                     {post.data.eventPoster ? (
                         <img 
                             src= {`/content/flyers/${post.data.eventPoster}`} 
@@ -215,32 +215,32 @@ const EventFilters = ({ events }) => {
                     )}
                 </div>
 
-                <div class="content-wrapper">
-                    <div class="title-wrap">
-                        <h6 class="event-name">{post.data.eventName}</h6>
+                <div className="content-wrapper">
+                    <div className="title-wrap">
+                        <h6 className="event-name">{post.data.eventName}</h6>
                     </div>
 
-                    <div class="event-category">
-                        <div class="flex cat-box-1">
-                            <div class="cat-tag">{post.data.category}</div>
-                            <div class="type-tag">{post.data.eventType}</div>
+                    <div className="event-category">
+                        <div className="flex cat-box-1">
+                            <div className="cat-tag">{post.data.category}</div>
+                            <div className="type-tag">{post.data.eventType}</div>
                             
                         </div>
-                        <div class="flex cat-box-2">
-                            {post.data.minAge && <div class="age-tag dataOptional" id="minimum-age-tag">{post.data.minAge}</div>}
+                        <div className="flex cat-box-2">
+                            {post.data.minAge && <div className="age-tag dataOptional" id="minimum-age-tag">{post.data.minAge}</div>}
                         </div>
                     </div>
 
-                    <div class="meta-wrapper">
-                        <div class="location-wrapper">
-                            📍 <p class="location">{post.data.townCity} - {post.data.country}</p>
+                    <div className="meta-wrapper">
+                        <div className="location-wrapper">
+                            📍 <p className="location">{post.data.townCity} - {post.data.country}</p>
                         </div>
 
-                        <div class="description-wrapper">
-                            <span class="description">{post.data.description}</span>
+                        <div className="description-wrapper">
+                            <span className="description">{post.data.description}</span>
                         </div>
 
-                        <div class="date-wrapper">
+                        <div className="date-wrapper">
                             <span>
                                 <span>🗓️ {new Date(post.data.startDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                             </span>

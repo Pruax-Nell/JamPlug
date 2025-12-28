@@ -2,7 +2,7 @@
 import "../styles/components.css" ;
 
 
-const { title, url, poster, tags, date, startDate } = Astro.props;
+const { title, url, poster, tags, date, startDate, city, country } = Astro.props;
 
 // const day = startDate.getDate().toString().padStart(2, '0');
 // const month = (startDate.getMonth() + 1).toString().padStart(2, '0');
@@ -13,7 +13,8 @@ const { title, url, poster, tags, date, startDate } = Astro.props;
         <img src={poster} alt={title} class="mini-poster">
         <div class="mini-content">
             <p>{title}</p>
-            <span>{date}</span>
+            <span>{city}, {country}</span>
+            <!-- <span>{date}</span> -->
             {tags && <div>{tags}</div>}
         </div>
     </a>

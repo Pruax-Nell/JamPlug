@@ -71,16 +71,18 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 	</div>
 </section>
 <section class="scribe">
-	<div class="primary-container">
+	<div class="primary-container scribe-content">
+		<div class="">
 			<p>Find Roller skate events happening all over Europe. Small jams, weekend festivals, workshops and more.</p>
 	</div>
-	<div>
+	<div class="left-lean">
 		<p>what are you looking for?</p>
-		<span>Skate party?</span>
 	</div>
-	<div>
-		<h3>Big Jam List</h3>
-		<button><a href="/festivals">Click here</a></button>
+	<div class=" half-width-block jam-link-block">
+		<h3 id="jam-list-heading">Big Jam List</h3>
+		<a href="/festivals" class="button light-button">Annual Skate Festivals</a>
+		<span>Find all of Europes multi-day skate festivals</span>
+	</div>
 	</div>
 </section>
 <!-- ||-----------------------------------------------EVENTS SECTION -->
@@ -99,31 +101,6 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 
 	</div>
 
-	<!-- ||------------------------------------------EVENTS SECTION -->
-	<!-- TODO: temporary solution until pagination works, create a block with scrolling overflow.  -->
-	<!-- <div class="primary-container events">
-		<div>
-			{upcomingEvents.length > 0 ? (
-			<div class="event-grid">
-				{upcomingEvents.map((post) => 
-					(<EventCard 
-					url={`/events/${post.id}/`} 
-					title={post.data.eventName} 
-					poster={post.data.eventPoster}  
-					description={post.data.description} 
-					area={post.data.townCity} 
-					country={post.data.country} 
-					start={post.data.startDate} 
-					end={post.data.endDate} 
-					category={post.data.category} 
-					type={post.data.eventType} 
-					age={post.data.minAge} />)
-					)}
-			</div>) : 
-		(<div class="none-returned"><p>no events found</p></div>)
-		}	 
-		</div>
-	</div> -->
 </section>
 <!-- ||------------------------------------------------50/50 SECTION -->
 
@@ -143,7 +120,7 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 				<h2>Submit an Event</h2>
 				<p>Have an Event, Competition, Jam or Tour to tell us about? We aim to add events weekly, so use the button below to spread the word!</p>
 				<div class="btn-wrap">
-					<a class="button btn-primary" href="/submit-an-event" target="_self">SUBMIT</a>                        
+					<a class="button secondary-button" href="/submit-an-event" target="_self">SUBMIT</a>                        
 				</div>
 			</div>
 		</div>

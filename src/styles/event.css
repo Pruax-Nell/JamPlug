@@ -17,29 +17,40 @@
     
 }
 
-/* ||-------------------------------------------------EVENTS*/
-
-/* -----------------SECTION LAYOUT -----------*/
-.events-list {
-    margin: 20px 0;
-    padding-top: 10px;
-    height: max-content;
+.scribe-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.events {
-    margin-bottom: 2rem;
+.scribe-content div {
+    margin-top: 4ch;
 }
 
-.event-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    grid-auto-flow: dense;
-    gap: 24px;
-    justify-content: center;
+.jam-link-block {
+    width: 100%;
+    height: 50svh;
+    padding: 2ch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    background-color: var(--shadow-purple);
+    border-color: var();
+    border-radius: 8px;
+    /* border: 13px solid var(--accent-dark-orange); */
+    box-shadow: 0 0 6px 0 var(--box-teal),0 0 40px 0 var(--shadow-purple);
+
+
+}
+
+#jam-list-heading{
+    font-size: var(--fs-title);
+    margin: 2rem;
 }
 
 /* ||-------------------------------------------------FILTER */
-/* EVENTS SEARCH AND FILTER BAR */
 
 #filter-component {
     display: grid;
@@ -73,39 +84,53 @@
     gap: 2ch;
 }
 
-.filter-return {
+.reset-button {
+    border-radius: 8px;
+    padding: 1ch;
+}
+/* ||-------------------------------------------------EVENTS*/
 
+/* -----------------SECTION LAYOUT -----------*/
+.events-list {
+    margin: 20px 0;
+    padding-top: 10px;
+    height: max-content;
+    margin-bottom: 2rem;
+}
+
+/* COMPONENT - EVENTPAGINATION */
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 280px));
+    grid-auto-flow: dense;
+    gap: 24px;
+    justify-content: center;
 }
 
 
 
 
 /* ||---------------------------------------EVENT ITEMS ----*/
-
-
 :root {
     --mobile-max-screen: 768px;
     --small-screen: 769px;
     --mid-screen: 992px;
     --big-screen: 1200px;
-
-    
 }
 
-/* @media (max-width: var(--mobile-max-screen)) {}
-@media (min-width: var(--small-screen)) {}
-@media (min-width: var(--mid-screen)) {}
-@media (min-width: var(--big-screen)) {} */
-
 /* -------------------CARDS--------------- */
+
+
 .event-item {
+    width: minmax(100%, 280px);
+    height: 520px;
+    grid-row: span 3;
+
     display: grid;
     grid-template-rows: 40% 20% 40%;
     grid-template-columns: 100%;
     gap: 0;
-    grid-row: span 3;
-    height: 520px;
-    width: minmax(100%, 280px);
 
     justify-content: flex-start; 
     color: var(--text-white);
@@ -115,6 +140,19 @@
     overflow: hidden;
 
     transition: all .3s ease-in-out;
+}
+
+@media (max-width: 680px){
+    .event-grid{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .event-item{
+        width: 350px;
+        justify-self: center;
+    }
 }
 
 .event-item:hover {

@@ -4,7 +4,7 @@
     font-family: "Titan One";
     src: 
     local("TitanOne-Regular"),
-    url("TitanOne-Regular.ttf");
+    url("/fonts/TitanOne-Regular.ttf");
     font-weight: 400;
     font-style: normal;
 }
@@ -14,8 +14,8 @@
     font-family: "Red Rose";
     src: 
     local("RedRose"),
-    url("RedRose-VariableFont_wght.woff2") format("Woff2 supports variations"),
-    url("RedRose-VariableFont_wght.woff2") format("woff2-variations");
+    url("/fonts/RedRose-VariableFont_wght.ttf") format("Woff2 supports variations"),
+    url("/fonts/RedRose-VariableFont_wght.woff2") format("woff2-variations");
     font-weight: 0 700;
 }
 
@@ -25,7 +25,7 @@
     src:
     local("ShantellSans"),
     url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'),
-    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf-variations');
+    url("/fonts/ShantellSans-VariableFont_BNCE\,INFM\,SPAC\,wght.ttf") format('ttf-variations');
     font-weight: 0 900;
     
 }
@@ -178,6 +178,15 @@ label {
     color: var(--accent-mid-pink)
 }
 
+.left-lean {
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+    gap: 10%;
+}
+
 
 /* || -----------------------Brand and Project colours-------------- */
 :root {
@@ -260,6 +269,8 @@ label {
 }
 
 
+
+
 /* || --------------------DARK TEST------------------ */
 
 
@@ -281,6 +292,8 @@ label {
   color: #ff9776;
 }
 
+
+
 /* || --------------------Utilities------------------ */
 
 :root {
@@ -299,12 +312,12 @@ label {
 .content-center {justify-content: center;}
 .items-center {justify-items: center;}
 
-button { cursor: pointer;}
 
 ul {list-style: none;}
-a {text-decoration: none;}
+a {text-decoration: none; cursor: pointer;}
 a:visited {opacity: 90%; }
 .hidden {display: none;}
+button { cursor: pointer;}
 
 
 * {scroll-behavior: smooth;}
@@ -337,6 +350,7 @@ a:visited {opacity: 90%; }
 .devOnly {display: none;}
 
 /* --------------------BUTTONS------------------ */
+
 .button {
     display: flex;
     letter-spacing: .2ch;
@@ -346,45 +360,80 @@ a:visited {opacity: 90%; }
 
 }
 
-.btn-primary {
-    border-radius: 8px 5px 5px 5px;
-    border: 1.2px solid var(--main-bg-light);
-    background-color: var(--accent-dark-pink);
-    color: var(--text-white);
-    padding: 16px;
-    width: 20%;
-    justify-content: center;
+.button-light{
+    color:#000;
 }
-.btn-secondary {
-    border-radius: 5px;
-    border: 1.2px solid var(--bg-orange-2);
-    padding: 16px;
-    background-color: var(--accent-dark-purple);
-    justify-content: center;
-    color: var(--text-white);
-    width: max-content;
+.button-dark{
+    color:#fff4f4;
 }
-.btn-tertiary {
-    border-radius: 8px 3px 8px 3px;
-    border: 1.2px solid var(--accent-mid-pink);
-    padding: 10px;
-    background-color: var(--accent-dark-teal);
-    color: var(--text-white);
+.primary-button, .btn-primary{
+    display: flex;
+    width: 28ch;
+    height: 4.8rem;
     justify-content: center;
-    width: max-content;
+    align-items: center;
+    text-align: center;
+
+    border-radius: 25px ;
+    border: 2px solid var(--accent-dark-teal);
+    background-color: var(--accent-dark-orange);
+    color: var(--text-white);
+    font-family: 'red rose';
+    letter-spacing: .1ch;
+
 }
 
-#toolkit-field {
-    position: fixed;
-    bottom: 0px;
-    left: 50%;
-    z-index: 2000;
+.secondary-button, .btn-secondary{
     display: flex;
-    flex-direction: column;
+    width: 25ch;
+    height: 4rem;
+    justify-content: center;
     align-items: center;
-    transition: bottom 0.35s cubic-bezier(0.485, -0.050, 0.285, 1.505);
-    pointer-events: none;
+    text-align: center;
+
+    border-radius: 30px;
+    border: 2px solid var(--accent-mid-purple);
+    background-color: var(--text-bg-purple);
+    color: var(--text-white);
+    font-family: 'red rose';
+    letter-spacing: .1ch;
+
 }
+.tertiary-button, .btn-tertiary{
+    display: flex;
+    width: 25ch;
+    height: 4rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    border-radius: 30px;
+    border: 2px solid var(--accent-dark-teal);
+    background-color: var(--accent-dark-orange);
+    color: var(--text-white);
+    font-family: 'red rose';
+    letter-spacing: .1ch;
+
+}
+
+.light-button{
+    display: flex;
+    width: 25ch;
+    height: 4rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    border-radius: 30px;
+    border: 2px solid var(--accent-dark-teal);
+    background-color: var(--accent-dark-orange);
+    color: var(--text-white);
+    font-family: 'red rose';
+    letter-spacing: .1ch;
+
+}
+
+
 
 /* --------------------Structure and foundation------------------ */
 :root {
@@ -485,43 +534,19 @@ body *{
 
 /* || --------------------SITEWIDE------------------ */
 
-/* ----Return to top button---- */
-#toTop   {
-    /* width: 35px; */
-    /* height: 50px; */
-    /* margin: .2ch; */
-    /* padding: 1ch; */
-    justify-items: center;
-    align-content: center;
-    transition: display .5s, opacity .4s;
-    background: none;
-    border: 0;
-}
 
-
-#theme {
-    display: block;
-    position: sticky;
-    top: 80px;
-    left: 10px;
-    width: max-content;
-    padding: 1ch;
-
-}
 
 /* || --------------------ABOUT PAGE------------------ */
 
 
 
 
-/* || --------------------Insert title here------------------ */
-/* ----insert title here 2---- */
-/* small  notes */
-
-/* ----Return to top button---- */
+/* || --------------------CHAPTER------------------ */
+/* ----INSERT---- */
+/* NOTES */
 
 /* ... */
 
-/* || --------------------Buttons------------------ */
-/* ----insert title here 2---- */
-/* small  notes */
+/* || --------------------CHAPTER------------------ */
+/* ----INSERT---- */
+/* NOTES */
