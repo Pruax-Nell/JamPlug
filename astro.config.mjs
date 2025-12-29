@@ -1,4 +1,3 @@
-
 // https://astro.build/config
 // export default defineConfig({});
 
@@ -10,11 +9,15 @@ import react from '@astrojs/react';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import markdoc from '@astrojs/markdoc';
+
+import keystatic from '@keystatic/astro';
+
 export default defineConfig({
   prefetch: true,
   base: '/',
   // trailingSlash: 'never',
-  integrations: [mdx(), react()],
+  integrations: [mdx(), react(), markdoc(), keystatic()],
 
   vite: {
     plugins: [tailwindcss()]
