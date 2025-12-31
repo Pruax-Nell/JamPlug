@@ -14,9 +14,10 @@ import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro';
 
 export default defineConfig({
+  output: 'hybrid',
   prefetch: true,
   base: '/',
-  // trailingSlash: 'never',
+  trailingSlash: 'always',
   integrations: [mdx(), react(), markdoc(), keystatic()],
 
   vite: {

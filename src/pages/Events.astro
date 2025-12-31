@@ -49,7 +49,6 @@ const pastEvents = publishedEvents
 // 3. DATA SERIALIZATION (Crucial for React Props)
 const clientUpcomingEvents = upcomingEvents.map(event => ({
     id: event.id,
-    // slug: event.slug,
     data: {
         ...event.data,
         startDate: event.data.startDate.toISOString(),

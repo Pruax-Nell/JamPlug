@@ -165,7 +165,7 @@ export default config({
             label: 'Minute',
             options: ['00', '15', '30', '45'].map(m => ({ label: m, value: m })),
             defaultValue: '00',
-          }),
+          }), 
         }),
         
         eventLink: fields.url({ label: 'Event Link', validation: {isRequired: true}}),
@@ -275,6 +275,9 @@ export default config({
           label: 'Image 3',
           directory: 'src/assets/images/organisers',
           publicPath: '../../assets/images/organisers/',
+        }),
+        content: fields.markdoc({
+          label: 'content',
         }),
       }
     }),

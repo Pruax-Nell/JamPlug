@@ -1,6 +1,11 @@
 import { z, defineCollection, reference } from "astro:content";
 import { glob } from "astro/loaders";
- 
+
+const timeObject = z.object({
+    hour: z.string(),
+    minute: z.string(),
+});
+
 const events = defineCollection({
     loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/events"}),
     schema: ({ image }) =>  z.object ({
@@ -23,15 +28,10 @@ const events = defineCollection({
         eventType: z.enum(['Skate Party', 'Day Party', 'Festival', 'Workshop','Social', 'Weekend', 'Other']),
         eventPoster: z.string(),
 
-        startTime: z.object({
-            hour: z.string(),
-            minute: z.string(),
-        }).optional(), 
-        endTime: z.object({
-            hour: z.string(),
-            minute: z.string(),
-        }).optional(),
+        startTime: timeObject.optional(), 
+        endTime: timeObject.optional(), 
 
+        
         eventLink: z.string().url().optional(),
         ticketLink: z.string().url().optional(),
         organiser: z.string().optional(), 

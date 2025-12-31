@@ -5,9 +5,9 @@ import '../styles/global.css'
 
 import { Image } from 'astro:assets';
 import { allEuropeanCountries } from '../function/constant';
-
+ 
 const BASE_URL = import.meta.env.BASE_URL
-const Poster = 'src/content'
+const Poster = 'src/content' 
 // **/[^_]*.{md,mdx,mdoc}
 const Content_Folder = "src/content/posters/*.{jpeg, jpg, pgn}";
 

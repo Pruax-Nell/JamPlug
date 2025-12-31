@@ -48,13 +48,13 @@ header {
     right: 2rem;
     
     aspect-ratio: 1;
-    background: url(/branding/menu.icon.1.svg);
+    background: url(/src/assets/branding/menu.icon.1.svg);
     background-repeat: no-repeat;
     border: none;
 }
 
 #nav-menu-toggle[aria-expanded='true'] {
-    background: url(/branding/crossClose1.svg);
+    background: url(src/assets/branding/crossClose1.svg);
 }
 
 
