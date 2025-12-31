@@ -47,8 +47,6 @@ const pastEvents = publishedEvents
  
 	
 // 3. DATA SERIALIZATION (Crucial for React Props)
-// React components must receive data that is JSON-safe. Date objects are NOT JSON-safe.
-// We map the server-side objects to client-safe objects, converting Date objects to ISO strings.
 const clientUpcomingEvents = upcomingEvents.map(event => ({
     id: event.id,
     // slug: event.slug,

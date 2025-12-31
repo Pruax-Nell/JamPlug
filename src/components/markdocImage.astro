@@ -1,0 +1,8 @@
+---
+// src/components/MarkdocImage.astro
+import { Image } from 'astro:assets';
+const { src, alt } = Astro.props;
+---
+<figure class="my-8">
+  <Image src={src} alt={alt} class="rounded-lg shadow-md" />
+</figure>

@@ -17,8 +17,13 @@
         eventType: ['Skate Party', 'Day Party', 'Festival', 'Workshop','Social', 'Weekend', 'Other']
         category: ['Street', 'Jam/Dance', 'Artistic', 'Ramps/Vert', 'Speed', 'Roller Hockey', 'All', 'Other']
         eventPoster: "..."
-        startTime:
-        endTime:
+        startTime: 
+            hour: 
+            minute: 
+        
+        endTime: 
+            hour: 
+            minute: 
         
         eventLink:
         ticketLink: 

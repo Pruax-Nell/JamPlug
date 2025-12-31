@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  socials: { platform: string; url: string }[];
+}
+
+const { socials } = Astro.props;
+
+// Map your Keystatic values to Lucide icon names
+const iconMap: Record<string, string> = {
+  instagram: "lucide:instagram",
+  facebook: "lucide:facebook",
+  twitter: "lucide:twitter",
+  youtube: "lucide:youtube",
+  globe: "lucide:globe",
+};
+---
+
+<div class="flex gap-4">
+  {socials.map((item) => (
+    <a href={item.url} target="_blank" rel="noopener noreferrer" class="hover:text-blue-500 transition-colors">
+      <Icon name={iconMap[item.platform]} class="w-6 h-6" />
+      <span class="sr-only">{item.platform}</span>
+    </a>
+  ))}
+</div>

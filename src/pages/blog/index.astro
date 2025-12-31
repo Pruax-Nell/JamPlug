@@ -5,31 +5,29 @@ import BlogPost from '../../components/blogPost.astro'
 import { getCollection } from 'astro:content';
 import { object } from 'astro:schema';
 
-const posts = await getCollection('posts')
+const posts = await getCollection('posts');
 
 const allPosts = await getCollection("blogs");
-const blogPosts = await getCollection('blogs', ({ data }) => {
-	return data.status === 'published';
+const blogPosts = (await getCollection('blogs', ({ data }) => {
+  return data.status === 'published';
+}))
+.sort((a, b) => {
+  const dateA = a.data.published ? new Date(a.data.published).getTime() : 0;
+  const dateB = b.data.published ? new Date(b.data.published).getTime() : 0;
+  return dateB - dateA;
 });
 
 const pageTitle = "My Astro Learning Blog";
 ---
 <BaseLayout page_title={pageTitle}>
 
-  <ul>
-  {posts.map(post => (
-    <li>
-      <a href={`/posts/${post.slug}`}>{post.data.title}</a>
-    </li>
-  ))}
-</ul>
-
+  
   <h1>the new blog page...! </h1>
   <p>This is where I will post about my journey learning Astro. again</p>
 
   <span>Component test below</span>
   <ul>
-    {blogPosts.map((post) => (<BlogPost url={`/blog/${post.id}/`} title={post.data.title} />))}
+    {blogPosts.map((blogs) => (<BlogPost url={`/blog/${blogs.id}/`} title={blogs.data.title} />))}
   </ul>
 
     <p>

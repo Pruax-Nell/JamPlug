@@ -8,7 +8,7 @@ import { allEuropeanCountries } from '../function/constant';
 
 const BASE_URL = import.meta.env.BASE_URL
 const Poster = 'src/content'
-// **/[^_]*.{md,mdx}
+// **/[^_]*.{md,mdx,mdoc}
 const Content_Folder = "src/content/posters/*.{jpeg, jpg, pgn}";
 
 const GROUPED_COUNTRIES = allEuropeanCountries
@@ -38,7 +38,7 @@ const INITIAL_FILTERS = {
   eventType: 'All',
   skateDiscipline: 'All',
   minAge: 'All', 
-  skillLevel: 'All',
+  skillLevel: 'All', 
   month: 'All',
 };
 

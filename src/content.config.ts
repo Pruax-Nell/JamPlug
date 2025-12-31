@@ -2,7 +2,7 @@ import { z, defineCollection, reference } from "astro:content";
 import { glob } from "astro/loaders";
  
 const events = defineCollection({
-    loader: glob({pattern: "**/[^_]*.{md,mdx}", base: "./src/content/events"}),
+    loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/events"}),
     schema: ({ image }) =>  z.object ({
         eventName: z.string(),
         startDate: z.coerce.date().min(new Date(), { message: "Start date must be in the future." }), 
@@ -23,12 +23,18 @@ const events = defineCollection({
         eventType: z.enum(['Skate Party', 'Day Party', 'Festival', 'Workshop','Social', 'Weekend', 'Other']),
         eventPoster: z.string(),
 
-        startTime: z.string().optional(), 
-        endTime: z.string().optional(), 
+        startTime: z.object({
+            hour: z.string(),
+            minute: z.string(),
+        }).optional(), 
+        endTime: z.object({
+            hour: z.string(),
+            minute: z.string(),
+        }).optional(),
 
         eventLink: z.string().url().optional(),
         ticketLink: z.string().url().optional(),
-        organiser: reference('organisers').optional(), 
+        organiser: z.string().optional(), 
         orgLink: z.string().url().optional(),
         host: z.string().optional(),
         hostLink: z.string().url().optional(),
@@ -39,7 +45,7 @@ const events = defineCollection({
         
         eventImageOther: image().optional(),
         
-        featuredRink: z.string().optional(),
+        featuredRink: z.string().url().optional(),
         venueAddress: z.string().optional(),
         mapCoordinates: z.string().optional(),
 
@@ -50,35 +56,49 @@ const events = defineCollection({
         maxAge: z.string().optional(),
         frequency: z.string().optional(),
 
-        orgPastEvents: z.array(reference('events')).optional(),
-
     })
 });
 
 // ORGANISERS ***
 
 const organisers = defineCollection({
-    loader: glob({pattern: "**/[^_]*.{md,mdx}", base: "./src/content/organisers"}),
+    loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc, }", base: "./src/content/organisers"}),
     schema: ({ image }) => z.object({
         name: z.string(),
         portfolio: z.string().url(),
-        socials: z.array(z.string().url()).optional(),
-        coverImage: image().optional(),
+        socials: z.array(z.object({
+            platform: z.enum(['instagram', 'facebook', 'x', 'tiktok', 'website', 'other platform']),
+            url: z.string().url(),
+            })).optional(),
+        about: z.string().optional(),
+        brand: image().optional(),
         insert1: image().optional(),
         insert2: image().optional(),
         insert3: image().optional(),
     }),
 });
- 
+
+
+// SKATE SPOTS FOR REFERENCE AND REVIEWS 
+const spots = defineCollection ({
+    loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/spots"}),
+    schema: ({ image }) => z.object({ 
+        name: z.string(),
+        cover: image().optional(),
+        status: z.enum(['draft', 'published']).default('draft'),
+
+    })
+
+})
 
 //  BLOGS *** 
 const blogs = defineCollection ({
-    loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/blog"}),
+    loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/blog"}),
     schema: ({ image }) => z.object({
         title: z.string(),
         status: z.enum(['draft', 'published']).default('draft'),
         tags: z.array(z.string()).default([]).default(['new']),
-        published: z.coerce.date(),
+        published: z.coerce.date().default(() => new Date()),
         description: z.string(),
         coverImage: image().optional(),
         insert1: image().optional(),
@@ -87,6 +107,15 @@ const blogs = defineCollection ({
     }),
 });
 
-export const collections = {blogs, events, organisers, };
 
+const posts = defineCollection({
+  // Since Keystatic creates files, we don't need a custom loader for basic setups
+  type: 'content', 
+  schema: z.object({
+    title: z.string(),
+    // Make sure these match the fields in your keystatic.config.ts!
+    date: z.string().optional(), 
+  }),
+});
 
+export const collections = {blogs, events, organisers, spots, posts };

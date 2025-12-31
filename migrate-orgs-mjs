@@ -1,0 +1,29 @@
+import fs from 'fs';
+import path from 'path';
+import { parse } from 'csv-parse/sync'; // npm install csv-parse
+
+// 1. Read the CSV
+const csvData = fs.readFileSync('./organisers.csv', 'utf-8');
+const records = parse(csvData, { columns: true });
+
+records.forEach((row) => {
+  // Create a URL-friendly slug (e.g., "Live Nation" -> "live-nation")
+//   const slug = row.name.toLowerCase().replace(/\s+/g, '-');
+  
+  // 2. Define the Frontmatter content
+//   const content = `---
+// name: "${row.name}"
+// website: "${row.website || ''}"
+// description: "${row.description || ''}"
+// ---`;
+
+  // 3. Save the file to your content collection folder
+  const filePath = path.join('src/content/organisers', `${slug}.mdoc`);
+  
+  if (!fs.existsSync('src/content/organisers')) {
+    fs.mkdirSync('src/content/organisers', { recursive: true });
+  }
+
+  fs.writeFileSync(filePath, content);
+  console.log(`Created: ${slug}.mdoc`);
+});
