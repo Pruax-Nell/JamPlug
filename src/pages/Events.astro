@@ -7,7 +7,6 @@ import { getCollection } from "astro:content";
 
 // rebuild in react file
 import EventCard from '../components/eventCard.astro';
-import SearchComponent from "../components/searchFilter.astro";
 
 import UpcomingEvents from '../components/eventPagination'
 
@@ -81,7 +80,7 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 	</div>
 	<div class=" half-width-block jam-link-block">
 		<h3 id="jam-list-heading">Big Jam List</h3>
-		<a href="/festivals" class="button light-button">Annual Skate Festivals</a>
+		<a href="/festivals" class="button primary-button">Annual Skate Festivals</a>
 		<span>Find all of Europes multi-day skate festivals</span>
 	</div>
 	</div>
@@ -121,7 +120,7 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 				<h2>Submit an Event</h2>
 				<p>Have an Event, Competition, Jam or Tour to tell us about? We aim to add events weekly, so use the button below to spread the word!</p>
 				<div class="btn-wrap">
-					<a class="button secondary-button" href="/submit-an-event" target="_self">SUBMIT</a>                        
+					<a class="button primary-button" href="/submit-an-event" target="_self">SUBMIT</a>                        
 				</div>
 			</div>
 		</div>

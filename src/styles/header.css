@@ -54,7 +54,8 @@ header {
 }
 
 #nav-menu-toggle[aria-expanded='true'] {
-    background: url(src/assets/branding/crossClose1.svg);
+    background: url(/src/assets/branding/crossClose1.svg);
+    z-index: 99999;
 }
 
 
@@ -167,4 +168,4 @@ li a {
 .sub-nav li {
     font-size: var(--fs-p4);
     padding: .2rem;
-}
+} 

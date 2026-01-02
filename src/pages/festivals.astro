@@ -64,19 +64,31 @@ const now = new Date();
         <h1>Big Jam List</h1>
     </div>
     <div>
-        <p>Festivals are the days we plan in advance for</p>
+        <p>Bigger that your local Skate night!</p>
     </div>
     <div class="jam-req">
-        <div><span>it's overnight</span></div>
-        <div><span>workshops AND parties</span></div>
-        <div><span>what makes it a festival</span></div>
+        <div class="tri-brick brick-1">
+            <span class="side-a">What is a Skate Festival?</span>
+            <span class="side-b">+ An overnight skate trip!</span>
+        
+        </div>
+        <div class="tri-brick brick-2">
+            <span class="side-a">Who is it for?</span>
+            <span class="side-b">+ Something for all levels unless it specifies otherwise!</span>
+        
+        </div>
+        <div class="tri-brick brick-3">
+            <span class="side-a">Why go?</span>
+            <span class="side-b">1. why not... 2. it's a holiday AND everyone will be skating</span>
+        
+        </div>
     </div>
 </section>
 <section>
-    <div class="jam-direct">
-        <span><button class="jam-year-button"> 2025 </button></span>
+    <div class="jam-direct"> 
+        <span><a class="jam-year-button-down jam-year-button"> 2025 </a></span>
         <h2 class="year-title">2026</h2>
-        <span><button class="jam-year-button"> 2027 </button></span>
+        <span><a class="jam-year-button-up jam-year-button"> 2027 </a></span>
     </div>
     <div id="jam-list">
         <div>
@@ -96,11 +108,13 @@ const now = new Date();
                         <div class="jam-content">
                             <div class="jam-title">
                                 {event.data.published >= thirtyDaysAgo && (
-                                    <span class="highlight-new">NEW!</span>
+                                    <span class="highlight-new ">NEW!</span>
                                 )}
                                     
-                                <p>{event.data.eventName} </p>
-                                <p>{event.data.description}</p>
+                                <div class="jam-bold">
+                                    <p>{event.data.eventName} </p>
+                                    <p>{event.data.description}</p>
+                                </div>
                             </div>
 
                             <div class="divider">  </div>
@@ -121,86 +135,13 @@ const now = new Date();
             );
             })}
         </div>
-        <!-- <div class="list-month-block" >
-            <div >
-             <p class="month-head">January</p>  
-            </div>
-            <div >
-                
-            </div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-              <p class="month-head">February</p>  
-            </div>
-           { <div></div>}
-        </div>
-        <div class="list-month-block" >
-            <div>
-              <p class="month-head">March</p>  
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-               <p class="month-head">April</p> 
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-              <p class="month-head">May</p>  
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-               <p class="month-head">June</p> 
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-              <p class="month-head">July</p>  
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-               <p class="month-head">August</p> 
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-               <p class="month-head">September</p> 
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-              <p class="month-head">October</p>  
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-              <p class="month-head">November</p>  
-            </div>
-            <div></div>
-        </div>
-        <div class="list-month-block" >
-            <div>
-               <p class="month-head">December</p> 
-            </div>
-            <div></div>
-        </div> -->
+        
     </div>
 </section>
-<section>
-    <div>
+<section >
+    <div class="middle">
         <p>looking for more events? </p>
-        <button><a href="/events"> go here </a></button>
+        <a href="/events" class="tertiary-button"> Browse the event list </a>
     </div>
 </section>
 
@@ -209,14 +150,49 @@ const now = new Date();
 
 <style>
 
+    .middle{
+        justify-items: center;
+        align-content: center;
+        margin: .5rem;
+        height: 220px;
+        border-top: 13px double var(--ow-orange) ;
+        border-bottom: 13px double var(--ow-orange) ;
+    }
+
     .welcome {
         justify-items: center;
     }
 
     .jam-req {
         display: flex;
-        gap: 24px;
+        /* gap: 2%; */
+        justify-content: space-around;
 
+    }
+
+    .tri-brick{
+        width: 200px;
+        height: 120px;
+        padding: .5rem;
+        text-align: center;
+        border-radius: 4px;
+        align-content: center;
+    }
+
+    .side-b{
+        display: none;
+    }
+    
+    .tri-brick:hover{
+        background-color: var(--shadow-purple);
+
+        .side-b{
+            display: block;
+        }
+
+        .side-a{
+            display: none;
+        }
     }
 
     .jam-direct {
@@ -235,25 +211,48 @@ const now = new Date();
         font-size: var(--fs-title);
     }
 
-    .jam-year-button {
-        border-radius: 4px;
+    .jam-year-button{
         letter-spacing: .3ch;
+        padding: .6rem 1rem;
+        background-color: var(--grey-teal);
     }
 
+    .jam-year-button:hover{
+        /* background-color: var(--mid-teal); */
+        cursor: default;
+        
+    }
+    .jam-year-button-up {
+        opacity: 30%;
+        border-radius: 8px 25px 25px 8px;
+        
+    }
+    .jam-year-button-down {
+        opacity: 30%;
+        border-radius: 25px 8px 8px 25px;
+        
+    }
+
+    
+    .jam-bold{
+        font-size: var(--fs-p2);
+    }
+    
     .highlight-new {
         height: 40px;
-        width: 100px;
-        padding: 2ch;
-        border-radius: 18px;
+        width: 70px;
+        /* padding: 1ch; */
+        border-radius: 14px;
+        font-size: var(--fs-footer);
 
-        color: var(--black);
-        font-weight: 800;
-        background: linear-gradient(45deg, var(--grey-orange), var(--mid-orange));
+        color: var(--text-white);
+        font-weight: 400;
+        background: linear-gradient(45deg, var(--grey-pink), var(--mid-purple));
         text-align: center;
         align-content: center;
         justify-self: right;
 
-        animation: pulse 2s infinite;
+        animation: pulse 1.8s infinite;
 
     }
 
@@ -290,9 +289,9 @@ const now = new Date();
 
     .jam-title  {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         height: max-content;
-        width: 2fr;
+        /* width: 2fr; */
         justify-content:space-between;
     }
 
@@ -303,9 +302,17 @@ const now = new Date();
         width: 1fr;
     }
 
+    .month-block{
+        padding: .7rem;
+    }
     .month-block h2 {
         justify-self: left;
         margin-left: 3rem;
+        font-size: var(--fs-heading-mid);
+    }
+
+    .month-block ul {
+        padding-left: 0;
     }
 
 
