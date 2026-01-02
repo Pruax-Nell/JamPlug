@@ -4,9 +4,9 @@
     --Republic-Ireland: #Republic-Region;
     --Scottland: #Scottland-region;
     --menu-position: clamp(78px, 17vh, 80px);
-    --background-light: var(--main-bg-orange);
-    --background-dark: var(--main-bg-white);
-    --background-mid: var(--main-bg-white);
+    --background-light: var(--main-orange);
+    --background-dark: var(--main-light);
+    --background-mid: var(--main-light);
 }
 
 /* -------------------- || page set up */
@@ -66,13 +66,13 @@
     border-radius: 3px;
     border-width: 0;
     padding: 1em;
-    background-color: var(--main-brown-light);
-    color: var(--main-bg-light);
+    background-color: var(--main-brown);
+    color: var(--main-light);
     transition: background-color .6s;
 }
 
 #menuBar button:hover {
-    background-color: var(--main-brown-dark);
+    background-color: var(--ob-brown);
 }
 
 #menuBar div {
@@ -100,7 +100,7 @@
     grid-row: 3;
     grid-column: 2 / 3;
     padding: 2ch;
-    background:  var(--accent-mid-orange); 
+    background:  var(--main-orange); 
     border-radius: 8px;
     box-sizing: border-box;
     margin-top: 15px;
@@ -134,7 +134,7 @@
     letter-spacing: .2ch;
     font-size: 1.2rem;
     margin: 1ch 0;
-    text-decoration: underline var(--main-orange);
+    text-decoration: underline var(--NEW-main-orange);
     text-underline-offset: .3ch;
     
 }
@@ -143,7 +143,7 @@
     column-width: auto;
     columns: 3; 
     widows: 0;
-    column-rule: 3px dotted var(--main-bg-light);
+    column-rule: 3px dotted var(--main-light);
     padding: 1ch 3ch;
 
 }
@@ -181,16 +181,16 @@ a {
     font-family: 'Red Rose';
     font-weight: 600;
     letter-spacing: .2ch;
-    color: var(--main-brown-dark);
+    color: var(--ob-brown-);
 }
 
 a:hover {
     cursor: pointer;
-    text-decoration: dotted var(--main-bg-light);
-    color: var(--accent-mid-teal); 
-    color: var(--main-bg-light); 
+    text-decoration: dotted var(--main-light);
+    color: var(--mid-teal); 
+    color: var(--main-light); 
     text-underline-offset: .2ch;
-    text-shadow: 1px 5px .5px var(--highlight2);
+    text-shadow: 1px 5px .5px var(--highlight-2);
 
 }
 

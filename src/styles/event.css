@@ -13,7 +13,7 @@
 
 .scribe {
     margin-bottom: 60px;
-    border-bottom: 5px solid var(--main-bg-orange);
+    border-bottom: 5px solid var(--main-orange);
     
 }
 
@@ -36,11 +36,11 @@
     align-items: center;
     justify-content: space-around;
 
-    background-color: var(--shadow-purple);
+    background-color: var(--shadow-yellow);
     border-color: var();
     border-radius: 8px;
     /* border: 13px solid var(--accent-dark-orange); */
-    box-shadow: 0 0 6px 0 var(--box-teal),0 0 40px 0 var(--shadow-purple);
+    box-shadow: 0 0 6px 0 var(--grey-teal),0 0 40px 0 var(--shadow-purple);
 
 
 }
@@ -134,7 +134,7 @@
 
     justify-content: flex-start; 
     color: var(--text-white);
-    background-color: var(--background-light);
+    background-color: var(--main-light);
     /* box-shadow: 0 0 4px 0 var(--box-teal),0 0 40px 0 var(--shadow-teal); */
     border-radius: 5px;
     overflow: hidden;
@@ -157,7 +157,7 @@
 
 .event-item:hover {
     scale: 1.03;
-    box-shadow: 0 0 4px 0 var(--box-orange),0 0 20px 0 var(--shadow-yellow);
+    box-shadow: 0 0 4px 0 var(--mid-orange),0 0 20px 0 var(--shadow-yellow);
  
 }
 
@@ -199,7 +199,7 @@
 
 }
 .eventcard-poster-alt {
-    background-color: var(--accent-mid-teal);
+    background-color: var(--mid-teal);
     object-fit: cover;
     object-position: center;
     align-self: center;
@@ -226,7 +226,7 @@
     
     grid-row: 2 / 4;
     z-index: 30;
-    box-shadow: 0 0 15px 0 var(--box-orange), 
+    box-shadow: 0 0 15px 0 var(--grey-orange), 
     10px 0 0 0 var(--shadow-yellow);
 }
 
@@ -252,8 +252,6 @@
 }
 
 .event-name {
-    /* color: var(--text-black); */
-    /* color: var(--text-white); */
     line-height: 1.5;
     margin: 1rem .2rem;
     padding: 0 1.2ch;
@@ -266,7 +264,7 @@
 }
 
 .event-item:hover .event-name {
-    color: var(--accent-mid-orange);
+    color: var(--mid-orange);
 
 }
 
@@ -301,7 +299,7 @@
     /* border: 1px solid blue; */
     border-radius: 2px 9px 7px 9px;
     
-    background-color: var(--accent-mid-teal);
+    background-color: var(--mid-teal);
     color: black;
 }
 .type-tag { 
@@ -311,8 +309,8 @@
     /* border: 1px solid purple; */
     border-radius: 2px 9px 7px 9px;
     
-    background-color: var(--accent-mid-purple);
-    color: black;
+    background-color: var(--mid-purple);
+    color: black; 
 }
 
 .age-tag {
@@ -320,7 +318,7 @@
     padding-inline: .9ch;
     text-align: center;
     border-radius: 9px;
-    border: 3px double var(--accent-new-pink);
+    border: 3px double var(--mid-pink);
     color: var(--text-white);
 }
 
@@ -390,7 +388,7 @@
 }
 
 .fifty-fifty-section .content-wrap {
-    background-color: var(--text-bg-orange);
+    background-color: var(--mid-orange);
     height: 100%;
     box-sizing: content-box;
 }

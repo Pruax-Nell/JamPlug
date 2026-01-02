@@ -10,7 +10,7 @@ header {
 
     box-shadow: -0 1px 5px var(--shadow-grey);
     border-radius: 0 10px;
-    background-color: var(--main-bg-light);
+    background-color: var(--main-light);
 
 }
 
@@ -38,7 +38,7 @@ header {
 /*---------------- toggle button */
 
 
-#nav-menu-toggle {
+#nav-menu-toggle { 
     display: block;
     /* margin-bottom: 1rem; */
     position: absolute;
@@ -72,7 +72,7 @@ ul li {
 li a {
     flex-wrap: nowrap;
     text-wrap: nowrap;
-    color: var(--main-brown-dark);
+    color: var(--ob-brown);
 }
 
 @media (max-width: 680px) {
@@ -110,7 +110,7 @@ li a {
     inset: 0 0 0 20%;
     height: 90vh;
     
-    background-color: var(--bg-orange-1);
+    background-color: var(--mid-orange);
     border-radius: 0 0 0 8px;
     
     transform: translatex(100%);
@@ -138,13 +138,13 @@ li a {
 }
 
 #full-nav .home-list a:hover{
-    color: var(--main-bg-light);
+    color: var(--main-light);
 }
 #full-nav .business-list a:hover{
-    color: var(--main-pink);
+    color: var(--mid-yellow);
 }
 #full-nav .brand-list a:hover{
-    color: var(--main-teal);
+    color: var(--mid-teal);
 }
 
 .nav-block {

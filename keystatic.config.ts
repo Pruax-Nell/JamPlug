@@ -78,8 +78,8 @@ export default config({
       format: { contentField: 'content'},
       schema: {
         eventName: fields.slug({ name: { label: 'Event Name' } }),
-        startDate: fields.date({ label: '...' }),
-        endDate: fields.date({ label: '...' }),
+        startDate: fields.date({ label: 'Start Date' }),
+        endDate: fields.date({ label: 'End Date' }),
         tags: fields.array(
           fields.text({ label: 'Tag' }),
           {
@@ -103,9 +103,7 @@ export default config({
           multiline: true,
         }),
 
-        isUpcoming: fields.checkbox({ label: '...' }),
-        isFeatured: fields.checkbox({ label: '...' }),
-        removeWhen: fields.date({ label: '...' }),
+        isFeatured: fields.checkbox({ label: 'Is Featured' }),
         
         eventType: fields.select({ 
           label: 'event Type',
@@ -137,9 +135,9 @@ export default config({
           directory: 'src/assets/images/event',
           publicPath: '../../assets/images/event/',
         }),
-        startTime: fields.object({
+        startTime: fields.object({ 
           hour: fields.select({
-            label: 'Hour',
+            label: 'Start Time',
             options: Array.from({ length: 24 }, (_, i) => ({
               label: i.toString().padStart(2, '0'),
               value: i.toString().padStart(2, '0'),
@@ -154,7 +152,7 @@ export default config({
         }),
         endTime: fields.object({
           hour: fields.select({
-            label: 'Hour',
+            label: 'End Time',
             options: Array.from({ length: 24 }, (_, i) => ({
               label: i.toString().padStart(2, '0'),
               value: i.toString().padStart(2, '0'),
@@ -168,16 +166,16 @@ export default config({
           }), 
         }),
         
-        eventLink: fields.url({ label: 'Event Link', validation: {isRequired: true}}),
-        ticketLink: fields.url({ label: 'Ticket Link', validation: {isRequired: true}}),
+        eventLink: fields.url({ label: 'Event Link', }),
+        ticketLink: fields.url({ label: 'Ticket Link',}),
         organiser:  fields.text({ label: 'Organiser'}),
-        orgLink: fields.url({ label: 'Organisers link', validation: {isRequired: true} }),
+        orgLink: fields.url({ label: 'Organisers link',  }),
         host: fields.text({ label: 'Event Host' }),
-        hostLink: fields.url({ label: 'host link', validation: {isRequired: true} }),
+        hostLink: fields.url({ label: 'host link', }),
         coach: fields.text({ label: 'Coach' }),
-        coachLink: fields.url({ label: 'coach link', validation: {isRequired: true} }),
+        coachLink: fields.url({ label: 'coach link', }),
         dj: fields.text({ label: 'DJ' }),
-        djLink: fields.url({ label: 'dj link', validation: {isRequired: true} }),
+        djLink: fields.url({ label: 'dj link', }),
         eventImageOther: fields.image({
           label: 'Other images',
           directory: 'src/assets/images/event',

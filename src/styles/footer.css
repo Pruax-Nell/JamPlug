@@ -1,7 +1,7 @@
 /* SECTION WRAP - BASELAYOUT*/ 
 #mainFooter {
-    background-color: var(--main-brown-light);
-    color: var(--main-bg-light);
+    background-color: var(--main-brown);
+    color: var(--main-light);
     box-sizing: border-box;
     padding: 3ch;
     width: 100%;
@@ -18,13 +18,13 @@
 
 /* text links */
 .bold-links a {
-    color: var(--main-bg-light);
-    text-decoration: underline var(--accent-mid-orange);
+    color: var(--main-light);
+    text-decoration: underline var(--mid-orange);
     text-underline-offset: .7ch;
 }
 
 .bold-links a:hover {
-    color: var(--accent-mid-orange);
+    color: var(--mid-orange);
 }
 
 /* SITE MAP */
@@ -82,7 +82,7 @@ footer {
         grid-template-columns: repeat(3, 1fr );
         
     }
-
+ 
 
 }
 

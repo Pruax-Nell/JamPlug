@@ -11,7 +11,7 @@ const events = defineCollection({
     schema: ({ image }) =>  z.object ({
         eventName: z.string(),
         startDate: z.coerce.date().min(new Date(), { message: "Start date must be in the future." }), 
-        endDate: z.coerce.date().min(new Date(), { message: "End date must be in the future." }),
+        endDate: z.coerce.date().min(new Date(), { message: "End date must be in the future." }).optional(),
         tags: z.array(z.string()).default(['new']),
         status: z.enum(['draft', 'pending', 'published']).default('draft'),
         published: z.coerce.date(), 
@@ -20,9 +20,7 @@ const events = defineCollection({
         townCity: z.string(),
         description: z.string(),
 
-        isUpcoming: z.boolean().default(true),
         isFeatured: z.boolean().default(false),
-        removeWhen: z.coerce.date().optional(),
 
         category: z.enum(['Street', 'Jam/Dance', 'Artistic', 'Ramps/Vert', 'Speed', 'Roller Hockey', 'All', 'Other']),
         eventType: z.enum(['Skate Party', 'Day Party', 'Festival', 'Workshop','Social', 'Weekend', 'Other']),

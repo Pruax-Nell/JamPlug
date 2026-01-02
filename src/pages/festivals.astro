@@ -48,13 +48,13 @@ Object.values(groupedEvents).forEach(monthArray => {
 const now = new Date();
 
 // Helper function to calculate days left
-function getDaysRemaining(targetDate) {
-    const diffInMs = targetDate.getTime() - now.getTime();
+// function getDaysRemaining(targetDate) {
+//     const diffInMs = targetDate.getTime() - now.getTime();
 
-    const days = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+//     const days = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
     
-    return days;
-}
+//     return days;
+// }
 
 ---
 
@@ -248,7 +248,7 @@ function getDaysRemaining(targetDate) {
 
         color: var(--black);
         font-weight: 800;
-        background: linear-gradient(45deg, #f43f5e, #fb923c);
+        background: linear-gradient(45deg, var(--grey-orange), var(--mid-orange));
         text-align: center;
         align-content: center;
         justify-self: right;
@@ -309,4 +309,4 @@ function getDaysRemaining(targetDate) {
     }
 
 
-</style>
+</style> 

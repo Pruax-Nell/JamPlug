@@ -33,12 +33,14 @@ const upcomingEvents = (publishedEvents)
 const thirtyDaysAgo = new Date();
 thirtyDaysAgo.setDate(now.getDate() - 30);
 
+// PAST EVENTS
 const pastEvents = publishedEvents
   .filter(event => {
-    const endDate = new Date(event.data.endDate);
-    // Returns true only if the event ended in the past, 
-    // but specifically within the last 30 days.
-    return endDate <= now && endDate >= thirtyDaysAgo;
+	const dateCompare = event.data.endDate || event.data.startDate;
+
+	const eventEndDate = new Date(dateCompare);
+
+	return eventEndDate <= now && eventEndDate >= thirtyDaysAgo;
   })
   .sort((a, b) => {
     // Sort by start date descending (most recent first)
@@ -154,9 +156,8 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 		justify-self: center;
 		align-items: center;
 		border-radius: 8px;
-		border: 12px double var(--box-teal);
-		background-color: var(--text-bg-teal);
-		background-color: var(--box-teal);
+		border: 12px double var(--mid-teal);
+		background-color: var(--mid-teal);
 		width: 70%;
 	}
-</style>
+</style> 
