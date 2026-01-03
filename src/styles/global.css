@@ -24,7 +24,8 @@
     font-family: "Shantelle Sans";
     src:
     local("ShantellSans"),
-    url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'),
+    url("ShantellSans-VariableFont.ttf") format('ttf supports variations'),
+    /* url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'), */
     url("/fonts/ShantellSans-VariableFont.ttf") format('ttf-variations');
     font-weight: 0 900;
     

@@ -59,35 +59,35 @@ const events = defineCollection({
 
 // ORGANISERS ***
 
-const organisers = defineCollection({
-    loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc, }", base: "./src/content/organisers"}),
-    schema: ({ image }) => z.object({
-        name: z.string(),
-        portfolio: z.string().url(),
-        socials: z.array(z.object({
-            platform: z.enum(['instagram', 'facebook', 'x', 'tiktok', 'website', 'other platform']),
-            url: z.string().url(),
-            })).optional(),
-        about: z.string().optional(),
-        brand: image().optional(),
-        insert1: image().optional(),
-        insert2: image().optional(),
-        insert3: image().optional(),
-    }),
-});
+// const organisers = defineCollection({
+//     loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc, }", base: "./src/content/organisers"}),
+//     schema: ({ image }) => z.object({
+//         name: z.string(),
+//         portfolio: z.string().url(),
+//         socials: z.array(z.object({
+//             platform: z.enum(['instagram', 'facebook', 'x', 'tiktok', 'website', 'other platform']),
+//             url: z.string().url(),
+//             })).optional(),
+//         about: z.string().optional(),
+//         brand: image().optional(),
+//         insert1: image().optional(),
+//         insert2: image().optional(),
+//         insert3: image().optional(),
+//     }),
+// });
 
 
 // SKATE SPOTS FOR REFERENCE AND REVIEWS 
-const spots = defineCollection ({
-    loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/spots"}),
-    schema: ({ image }) => z.object({ 
-        name: z.string(),
-        cover: image().optional(),
-        status: z.enum(['draft', 'published']).default('draft'),
+// const spots = defineCollection ({
+//     loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/spots"}),
+//     schema: ({ image }) => z.object({ 
+//         name: z.string(),
+//         cover: image().optional(),
+//         status: z.enum(['draft', 'published']).default('draft'),
 
-    })
+//     })
 
-})
+// })
 
 //  BLOGS *** 
 const blogs = defineCollection ({
@@ -106,4 +106,4 @@ const blogs = defineCollection ({
 });
 
 
-export const collections = {blogs, events, organisers, spots };
+export const collections = {blogs, events,  };
