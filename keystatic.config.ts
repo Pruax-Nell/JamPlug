@@ -1,6 +1,6 @@
 // keystatic.config.ts
 import { config, fields, collection } from '@keystatic/core';
-  
+ 
 export default config({
   storage: {
     kind: 'local',
@@ -137,7 +137,7 @@ export default config({
         }),
         startTime: fields.object({ 
           hour: fields.select({
-            label: 'Start Time',
+            label: 'Hour',
             options: Array.from({ length: 24 }, (_, i) => ({
               label: i.toString().padStart(2, '0'),
               value: i.toString().padStart(2, '0'),
@@ -152,7 +152,7 @@ export default config({
         }),
         endTime: fields.object({
           hour: fields.select({
-            label: 'End Time',
+            label: 'Hour',
             options: Array.from({ length: 24 }, (_, i) => ({
               label: i.toString().padStart(2, '0'),
               value: i.toString().padStart(2, '0'),
@@ -166,16 +166,16 @@ export default config({
           }), 
         }),
         
-        eventLink: fields.url({ label: 'Event Link', }),
-        ticketLink: fields.url({ label: 'Ticket Link',}),
+        eventLink: fields.url({ label: 'Event Link', validation: {isRequired: true}}),
+        ticketLink: fields.url({ label: 'Ticket Link', validation: {isRequired: true}}),
         organiser:  fields.text({ label: 'Organiser'}),
-        orgLink: fields.url({ label: 'Organisers link',  }),
+        orgLink: fields.url({ label: 'Organisers link', validation: {isRequired: true} }),
         host: fields.text({ label: 'Event Host' }),
-        hostLink: fields.url({ label: 'host link', }),
+        hostLink: fields.url({ label: 'host link', validation: {isRequired: true} }),
         coach: fields.text({ label: 'Coach' }),
-        coachLink: fields.url({ label: 'coach link', }),
+        coachLink: fields.url({ label: 'coach link', validation: {isRequired: true} }),
         dj: fields.text({ label: 'DJ' }),
-        djLink: fields.url({ label: 'dj link', }),
+        djLink: fields.url({ label: 'dj link', validation: {isRequired: true} }),
         eventImageOther: fields.image({
           label: 'Other images',
           directory: 'src/assets/images/event',
@@ -217,99 +217,99 @@ export default config({
       }
     }),
 
-    // organisers: collection({
-    //   label: 'Organisers',
-    //   slugField: 'name',
-    //   path: 'src/content/organisers/*',
-    //   format: { contentField: 'content'},
-    //   schema: {
-    //     name: fields.text({ label: 'Name'}),
-    //     portfolio: fields.slug({ name: {label: 'Portfolio'}}),
+    organisers: collection({
+      label: 'Organisers',
+      slugField: 'name',
+      path: 'src/content/organisers/*',
+      format: { contentField: 'content'},
+      schema: {
+        name: fields.text({ label: 'Name'}),
+        portfolio: fields.slug({ name: {label: 'Portfolio'}}),
 
-    //     socials: fields.array(
-    //       fields.object({
-    //         platform: fields.select({
-    //           label: 'Platform',
-    //           options: [
-    //             { label: 'Instagram', value: 'instagram'},
-    //             { label: 'TikTok', value: 'tiktok'},
-    //             { label: 'Facebook', value: 'facebook'},
-    //             { label: 'X / Twitter', value: 'x'},
-    //             { label: 'Youtube', value: 'youtube'},
-    //             { label: 'Website', value: 'website'},
-    //             { label: 'Other', value: 'other'},
-    //           ],
-    //           defaultValue: 'website',
-    //         }),
-    //         url: fields.url({label: 'URL'}),
-    //       }),
-    //       {label: 'Social Links',
-    //         itemLabel: (props) => {
-    //           // Access the value of the 'platform' field inside the object
-    //           return props.fields.platform.value ? `Social: ${props.fields.platform.value}` : 'New Link';
-    //         },
-    //       }),
+        socials: fields.array(
+          fields.object({
+            platform: fields.select({
+              label: 'Platform',
+              options: [
+                { label: 'Instagram', value: 'instagram'},
+                { label: 'TikTok', value: 'tiktok'},
+                { label: 'Facebook', value: 'facebook'},
+                { label: 'X / Twitter', value: 'x'},
+                { label: 'Youtube', value: 'youtube'},
+                { label: 'Website', value: 'website'},
+                { label: 'Other', value: 'other'},
+              ],
+              defaultValue: 'website',
+            }),
+            url: fields.url({label: 'URL'}),
+          }),
+          {label: 'Social Links',
+            itemLabel: (props) => {
+              // Access the value of the 'platform' field inside the object
+              return props.fields.platform.value ? `Social: ${props.fields.platform.value}` : 'New Link';
+            },
+          }),
         
-    //     about: fields.text({
-    //       label: 'About The Organiser',
-    //       multiline: true,
-    //     }),
-    //     brand: fields.image({
-    //       label: 'brand logo',
-    //       directory: 'src/assets/images/organisers',
-    //       publicPath: '../../assets/images/organisers/',
-    //     }),
-    //     insert1: fields.image({
-    //       label: 'Image 1',
-    //       directory: 'src/assets/images/organisers',
-    //       publicPath: '../../assets/images/organisers/',
-    //     }),
-    //     insert2: fields.image({
-    //       label: 'Image 2',
-    //       directory: 'src/assets/images/organisers',
-    //       publicPath: '../../assets/images/organisers/',
-    //     }),
-    //     insert3: fields.image({
-    //       label: 'Image 3',
-    //       directory: 'src/assets/images/organisers',
-    //       publicPath: '../../assets/images/organisers/',
-    //     }),
-    //     content: fields.markdoc({
-    //       label: 'content',
-    //     }),
-    //   }
-    // }),
+        about: fields.text({
+          label: 'About The Organiser',
+          multiline: true,
+        }),
+        brand: fields.image({
+          label: 'brand logo',
+          directory: 'src/assets/images/organisers',
+          publicPath: '../../assets/images/organisers/',
+        }),
+        insert1: fields.image({
+          label: 'Image 1',
+          directory: 'src/assets/images/organisers',
+          publicPath: '../../assets/images/organisers/',
+        }),
+        insert2: fields.image({
+          label: 'Image 2',
+          directory: 'src/assets/images/organisers',
+          publicPath: '../../assets/images/organisers/',
+        }),
+        insert3: fields.image({
+          label: 'Image 3',
+          directory: 'src/assets/images/organisers',
+          publicPath: '../../assets/images/organisers/',
+        }),
+        content: fields.markdoc({
+          label: 'content',
+        }),
+      }
+    }),
 
-    // Spots: collection({
-    //   label: 'Skate Spots',
-    //   slugField: 'name',
-    //   path: 'src/content/spots/*',
-    //   format: { contentField: 'content'},
-    //   schema: {
-    //     name: fields.text({ label: 'Skate Spot'}),
-    //     status: fields.select({
-    //       label: 'Status', 
-    //       options: [
-    //         {label: 'Draft', value: 'draft'},
-    //         {label: 'Published', value: 'published'},
-    //       ], defaultValue: 'draft',
-    //      }),
-    //     cover: fields.image({
-    //       label: 'Cover Image',
-    //       directory: 'src/assets/images/spots',
-    //       publicPath: '../../assets/images/spots/',
-    //     }),
-    //     content: fields.markdoc({
-    //       label: 'Content',
-    //       options: {
-    //         image: {
-    //         // Where the actual files are saved
-    //         directory: 'src/assets/images/spots',
-    //         publicPath: '../../assets/images/spots/',
-    //       }},
-    //     }),
-    //   },
-    // }),
+    Spots: collection({
+      label: 'Skate Spots',
+      slugField: 'name',
+      path: 'src/content/spots/*',
+      format: { contentField: 'content'},
+      schema: {
+        name: fields.text({ label: 'Skate Spot'}),
+        status: fields.select({
+          label: 'Status', 
+          options: [
+            {label: 'Draft', value: 'draft'},
+            {label: 'Published', value: 'published'},
+          ], defaultValue: 'draft',
+         }),
+        cover: fields.image({
+          label: 'Cover Image',
+          directory: 'src/assets/images/spots',
+          publicPath: '../../assets/images/spots/',
+        }),
+        content: fields.markdoc({
+          label: 'Content',
+          options: {
+            image: {
+            // Where the actual files are saved
+            directory: 'src/assets/images/spots',
+            publicPath: '../../assets/images/spots/',
+          }},
+        }),
+      },
+    }),
   }
 });
 
