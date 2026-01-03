@@ -25,8 +25,9 @@
     src:
     local("ShantellSans"),
     url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'),
-    url("/fonts/ShantellSans-VariableFont_BNCE\,INFM\,SPAC\,wght.ttf") format('ttf-variations');
+    url("/fonts/ShantellSans-VariableFont.ttf") format('ttf-variations');
     font-weight: 0 900;
+    
     
 }
 
