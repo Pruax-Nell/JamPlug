@@ -13,8 +13,10 @@ import markdoc from '@astrojs/markdoc';
 
 import keystatic from '@keystatic/astro';
 
+import node from '@astrojs/node';
+
 export default defineConfig({
-  output: "static" | "server",
+  output: "static",
   prefetch: true,
   base: '/',
   trailingSlash: 'always',
@@ -22,5 +24,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+
+  adapter: node({
+    mode: 'standalone'
+  })
 });
