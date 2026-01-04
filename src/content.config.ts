@@ -90,7 +90,7 @@ const spots = defineCollection ({
 })
 
 //  BLOGS *** 
-const blogs = defineCollection ({
+const blog = defineCollection ({
     loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/blog"}),
     schema: ({ image }) => z.object({
         title: z.string(),
@@ -106,14 +106,12 @@ const blogs = defineCollection ({
 });
 
 
-const posts = defineCollection({
-  // Since Keystatic creates files, we don't need a custom loader for basic setups
-  type: 'content', 
-  schema: z.object({
-    title: z.string(),
-    // Make sure these match the fields in your keystatic.config.ts!
-    date: z.string().optional(), 
-  }),
-});
+// const posts = defineCollection({
+//   type: 'content', 
+//   schema: z.object({
+//     title: z.string(),
+//     date: z.string().optional(), 
+//   }),
+// });
 
-export const collections = {blogs, events, organisers, spots };
+export const collections = {blog, events, organisers, spots };

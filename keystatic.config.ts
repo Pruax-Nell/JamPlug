@@ -6,7 +6,7 @@ export default config({
     kind: 'local',
   },
   collections: {
-    blogs: collection({
+    blog: collection({
       label: 'blog',
       slugField: 'title',
       path: 'src/content/blog/*',
@@ -215,100 +215,6 @@ export default config({
           }},
         }),
       }
-    }),
-
-    organisers: collection({
-      label: 'Organisers',
-      slugField: 'name',
-      path: 'src/content/organisers/*',
-      format: { contentField: 'content'},
-      schema: {
-        name: fields.text({ label: 'Name'}),
-        portfolio: fields.slug({ name: {label: 'Portfolio'}}),
-
-        socials: fields.array(
-          fields.object({
-            platform: fields.select({
-              label: 'Platform',
-              options: [
-                { label: 'Instagram', value: 'instagram'},
-                { label: 'TikTok', value: 'tiktok'},
-                { label: 'Facebook', value: 'facebook'},
-                { label: 'X / Twitter', value: 'x'},
-                { label: 'Youtube', value: 'youtube'},
-                { label: 'Website', value: 'website'},
-                { label: 'Other', value: 'other'},
-              ],
-              defaultValue: 'website',
-            }),
-            url: fields.url({label: 'URL'}),
-          }),
-          {label: 'Social Links',
-            itemLabel: (props) => {
-              // Access the value of the 'platform' field inside the object
-              return props.fields.platform.value ? `Social: ${props.fields.platform.value}` : 'New Link';
-            },
-          }),
-        
-        about: fields.text({
-          label: 'About The Organiser',
-          multiline: true,
-        }),
-        brand: fields.image({
-          label: 'brand logo',
-          directory: 'src/assets/images/organisers',
-          publicPath: '../../assets/images/organisers/',
-        }),
-        insert1: fields.image({
-          label: 'Image 1',
-          directory: 'src/assets/images/organisers',
-          publicPath: '../../assets/images/organisers/',
-        }),
-        insert2: fields.image({
-          label: 'Image 2',
-          directory: 'src/assets/images/organisers',
-          publicPath: '../../assets/images/organisers/',
-        }),
-        insert3: fields.image({
-          label: 'Image 3',
-          directory: 'src/assets/images/organisers',
-          publicPath: '../../assets/images/organisers/',
-        }),
-        content: fields.markdoc({
-          label: 'content',
-        }),
-      }
-    }),
-
-    Spots: collection({
-      label: 'Skate Spots',
-      slugField: 'name',
-      path: 'src/content/spots/*',
-      format: { contentField: 'content'},
-      schema: {
-        name: fields.text({ label: 'Skate Spot'}),
-        status: fields.select({
-          label: 'Status', 
-          options: [
-            {label: 'Draft', value: 'draft'},
-            {label: 'Published', value: 'published'},
-          ], defaultValue: 'draft',
-         }),
-        cover: fields.image({
-          label: 'Cover Image',
-          directory: 'src/assets/images/spots',
-          publicPath: '../../assets/images/spots/',
-        }),
-        content: fields.markdoc({
-          label: 'Content',
-          options: {
-            image: {
-            // Where the actual files are saved
-            directory: 'src/assets/images/spots',
-            publicPath: '../../assets/images/spots/',
-          }},
-        }),
-      },
     }),
   }
 });

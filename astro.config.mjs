@@ -18,12 +18,18 @@ import node from '@astrojs/node';
 export default defineConfig({
   output: "static",
   prefetch: true,
-  base: '/',
-  trailingSlash: 'always',
+  site: 'https://example.com',
+  trailingSlash: 'ignore',
   integrations: [mdx(), react(), markdoc(), keystatic()],
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: ['lodash/debounce', '@keystatic/core > lodash/debounce'],
+    },
+    ssr: {
+      noExternal: ['@keystatic/core', 'lodash']
+    }
   },
 
   adapter: node({

@@ -5,10 +5,8 @@ import BlogPost from '../../components/blogPost.astro'
 import { getCollection } from 'astro:content';
 import { object } from 'astro:schema';
 
-const posts = await getCollection('posts');
-
-const allPosts = await getCollection("blogs");
-const blogPosts = (await getCollection('blogs', ({ data }) => {
+const allPosts = await getCollection("blog");
+const blogPosts = (await getCollection('blog', ({ data }) => {
   return data.status === 'published';
 }))
 .sort((a, b) => {

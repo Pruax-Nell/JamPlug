@@ -61,7 +61,7 @@ const upcomingEvents = (publishedEvents)
 	.slice(7);
 	
 	// BLOG COLLECTION
-	const publishedBlogs = await getCollection('blogs')
+	const publishedBlogs = await getCollection('blog')
 	
 	const recentBlogs = (publishedBlogs)
 	.filter( (post) => post.data.status === 'published')
