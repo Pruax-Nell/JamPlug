@@ -1,38 +1,20 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import '../styles/components.css'
 import '../styles/global.css'
-// import '../styles/event.css'
+import '../styles/event.css'
 
-import { Image } from 'astro:assets';
-import { allEuropeanCountries } from '../function/constant';
+import { formatEventDate } from '../function/dateFormatter';
+// import type { SerializedEvent } from '../types';
+
+import { Image } from 'astro:assets'; 
+import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL } from '../constants';
  
 const BASE_URL = import.meta.env.BASE_URL
-const Poster = 'src/content' 
-// **/[^_]*.{md,mdx,mdoc}
-const Content_Folder = "src/content/posters/*.{jpeg, jpg, pgn}";
+// const GROUPED_COUNTRIES = allEuropeanCountries
 
-const GROUPED_COUNTRIES = allEuropeanCountries
-
-const SKATE_DISCIPLINE = [
-  'All','Artistic','Street', 'Jam/Dance',  'Ramps/Vert', 'Roller Hockey', 'Speed', 'Other'
-];
-
-const EVENT_TYPE = [
-  'All', 'Day Party', 'Festival', 'Social', 'Skate Party', 'Weekend', 'Workshop', 'Other'
-];
-
-const MONTH_ORDER = [
-  'All',
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
-
-/**
- * CONFIGURATION
- * These constants control the behavior of the list.
- */
 const EVENTS_PER_PAGE = 20;
 
+// TODO might need to go depending on 'all' code attempt
 const INITIAL_FILTERS = {
   country: 'All',
   eventType: 'All',
@@ -40,16 +22,16 @@ const INITIAL_FILTERS = {
   minAge: 'All', 
   skillLevel: 'All', 
   month: 'All',
+  townCity: 'All',
 };
 
 const EventFilters = ({ events }) => {
-  // 1. STATE MANAGEMENT
-  // safeEvents ensures we always have an array to work with even if props are null
   const safeEvents = events || [];
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // 2. DYNAMIC DROPDOWN OPTIONS (Computed from available data)
+
+  
   // useMemo ensures we only scan the event list once unless the list changes
   const uniqueOptions = useMemo(() => {
     const options = {
@@ -58,23 +40,33 @@ const EventFilters = ({ events }) => {
       skateDiscipline: new Set(),
       minAge: new Set(['18+', '21+']),
       skillLevel: new Set(),
+      townCity: new Set(availableTowns) ,
       // month: MONTH_ORDER ,
-      // month: new Set(),
     };
+
+    const normalizeTown = (str) => {
+  if (!str) return '';
+  return str
+    .trim()                                
+    .toLowerCase()                         
+    .split(' ')                            
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) 
+    .join(' ');                            
+};
 
     safeEvents.forEach((event) => {
       const d = event.data;
-      if (d.country) options.country.add(d.country);
+      if (d.country) options.country.add(d.country) ;
       if (d.eventType) options.eventType.add(d.eventType);
       if (d.skateDiscipline) options.skateDiscipline.add(d.skateDiscipline);
       if (d.minAge) options.minAge.add(d.minAge);
       if (d.skillLevel) options.skillLevel.add(d.skillLevel);
-      
+      if (d.townCity) options.townCity.add(normalizeTown(d.townCity));
+
       // Extract month name from ISO date string
       if (d.startDate) {
         const date = new Date(d.startDate);
-        const monthName = date.toLocaleString('en-US', { month: 'long' });
-        // options.month.add(monthName);
+        const monthName = date.toLocaleString('en-GB', { month: 'long' });
       }
     });
 
@@ -84,21 +76,20 @@ const EventFilters = ({ events }) => {
     return {
       country: GROUPED_COUNTRIES,
       eventType: EVENT_TYPE,
-      skateDiscipline: SKATE_DISCIPLINE,
+      skateDiscipline: SKATE_DISCIPLINES,
       minAge: format(options.minAge),
-      skillLevel: format(options.skillLevel),
+      skillLevel: SKILL_LEVEL,
+      townCity: format(townCity),
       month: MONTH_ORDER,
-      // month: format(options.month),
     };
   }, [safeEvents]);
 
-  // 3. FILTERING LOGIC
   // This calculates the 'Source of Truth' for the filtered results
   const filteredEvents = useMemo(() => {
     return safeEvents.filter((event) => {
       const d = event.data;
       const date = new Date(d.startDate);
-      const eventMonth = date.toLocaleString('en-US', { month: 'long' });
+      const eventMonth = date.toLocaleString('en-GB', { month: 'long' });
 
       const matchesCountry = filters.country === 'All' || d.country === filters.country;
       const matchesType = filters.eventType === 'All' || d.eventType === filters.eventType;
@@ -106,13 +97,14 @@ const EventFilters = ({ events }) => {
       const matchesAge = filters.minAge === 'All' || d.minAge === filters.minAge;
       const matchesSkill = filters.skillLevel === 'All' || d.skillLevel === filters.skillLevel;
       const matchesMonth = filters.month === 'All' || eventMonth === filters.month;
+      const matchTown = filters.townCity === 'All' || d.townCity === filters.townCity;
 
       // Event must pass ALL filters to be included
-      return matchesCountry && matchesType && matchesDiscipline && matchesAge && matchesSkill && matchesMonth;
+      return matchesCountry && matchesType && matchesDiscipline && matchesAge && matchesSkill && matchesMonth && matchTown;
     });
   }, [safeEvents, filters]);
 
-  // 4. PAGINATION LOGIC
+  // PAGINATION 
   const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE);
 
   const paginatedEvents = useMemo(() => {
@@ -121,7 +113,6 @@ const EventFilters = ({ events }) => {
     return filteredEvents.slice(startIndex, endIndex);
   }, [filteredEvents, currentPage]);
 
-  // 5. AUTO-RESET
   // If user changes a filter, always go back to page 1
   useEffect(() => {
     setCurrentPage(1);
@@ -135,7 +126,6 @@ const EventFilters = ({ events }) => {
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      // Smooth scroll to top of section for better UX
       document.getElementById('events-anchor')?.scrollIntoView({ behavior: 'smooth' });
     }
   };
@@ -159,6 +149,8 @@ const EventFilters = ({ events }) => {
     </div>
   );
 
+  
+
   return (
     <div className="primary-container" id="events-anchor">
       
@@ -171,6 +163,7 @@ const EventFilters = ({ events }) => {
           <FilterSelect label="Age Limit" name="minAge" options={uniqueOptions.minAge} className="filter-box" />
           <FilterSelect label="Skill Level" name="skillLevel" options={uniqueOptions.skillLevel} className="filter-box" />
           <FilterSelect label="Month" name="month" options={uniqueOptions.month} className="filter-box" />
+          <FilterSelect label="Town" name="townCity" options={uniqueOptions.townCity} className="filter-box" />
         </div>
         
         <div className="filter-return">
@@ -178,10 +171,10 @@ const EventFilters = ({ events }) => {
 
             {/* clear filters button */}
             <button 
-                onClick={() => setFilters(INITIAL_FILTERS)}
-                className="button reset-button"
+              onClick={() => setFilters(INITIAL_FILTERS)}
+              className="button reset-button"
             >
-                Clear All Filters
+              Clear All Filters
             </button>
         </div>
       </div>
@@ -202,9 +195,11 @@ const EventFilters = ({ events }) => {
 
                 <div className="img-wrapper ">
                     {post.data.eventPoster ? (
-                        <img 
+                        <Image 
                             src= {`/content/flyers/${post.data.eventPoster}`} 
                             alt={post.data.eventName}
+                            width={230}
+                            height={320}
                             className="eventcard-poster"
                         />
                         
@@ -264,10 +259,10 @@ const EventFilters = ({ events }) => {
             <p className="text-gray-400 text-lg">No events match your criteria.</p>
 
             <button 
-                onClick={() => setFilters(INITIAL_FILTERS)}
-                className="mt-4 text-indigo-600 font-bold underline"
+              onClick={() => setFilters(INITIAL_FILTERS)}
+              className="button mt-4 text-indigo-600 font-bold underline"
             >
-                Reset all filters
+              Reset all filters
             </button>
           </div>
         )}

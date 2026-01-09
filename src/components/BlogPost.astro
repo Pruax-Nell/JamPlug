@@ -1,26 +1,40 @@
 ---
 import "../styles/components.css" ;
 
+import Image from "astro/components/Image.astro";
  
-const { title, url, id, description } = Astro.props;
----
+const { post, title, url, description, tags } = Astro.props;
+--- 
 
 <li>
-    <a href={url}>{title}</a> 
+    <a href={url}>{title}
+        <div>
+            <Image 
+                src={post.data.coverImage}
+                alt={post.data.title}
+                width={250}
+                height={260}
+                format="webp"
+            />
+        </div>
+        <div>
+            <h5>{title}</h5>
+            <p>{description}</p>
+            <span>read this post</span>
+            <div>{tags}</div>
+        </div>
+    </a> 
 </li>
 
-<div>
-    <a href={url}>
-        <h5>{title}</h5>
-        <p>{description} ...click here</p>
-    </a>
-</div>
 
 <style>
-    div {
+    a {
         border: 2px solid var(--main-purple);
         border-radius: 8px;
         padding: 5px;
         width: 250px;
+
+        display: flex;
+        flex-direction: column;
     }
 </style>

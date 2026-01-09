@@ -3,19 +3,24 @@ import "../styles/event.css" ;
 import BaseLayout from "../layouts/baseLayout.astro";
 
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 
 // rebuild in react file
 import EventCard from '../components/eventCard.astro';
 
 import UpcomingEvents from '../components/eventPagination'
+import type { formatEventDate } from "../function/dateFormatter";
 
 const now = new Date();
 now.setHours(0, 0, 0, 0);
 
 // All events which status is 'published'
-const publishedEvents = await getCollection('events', ({ data }) => {
-	return data.status === 'published';
+// const publishedEvents = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
+// 	return data.status === 'published';
+// });
+const publishedEvents: CollectionEntry<'events'>[] = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
+    return data.status === 'published';
 });
 
 // all 'published' events that are in the future
@@ -26,9 +31,9 @@ const upcomingEvents = (publishedEvents)
 		})
 	.sort(
 	(a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
-	);
+);
 
-	// all published events that are in the past
+// all published events that are in the past
 const thirtyDaysAgo = new Date();
 thirtyDaysAgo.setDate(now.getDate() - 30);
 
@@ -42,19 +47,26 @@ const pastEvents = publishedEvents
 	return eventEndDate <= now && eventEndDate >= thirtyDaysAgo;
   })
   .sort((a, b) => {
-    // Sort by start date descending (most recent first)
     return new Date(b.data.startDate).valueOf() - new Date(a.data.startDate).valueOf();
   });
  
 	
-// 3. DATA SERIALIZATION (Crucial for React Props)
-const clientUpcomingEvents = upcomingEvents.map(event => ({
+// 3. DATA SERIALIZATION (reduce the load for React Props)
+const clientUpcomingEvents = upcomingEvents.map((event: CollectionEntry<'events'>)=> ({
     id: event.id,
     data: {
-        ...event.data,
+        eventName: event.data.eventName,
+        country: event.data.country,
+        townCity: event.data.townCity,
+        category: event.data.category,
+        eventType: event.data.eventType,
+        skateDiscipline: event.data.skateDiscipline,
+        minAge: event.data.minAge,
+        skillLevel: event.data.skillLevel,
+        description: event.data.description,
+        eventPoster: event.data.eventPoster,
         startDate: event.data.startDate.toISOString(),
         endDate: event.data.endDate ? event.data.endDate.toISOString() : null,
-        // Any other Date objects must be converted here too!
     },
 }));
 
@@ -135,7 +147,7 @@ const clientUpcomingEvents = upcomingEvents.map(event => ({
 		</div>
 		{pastEvents.length > 0 ? (
 		<div class="event-grid"> 
-			{pastEvents.map((post) =>
+			{pastEvents.map((post )  =>
 				( <EventCard 
 				/>)
 			)}

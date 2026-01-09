@@ -1,6 +1,8 @@
 ---
+// TODO - dynamic frontmatter application
 import Favicon from "../../public/astro.svg";
 import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
+import type { SerializedEvent } from "../types";
 
 
 const { title = "Your Jam Plug UK", ...props } = Astro.props;
@@ -10,6 +12,7 @@ interface Props {
 	description?: string;
 	Index?: string;
 	SEO?: string;
+	frontmatter?: SerializedEvent['data'];
 }
 
 const { Index, description, SEO } = Astro.props;

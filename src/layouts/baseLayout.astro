@@ -2,7 +2,7 @@
 // const Brand = "Your Jam Plug";
 // const {Index = 'Home |'} = Astro.props;
 // const {title = ' Your Jam Plug UK | Where Roller Skates gather'} = Astro.props; 
-
+ 
 import "../styles/global.css";
 import "../styles/components.css";
 import "../styles/header.css"
@@ -22,6 +22,7 @@ interface Props {
 	description?: string;
 	Index?: string;
 	SEO?: string;
+	
 }
 
 const { page_title, Index, description, SEO } = Astro.props;

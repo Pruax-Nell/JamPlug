@@ -1,19 +1,23 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import EventsLayout from '../../layouts/eventFocusLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('events');
   return posts.map(post => ({
-    params: { slug: post.id }, 
-    props: post ,
+    params: { id: post.id }, 
+    props: { post },
   }));
+};
+
+interface Props {
+  post: CollectionEntry<'events'>;
 }
 
-const post = Astro.props;
+const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<EventsLayout frontmatter={post.data}>
+<EventsLayout event={post}>
     <Content />
-</EventsLayout>  
+</EventsLayout>

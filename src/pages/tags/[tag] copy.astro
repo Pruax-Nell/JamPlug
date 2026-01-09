@@ -1,0 +1,47 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/baseLayout.astro";
+import BlogPost from "../../components/blogPost.astro";
+
+const now = new Date();
+now.setHours(0, 0, 0, 0);
+
+export async function getStaticPaths() {
+  // const allPosts = await getCollection('blog');
+  
+  // const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+
+  const publishedEvents: CollectionEntry<'events'>[] = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
+    return data.status === 'published';
+});
+
+// all 'published' events that are in the future
+const upcomingEvents = (publishedEvents)
+	.filter(
+		event => {
+			return event.data.startDate >= now;
+		})
+	.sort(
+	(a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
+);
+  
+  return uniqueTags.map((tag) => {
+    const filteredPosts = publishedEvents.filter((post) => 
+    post.data.tags.includes(tag));
+    
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+} 
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+<BaseLayout page_title={tag}>
+  <p>Posts tagged with {tag}</p>
+  <ul>
+    {posts.map((post) => <BlogPost url={post.id} title={post.data.title}/>)}
+  </ul>
+</BaseLayout>

@@ -3,33 +3,94 @@ import BaseLayout from './baseLayout.astro';
 import '../styles/event.css'
 import '../styles/components.css'
 
-const { frontmatter, data } = Astro.props;
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map(event => ({
+    params: {slug: event.id},
+    props: { event },
+  }));
+}
+
+import { Image } from 'astro:assets';
+
+const { event } = Astro.props;
+const { data } = event;
+// const { frontmatter, data } = Astro.props;
 const BASE_URL = import.meta.env.BASE_URL
 
+function formatTime(timeObj: any) {
+  if (!timeObj) return '';
+  const { hour, minute } = timeObj;
+  
+  // Example for 12-hour format (e.g., 2:30 PM)
+  const h = parseInt(hour);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const displayHour = h % 12 || 12;
+  
+  return `${displayHour}:${minute} ${ampm}`;
+}
+
 ---
-<BaseLayout page_title={frontmatter.eventName} >
+<BaseLayout page_title={data.eventName} >
+  <div class="navigation-controls">
+    <button onclick="history.back()" class="back-button">
+      ← Back to Events
+    </button>
+  </div>
 
   <div>
-    <!-- <img src={BASE_URL + {frontmatter.eventPoster.src}} width="300" alt={frontmatter.eventPoster.alt} /> -->
-    <img src={frontmatter.eventPoster} width="300" alt={frontmatter.title} />
+    <Image 
+      src={data.eventPoster} 
+      alt={data.eventName} 
+      width={350} 
+      height={510} 
+      class="cover-image"
+    />
 
   </div>
 
   <div>
-    <p><em>{frontmatter.description}</em></p>
+    <div>
+      {formatTime(data.startTime)} 
+      {data.endTime && ` - ${formatTime(data.endTime)}`}
+    </div>
+    <p>{data.description}</p>
+    <span>{data.startTime} </span> <span> ~ </span> <span>{data.endTime} </span>
 
     <slot />
   </div>
 
   <div class="primary-container">
     <div class="tags">
-      {frontmatter.tags.map((tag: string) => (
-        <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
-      ))}
+      <span>{data.skateDiscipline}</span>
+      <span>{data.eventType}</span>
     </div>
 
   </div>
 
+  <div class="navigation-controls">
+    <button onclick="history.back()" class="back-button">
+      ← Back to Events
+    </button>
+  </div>
+
 </BaseLayout>
+
+<style>
+  .back-button {
+    cursor: pointer;
+    background: none;
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+  .back-button:hover {
+    border-color: #4f46e5;
+    color: #4f46e5;
+  }
+</style>
 
 

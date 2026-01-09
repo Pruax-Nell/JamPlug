@@ -1,30 +1,56 @@
 ---
 import BaseLayout from "./baseLayout.astro";
-
+import { Image } from 'astro:assets';
 
 const { frontmatter } = Astro.props;
+const { title, published, coverImage, description, tags, gallery } = frontmatter;
+
 ---
 
 <BaseLayout >
-    <h1>{frontmatter.title}</h1>
-    <!-- <p>Written by {data.author}</p> -->
-    <p>Published on: {frontmatter.published.toString().slice(0,10)}</p>
-    <p>{frontmatter.published.toLocaleDateString()}</p>
-
-    <slot />
+    <h1>{title}</h1>
+    <p>Published on: {published.toString().slice(0,10)}</p>
+    <p>{published.toLocaleDateString()}</p>
     
-    <!-- <img src={data.image.url} width="300" alt={post.data.image.alt} /> -->
-    <p>{frontmatter.description}</p>
+    <p>{description}</p>
 
-    <div>
-        <ul>{frontmatter.tags}</ul>
+    <Image 
+    src={coverImage} 
+    alt={title} 
+    width={350} 
+    height={510} 
+    class="cover-image"
+    />
+    
+    <div class="content">
+        <slot />
     </div>
-    <!-- tag list -->
-    <div class="tags">
-        {frontmatter.tags.map((tag: string) => (
-        <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
-        ))}
-    </div>
+
+    {gallery && (
+        <section class="gallery-grid">
+            {gallery.map((item:any) => (
+            <figure>
+                <Image 
+                src={item.image} 
+                alt={item.alt} 
+                width={800} 
+                format="avif"
+                class="rounded-lg shadow-md"
+                />
+                <figcaption>{item.alt}</figcaption>
+            </figure>
+            ))} 
+        </section>
+    )}
+
+    {tags && ( 
+        <div class="tags">
+            {tags.map((tag: string) => (
+                <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
+            ))}
+        </div>
+    )}
+
 </BaseLayout>
 
 

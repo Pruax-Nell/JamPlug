@@ -3,19 +3,24 @@ import BaseLayout from '../../layouts/baseLayout.astro';
 import BlogPost from '../../components/blogPost.astro'
 
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+import { Image } from 'astro:assets';
 import { object } from 'astro:schema';
 
-const allPosts = await getCollection("blog");
-const blogPosts = (await getCollection('blog', ({ data }) => {
-  return data.status === 'published';
-}))
-.sort((a, b) => {
-  const dateA = a.data.published ? new Date(a.data.published).getTime() : 0;
-  const dateB = b.data.published ? new Date(b.data.published).getTime() : 0;
-  return dateB - dateA;
-});
+const allPosts = await getCollection('blog');
 
-const pageTitle = "My Astro Learning Blog";
+const blogPosts = allPosts
+  .filter((post: CollectionEntry<'blog'>) => {
+    return post.data.status === 'published';
+  })
+  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => {
+    const dateA = a.data.published ? new Date(a.data.published).getTime() : 0;
+    const dateB = b.data.published ? new Date(b.data.published).getTime() : 0;
+    return dateB - dateA;
+  });
+ 
+const pageTitle = "Roll/Skate/Blog";
 ---
 <BaseLayout page_title={pageTitle}>
 
@@ -25,7 +30,9 @@ const pageTitle = "My Astro Learning Blog";
 
   <span>Component test below</span>
   <ul>
-    {blogPosts.map((blogs) => (<BlogPost url={`/blog/${blogs.id}/`} title={blogs.data.title} />))}
+    {blogPosts.map((blog: CollectionEntry<'blog'>) => (
+      <BlogPost url={`/blog/${blog.id}/`} title={blog.data.title} />
+    ))}
   </ul>
 
     <p>
