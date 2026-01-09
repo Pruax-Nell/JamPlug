@@ -1,67 +1,74 @@
 ---
-import "../styles/event.css";
+import "../styles/event.css" ;
 import BaseLayout from "../layouts/baseLayout.astro";
+
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import UpcomingEvents from '../components/eventPagination'; // Your React Component
+
+
+// rebuild in react file
+import EventCard from '../components/eventCard.astro';
+
+import UpcomingEvents from '../components/eventPagination'
+import type { formatEventDate } from "../function/dateFormatter";
 
 const now = new Date();
 now.setHours(0, 0, 0, 0);
 
-// 1. Fetch only published events
-const publishedEvents = await getCollection('events', ({ data }) => {
-  return data.status === 'published';
+// All events which status is 'published'
+// const publishedEvents = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
+// 	return data.status === 'published';
+// });
+const publishedEvents: CollectionEntry<'events'>[] = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
+    return data.status === 'published';
 });
 
-// 2. Prepare our "Server-Side Scanner" containers
-const townsByCountry = {};
-const rinks = new Set();
-const ages = new Set();
+// all 'published' events that are in the future
+const upcomingEvents = (publishedEvents)
+	.filter(
+		event => {
+			return event.data.startDate >= now;
+		})
+	.sort(
+	(a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
+);
 
-// 3. Single-Pass: Filter, Sort, Serialize, and Scan
-const clientUpcomingEvents = publishedEvents
-  .filter(event => event.data.startDate >= now)
-  .sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf())
-  .map((event) => {
-    const d = event.data;
+// all published events that are in the past
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(now.getDate() - 30);
 
-    // --- NORMALIZATION HELPER ---
-    const clean = (str: string) => str ? str.trim().replace(/\s+/g, ' ') : "";
-    const city = clean(d.townCity);
-    const rink = clean(d.featuredRink || ""); 
+// PAST EVENTS
+const pastEvents = publishedEvents
+  .filter(event => {
+	const dateCompare = event.data.endDate || event.data.startDate;
 
-    // --- SCANNING (Building our filter options) ---
-    if (d.country && city) {
-      if (!townsByCountry[d.country]) townsByCountry[d.country] = new Set();
-      townsByCountry[d.country].add(city);
-    }
-    if (rink) rinks.add(rink);
-    if (d.minAge) ages.add(d.minAge);
+	const eventEndDate = new Date(dateCompare);
 
-    // --- SERIALIZATION (The data React receives) ---
-    return {
-      id: event.id,
-      data: {
-        ...d, // Spread existing data
-        townCity: city, // Use cleaned version
-        featuredRink: rink,
-        startDate: d.startDate.toISOString(),
-        endDate: d.endDate ? d.endDate.toISOString() : null,
-      },
-    };
+	return eventEndDate <= now && eventEndDate >= thirtyDaysAgo;
+  })
+  .sort((a, b) => {
+    return new Date(b.data.startDate).valueOf() - new Date(a.data.startDate).valueOf();
   });
-
-// 4. Finalize the Options Object
-const serverOptions = {
-  townsByCountry: Object.fromEntries(
-    Object.entries(townsByCountry).map(([country, citySet]) => [
-      country, 
-      Array.from(citySet as Set<string>).sort()
-    ])
-  ),
-  featuredRink: ['All', ...Array.from(rinks).sort()],
-  minAge: ['All', ...Array.from(ages).sort().map(a => `${a}+`) ]
-};
+ 
+	
+// 3. DATA SERIALIZATION (reduce the load for React Props)
+const clientUpcomingEvents = upcomingEvents.map((event: CollectionEntry<'events'>)=> ({
+    id: event.id,
+    data: {
+        eventName: event.data.eventName,
+        country: event.data.country,
+        townCity: event.data.townCity,
+        category: event.data.category,
+        eventType: event.data.eventType,
+        skateDiscipline: event.data.skateDiscipline,
+        minAge: event.data.minAge,
+        skillLevel: event.data.skillLevel,
+        description: event.data.description,
+        eventPoster: event.data.eventPoster,
+        startDate: event.data.startDate.toISOString(),
+        endDate: event.data.endDate ? event.data.endDate.toISOString() : null,
+    },
+}));
 
 
 ---
@@ -101,10 +108,8 @@ const serverOptions = {
 			<h2>Upcoming Events</h2>
 		</div>
 
-		<UpcomingEvents 
+		<UpcomingEvents events={clientUpcomingEvents}
 			client:load
-			events={clientUpcomingEvents}
-			serverOptions={serverOptions}
 		/>
 
 	</div>
@@ -141,7 +146,7 @@ const serverOptions = {
 		<div>
 			<h3>Last Month's Events</h3>
 		</div>
-		<!-- {pastEvents.length > 0 ? (
+		{pastEvents.length > 0 ? (
 		<div class="event-grid"> 
 			{pastEvents.map((post )  =>
 				( <EventCard 
@@ -149,7 +154,7 @@ const serverOptions = {
 			)}
 		</div>) : 
 		(<div class="none-returned"><p>no events found</p></div>)
-		} -->
+		}
 
 	</div>
 </section>

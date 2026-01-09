@@ -1,6 +1,6 @@
 import { z, defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, PARTICIPATION_LEVEL, EVENT_TYPE, GROUPED_COUNTRIES, POST_STATUS } from '../src/constants'
+import { SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, GROUPED_COUNTRIES, POST_STATUS } from '../src/constants'
 
 const getValues = (constArray: readonly { value: string }[]) => {
   return constArray.map(c => c.value) as [string, ...string[]];
@@ -15,7 +15,10 @@ const timeObject = z.object({
 const blog = defineCollection ({
     loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/blog"}),
     schema: ({ image }: { image: any }) => z.object({
-
+    // CMS ADMIN FIELDS
+        status: z.enum(getValues(POST_STATUS)).default('draft'),
+        published: z.coerce.date().default(() => new Date()),
+    // MAIN FIELDS
         title: z.string(),
         subtitle: z.string().optional(),
         description: z.string(),
@@ -23,16 +26,8 @@ const blog = defineCollection ({
         blogCategory: z.enum( getValues(BLOG_CATEGORY)),
         skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)).optional(),
         
-        status: z.enum(getValues(POST_STATUS)).default('draft'),
-        published: z.coerce.date().default(() => new Date()),
-        
         coverImage: image().optional(),
-        gallery: z.array(
-            z.object({
-                file: image(),
-                alt: z.string().optional().default('Gallery image')
-            })
-        ).optional().default([]),
+        
     }),
 });
 
@@ -40,36 +35,30 @@ const blog = defineCollection ({
 const events = defineCollection({
     loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/events"}),
     schema: ({ image }: { image: any }) =>  z.object ({
-
-        eventName: z.string(),
-        subheading: z.string().optional(),
-
-        startDate: z.coerce.date().min(new Date(), { message: "Start date must be in the future." }), 
-        endDate: z.coerce.date().min(new Date(), { message: "End date must be in the future." }).optional(),
-        // tags: z.array(z.string()).default(['new']),
+// CMS admin items 
         status: z.enum(getValues(POST_STATUS)).default('draft'),
         published: z.coerce.date().optional(), 
         isFeatured: z.boolean().default(false),
-        
+    // Main Info
+        eventName: z.string(),
+        subheading: z.string().optional(),
+        description: z.string(),
+        startDate: z.coerce.date().min(new Date(), { message: "Start date must be in the future." }), 
+        endDate: z.coerce.date().min(new Date(), { message: "End date must be in the future." }).optional(),
+    // Secondary key info
+        eventPoster: image().optional(),
         country: z.enum( getValues(GROUPED_COUNTRIES)),
         townCity: z.string(),
-        description: z.string(),
-
         eventType: z.enum( getValues(EVENT_TYPE)),
         skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)),
-
-        eventPoster: image().optional(),
-        eventgallery: z.array(
-            z.object({
-                file: image(),
-                alt: z.string().optional().default('Gallery image')
-            })
-        ).optional().default([]),
+        skilllevel: z.enum( getValues(SKILL_LEVEL)).optional(), 
+        // participationlevel: z.enum( getValues(PARTICIPATION_LEVEL)).optional(), 
+        minAge: z.string().optional(),
+        maxAge: z.string().optional(),
 
         startTime: timeObject.optional(), 
         endTime: timeObject.optional(), 
-
-        
+    // Bonus info - option to add multiple lines ideal
         eventLink: z.string().url().optional(),
         ticketLink: z.string().url().optional(),
         organiser: z.string().optional(), 
@@ -81,17 +70,12 @@ const events = defineCollection({
         dj: z.string().optional(),
         djLink: z.string().url().optional(),
         
-        featuredRink: z.string().optional(),
+        rink: z.string().optional(),
         venueAddress: z.string().optional(),
         mapCoordinates: z.string().optional(),
 
-        repetition: z.string().optional(),
-        skilllevel: z.enum( getValues(SKILL_LEVEL)).optional(), 
-        participationlevel: z.enum( getValues(PARTICIPATION_LEVEL)).optional(), 
         offSkates: z.boolean().optional().default(false),
-        minAge: z.string().optional(),
-        maxAge: z.string().optional(),
-        frequency: z.string().optional(),
+        repetition: z.string().optional(),
 
     })
 });

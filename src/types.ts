@@ -17,8 +17,6 @@ export interface SerializedEvent {
     eventPoster?: string;
     startDate: string; // ISO String for Serialization
     endDate: string | null;
+    rink?: string;
   };
 }
-
-// You can also define your Constant types here
-export type CountryCode = 'uk' | 'france' | 'germany' | 'spain'; // etc.

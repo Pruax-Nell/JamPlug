@@ -1,6 +1,6 @@
 // keystatic.config.ts
 import { config, fields, collection } from '@keystatic/core';
-import { SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, PARTICIPATION_LEVEL, EVENT_TYPE, GROUPED_COUNTRIES, POST_STATUS } from './src/constants'
+import { SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, GROUPED_COUNTRIES, POST_STATUS } from './src/constants'
 
 // Since you defined startTime and endTime as fields.object in Keystatic, we match that structure in Zod. When you want to display it in your Astro component, you would use: {event.data.startTime.hour}:{event.data.startTime.minute}.
  
@@ -10,7 +10,7 @@ export default config({
     // type: 'local',
   },
   collections: {
-
+    
     // ---------------------------------------------------------- BLOG
     blog: collection({
       label: 'blog',
@@ -18,7 +18,18 @@ export default config({
       path: 'src/content/blog/*/',
       format: { contentField: 'content'},
       schema: {
-        // needs to match astro config
+      // CMS ADMIN FIELDS 
+        status: fields.select({
+          label: 'Status', 
+          options: POST_STATUS,
+          defaultValue: 'draft',
+        }),
+        published: fields.date({ 
+          label: 'Published Date', 
+          defaultValue: new Date().toISOString().split('T')[0], 
+          validation: { isRequired: true }
+          // TODO if this fails, remove defaultValue or fix somehow
+        }),
         title: fields.slug({ name: { label: 'Title' } }),
         subtitle: fields.text({ label: 'Sub-Title', description: 'e.g.tag lines or under/second title (hint:...after the colon)'}),
         description: fields.text({
@@ -32,50 +43,22 @@ export default config({
         }),
         skateDiscipline: fields.select({
           label: 'Blog Category',
-          options: SKATE_DISCIPLINES,
-          defaultValue: 'rhythm-dance',
+          options:[
+            { label: '-- Not Specified --', value: '' }, 
+            ...SKATE_DISCIPLINES 
+          ],
+          defaultValue: '',
         }),
-
-        status: fields.select({
-          label: 'Status', 
-          options: POST_STATUS,
-          defaultValue: 'draft',
-        }),
-        published: fields.date({ 
-          label: 'Published Date', 
-          defaultValue: new Date().toISOString().split('T')[0], 
-          validation: { isRequired: true }
-          // TODO if this fails, remove defaultValue or fix somehow
-        }),
-        
         coverImage: fields.image({
           label: 'Cover Image',
-          directory: 'src/content/blog/*/_images',
-          publicPath: './_images/',
+          directory: '/',
+          publicPath: './',
         }),
-        gallery: fields.array(
-          fields.object({
-            file: fields.image({
-              label: 'Image File',
-              directory: 'src/content/blog/*/_images',
-              publicPath: './_images/',
-            }),
-            alt: fields.text({ 
-              label: 'Alt Text',
-              defaultValue: 'Blog gallery image' 
-            }),
-          }),
-          {
-            label: 'Image Gallery',
-            itemLabel: (props) => props.fields.alt.value || 'Gallery Image',
-          }
-        ),
+
         content: fields.markdoc({
           label: 'Content',
           options: {
             image: {
-            directory: 'src/content/blog/*/_images',
-            publicPath: './_images/',
           }},
         }),
       },
@@ -86,24 +69,32 @@ export default config({
     events: collection ({
       label: 'Events',
       slugField: 'eventName',
-      path: 'src/content/events/*',
+      path: 'src/content/events/*/',
       format: { contentField: 'content'},
       schema: {
-
-        eventName: fields.slug({ name: { label: 'Event Name' } }),
-        subheading: fields.text({ label: 'Sub Heading'}),
-
-        startDate: fields.date({ label: 'Start Date' }),
-        endDate: fields.date({ label: 'End Date' }),
-        
+      // CMS ADMIN FIELDS
         status: fields.select({
           label: 'Status', 
           options: POST_STATUS,
-           defaultValue: 'draft',
-         }),
+          defaultValue: 'draft',
+        }),
         published: fields.date({ label: 'Published Date' }),
         isFeatured: fields.checkbox({ label: 'Is Featured' }),
-
+      // Main Info
+        eventName: fields.slug({ name: { label: 'Event Name' } }),
+        subheading: fields.text({ label: 'Sub Heading'}),
+        description: fields.text({
+          label: 'Description',
+          multiline: true,
+        }),
+        startDate: fields.date({ label: 'Start Date' }),
+        endDate: fields.date({ label: 'End Date' }),
+    // Secondary key info
+        eventPoster: fields.image({
+          label: 'Event Poster',
+          directory: '/',
+          publicPath: '/',
+        }),
         country: fields.select({
           label: 'Country',
           options: GROUPED_COUNTRIES,
@@ -113,46 +104,39 @@ export default config({
           label: 'Town / City',
           description: 'e.g. London, Bristol, Lille'
         }),
-        description: fields.text({
-          label: 'Description',
-          multiline: true,
-        }),
-        
         eventType: fields.select({ 
-          label: 'Event Type',
-          options: EVENT_TYPE, 
-          defaultValue: 'day-skate', 
+          label:'Event Type',
+          options: [
+            { label: '-- Not Specified --', value: '' }, 
+            ...EVENT_TYPE 
+          ],
+          defaultValue: '',
         }),
         skateDiscipline: fields.select({ 
           label: 'Skate Discipline',
-          options: SKATE_DISCIPLINES,
-          defaultValue: 'rhythm-dance', 
+          options: [
+            {label: '-- Not Specified --', value: ''},
+            ...SKATE_DISCIPLINES
+          ],
+          defaultValue: '', 
         }),
-
-        eventPoster: fields.image({
-          label: 'Event Poster',
-          directory: 'src/content/events/*/_images',
-          publicPath: './_images/',
+        skilllevel: fields.select({
+          label: 'Level requirement',
+          options:[
+            {label: '-- Not Specified --', value: ''},
+            ...SKILL_LEVEL
+          ],
+          defaultValue: '', 
         }),
-        eventgallery: fields.array(
-          fields.object({
-            file: fields.image({
-              label: 'Image File',
-              directory: 'src/content/events/*/_images',
-              publicPath: './_images/',
-            }),
-            alt: fields.text({ 
-              label: 'Alt Text',
-              defaultValue: 'Blog gallery image' 
-            }),
-          }),
-          {
-            label: 'Image Gallery',
-            itemLabel: (props) => props.fields.alt.value || 'Gallery Image',
-          }
-        ),
+        // participationlevel: fields.select({
+        //   label: 'Participation level',
+        //   options: PARTICIPATION_LEVEL, 
+        //   defaultValue: 'amateur',
+        // }),
+        minAge: fields.text({ label: 'Minimum Age' }),
+        maxAge: fields.text({ label: 'Maximum Age' }),
 
-        startTime: fields.object({ 
+        startTime: fields.object({
           hour: fields.select({
             label: 'Hour',
             options: Array.from({ length: 24 }, (_, i) => ({
@@ -182,10 +166,10 @@ export default config({
             defaultValue: '00',
           }), 
         }),
-        
+    // Bonus info - option to add multiple lines ideal
         eventLink: fields.url({ label: 'Event Link', }),
         ticketLink: fields.url({ label: 'Ticket Link' }),
-        organiser:  fields.text({ label: 'Organiser'}),
+        organiser: fields.text({ label: 'Organiser'}),
         orgLink: fields.url({ label: 'Organisers link'}),
         host: fields.text({ label: 'Event Host' }),
         hostLink: fields.url({ label: 'host link'}),
@@ -194,33 +178,19 @@ export default config({
         dj: fields.text({ label: 'DJ' }),
         djLink: fields.url({ label: 'dj link'}),
         
-        featuredRink: fields.text({ label: 'Featured Rink' }),
+        rink: fields.text({ label: 'Featured Rink' }),
         venueAddress: fields.text({ label: 'Address' }),
         mapCoordinates: fields.text({ label: 'Map Coordinates' }),
 
+        offSkates: fields.checkbox({ label: 'Non Skating Event?'}),
         repetition: fields.text({ label: 'Repetition' }),
-        skilllevel: fields.select({
-          label: 'Level requirement',
-          options:SKILL_LEVEL, 
-          defaultValue: 'competent',
-        }),
-        participationlevel: fields.select({
-          label: 'Participation level',
-          options: PARTICIPATION_LEVEL, 
-          defaultValue: 'amateur',
-        }),
-        offSkates: fields.checkbox({ 
-          label: 'Non Skating Event?', 
-        }),
-        minAge: fields.text({ label: 'Minimum Age' }),
-        maxAge: fields.text({ label: 'Maximum Age' }),
-        frequency: fields.text({ label: 'frequency' }),
+      // TEXT BODY
         content: fields.markdoc({
           label: 'Content',
           options: {
             image: {
-            directory: 'src/content/events/*/_images',
-            publicPath: './_images/',
+            directory: '/',
+            publicPath: './',
           }},
         }),
       }

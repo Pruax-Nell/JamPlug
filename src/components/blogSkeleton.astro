@@ -1,0 +1,45 @@
+---
+/* A simple placeholder component with no logic */
+---
+<li class="skeleton-card">
+  <div class="skeleton-image"></div>
+  <div class="skeleton-content">
+    <div class="skeleton-title"></div>
+    <div class="skeleton-description"></div>
+    <div class="skeleton-description short"></div>
+  </div>
+</li>
+
+<style>
+  .skeleton-card {
+    list-style: none;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #eee;
+    margin-bottom: 1rem;
+    width: 250px;
+  }
+  .skeleton-image {
+    height: 260px;
+    background: #ddd;
+  }
+  .skeleton-content { padding: 1rem; }
+  
+  .skeleton-title, .skeleton-description {
+    background: #ddd;
+    height: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    /* The Shimmer Animation */
+    background: linear-gradient(90deg, #ddd 25%, #e5e5e5 50%, #ddd 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  .short { width: 60%; }
+  .skeleton-title { height: 1.5rem; width: 80%; }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+</style>

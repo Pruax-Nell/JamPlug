@@ -11,9 +11,13 @@ import Error404 from "../assets/Custom404B.png";
     
 </div>
 <div>
-    <a href="/home">Back to Home Page</a>
+    <a href="/">Back to Home Page</a>
     <button class="btn-secondary">Go Back</button>
-    <button class="btn-secondary"><span>Go Back</span></button>
+    <div class="navigation-controls btn-primary">
+    <button onclick="history.back()" class="back-button">
+      ← Back to Events
+    </button>
+  </div>
 </div>
 </BaseLayout>
 

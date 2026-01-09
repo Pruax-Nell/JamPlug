@@ -1,13 +1,14 @@
-import React, { useState, useMemo, useEffect } from 'react';
+//  ...CODE A...
 import '../styles/components.css'
 import '../styles/global.css'
 import '../styles/event.css'
 
+import React, { useState, useMemo, useEffect } from 'react';
 import { formatEventDate } from '../function/dateFormatter';
 // import type { SerializedEvent } from '../types';
 
 import { Image } from 'astro:assets'; 
-import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, DISCIPLINE_TAGS, SKILL_LEVEL } from '../constants';
+import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, DISCIPLINE_TAGS, SKILL_LEVEL, FOOTWARE_CHOICE } from '../constants';
  
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -18,10 +19,11 @@ const EventFilters = ({ events }) => {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // 1. GENERATE DYNAMIC OPTIONS
-  const uniqueOptions = useMemo(() => {
+  // 1. GENERATE DYNAMIC OPTIONS ...code a...
+  const uniqueOptions = useMemo(() => { 
+    // -NOTE- creates a container to prepare for incoming loop's information.
     const townsByCountry = {}; 
-
+// -NOTE- difference between {} object -key and value, and [] array -list of obj/string etc.
     safeEvents.forEach((event) => {
       const { country, townCity } = event.data;
       if (country && townCity) {
@@ -40,9 +42,13 @@ const EventFilters = ({ events }) => {
       skillLevel: withAll(SKILL_LEVEL),
       month: withAll(MONTH_ORDER),
       // Towns are special: they depend on the country filter
-      townsByCountry
+      // townsByCountry,
+      townCity: townsByCountry,
+      // Fixed minAge logic TODO change to dynamic list to allow other age settings
+      minAge: ['All', '18+', '21+'],
     };
   }, [safeEvents]);
+// end of calculation -NOTE- depends on safeEvents
 
   // 2. GET CURRENT TOWNS BASED ON SELECTED COUNTRY
   const availableTowns = useMemo(() => {
@@ -54,9 +60,11 @@ const EventFilters = ({ events }) => {
   }, [filters.country, options.townsByCountry]);
 
   // 3. FILTER LOGIC
+  // AKA THE GATE CHECK 
   const filteredEvents = useMemo(() => {
     return safeEvents.filter((event) => {
       const d = event.data;
+
       const date = new Date(d.startDate);
       const eventMonth = date.toLocaleString('en-GB', { month: 'long' }).toLowerCase();
       
@@ -273,5 +281,6 @@ const EventFilters = ({ events }) => {
     </div>
   );
 };
+// end of const EventFilters variable/function
 
 export default EventFilters;

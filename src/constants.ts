@@ -1,32 +1,32 @@
 export const SITE_TITLE = 'Your Jam Plug UK';
 export const SITE_DESCRIPTION = 'For Roller Skaters who want to skate';
+
 export const HOMEPAGE_FEATURE_LIMIT = 8;
 export const EVENTS_PER_PAGE = 20;
 
+// ---------------------- CMS HELPERS
 export const POST_STATUS = [
-    {value:'draft', label: 'Draft'},
-    {value:'published', label: 'Published'},
+  {value:'draft', label: 'Draft'},
+  {value:'published', label: 'Published'},
 ] as const;
 
-// SKATE-DISCIPLINES
-export const SKATE_DISCIPLINES = [
-    // {value:'all', label: 'All'},
-    {value:'rhythm-dance', label: 'Rhythm & Dance'},
-    // Rhythm
-    // Jam, Rhythm, JB, Artistic, and casual rink skating.
-    {value:'sport-games', label: 'Sport & Games'},
-    // Sport
-    // Derby, Hockey, and organized meetup groups.
-    {value:'park-ramps', label: 'Park & Ramps'},
-    // Park
-    // Park skating, Vert, and Aggressive street
-    {value:'distance-detours', label: 'Distance & Detours '},
-    // Distance
-    // Trail, Speed, Urban Flow, and City skating.
-    {value: 'other', label: 'Other'},
+//  ---------------------- MONTH ORDER
+export const MONTH_ORDER = [
+    { value: 'january', label: 'January' },
+    { value: 'february', label: 'February' },
+    { value: 'march', label: 'March' },
+    { value: 'april', label: 'April' },
+    { value: 'may', label: 'May' },
+    { value: 'june', label: 'June' },
+    { value: 'july', label: 'July' },
+    { value: 'august', label: 'August' },
+    { value: 'september', label: 'September' },
+    { value: 'october', label: 'October' },
+    { value: 'november', label: 'November' },
+    { value: 'december', label: 'December' },
 ] as const;
 
-//  BLOG-CATAGORIES
+//  ----------------------  BLOG-logic
 export const BLOG_CATEGORY = [
     // can be multiple choice..
     { value: 'news', label: 'News'},
@@ -43,26 +43,29 @@ export const BLOG_CATEGORY = [
     // all others / uncategorised
 ] as const;
 
-// MONTH ORDER
-export const MONTH_ORDER = [
-    // { value: 'all', label: 'All' },
-    { value: 'january', label: 'January' },
-    { value: 'february', label: 'February' },
-    { value: 'march', label: 'March' },
-    { value: 'april', label: 'April' },
-    { value: 'may', label: 'May' },
-    { value: 'june', label: 'June' },
-    { value: 'july', label: 'July' },
-    { value: 'august', label: 'August' },
-    { value: 'september', label: 'September' },
-    { value: 'october', label: 'October' },
-    { value: 'november', label: 'November' },
-    { value: 'december', label: 'December' },
+// ----------------------  EVENT logic
+export const FOOTWEAR_CHOICE = [
+    {value:'skates', label: 'Skates'},
+    {value:'Shoes', label: 'Shoes'},
 ] as const;
 
-// EVENT TYPE
+export const SKATE_DISCIPLINES = [
+  {value:'rhythm-dance', label: 'Rhythm & Dance'},
+  // Rhythm
+  // Jam, Rhythm, JB, Artistic, and casual rink skating.
+  {value:'sport-games', label: 'Sport & Games'},
+  // Sport
+  // Derby, Hockey, and organized meetup groups.
+  {value:'park-ramps', label: 'Park & Ramps'},
+  // Park
+  // Park skating, Vert, and Aggressive street
+  {value:'distance-detours', label: 'Distance & Detours '},
+  // Distance
+  // Trail, Speed, Urban Flow, and City skating.
+  {value: 'other', label: 'Other'},
+] as const;
+
 export const EVENT_TYPE = [
-    // { value: 'all', label: 'All' },
     { value: 'day-skate', label: 'Day Skate' },
     { value: 'skate-night', label: 'Skate Night' },
     { value: 'social', label: 'Social' },
@@ -73,7 +76,6 @@ export const EVENT_TYPE = [
     // MISCELLANEOUS?
 ] as const;
 
-// SKILL LEVEL
 export const SKILL_LEVEL =  [
     {value: 'foundational', label: 'Foundational (Beginner)'},
     {value: 'competent', label: 'Competent (Beinner-Intermediate)'},
@@ -81,13 +83,7 @@ export const SKILL_LEVEL =  [
     {value: 'advanced', label: 'Advanced (Professional)'},
 ] as const;
 
-export const PARTICIPATION_LEVEL = [
-    {value: 'novice', label: 'Novice'},
-    {value: 'amateur', label: 'Amateur'},
-    {value: 'professional', label: 'Professional'},
-] as const;
-
-// COUNTRIES
+//  ---------------------- COUNTRY logic
 export interface CountryOption {
   readonly value: string;
   readonly label: string;
@@ -98,24 +94,20 @@ export interface CountryGroup {
   readonly options: CountryOption[];
 }
 
+
 // Small helper to turn "San Marino" into "san-marino"
 const slugify = (str: string) => 
-    str.toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '');
+  str.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '');
 
 export const ALL_COUNTRIES: CountryGroup[] = [
-//   {
-//     label: "all",
-//     options: [{ value: 'all', label: 'All' }]
-//   },
   {
     label: "United Kingdom & Ireland",
     options: ["England", "Ireland", "Northern Ireland", "Scotland", "Wales"]
-      .sort()
-      .map(name => ({ value: slugify(name), label: name }))
+      .sort().map(name => ({ value: slugify(name), label: name }))
   },
   {
     label: "International",
@@ -130,8 +122,7 @@ export const ALL_COUNTRIES: CountryGroup[] = [
       "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Turkey", 
       "Ukraine", "Vatican City" 
     ]
-      .sort()
-      .map(name => ({ value: slugify(name), label: name }))
+      .sort().map(name => ({ value: slugify(name), label: name }))
   }
 ];
 
@@ -142,6 +133,12 @@ export type BlogCategory = (typeof BLOG_CATEGORY)[number]['value'];
 export type MonthOrder = (typeof MONTH_ORDER)[number]['value'];
 export type CountryValue = (typeof GROUPED_COUNTRIES)[number]['value'];
 export type SkillLevel = (typeof SKILL_LEVEL)[number]['value'];
-export type ParticipationLevel = (typeof PARTICIPATION_LEVEL)[number]['value'];
 export type EventType = (typeof EVENT_TYPE)[number]['value'];
 export type PostStatus = (typeof POST_STATUS)[number]['value'];
+// export type ParticipationLevel = (typeof PARTICIPATION_LEVEL)[number]['value'];
+
+// export const PARTICIPATION_LEVEL = [
+//     {value: 'novice', label: 'Novice'},
+//     {value: 'amateur', label: 'Amateur'},
+//     {value: 'professional', label: 'Professional'},
+// ] as const;
