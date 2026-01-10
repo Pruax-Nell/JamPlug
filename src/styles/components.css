@@ -1,5 +1,6 @@
 /* TOOLKIT */
 /* TO PAGE TOP */
+/* eventCard tsx */
 /*  */
 
 /* ------------------------UNIVERSAL COMPONENTS LIST ------------------*/
@@ -12,7 +13,7 @@
         margin: 1ch 0;
     }
 
-
+    
 }
 
 #tool-kit {
@@ -29,15 +30,15 @@
     padding-block: .4ch;
     border-radius: 10px;
     border: 1px dotted var(--grey);
-
-
+    
+    
     transition: bottom 0.35s cubic-bezier(0.485, -0.050, 0.285, 1.505);
 }
 
 #tool-kit:hover {
     background-color: var(--shadow-grey);
     box-shadow: var(--shadow-light-2);
-
+    
     transition: All .6s;
     
 }
@@ -92,3 +93,106 @@
 
 
 /* || --------------------TOOLKIT------------------ */
+
+
+/* || --------------------EVENTCARD------------------ */
+.event-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Makes the whole area clickable */
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #eee;
+  height: 100%; /* Ensures cards in a row have equal height */
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-container {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #f0f0f0;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.discipline-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Pushes content to fill the card */
+}
+
+.event-title {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: #1a1a1a;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.no-events-fallback {
+  background-color: var(--grey);
+  color: #ddd;
+  border-radius: 8px;
+  padding: 1rem 1.2rem ;
+}

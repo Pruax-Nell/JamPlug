@@ -8,6 +8,7 @@ type EventCardProps = SerializedEvent['data'] & {
 };
 
 export default function EventCard({
+  id,
   eventName,
   townCity,
   country,
@@ -22,11 +23,13 @@ export default function EventCard({
 const dateDisplay = formatEventDate(startDate, endDate);
 
   return (
+    <a href={`/events/${id}`} className="event-card-link">
+
     <article className="event-card">
       <div className="card-image-container">
         {eventPoster ? (
           <img 
-            src={eventPoster} 
+          src={eventPoster} 
             alt={`Poster for ${eventName}`}
             loading="lazy"
             decoding="async"
@@ -57,5 +60,6 @@ const dateDisplay = formatEventDate(startDate, endDate);
         </div>
       </div>
     </article>
+    </a>
   );
 }

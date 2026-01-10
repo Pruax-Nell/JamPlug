@@ -1,34 +1,34 @@
 ---
 import "../styles/event.css";
 import BaseLayout from "../layouts/baseLayout.astro";
-import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-import UpcomingEvents from '../components/eventPagination'; // Your React Component
+
+import { getCollection, type CollectionEntry } from "astro:content";
+import UpcomingEvents from '../components/upcomingEvents'; 
 
 const now = new Date();
 now.setHours(0, 0, 0, 0);
 
-// 1. Fetch only published events
-const publishedEvents = await getCollection('events', ({ data }) => {
+const publishedEvents: CollectionEntry<'events'>[] = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
   return data.status === 'published';
 });
 
-// 2. Prepare our "Server-Side Scanner" containers
-const townsByCountry = {};
-const rinks = new Set();
-const ages = new Set();
+const townsByCountry: Record<string, Set<string>> = {};
+const rinks = new Set<string>();
+const ages = new Set<string>();
 
 // 3. Single-Pass: Filter, Sort, Serialize, and Scan
 const clientUpcomingEvents = publishedEvents
-  .filter(event => event.data.startDate >= now)
+  .filter((event: CollectionEntry<'events'>) => event.data.startDate >= now)
   .sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf())
   .map((event) => {
     const d = event.data;
+	console.log(`[Astro Server] Processing: ${event.id}`);
+    console.log(`[Astro Server] Raw Poster Object:`, d.eventPoster);
 
     // --- NORMALIZATION HELPER ---
     const clean = (str: string) => str ? str.trim().replace(/\s+/g, ' ') : "";
     const city = clean(d.townCity);
-    const rink = clean(d.featuredRink || ""); 
+    const rink = clean(d.rink || ""); 
 
     // --- SCANNING (Building our filter options) ---
     if (d.country && city) {
@@ -41,10 +41,14 @@ const clientUpcomingEvents = publishedEvents
     // --- SERIALIZATION (The data React receives) ---
     return {
       id: event.id,
+	  slug: event.id, 
       data: {
-        ...d, // Spread existing data
-        townCity: city, // Use cleaned version
-        featuredRink: rink,
+        ...d,
+        townCity: city,
+        rink: rink,
+        eventPoster: d.eventPoster && typeof d.eventPoster === 'object' 
+          ? d.eventPoster.src 
+          : d.eventPoster,
         startDate: d.startDate.toISOString(),
         endDate: d.endDate ? d.endDate.toISOString() : null,
       },
@@ -59,9 +63,10 @@ const serverOptions = {
       Array.from(citySet as Set<string>).sort()
     ])
   ),
-  featuredRink: ['All', ...Array.from(rinks).sort()],
-  minAge: ['All', ...Array.from(ages).sort().map(a => `${a}+`) ]
+  rink: Array.from(rinks).sort(), // React handle the "All"
+  minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b))
 };
+
 
 
 ---
@@ -103,7 +108,7 @@ const serverOptions = {
 
 		<UpcomingEvents 
 			client:load
-			events={clientUpcomingEvents}
+			initialEvents={clientUpcomingEvents}
 			serverOptions={serverOptions}
 		/>
 

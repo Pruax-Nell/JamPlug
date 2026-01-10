@@ -8,11 +8,10 @@ export interface SerializedEvent {
     eventName: string;
     country: string;
     townCity: string;
-    category: string;
     eventType: string;
-    skateDiscipline: string;
+    skateDiscipline?: string;
     minAge?: string; // Optional field
-    skillLevel: string;
+    skillLevel?: string;
     description: string;
     eventPoster?: string;
     startDate: string; // ISO String for Serialization

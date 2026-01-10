@@ -47,11 +47,11 @@ const INITIAL_FILTERS: FilterState = {
 };
 
 export default function UpcomingEvents({ initialEvents, serverOptions }: UpcomingEventsProps) {
-  // --- 1. STATE ---
+  // ---  STATE ---
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // --- 2. URL SYNC ---
+  // ---  URL SYNC ---
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const updatedFilters = { ...INITIAL_FILTERS };
@@ -62,9 +62,10 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     setFilters(updatedFilters);
   }, []);
 
-  // --- 3. DYNAMIC DROPDOWN LOGIC ---
-  // [LEARNING NOTE]: We only calculate towns dynamically because they depend on the Country. 
-  // Disciplines/Skill Levels are static (from constants), so they don't need a useMemo here.
+  
+  // ---  DYNAMIC DROPDOWN LOGIC ---
+  // calculate towns dynamically because they depend on the Country. 
+  // static (from constants) don't need a useMemo here.
   const availableTowns = useMemo(() => {
     if (filters.country === 'All') {
       const allTowns = Object.values(serverOptions.townsByCountry).flat();
@@ -73,7 +74,54 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     return ['All', ...(serverOptions.townsByCountry[filters.country] || [])];
   }, [filters.country, serverOptions]);
 
-  // --- 4. FILTERING ENGINE ---
+  // This scans all events to see which categories actually have data
+// const activeFilterValues = useMemo(() => {
+//   return {
+//     countries: new Set(initialEvents.map(e => e.data.country)),
+//     types: new Set(initialEvents.map(e => e.data.eventType)),
+//     disciplines: new Set(initialEvents.map(e => e.data.skateDiscipline)),
+//     levels: new Set(initialEvents.map(e => e.data.skillLevel)),
+//     rinks: new Set(initialEvents.map(e => e.data.rink)),
+//     months: new Set(initialEvents.map(e => new Date(e.data.startDate).getMonth().toString())),
+//   };
+// }, [initialEvents]);
+
+const activeFilterValues = useMemo(() => {
+  // Helper to extract values and remove any that are undefined or null
+  const getActiveSet = (key: keyof SerializedEvent['data']) => {
+    return new Set(
+      initialEvents
+        .map(e => e.data[key])
+        .filter((val): val is string => typeof val === 'string') // This removes undefined/null
+    );
+  };
+
+  return {
+    countries: getActiveSet('country'),
+    types: getActiveSet('eventType'),
+    disciplines: getActiveSet('skateDiscipline'),
+    levels: getActiveSet('skillLevel'),
+    rinks: getActiveSet('rink'),
+    // Months usually comes from a date string which is never undefined if the event exists
+    months: new Set(initialEvents.map(e => new Date(e.data.startDate).getMonth().toString()))
+  };
+}, [initialEvents]);
+
+const renderOptions = (
+  constantList: readonly { readonly value: string; readonly label: string }[],
+  activeSet: Set<string>
+) => {
+  return constantList.map((item) => {
+    const isDisabled = !activeSet.has(item.value);
+    return (
+      <option key={item.value} value={item.value} disabled={isDisabled}>
+        {item.label} {isDisabled ? ' ' : ''}
+      </option>
+    );
+  });
+};
+
+  // --- FILTERING ENGINE ---
   const filteredEvents = useMemo(() => {
     return initialEvents.filter((event) => {
       const d = event.data;
@@ -81,6 +129,8 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         if (filterVal === 'All') return true;
         return String(eventVal) === filterVal;
       };
+      const eventMonth = new Date(d.startDate).getMonth().toString();
+      const monthMatch = filters.month === 'All' || eventMonth === filters.month;
 
       return (
         match(filters.country, d.country) &&
@@ -89,13 +139,14 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         match(filters.skateDiscipline, d.skateDiscipline) &&
         match(filters.skillLevel, d.skillLevel) &&
         match(filters.minAge, d.minAge) &&
-        match(filters.rink, d.rink)
+        match(filters.rink, d.rink) &&
+        monthMatch
       );
     });
   }, [filters, initialEvents]);
 
-  // --- 5. PAGINATION LOGIC ---
-  // [LEARNING NOTE]: totalPages must be calculated from the FILTERED list, not the initial list.
+  // ---  PAGINATION LOGIC ---
+  //totalPages must be calculated from the FILTERED list, not the initial list.
   const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE);
   
   const visibleEvents = useMemo(() => {
@@ -103,7 +154,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     return filteredEvents.slice(start, start + EVENTS_PER_PAGE);
   }, [filteredEvents, currentPage]);
 
-  // --- 6. HANDLERS ---
+  // ---  HANDLERS ---
   const handleFilterChange = (key: keyof FilterState, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
     setCurrentPage(1); // Reset to page 1 whenever a filter changes!
@@ -118,49 +169,105 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
   return (
     <div className="events-page-wrapper">
       <section className="filter-bar">
-        {/* Country Dropdown */}
-        <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
-          <option value="All">All Countries</option>
-          {Object.keys(serverOptions.townsByCountry).map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
 
+        <div className='duo-filter'>
+        <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
+          <option value="All">Choose a Country</option>
+          {renderOptions(GROUPED_COUNTRIES, activeFilterValues.countries)}
+        </select>
+          <span className='divider'></span>
         {/* Dynamic Town Dropdown */}
         <select value={filters.townCity} onChange={(e) => handleFilterChange('townCity', e.target.value)}>
-          {availableTowns.map(t => <option key={t} value={t}>{t}</option>)}
-        </select>
-        
-        <select value={filters.month} onChange={(e) => handleFilterChange('townCity', e.target.value)}>
-          {availableTowns.map(t => <option key={t} value={t}>{t}</option>)}
+          {availableTowns.map(t => <option key={t} value={t}>{t} 
+             _Areas
+          </option>)}
         </select>
 
-        {/* [LEARNING NOTE]: Use your Constants for these! */}
-        <select value={filters.eventType} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
-          <option value="All">All Disciplines</option>
+        </div>
+
+        <div className='duo-filter'>
+          <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
+            <option value="All">All Types</option>
+            {renderOptions(EVENT_TYPE, activeFilterValues.types)}
+          </select>
+          <span className='divider'></span>
+
+
+          <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
+            <option value="All">All Disciplines</option>
+            {renderOptions(SKATE_DISCIPLINES, activeFilterValues.disciplines)}
+          </select>
+        </div>
+        <div className='duo-filter'>
+        <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
+          <option value="All">All Months</option>
+          {renderOptions(MONTH_ORDER, activeFilterValues.months)}
+        </select>
+
+        </div>
+        <div className='duo-filter'>
+
+          <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
+            <option value="All">All Levels</option>
+            {renderOptions(SKILL_LEVEL, activeFilterValues.levels)}
+          </select>
+        </div>
+        <div className='duo-filter'>
+          <select value={filters.minAge} onChange={(e) => handleFilterChange('minAge', e.target.value)}>
+          <option value="All">All Ages</option>
+          {serverOptions.minAge.map(age => (
+            <option key={age} value={age}>{age}</option>
+          ))}
+          </select>
+            <span className='divider'></span>
+
+          <select value={filters.rink} onChange={(e) => handleFilterChange('rink', e.target.value)}>
+            <option value="All">All Rinks</option>
+            {serverOptions.rink.sort().map(r => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+
+        </div>
+        {/* <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
+          <option value="All">All Countries</option>
+          {Object.keys(serverOptions.townsByCountry).map(c => <option key={c} value={c}>{c}</option>)}
+        </select> */}
+
+        {/* <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
+          {MONTH_ORDER.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+        </select> */}
+
+        {/* <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
+          <option value="All">All Event Type</option>
           {EVENT_TYPE.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
-        </select>
+        </select> */}
 
-        <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
+        {/* <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
           <option value="All">All Disciplines</option>
           {SKATE_DISCIPLINES.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
-        </select>
+        </select> */}
 
-        <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
+        {/* <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
           <option value="All">All Levels</option>
           {SKILL_LEVEL.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-        </select>
+        </select> */}
 
-        <select value={filters.minAge} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
-          <option value="All">All Levels</option>
-          {minAge.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-        </select>
 
-        <select value={filters.rink} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
-          <option value="All">All Levels</option>
-          {rink.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-        </select>
+        <button 
+          className="reset-button"
+          onClick={() => {
+            // 1. Reset the React State to the empty blueprint
+            setFilters(INITIAL_FILTERS);
+            
+            // 2. Reset to the first page of results
+            setCurrentPage(1);
 
-        <button onClick={() => { setFilters(INITIAL_FILTERS); window.history.replaceState({}, '', window.location.pathname); }}>
-          Reset
+            // 3. Clear the URL Search Parameters
+            window.history.replaceState({}, '', window.location.pathname);
+          }}
+        >
+          Clear All Filters
         </button>
       </section>
 
@@ -168,7 +275,26 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         {visibleEvents.map(event => (
           <EventCard key={event.id} id={event.id} {...event.data} />
         ))}
+        
       </div>
+
+      <div className="event-grid">
+  {visibleEvents.length > 0 ? (
+    visibleEvents.map(event => (
+      <EventCard 
+        key={event.id} 
+        id={event.id} 
+        {...event.data} 
+      />
+    ))
+  ) : (
+    <div className="no-events-fallback">
+      <h3>No events found</h3>
+      <p>Try adjusting your filters or check back later for new dates.</p>
+      
+    </div>
+  )}
+</div>
       
       {/* Pagination Controls */}
       {totalPages > 1 && (

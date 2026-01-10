@@ -1,42 +1,39 @@
 ---
 import BaseLayout from './baseLayout.astro';
+import { Image } from 'astro:assets';
+
 import '../styles/event.css'
 import '../styles/components.css'
 
-import { getCollection } from 'astro:content';
-export async function getStaticPaths() {
-  const events = await getCollection('events');
-  return events.map(event => ({
-    params: {slug: event.id},
-    props: { event },
-  }));
+interface Props {
+  event: any; // Using any for brevity, or use CollectionEntry<'events'>
+  children?: any; 
 }
-
-import { Image } from 'astro:assets';
 
 const { event } = Astro.props;
 const { data } = event;
-// const { frontmatter, data } = Astro.props;
-const BASE_URL = import.meta.env.BASE_URL
 
 function formatTime(timeObj: any) {
-  if (!timeObj) return '';
+  if (!timeObj || typeof timeObj !== 'object') return '';
   const { hour, minute } = timeObj;
   
-  // Example for 12-hour format (e.g., 2:30 PM)
   const h = parseInt(hour);
   const ampm = h >= 12 ? 'PM' : 'AM';
   const displayHour = h % 12 || 12;
   
-  return `${displayHour}:${minute} ${ampm}`;
+  return `${displayHour}:${minute.toString().padStart(2, '0')} ${ampm}`;
 }
+
+const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
+  weekday: 'short', day: 'numeric', month: 'long'
+});
 
 ---
 <BaseLayout page_title={data.eventName} >
-  <div class="navigation-controls">
-    <button onclick="history.back()" class="back-button">
-      ← Back to Events
-    </button>
+  <div class="">
+    <nav class="navigation-controls">
+      <button id="back-button" class="back-button">← Back to Events</button>
+    </nav>
   </div>
 
   <div>
@@ -47,7 +44,7 @@ function formatTime(timeObj: any) {
       height={510} 
       class="cover-image"
     />
-
+ 
   </div>
 
   <div>
@@ -57,9 +54,15 @@ function formatTime(timeObj: any) {
     </div>
     <p>{data.description}</p>
     <span>{data.startTime} </span> <span> ~ </span> <span>{data.endTime} </span>
-
-    <slot />
+    <p class="time-location">
+      <strong>{displayDate}</strong> • {formatTime(data.startTime)} 
+      {data.endTime && ` - ${formatTime(data.endTime)}`}
+    </p>
   </div>
+
+    <div class="content-slot">
+      <slot />
+    </div>
 
   <div class="primary-container">
     <div class="tags">
@@ -69,13 +72,24 @@ function formatTime(timeObj: any) {
 
   </div>
 
-  <div class="navigation-controls">
-    <button onclick="history.back()" class="back-button">
-      ← Back to Events
-    </button>
+  <div>
+    <nav class="navigation-controls">
+      <button id="back-button" class="back-button">← Back to Events</button>
+    </nav>
   </div>
 
 </BaseLayout>
+
+<script>
+  // Robust back button handling
+  document.getElementById('back-button')?.addEventListener('click', () => {
+    if (document.referrer.includes(window.location.host)) {
+      history.back();
+    } else {
+      window.location.href = '/events';
+    }
+  });
+</script>
 
 <style>
   .back-button {

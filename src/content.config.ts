@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection } from "astro:content"; 
 import { glob } from "astro/loaders";
 import { SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, GROUPED_COUNTRIES, POST_STATUS } from '../src/constants'
 
@@ -13,7 +13,7 @@ const timeObject = z.object({
 
 //  BLOGS *** 
 const blog = defineCollection ({
-    loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/blog"}),
+    loader: glob({ pattern: '**/index.mdoc', base: "./src/content/blog"}),
     schema: ({ image }: { image: any }) => z.object({
     // CMS ADMIN FIELDS
         status: z.enum(getValues(POST_STATUS)).default('draft'),
@@ -27,13 +27,14 @@ const blog = defineCollection ({
         skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)).optional(),
         
         coverImage: image().optional(),
+        gallery: z.array(image()).optional().default([]),
         
     }),
 });
 
 //  EVENTS  *** 
 const events = defineCollection({
-    loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/events"}),
+    loader: glob({pattern: '**/index.mdoc', base: "./src/content/events"}),
     schema: ({ image }: { image: any }) =>  z.object ({
 // CMS admin items 
         status: z.enum(getValues(POST_STATUS)).default('draft'),
@@ -43,15 +44,16 @@ const events = defineCollection({
         eventName: z.string(),
         subheading: z.string().optional(),
         description: z.string(),
-        startDate: z.coerce.date().min(new Date(), { message: "Start date must be in the future." }), 
-        endDate: z.coerce.date().min(new Date(), { message: "End date must be in the future." }).optional(),
+        startDate: z.coerce.date(), 
+        endDate: z.coerce.date().optional(),
     // Secondary key info
         eventPoster: image().optional(),
+        gallery: z.array(image()).optional().default([]),
         country: z.enum( getValues(GROUPED_COUNTRIES)),
         townCity: z.string(),
         eventType: z.enum( getValues(EVENT_TYPE)),
         skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)),
-        skilllevel: z.enum( getValues(SKILL_LEVEL)).optional(), 
+        skillLevel: z.enum( getValues(SKILL_LEVEL)).optional(), 
         // participationlevel: z.enum( getValues(PARTICIPATION_LEVEL)).optional(), 
         minAge: z.string().optional(),
         maxAge: z.string().optional(),

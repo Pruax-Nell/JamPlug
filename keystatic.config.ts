@@ -51,7 +51,7 @@ export default config({
         }),
         coverImage: fields.image({
           label: 'Cover Image',
-          directory: '/',
+          directory: 'src/content/blog',
           publicPath: './',
         }),
 
@@ -61,6 +61,17 @@ export default config({
             image: {
           }},
         }),
+        gallery: fields.array(
+          fields.image({
+            label: 'Gallery Image',
+            directory: 'src/content/blog', 
+            publicPath: './', 
+          }),
+          {
+            label: 'Post Gallery',
+            itemLabel: (props) => props.value ? 'Image' : 'New Gallery Image',
+          }
+        ),
       },
 
     }),
@@ -92,9 +103,20 @@ export default config({
     // Secondary key info
         eventPoster: fields.image({
           label: 'Event Poster',
-          directory: '/',
-          publicPath: '/',
+          directory: 'src/content/events',
+          publicPath: './',
         }),
+        gallery: fields.array(
+          fields.image({
+            label: 'Gallery Image',
+            directory: 'src/content/events', 
+            publicPath: './', 
+          }),
+          {
+            label: 'Event Gallery',
+            itemLabel: (props) => props.value ? 'Image' : 'New Gallery Image',
+          }
+        ),
         country: fields.select({
           label: 'Country',
           options: GROUPED_COUNTRIES,
@@ -120,7 +142,7 @@ export default config({
           ],
           defaultValue: '', 
         }),
-        skilllevel: fields.select({
+        skillLevel: fields.select({
           label: 'Level requirement',
           options:[
             {label: '-- Not Specified --', value: ''},
