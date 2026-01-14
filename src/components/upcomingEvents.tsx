@@ -158,7 +158,7 @@ const renderOptions = (
   const handleFilterChange = (key: keyof FilterState, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
     setCurrentPage(1); // Reset to page 1 whenever a filter changes!
-
+ 
     // URL Sync logic
     const params = new URLSearchParams(window.location.search);
     if (value === 'All') params.delete(key);
@@ -172,14 +172,14 @@ const renderOptions = (
 
         <div className='duo-filter'>
         <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
-          <option value="All">Choose a Country</option>
+          <option value="All">Any Country</option>
           {renderOptions(GROUPED_COUNTRIES, activeFilterValues.countries)}
         </select>
           <span className='divider'></span>
         {/* Dynamic Town Dropdown */}
         <select value={filters.townCity} onChange={(e) => handleFilterChange('townCity', e.target.value)}>
           {availableTowns.map(t => <option key={t} value={t}>{t} 
-             _Areas
+             
           </option>)}
         </select>
 
@@ -187,42 +187,46 @@ const renderOptions = (
 
         <div className='duo-filter'>
           <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
-            <option value="All">All Types</option>
+            <option value="All">Any Type</option>
             {renderOptions(EVENT_TYPE, activeFilterValues.types)}
           </select>
           <span className='divider'></span>
 
 
           <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
-            <option value="All">All Disciplines</option>
+            <option value="All">Any Discipline</option>
             {renderOptions(SKATE_DISCIPLINES, activeFilterValues.disciplines)}
           </select>
         </div>
+
         <div className='duo-filter'>
         <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
-          <option value="All">All Months</option>
+          <option value="All">Any Month</option>
           {renderOptions(MONTH_ORDER, activeFilterValues.months)}
         </select>
+            <span className='divider'></span>
 
-        </div>
-        <div className='duo-filter'>
 
-          <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
-            <option value="All">All Levels</option>
-            {renderOptions(SKILL_LEVEL, activeFilterValues.levels)}
-          </select>
-        </div>
-        <div className='duo-filter'>
-          <select value={filters.minAge} onChange={(e) => handleFilterChange('minAge', e.target.value)}>
-          <option value="All">All Ages</option>
+        <select value={filters.minAge} onChange={(e) => handleFilterChange('minAge', e.target.value)}>
+          <option value="All">Any Age</option>
           {serverOptions.minAge.map(age => (
             <option key={age} value={age}>{age}</option>
           ))}
           </select>
+
+          
+        </div>
+        
+        <div className='duo-filter'>
+
+          <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
+            <option value="All">Any Level</option>
+            {renderOptions(SKILL_LEVEL, activeFilterValues.levels)}
+          </select>
             <span className='divider'></span>
 
           <select value={filters.rink} onChange={(e) => handleFilterChange('rink', e.target.value)}>
-            <option value="All">All Rinks</option>
+            <option value="All">Any Rink</option>
             {serverOptions.rink.sort().map(r => (
               <option key={r} value={r}>{r}</option>
             ))}
@@ -272,29 +276,22 @@ const renderOptions = (
       </section>
 
       <div className="event-grid">
-        {visibleEvents.map(event => (
-          <EventCard key={event.id} id={event.id} {...event.data} />
-        ))}
-        
+        {visibleEvents.length > 0 ? (
+          visibleEvents.map(event => (
+            <EventCard 
+              key={event.id} 
+              id={event.id} 
+              {...event.data} 
+            />
+          ))
+        ) : (
+          <div className="no-events-fallback">
+            <h3>No events found</h3>
+            <p>Try adjusting your filters or check back later for new dates.</p>
+            
+          </div>
+        )}
       </div>
-
-      <div className="event-grid">
-  {visibleEvents.length > 0 ? (
-    visibleEvents.map(event => (
-      <EventCard 
-        key={event.id} 
-        id={event.id} 
-        {...event.data} 
-      />
-    ))
-  ) : (
-    <div className="no-events-fallback">
-      <h3>No events found</h3>
-      <p>Try adjusting your filters or check back later for new dates.</p>
-      
-    </div>
-  )}
-</div>
       
       {/* Pagination Controls */}
       {totalPages > 1 && (

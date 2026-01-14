@@ -1,6 +1,6 @@
 /* ----Header---- */
 
-header {
+#site-header  {
     display: grid;
     grid-template-columns: minmax(100px, 120px) auto;
     width: 100%;
@@ -10,7 +10,8 @@ header {
 
     box-shadow: -0 1px 5px var(--shadow-grey);
     border-radius: 0 10px;
-    background-color: var(--main-light);
+    /* background-color: var(--main-light); */
+    background-color: var(--main-bg-light);
 
 }
 

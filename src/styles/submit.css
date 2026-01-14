@@ -1,17 +1,3 @@
-/* PRIMARY CONTAINER */
-@media (max-width: 767px) {
-    .primary-container {
-        width: 80vw;
-        margin: auto; 
-    }
-}
-    
-@media (min-width: 768px){
-    .primary-container {
-        width: 90vw;
-        min-height: max-content;
-    }
-}
 
 /* FIELD SECTIONS */
     .dual-field {
@@ -24,8 +10,8 @@
 /* DUAL CONTAINERS */
 
 .half-container {
-    padding: 0 2svw;
-    width: minmax(20svw 80svw);
+    padding: 0 1.5rem;
+    width: minmax(5rem 10rem);
 }
 
 

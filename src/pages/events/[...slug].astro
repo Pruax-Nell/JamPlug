@@ -1,10 +1,13 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/baseLayout.astro';
-import { Image } from 'astro:assets';
+// import '../../styles/event.css'
+import '../../styles/components.css'
 
-import '../styles/event.css'
-import '../styles/components.css'
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Button from '../../components/button.astro';
+import { formatDate } from '../../utility';
+
 
 export async function getStaticPaths() {
   const posts = await getCollection('events');
@@ -14,7 +17,6 @@ export async function getStaticPaths() {
   }));
 };
 
-
 interface Props {
   post: CollectionEntry<'events'>;
   // event: any; 
@@ -23,8 +25,9 @@ interface Props {
 
 const { post } = Astro.props;
 const { data } = post;
-// const { data } = event;
 const { Content } = await render(post);
+
+const galleryImages = [data.flyerImage1, data.flyerImage2, data.flyerImage3, data.flyerImage4, data.flyerImage5].filter(Boolean);
 
 // HELPERS----
 function formatTime(timeObj: any) {
@@ -42,109 +45,164 @@ const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
   weekday: 'short', day: 'numeric', month: 'long'
 });
 
+const displayEndDate = data.endDate
+ ? new Date(data.endDate).toLocaleDateString('en-GB', {
+  weekday: 'short', 
+  day: 'numeric', 
+  month: 'long'
+}) : null ;
+
+const lineup = [
+  { title: "Organisers", people: data.organisers },
+  { title: "DJs", people: data.djs },
+  { title: "Coaches", people: data.coaches },
+  { title: "Hosts", people: data.hosts }
+];
+
+console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
 ---
-
-<!-- <BaseLayout page_title={data.eventName} >
-
-  <div class="">
-    <nav class="navigation-controls">
-      <button id="back-button" class="back-button">← Back to Events</button>
-    </nav>
-  </div>
-
-  <div>
-    <Image 
-      src={data.eventPoster} 
-      alt={data.eventName} 
-      width={350} 
-      height={510} 
-      class="cover-image"
-    />
- 
-  </div>
-
-  <div>
-    <div>
-      {formatTime(data.startTime)} 
-      {data.endTime && ` - ${formatTime(data.endTime)}`}
-    </div>
-    <p>{data.description}</p>
-    <span>{data.startTime} </span> <span> ~ </span> <span>{data.endTime} </span>
-    <p class="time-location">
-      <strong>{displayDate}</strong> • {formatTime(data.startTime)} 
-      {data.endTime && ` - ${formatTime(data.endTime)}`}
-    </p>
-  </div>
-
-    <div class="content-slot">
-      <slot />
-    </div>
-
-  <div class="primary-container">
-    <div class="tags">
-      <span>{data.skateDiscipline}</span>
-      <span>{data.eventType}</span>
-    </div>
-
-  </div>
-  
-
-  <div>
-    <nav class="navigation-controls">
-      <button id="back-button" class="back-button">← Back to Events</button>
-    </nav>
-  </div>
-
-</BaseLayout> -->
 
 <BaseLayout page_title={data.eventName}>
   <nav class="navigation-controls">
-    <button class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'">
-      ← Back to Events
-    </button>
+    
+		<Button  variant="outline" size="xs" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
+
   </nav>
 
   <article class="event-focus">
+      <div class=" poster-frame">
+        {data.eventPoster ? (
+        <Image 
+          src={data.eventPoster} 
+          alt={data.eventName} 
+          width={350} 
+          height={510} 
+          class="cover-image"
+        />
+      ) : (
+        // TODO create alt event poster
+        <div class="placeholder-poster ">🛼</div>
+      )}
+      </div>
+
     <header>
-      <Image 
-        src={data.eventPoster} 
-        alt={data.eventName} 
-        width={350} 
-        height={510} 
-        class="cover-image"
-      />
-      
       <div class="event-header-info">
-        <p class="time-location">
-          <strong>{displayDate}</strong> • {formatTime(data.startTime)} 
+        <h4 class="event-title">{data.eventName.toLocaleUpperCase()}</h4>
+        <div class="sub-heading">
+          {data.subheading && (
+            <span>{data.subheading}</span>
+          )}
+        </div>
+
+        {data.minAge && (
+          <div class="age-tag">
+          {data.minAge && (
+            <span >{data.minAge}</span>
+          )}
+          {data.maxAge && (
+            <span>{data.maxAge}</span>
+          )}
+        </div>
+        )}
+
+        {displayEndDate ? ( <p class="time-location">
+             <strong class="strong-date">{displayDate}</strong> • {formatTime(data.startTime)} {data.endTime && ` - ${formatTime(data.endTime)}`} </p>) : (<p> <strong>{displayDate}</strong> • {formatTime(data.startTime)} {displayEndDate && (displayEndDate)} 
           {data.endTime && ` - ${formatTime(data.endTime)}`}
-        </p>
+        </p>)
+        } 
+          
         <p class="description-snippet">{data.description}</p>
         
-        <div class="tags">
-          <span>{data.skateDiscipline}</span>
-          <span>{data.eventType}</span>
+        <p> 📍{data.townCity}, {data.country.toLocaleUpperCase()}</p>
+
+        <div class="small-space">
+          {data.rink && (<span> {data.rink}</span>)}
+          {data.venueAddress && (<span> {data.venueAddress}</span>)}
+        </div>
+        
+        <div class="tags"> 
+          <span class="event-type-label">{data.eventType}</span>
+          <span class="discipline">{data.skateDiscipline}</span>
+          {data.skillLevel && (<span class="level"> #{data.skillLevel} </span>) }
+          {data.offSkates===true && (<span> Non-Skating </span>) }
         </div>
       </div>
     </header>
 
-    <hr />
-
     <div class="content-body">
       <Content />
+      
+      <div>
+          {data.organiser && ( 
+          <p>Official page for
+          <Button  variant="outline" size="md" href={data.eventLink}> {data.eventName} </Button>
+          </p>)}
+        
+        {data.ticketLink && (
+          <Button href={data.ticketLink} variant='outline' size='sm' > Buy tickets here</Button>
+        )}
+
+      </div>
+
+      <div>
+        <h3>More Event Details:</h3>
+        <section class="lineup-container">
+          {lineup.map((group) => (
+          /* 1. Only render the section if the group exists and has people */
+          group.people && group.people.length > 0 && (
+            <div class={`group-${group.title.toLowerCase()}`}>
+              <h4>{group.title}</h4>
+              
+              <ul class="people-list">
+                {group.people.map((person) => (
+                  <li class="person-item">
+                    <strong>{person.name}</strong>
+
+                    {/* 2. Only render the sub-list if the person has links */}
+                    {person.socialLinks && person.socialLinks.length > 0 && (
+                      <ul class="social-links">
+                        {person.socialLinks.map((link) => (
+                          <li>{link.platform}
+                            <a href={link.url} target="_blank" rel="noopener">
+                              {link.url?.slice(8, 35)}...Click Here
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        ))}
+      </section>
+      </div>
     </div>
 
-    {data.gallery && data.gallery.length > 0 && (
-      <section class="gallery-section">
-        <h3>Gallery</h3>
+    {galleryImages.length > 0 && (
+      <section class="event-gallery-section">
         <div class="gallery-grid">
-          {data.gallery.map((img: any) => (
-            <Image src={img} alt="Event gallery image" width={400} height={300} class="gallery-thumb" />
+          {galleryImages.map((img, index) => (
+            <div class="gallery-item">
+              <Image 
+                src={img!} 
+                alt={`${data.eventName} gallery image ${index + 1}`} 
+                width={200} 
+                height={350}
+                class="event-image"
+              />
+            </div>
           ))}
         </div>
       </section>
     )}
   </article>
+  <nav class="navigation-controls">
+    
+		<Button  variant="outline" size="xs" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
+
+  </nav>
 </BaseLayout>
 
 <!-- <script>
@@ -159,51 +217,181 @@ const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
 </script> -->
 
 <style>
-  /* --- Layout Shell --- */
-  .event-focus {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+
+/* --- LAYOUT --- */
+.poster-frame{
+  grid-row: 1 / 2;
+}
+
+article header {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+
+.content-body {
+  grid-row: 2 / 3;
+  grid-column: span 2;
+}
+
+.event-gallery-section{
+  grid-row: 3 / 4;
+  grid-column: span 2;
+}
+
+hr {
+  grid-row: 3 / 4;
+  grid-column: 1 / 2;
+}
+/* mobile */
+@media (max-width: 671px) {
+
+  .poster-frame{
+    grid-row: 2 / 3;
+    grid-column: span 2;
+  }
+  
+  article header {
+    grid-row: 1 / 2;
+    grid-column: span 2;
+    /* grid-column: 1 / 2; */
+
   }
 
+  hr {
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+  }
+
+  .content-body {
+    grid-row: 4 / 5;
+    grid-column: 1 / 2;
+  }
+
+  .event-gallery-section {
+    grid-row: 5 / 6;
+    grid-column: 1 / 2;
+
+  }
+
+}
+
+.placeholder-poster{
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    background-color: var(--shadow-orange);
+    border-radius: 8px;
+}
+
+.event-header-info{
+  padding: 1rem .2rem;
+}
+
+.event-header-info .sub-heading{
+  font-size: var(--fs-p2);
+  justify-self: center;
+  align-content: center;
+}
+
+.age-tag{
+    border: 5px double var(--main-pink);
+    border-radius: 8px;
+    width: max-content;
+    padding: .3rem .5rem ;
+    margin: .3rem;
+    background-color: var(--shadow-pink);
+}
+
+.age-tag span {
+    font-weight: 400;
+
+}
+
+strong {
+  color: var(--ob-pink);
+}
+
+
+  
+/* --- Shell --- */
+  .event-focus {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto-fit auto-fit;
+    gap: 10px 25px;
+    /* flex-direction: column; */
+    max-width: 1200px;
+    height: auto;
+    margin: 0 auto 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  @media (max-width: 671px){
+    .event-focus{
+      grid-template-columns: 1fr;
+      gap: 10px 0;
+      
+    }
+  
+  }
+  
+  
   /* --- Header Section --- */
-  header {
+  article header {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    margin-bottom: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    header {
-      flex-direction: row;
-      align-items: flex-start;
-    }
+    margin: 1.8rem auto .5rem auto;
   }
 
   .cover-image {
     width: 100%;
-    max-width: 350px;
     height: auto;
+    max-width: 350px;
     border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px -3px var(--shadow-grey-2);
   }
 
-  .event-header-info {
-    flex: 1;
+  @media (max-width: 671px){
+    .cover-image{
+      max-width: 340px;
+      aspect-ratio: 4 / 5;
+    }
   }
 
+  .poster-frame{
+    display: inline-block;
+    flex: 0 0 350px;
+    height: auto;
+  }
+
+ 
+  hr {
+    grid-column: span 2;
+    border: 0;
+    border-top: 1px solid var(--grey);
+    margin: 2rem 0;
+    width: 100%;
+    clear: both; /* Ensure it sits below the header */
+  }
+
+ 
   /* --- Typography & Info --- */
+
+  .event-title{
+    margin: .8rem 0;
+    font-size: var(--fs-heading-xl);
+    text-wrap: balance;
+  }
   .time-location {
     font-size: 1.1rem;
-    color: #4f46e5; /* Indigo accent */
+    color: var(--main-purple); /* Indigo accent */
     margin-bottom: 1rem;
   }
 
   .description-snippet {
     font-size: 1.25rem;
     line-height: 1.6;
-    color: #374151;
+    color: var(--grey);
     margin-bottom: 1.5rem;
   }
 
@@ -214,55 +402,199 @@ const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
     gap: 0.5rem;
   }
 
-  .tags span {
-    background: #f3f4f6;
-    color: #4b5563;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-  }
+  .event-type-label {
+  background: var(--main-orange);
+  color: var(--black);
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px 8px 8px 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.discipline {
+  background-color: var(--main-yellow);
+  padding: .3rem .6rem;
+  border-radius: 3px 8px 8px 8px;
+  color: var(--main-black);
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+}
+
+.level {
+  background-color: var(--second-purple);
+  padding: .3rem .6rem;
+  border-radius: 3px 8px 8px 8px;
+  color: var(--main-black);
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+}
+
+
 
   /* --- Main Body Content --- */
   .content-body {
     font-size: 1.125rem;
     line-height: 1.8;
-    color: #1f2937;
-    margin: 3rem 0;
+    color: var(--black);
+    margin: 1.8rem 0;
+    max-width: 65ch;
   }
 
+  .content-body :global(h4), .content-body :global(h4) {
+    margin-top: 2rem;
+    margin-bottom: .5rem;
+    color: var(--main-purple);
+  }
+
+  .content-body :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  /* --- LINEUP Section --- */
+
+  .lineup-container{
+    max-width: 100%;
+    /* overflow-x: clip; */
+  }
+
+.people-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.person-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.person-item > * {
+ max-width: max-content;
+}
+
+.lineup-container h4 {
+  font-size: var(--fs-heading-small);
+  color: var(--mid-brown);
+}
+
+.social-links {
+  list-style: none;
+  padding: 0;
+  /* display: flex; */
+  gap: 0.5rem;
+}
+
+.social-links a {
+  font-size: 0.75rem;
+  /* background: var(--shadow-yellow); */
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--grey);
+  text-transform: capitalize;
+}
+
+.social-links a:hover {
+  background: var(--ow-orange);
+}
+
   /* --- Gallery Section --- */
-  .gallery-section {
-    border-top: 1px solid #e5e7eb;
-    padding-top: 3rem;
-    margin-top: 3rem;
+
+  .event-gallery-section {
+    
+
+    margin-top: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
   }
 
   .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: .5rem;
+    padding-bottom: 1rem;
+    scrollbar-width: 0;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .gallery-thumb {
+  .gallery-grid::-webkit-scrollbar { display: none; }
+
+  .gallery-item {
+    flex: 0 0 50%; 
+    scroll-snap-align: center;
+  }
+  
+  .event-image {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Makes them consistent squares */
+    max-width: 350px;
+    height: auto;
+    aspect-ratio: 4 / 5; 
     object-fit: cover;
     border-radius: 12px;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
-    cursor: zoom-in;
+    box-shadow: 0 4px 6px -1px var(--main-purple);
   }
 
-  .gallery-thumb:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+
+  .gallery-thumb:hover, .event-image:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
   }
+
+
 
   /* --- Controls --- */
   .navigation-controls {
-    margin-bottom: 2rem;
+    margin: 2rem;
   }
+
+@media (max-width: 330px){
+
+  .event-focus{
+    /* grid-template-columns: 1fr; */
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .event-header-info, .poster-frame{
+    max-width: 300px;
+  }
+
+  .cover-image{
+    aspect-ratio: 1 / 1;
+    max-width: 250px;
+
+  }
+
+  .people-list, .person-item, .social-links{
+    max-width: 250px;
+    overflow-x: hidden;
+  }
+  
+
+  .social-links a {
+    font-size: var(--fs-footer);
+    text-wrap: wrap;
+    overflow-wrap: wrap;
+  }
+
+  .event-image{
+    max-width: 200px;
+    aspect-ratio: 1 / 1;
+  }
+}
+
 </style>

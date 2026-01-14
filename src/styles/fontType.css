@@ -1,0 +1,177 @@
+/* || --------- Fonts ------------- */
+/* Titles */
+@font-face {
+    font-family: "Titan One";
+    src: 
+    local("TitanOne-Regular"),
+    url("/fonts/TitanOne-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* body */
+@font-face {
+    font-family: "Red Rose";
+    src: 
+    local("RedRose"),
+    url("/fonts/RedRose-VariableFont_wght.ttf") format("Woff2 supports variations"),
+    url("/fonts/RedRose-VariableFont_wght.woff2") format("woff2-variations");
+    font-weight: 0 700;
+}
+
+/* side notes */
+@font-face {
+    font-family: "Shantelle Sans";
+    src:
+    local("ShantellSans"),
+    url("ShantellSans-VariableFont.ttf") format('ttf supports variations'),
+    /* url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'), */
+    url("/fonts/ShantellSans-VariableFont.ttf") format('ttf-variations');
+    font-weight: 0 900;
+    
+    
+}
+
+/* || --------------------Text and Typography------------------ */
+:root {
+    
+    --font-title: "Titan One", sans-serif;
+
+    --font-body: "Red Rose", sans-serif;
+
+    --font-handwriten: "Shantell Sans", sans-serif;
+
+    --letter-space-titan: .15ch;
+    --letter-space-rose: .2ch;
+    --letter-space-shantell: .35ch;
+     
+    --fs-title: clamp(1.8rem, 6vw + .2rem, 3.23rem);
+    --fs-title-2: clamp(1.58rem, 5vw + .2rem, 3rem);
+    
+    --fs-heading-xl: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+    --fs-heading-large: clamp(1.3rem, 2vw + 1rem, 2.1rem);
+    --fs-heading-mid: clamp(1.225rem, 2vw + 1rem, 1.758rem);
+    --fs-heading-small: clamp(1.1rem, 2vw + 1rem, 1.5rem);
+    
+    --fs-p1: clamp(1.5rem, 2vw + 1rem, 1.5rem);
+    --fs-p2: clamp(1.25rem, 2vw + 1rem, 1.3rem);
+    --fs-p3: clamp(1.125rem, 2vw + 1rem, 1.1rem);
+    --fs-caption: clamp(.625rem, 2vw + 1rem, 1rem);
+
+    --fs-footer: clamp(.21rem, 2vw + 1rem, .95rem);
+    
+    --fs-note-large: clamp(.8rem, .2rem, .1.3rem);
+    --fs-note-small: clamp(.5rem, .2rem, 1rem);
+    
+    --fs-bttn: clamp(.1rem, 1vw + 1rem, 1rem);
+
+    --fs-mobile-1: clamp(.4rem, .6rem, 3rem);
+    --fs-mobile-button-1: clamp(.4rem, .6rem, 1rem);
+    
+}
+
+h1 {
+    font-family: var(--font-title);
+    font-size: var(--fs-title);
+    letter-spacing: var(--letter-space-titan);
+    
+}
+
+h2 {
+    font-family: var(--font-body);
+    font-size: var(--fs-title-2);
+    letter-spacing: var(--letter-space-titan);
+    font-weight: 900;
+    text-transform: uppercase;
+    
+}
+
+h3 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-xl);
+    font-weight: 700;
+    letter-spacing: var(--letter-space-rose);
+    font-style: bold;
+}
+
+h4 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-large);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 600;
+}
+
+h5 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-mid);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 500;
+}
+
+h6 {
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-small);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+p {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 400;
+    
+}
+
+.p1 {
+    font-weight: 700;
+    font-size: var(--fs-p1);
+}
+.p2 {
+    font-weight: 500;
+    font-size: var(--fs-p2);
+}
+.p3 {
+    font-weight: 400;
+    font-size: var(--fs-p3);
+}
+
+.caption {
+    font-size: var(--fs-caption);
+    text-transform: uppercase;
+    font-size: .6rem;
+    font-weight: 500;
+}
+
+.note {
+    font-family: var(--font-handwriten);
+    letter-spacing: var(--letter-space-shantell);
+    font-weight: 500;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+span {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-space-rose);
+    font-weight: 200;
+}
+
+label {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-space-rose);
+
+}
+
+.highlight {
+    color: var(--accent-mid-pink)
+}
+
+.left-lean {
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+    gap: 10%;
+}

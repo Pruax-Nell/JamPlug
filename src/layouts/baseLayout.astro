@@ -1,8 +1,4 @@
 ---
-// const Brand = "Your Jam Plug";
-// const {Index = 'Home |'} = Astro.props;
-// const {title = ' Your Jam Plug UK | Where Roller Skates gather'} = Astro.props; 
- 
 import "../styles/global.css";
 import "../styles/components.css";
 import "../styles/header.css"
@@ -33,6 +29,26 @@ const BASE_URL = import.meta.env.BASE_URL
 	<head>
 		<meta charset="utf-8" />
 		<Head />
+		<script is:inline>
+			// This script runs immediately, preventing the "flash"
+			const theme = (() => {
+			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+				return localStorage.getItem('theme');
+			}
+			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				return 'dark';
+			}
+			return 'light';
+			})();
+
+			if (theme === 'dark') {
+			document.documentElement.setAttribute('data-theme', 'dark');
+			} else {
+			document.documentElement.setAttribute('data-theme', 'light');
+			}
+			
+			window.localStorage.setItem('theme', theme);
+		</script>
 	</head>
 
 	<body >
@@ -45,7 +61,7 @@ const BASE_URL = import.meta.env.BASE_URL
 			
 			
 			<!-- || page head and Nav -->
-			<header>
+			<header id="site-header">
 				<!-- A -->
 				<div id="head-logo">
 					<a href="/"><img src="/src/assets/branding/Shine-orange-lug-2.svg" alt="your Jam Plug" id="headLogo"></a>

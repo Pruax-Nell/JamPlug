@@ -1,6 +1,8 @@
 ---
-import "../styles/event.css";
+import "../styles/event.css"; 
+import Button from "../components/button.astro";
 import BaseLayout from "../layouts/baseLayout.astro";
+// import { SerializedEvent } from "../types";
 
 import { getCollection, type CollectionEntry } from "astro:content";
 import UpcomingEvents from '../components/upcomingEvents'; 
@@ -38,21 +40,36 @@ const clientUpcomingEvents = publishedEvents
     if (rink) rinks.add(rink);
     if (d.minAge) ages.add(d.minAge);
 
+	// eventPoster URL solution
+	const posterString: string | undefined = 
+      d.eventPoster && typeof d.eventPoster === 'object' 
+        ? d.eventPoster.src 
+        : (d.eventPoster as string | undefined);
+
     // --- SERIALIZATION (The data React receives) ---
     return {
       id: event.id,
 	  slug: event.id, 
       data: {
-        ...d,
+        // ...d,
+		eventName: d.eventName,
+		description: d.description ?? "",
+		country: d.country,
         townCity: city,
         rink: rink,
-        eventPoster: d.eventPoster && typeof d.eventPoster === 'object' 
-          ? d.eventPoster.src 
-          : d.eventPoster,
         startDate: d.startDate.toISOString(),
         endDate: d.endDate ? d.endDate.toISOString() : null,
+		skateDiscipline: d.skateDiscipline,
+        skillLevel: d.skillLevel,
+        eventType: d.eventType,
+		eventPoster: posterString,
+		minAge: d.minAge,
+
+        // eventPoster: d.eventPoster && typeof d.eventPoster === 'object' && event.data.eventPoster !== null 
+        //   ? d.eventPoster.src 
+        //   : d.eventPoster,
       },
-    };
+    } ;
   });
 
 // 4. Finalize the Options Object
@@ -91,7 +108,7 @@ const serverOptions = {
 	</div>
 	<div class=" half-width-block jam-link-block">
 		<h3 id="jam-list-heading">Big Jam List</h3>
-		<a href="/festivals" class="button primary-button">Annual Skate Festivals</a>
+		<Button href="/festivals" variant="secondary" size="lg"> Read More </Button>
 		<span>Find all of Europes multi-day skate festivals</span>
 	</div>
 	</div>
@@ -133,7 +150,7 @@ const serverOptions = {
 				<h2>Submit an Event</h2>
 				<p>Have an Event, Competition, Jam or Tour to tell us about? We aim to add events weekly, so use the button below to spread the word!</p>
 				<div class="btn-wrap">
-					<a class="button primary-button" href="/submit-an-event" target="_self">SUBMIT</a>                        
+					<Button href="/submit-an-event" variant="secondary" size="lg"> Read More </Button>
 				</div>
 			</div>
 		</div>

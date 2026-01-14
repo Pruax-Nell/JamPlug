@@ -1,0 +1,164 @@
+---
+interface Props {
+  href?: string;          
+  theme?: 'orange' | 'teal' | 'purple' | 'pink' | 'brown' | 'white' | 'black';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'ghost';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  class?: string;          // Allows for extra utility classes (like mt-4)
+  [x: string]: any;        // Collects all other attributes (target, id, rel, etc.)
+}
+
+const { 
+  href, 
+  theme = 'orange',
+  variant = 'primary', 
+  size = 'md', 
+  class: className, 
+  ...rest 
+} = Astro.props;
+
+// Determine the HTML element based on whether an href is provided
+const Element = href ? 'a' : 'button';
+
+// Mapping variants to CSS classes
+const variantClasses = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  tertiary: 'btn-tertiary',
+  outline: 'btn-outline',
+  ghost: 'btn-ghost'
+};
+
+const sizeClasses = {
+    xs: 'btn-xs',
+    sm: 'btn-sm',
+    md: 'btn-md',
+    lg: 'btn-lg'
+};
+
+const themeColour = {
+    orange: 'orange',
+    teal: 'teal',
+    purple: 'purple',
+    pink: 'pink',
+    brown: 'brown',
+    white: 'white',
+    black: 'black',
+};
+
+---
+
+<Element 
+  href={href} 
+  class:list={[
+    'btn', 
+    variantClasses[variant], 
+    sizeClasses[size], 
+    themeColour[theme],
+    className
+  ]} 
+  {...rest}
+>
+  <slot /> </Element>
+
+<style>
+  /* Base Styles */
+  .btn {
+    margin: .1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    /* line-height: .1rem; */
+    letter-spacing: .3ch;
+    font-family: 'Red Rose';
+}
+
+/* Sizes */
+.btn-xs { padding: 0.5rem 0.8rem; font-size: 0.575rem; }
+.btn-sm { padding: 0.9rem 0.8rem; font-size: 0.875rem; }
+.btn-md { padding: 0.1rem 1rem; font-size: 1rem; }
+.btn-lg { padding: 0.2rem .6rem; font-size: 1.15rem; }
+
+/* ------------------ PRIMANRY BUTTON */
+.btn-primary {
+    /* border-radius: 18px;
+    background-color: var(--main-bg-dark, );
+    color: var(--main-orange); */
+
+    background-color: var(--main-pink);
+  color: var(--text-white);
+  box-shadow: 4px 4px 0px var(--shadow-pink-3);
+}
+
+[data-theme= 'dark'] {}
+    
+.btn-primary:hover {
+    background-color: var(--ob-brown, );
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px var(--shadow-brown);
+}
+/* ------------------ SECONDARY BUTTON */
+.btn-secondary {
+    /* border-radius: 5px 12px 12px 12px;
+    background-color: var(--main-purple, );
+    color: var(--text-white); */
+
+    background-color: var(--main-purple);
+    color: var(--text-white);
+    box-shadow: 4px 4px 0px var(--shadow-purple-3);
+}
+.btn-secondary:hover{
+    box-shadow: 0 4px 6px -1px var(--shadow-brown);
+    
+}
+/* ------------------ TERTIARY BUTTON */
+.btn-tertiary {
+    /* border-radius: 5px 12px 12px 12px;
+    background-color: var(--background-light,);
+    color: var(--main-dark); */
+    background-color: var(--main-teal);
+    color: var(--main-dark);
+    box-shadow: 4px 4px 0px var(--shadow-teal-3);
+}
+.btn-tertiary:hover{
+    box-shadow: 0 4px 6px -1px var(--shadow-brown);
+    
+}
+
+/* ------------------ OUTLINE BUTTON */
+.btn-outline {
+    background-color: transparent;
+    font-family: 'Red Rose';
+    border-radius: 8px;
+    border-color: var(--main-orange, );
+    color: var(--main-orange, );
+}
+.btn-outline:hover {
+    background-color: var(--shadow-grey);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* 5. YELLOW (Slalom/Skills) */
+.theme-yellow {
+  background-color: var(--main-yellow);
+  color: var(--main-dark);
+  box-shadow: 4px 4px 0px var(--shadow-yellow-3);
+}
+.theme-yellow:hover { background-color: var(--second-yellow); transform: translate(-1px, -1px); box-shadow: 5px 5px 0px var(--shadow-yellow-3); }
+
+/* 6. BROWN (Official/Distance) */
+.theme-brown {
+  background-color: var(--main-brown);
+  color: var(--text-white);
+  box-shadow: 4px 4px 0px var(--shadow-brown-3);
+}
+.theme-brown:hover { background-color: var(--second-brown); transform: translate(-1px, -1px); box-shadow: 5px 5px 0px var(--shadow-brown-3); }
+</style>

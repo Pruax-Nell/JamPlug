@@ -73,8 +73,7 @@ country:   ------- set list data / ennum / object-array
 townCity:  ------- dynamic set list - depends on country list
 eventType: -------  set list data / ennum / object-array
 skateDiscipline: -------  set list data / ennum / object-array
-skilllevel: -------   set list data / ennum / object-array
-participationlevel: -------   set list data / ennum / object-array
+skillLevel: -------   set list data / ennum / object-array
 minAge: -------  set list [all / 18+ / 21+ ...] or dynamic from strings  
 maxAge: -------  dynamic from strings 
 startTime: ------- 
@@ -90,7 +89,7 @@ coach: -------
 coachLink: -------
 dj: -------
 djLink: -------
-featuredRink: -------
+rink: -------
 venueAddress: -----
 mapCoordinates: -----
 offSkates: ----- true/false
@@ -107,3 +106,39 @@ description: ------
 blogCategory: ------
 skateDiscipline:  ------       
 coverImage: ------ 
+
+
+buttons
+
+Suggested Category Mapping:
+Dance / Jam: Pink Theme (--main-pink) — Energetic, flashy, and fun.
+
+Park / Aggressive: Teal Theme (--main-teal) — Edgy, fresh, and modern.
+
+Slalom / Skills: Yellow Theme (--main-yellow) — Caution/Technical focus; high visibility for "Learning."
+
+Trail / Distance: Orange Theme (--main-orange) — Classic endurance and warmth.
+
+Community / Meetups: Purple Theme (--main-purple) — Welcoming and inclusive.
+
+Admin / Info: Brown Theme (--main-brown) — Grounded and official.
+
+<!-- Colour contrast -->
+
+Orange, || --main-orange, || var(--main-dark),
+Orange is bright; dark text is sharper.
+
+Purple, || --main-purple, || var(--text-white),
+Purple is deep; white text provides high contrast.
+
+Teal, || --main-teal, || var(--main-dark),
+"Teal is a ""mid-light"" color; dark text is safer."
+
+Pink, || --main-pink, || var(--text-white),
+This pink is saturated; light text pops best.
+
+Yellow, || --main-yellow, || var(--main-dark),
+Crucial: White text on yellow is invisible. Always use dark.
+
+Brown, || --main-brown, || var(--text-white),
+Brown is very dark; white text is required.

@@ -5,10 +5,10 @@ import BaseLayout from "../layouts/baseLayout.astro";
 import EventCard from "../components/eventCard.astro";
 import SampleBlogCard from "../components/sampleBlogCard.astro";
 import SampleEventCard from "../components/sampleEventCard.astro";
+import Button from '../components/button.astro';
 
 import EndSamplecard from "../components/endsamplecard.astro"
 
-import "../styles/global.css";
 import "../styles/home.css";
 import "../styles/components.css";
 
@@ -77,6 +77,14 @@ const upcomingEvents = (publishedEvents)
 	<section  id="hero-section" class="section scroll-snap">
 		<Hero />
 	</section>
+
+	<div>
+		<Button href="/about" variant="primary" size="lg"> primary lg </Button>
+		<Button href="/about" variant="secondary" size="md"> secondary md </Button>
+		<Button href="/about" variant="tertiary" size="sm"> tertiary xs </Button>
+		<Button href="/about" variant="outline" size="sm"> outline sm </Button>
+		<Button href="/about" variant="ghost" size="xs"> ghost xs </Button>
+	</div>
 	
 	<!------------------------------------------ MISSION ---------------->
 	<section id="our-mission" class=" scroll-snap stack-section stack-1">
@@ -86,7 +94,9 @@ const upcomingEvents = (publishedEvents)
 		</div>
 		
 		<div class="l-mid">
-			<div class="nav-button"><a href="/about" class="primary-button">Read our mission statement</a></div>
+			<div class="nav-button">
+				<Button href="/about" variant="secondary" size="lg"> Read More </Button>
+			</div>
 		</div>
 		
 	</section>
@@ -98,7 +108,9 @@ const upcomingEvents = (publishedEvents)
 				<span class="sub-heading">All the Skate Festivals of Europe</span>
 			</div>
 			<div class="items-center">
-				<div class="secondary-button"><a href="/festivals" class="button-light">Big Jam List of Skate Festivals</a></div>
+				<div class="secondary-button">
+					<Button href="/festivals" variant="secondary" size="lg"> Read More </Button>
+				</div>
 			</div>
 		</div>
 		
@@ -111,7 +123,9 @@ const upcomingEvents = (publishedEvents)
 			<p>Find rinks, skate shops and groups who hold lessons or events</p>
 		</div>
 		<div class="l-mid ">
-			<div class="nav-button"><a href="/directory" class="primary-button">Browse the Directory</a></div>
+			<div class="nav-button">
+				<Button href="/directory" variant="secondary" size="lg"> Read More </Button>
+			</div>
 		</div>
 		
 	</section>
@@ -119,7 +133,7 @@ const upcomingEvents = (publishedEvents)
 	<section id="upcoming-events" class="section scroll-snap side-by-side" >
 		<div class="side-a">
 			<h3>Upcoming Events</h3>
-			<a href="/events">What's coming up next?</a>
+			<Button href="/events" variant="secondary" size="sm"> Read More </Button>
 			<p>small carosel of some events. maybe featured</p>
 			<p>direct to main event page</p>
 		</div>
@@ -129,7 +143,7 @@ const upcomingEvents = (publishedEvents)
 				<div class="carosel"> 
 				{/* map/dynamic list */}
 			{publishedEvents.map((post) =>
-				( <SampleEventCard title={post.data.eventName} url={`/events/${post.id}/`} poster={`/content/flyers/${post.data.eventPoster}`} tags={post.data.category} description={post.data.description} date={post.data.startDate} city={post.data.townCity} country={post.data.country}
+				( <SampleEventCard title={post.data.eventName} url={`/events/${post.id}/`} poster={`/content/flyers/${post.data.eventPoster}`} description={post.data.description} date={post.data.startDate} city={post.data.townCity} country={post.data.country}
 				/>
 			))}
 			{/* add the end card */}
@@ -147,14 +161,14 @@ const upcomingEvents = (publishedEvents)
 		<div class="side-a">
 			<h3>Skate News</h3>
 			<span>Direct to blog page</span>
-			<a href="/blog">Blog page</a>
+			<Button href="/blog" variant="secondary" size="sm"> Read More </Button>
 		</div>
 		<div class="side-b">
 			{publishedBlogs.length > 0 ? (
 				<div class="carosel"> 
 				{/* map/dynamic list */}
 			{publishedBlogs.map((post) =>
-				( <SampleBlogCard title={post.data.title} url={`/blog/${post.id}/`}  tags={post.data.tags} description={post.data.description}
+				( <SampleBlogCard title={post.data.title} url={`/blog/${post.id}/`} description={post.data.description}
 				/>
 			))}
 			{/* add the end card */}

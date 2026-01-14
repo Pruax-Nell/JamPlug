@@ -12,7 +12,7 @@ export interface SerializedEvent {
     skateDiscipline?: string;
     minAge?: string; // Optional field
     skillLevel?: string;
-    description: string;
+    description?: string;
     eventPoster?: string;
     startDate: string; // ISO String for Serialization
     endDate: string | null;

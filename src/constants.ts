@@ -4,6 +4,12 @@ export const SITE_DESCRIPTION = 'For Roller Skaters who want to skate';
 export const HOMEPAGE_FEATURE_LIMIT = 8;
 export const EVENTS_PER_PAGE = 20;
 
+// ----------------------  MEDIA LIST
+export const SOCIAL_MEDIA = [
+  { label: 'Socials', value: 'socials' },
+  { label: 'Other', value: 'other' },
+  { label: 'Website', value: 'website' },
+] as const;
 // ---------------------- CMS HELPERS
 export const POST_STATUS = [
   {value:'draft', label: 'Draft'},
@@ -135,6 +141,7 @@ export type CountryValue = (typeof GROUPED_COUNTRIES)[number]['value'];
 export type SkillLevel = (typeof SKILL_LEVEL)[number]['value'];
 export type EventType = (typeof EVENT_TYPE)[number]['value'];
 export type PostStatus = (typeof POST_STATUS)[number]['value'];
+export type socialMedia = (typeof SOCIAL_MEDIA)[number]['value'];
 // export type ParticipationLevel = (typeof PARTICIPATION_LEVEL)[number]['value'];
 
 // export const PARTICIPATION_LEVEL = [

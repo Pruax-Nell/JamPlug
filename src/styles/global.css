@@ -1,196 +1,8 @@
-/* || --------- Fonts ------------- */
-/* Titles */
-@font-face {
-    font-family: "Titan One";
-    src: 
-    local("TitanOne-Regular"),
-    url("/fonts/TitanOne-Regular.ttf");
-    font-weight: 400;
-    font-style: normal;
-}
+@import './components.css';
+@import './fontType.css';
+@import './spare.css';
 
-/* body */
-@font-face {
-    font-family: "Red Rose";
-    src: 
-    local("RedRose"),
-    url("/fonts/RedRose-VariableFont_wght.ttf") format("Woff2 supports variations"),
-    url("/fonts/RedRose-VariableFont_wght.woff2") format("woff2-variations");
-    font-weight: 0 700;
-}
-
-/* side notes */
-@font-face {
-    font-family: "Shantelle Sans";
-    src:
-    local("ShantellSans"),
-    url("ShantellSans-VariableFont.ttf") format('ttf supports variations'),
-    /* url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'), */
-    url("/fonts/ShantellSans-VariableFont.ttf") format('ttf-variations');
-    font-weight: 0 900;
-    
-    
-}
-
-/* || --------------------Text and Typography------------------ */
-:root {
-    
-    --font-title: "Titan One", sans-serif;
-
-    --font-body: "Red Rose", sans-serif;
-    /* --font-body-light: "Red Rose light", sans-serif;
-    --font-body-reg: "Red Rose regular", sans-serif;
-    --font-body-mid: "Red Rose medium", sans-serif;
-    --font-body-semi: "Red Rose semibold", sans-serif;
-    --font-body-bold: "Red Rose bold", sans-serif; */
-
-    --font-handwriten: "Shantell Sans", sans-serif;
-    /* --font-handwriten-light: "Shantell Sans light", sans-serif;
-    --font-handwriten-reg: "Shantell Sans regular", sans-serif;
-    --font-handwriten-med: "Shantell Sans medium", sans-serif;
-    --font-handwriten-semi: "Shantell Sans semibold", sans-serif;
-    --font-handwriten-bold: "Shantell Sans bold", sans-serif;
-    --font-handwriten-extra: "Shantell Sans extrabold", sans-serif; */
-
-    --letter-space-titan: .15ch;
-    --letter-space-rose: .2ch;
-    --letter-space-shantell: .35ch;
-    
-    --fs-title: clamp(1.8rem, 6vw + .2rem, 3.23rem);
-    /* --fs-title: clamp(2rem, 7vw + .2rem, 3.5rem); */
-    --fs-title-2: clamp(1.58rem, 5vw + .2rem, 3rem);
-    /* --fs-title-2: clamp(1.845rem, 3vw + .2rem, 3.1rem); */
-    
-    --fs-heading-xl: clamp(1.5rem, 2vw + 1rem, 2.5rem);
-    --fs-heading-large: clamp(1.3rem, 2vw + 1rem, 2.1rem);
-    --fs-heading-mid: clamp(1.225rem, 2vw + 1rem, 1.758rem);
-    --fs-heading-small: clamp(1.1rem, 2vw + 1rem, 1.5rem);
-    
-    --fs-p1: clamp(1.5rem, 2vw + 1rem, 1.5rem);
-    --fs-p2: clamp(1.25rem, 2vw + 1rem, 1.3rem);
-    --fs-p3: clamp(1.125rem, 2vw + 1rem, 1.1rem);
-    --fs-caption: clamp(.625rem, 2vw + 1rem, 1rem);
-
-    --fs-footer: clamp(.21rem, 2vw + 1rem, .95rem);
-    
-    --fs-note-large: clamp(.8rem, .2rem, .1.3rem);
-    --fs-note-small: clamp(.5rem, .2rem, 1rem);
-    
-    --fs-bttn: clamp(.1rem, 1vw + 1rem, 1rem);
-
-    --fs-mobile-1: clamp(.4rem, .6rem, 3rem);
-    --fs-mobile-button-1: clamp(.4rem, .6rem, 1rem);
-    
-}
-
-h1 {
-    font-family: var(--font-title);
-    font-size: var(--fs-title);
-    letter-spacing: var(--letter-space-titan);
-    
-}
-
-h2 {
-    font-family: var(--font-body);
-    font-size: var(--fs-title-2);
-    letter-spacing: var(--letter-space-titan);
-    font-weight: 900;
-    text-transform: uppercase;
-    
-}
-
-h3 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-xl);
-    font-weight: 700;
-    letter-spacing: var(--letter-space-rose);
-    font-style: bold;
-}
-
-h4 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-large);
-    letter-spacing: var(--letter-space-rose);
-    font-weight: 600;
-}
-
-h5 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-mid);
-    letter-spacing: var(--letter-space-rose);
-    font-weight: 500;
-}
-
-h6 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-small);
-    letter-spacing: var(--letter-space-rose);
-    font-weight: 400;
-    text-transform: uppercase;
-}
-
-p {
-    font-family: var(--font-body);
-    letter-spacing: var(--letter-space-rose);
-    font-weight: 400;
-    
-}
-
-.p1 {
-    font-weight: 700;
-    font-size: var(--fs-p1);
-}
-.p2 {
-    font-weight: 500;
-    font-size: var(--fs-p2);
-}
-.p3 {
-    font-weight: 400;
-    font-size: var(--fs-p3);
-}
-
-.caption {
-    font-size: var(--fs-caption);
-    text-transform: uppercase;
-    font-size: .6rem;
-    font-weight: 500;
-}
-
-.note {
-    font-family: var(--font-handwriten);
-    letter-spacing: var(--letter-space-shantell);
-    font-weight: 500;
-    font-style: italic;
-    text-transform: uppercase;
-}
-
-span {
-    font-family: var(--font-body);
-    letter-spacing: var(--letter-space-rose);
-    font-weight: 200;
-}
-
-label {
-    font-family: var(--font-body);
-    letter-spacing: var(--letter-space-rose);
-
-}
-
-.highlight {
-    color: var(--accent-mid-pink)
-}
-
-.left-lean {
-    width: inherit;
-    display: flex;
-    flex-direction: row;
-    text-align: left;
-    align-items: center;
-    gap: 10%;
-}
-
-
-/* || -----------------------Brand and Project colours-------------- */
+/* || -----------------------BRAND COLOURS-------------- */
 :root {
     /* NEW COLOUR SYSTEM */
     --main-orange: #e47200;
@@ -288,362 +100,8 @@ label {
     --text-bg-black: #211b15;
 
 }
-/* || --------------------BRANDING TEST------------------ */
-.test-box{
-    height: 100px;
-    aspect-ratio: 1;
-    border: 5px solid;
-    border-radius: 8px;
-    text-align: center;
-}
 
-#branding-test{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.test-box .light {
-    color: var(--text-white);
-    font-weight: 600;
-}
-.test-box .dark {
-    color: var(--text-black);
-    font-weight: 600;
-}
-
-/* ORANGE */
- .box-one{
-    border-color: var();
-    /* to become main orange */
-    background-color: var(--main-orange); 
-    /* background-color: var(--accent-mid-orange);  */
-
-    color: var();
-}
- .box-two{
-    border-color: var();
-    /* become a highlight */
-    /* background-color: var(--main-orange); */
-    background-color: var(--second-orange);
-    color: var();
-}
- .box-three{
-    border-color: var();
-    /* remain dark accent */
-    /* background-color: var(--accent-dark-orange); */
-    background-color: var(--ow-orange);
-    color: var();
-}
-.box-four{
-    border-color: var();
-    background-color: var(--ob-orange);
-    /* background-color: var(--box-orange); */
-    color: var();
-}
-.box-five{
-    border-color: var();
-    background-color: var(--mid-orange);
-    /* background-color: var(--bg-orange-2); */
-    color: var();
-}
-.box-six{
-    border-color: var();
-    background-color: var(--grey-orange);
-    color: var();
-}
-/* PURPLE */
-.box-seven{
-    border-color: var();
-    background-color: var(--main-purple);
-    color: var();
-}
-.box-eight{
-    border-color: var();
-    background-color: var(--second-purple);
-    color: var();
-}
-.box-nine{
-    border-color: var();
-    background-color: var(--ow-purple);
-    color: var();
-}
-.box-ten{
-    border-color: var();
-    /* background-color: var(--NEW-accent-dark-purple); */
-    background-color: var(--ob-purple);
-    color: var();
-}
-.box-eleven{
-    border-color: var();
-    background-color: var(--mid-purple);
-    color: var();
-}
-.box-twelve{
-    border-color: var();
-    background-color: var(--grey-purple);
-    color: var();
-}
-/* TEAL */
-.box-thirteen{
-    border-color: var();
-    background-color: var(--main-teal);
-    color: var();
-}
-.box-fourteen{
-    border-color: var();
-    background-color: var(--second-teal);
-    color: var();
-}
-.box-15{
-    border-color: var();
-    background-color: var(--ow-teal);
-    color: var();
-}
-.box-16{
-    border-color: var();
-    background-color: var(--ob-teal);
-    color: var();
-}
-.box-17{
-    border-color: var();
-    background-color: var(--mid-teal);
-    color: var();
-}
-.box-18{
-    border-color: var();
-    background-color: var(--grey-teal);
-    color: var();
-}
-
-/* PINK */
-.box-19{
-    border-color: var();
-    background-color: var(--main-pink);
-    color: var();
-}
-.box-20{
-    border-color: var();
-    background-color: var(--second-pink);
-    color: var();
-}
-.box-21{
-    border-color: var();
-    background-color: var(--ow-pink);
-    color: var();
-}
-.box-22{
-    border-color: var();
-    background-color: var(--ob-pink);
-    color: var();
-}
-.box-23{
-    border-color: var();
-    background-color: var(--mid-pink);
-    color: var();
-}
-.box-24{
-    border-color: var();
-    background-color: var(--grey-pink);
-    color: var();
-}
-/* YELLOW */
-.box-25{
-    border-color: var();
-    background-color: var(--main-yellow);
-    color: var();
-}
-.box-26{
-    border-color: var();
-    background-color: var(--second-yellow);
-    color: var();
-}
-.box-27{
-    border-color: var();
-    background-color: var(--ow-yellow);
-    color: var();
-}
-.box-28{
-    border-color: var();
-    background-color: var(--ob-yellow);
-    color: var();
-}
-.box-29{
-    border-color: var();
-    background-color: var(--mid-yellow);
-    color: var();
-}
-.box-30{
-    border-color: var();
-    background-color: var(--grey-yellow);
-    color: var();
-}
-
-/* BROWN */
-.box-31{
-    border-color: var();
-    background-color: var(--main-brown);
-    color: var();
-}
-.box-32{
-    border-color: var();
-    background-color: var(--second-brown);
-    color: var();
-}
-.box-33{
-    border-color: var();
-    background-color: var(--ow-brown);
-    color: var();
-}
-.box-34{
-    border-color: var();
-    background-color: var(--ob-brown);
-    color: var();
-}
-.box-35{
-    border-color: var();
-    background-color: var(--mid-brown);
-    color: var();
-}
-.box-36{
-    border-color: var();
-    background-color: var(--grey-brown);
-    color: var();
-}
-/* shadows */
-.box-37{
-    border-color: var();
-    background-color: var(--shadow-brown);
-    color: var();
-}
-.box-38{
-    border-color: var();
-    background-color: var(--shadow-brown-2);
-    color: var();
-}
-.box-39{
-    border-color: var();
-    background-color: var(--shadow-grey);
-    color: var();
-}
-.box-40{
-    border-color: var();
-    background-color: var(--shadow-grey-2);
-    color: var();
-}
-.box-41{
-    border-color: var();
-    background-color: var(--shadow-light);
-    color: var();
-}
-.box-42{
-    border-color: var();
-    background-color: var(--shadow-light-2);
-    color: var();
-}
-
-.box-43{
-    border-color: var();
-    background-color: var(--shadow-orange);
-    color: var();
-}
-.box-44{
-    border-color: var();
-    background-color: var(--shadow-orange-2);
-    color: var();
-}
-.box-45{
-    border-color: var();
-    background-color: var(--shadow-orange-3);
-    color: var();
-}
-
-.box-46{
-    border-color: var();
-    background-color: var(--shadow-pink);
-    color: var();
-}
-.box-47{
-    border-color: var();
-    background-color: var(--shadow-pink-2);
-    color: var();
-}
-.box-48{
-    border-color: var();
-    background-color: var(--shadow-pink-3);
-    color: var();
-}
-
-.box-49{
-    border-color: var();
-    background-color: var(--shadow-purple);
-    color: var();
-}
-.box-50{
-    border-color: var();
-    background-color: var(--shadow-purple-2);
-    color: var();
-}
-.box-51{
-    border-color: var();
-    background-color: var(--shadow-purple-3);
-    color: var();
-}
-
-.box-52{
-    border-color: var();
-    background-color: var(--shadow-teal);
-    color: var();
-}
-.box-53{
-    border-color: var();
-    background-color: var(--shadow-teal-2);
-    color: var();
-}
-.box-54{
-    border-color: var();
-    background-color: var(--shadow-teal-3);
-    color: var();
-}
-
-.box-55{
-    border-color: var();
-    background-color: var(--shadow-yellow);
-    color: var();
-}
-.box-56{
-    border-color: var();
-    background-color: var(--shadow-yellow-2);
-    color: var();
-}
-.box-57{
-    border-color: var();
-    background-color: var(--shadow-yellow-3);
-    color: var();
-}
-
-.box-58{
-    border-color: var();
-    /* background-color: var(--shadow-dark-teal); */
-    color: var();
-}
-.box-59{
-    border-color: var();
-    /* background-color: var(--shadow-dark-yellow); */
-    color: var();
-}
-.box-60{
-    border-color: var();
-    /* background-color: var(--shadow-dark-pink); */
-    color: var();
-}
-
-
-
-
-
-/* || --------------------DARK TEST------------------ */
+/* || --------------------DARK/LIGHT MODE------------------ */
 
 
 .dark .menu {
@@ -663,148 +121,15 @@ label {
 .dark a {
   color: #ff9776;
 }
-
-
-
-/* || --------------------Utilities------------------ */
-
-:root {
-    --mobile-screen-size: (max-width: 768px);
-    --tablet-screen-size: (min-width: 769px);
-    --desktop-screen-size: (min-width: 992px);
-    --xl-screen-size: (min-width: 1180px);
-    
+:root{
+    --main-bg: var(--background-light);
+    --site-text: var(--black);
 }
-
-.grid {display: grid;} 
-.flex {display: flex;}
-.column {flex-direction: column;}
-.row {flex-flow: row;}
-.self-center {justify-self: center;}
-.content-center {justify-content: center;}
-.items-center {justify-items: center;}
+[data-theme= 'dark'] {
+    --main-bg: var(--main-bg-dark);
+    --site-text: var(--text-white);
 
 
-ul {list-style: none;}
-a {text-decoration: none; cursor: pointer; color: var(--text-black);}
-a:visited {opacity: 90%; }
-.hidden {display: none;}
-button { cursor: pointer;}
-
-
-* {scroll-behavior: smooth;}
-
-.srOnly {
-    display: none;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-
-}
-
-.srText {
-    clip: rect(1px, 1px, 1px, 1px);
-    word-wrap: normal !important;
-    border: 0;
-    clip-path: inset(50%);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    overflow-wrap: normal !important;
-    padding: 0;
-    position: absolute !important;
-    width: 1px;
-}
-.devOnly {display: none;}
-
-/* --------------------BUTTONS------------------ */
-
-.button {
-    display: flex;
-    letter-spacing: .2ch;
-    font-family: 'red rose';
-    font-weight: 400;
-    margin: 15px 20px;
-
-}
-
-.button-light{
-    color:#000;
-}
-.button-dark{
-    color:#fff4f4;
-}
-.primary-button, .btn-primary{
-    display: flex;
-    width: 28ch;
-    height: 4.8rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    border-radius: 25px ;
-    border: 2px solid var(--grey-brown);
-    background-color: var(--ob-orange);
-    box-shadow: 2px 4px 8px var(--shadow-grey);
-    color: var(--text-white);
-    font-family: 'red rose';
-    letter-spacing: .1ch;
-
-}
-
-.secondary-button, .btn-secondary{
-    display: flex;
-    width: 25ch;
-    height: 4rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    border-radius: 30px;
-    border: 2px solid var(--main-purple);
-    background-color: var(--mid-purple);
-    box-shadow: 3px 8px 50px var(--shadow-yellow), 1px 2px 1px 1px var(--shadow-pink-2);
-    color: var(--text-white);
-    font-family: 'red rose';
-    letter-spacing: .1ch;
-
-}
-.tertiary-button, .btn-tertiary{
-    display: flex;
-    width: 25ch;
-    height: 4rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    border-radius: 30px;
-    border: 2px solid var(--ob-brown);
-    background-color: var(--ob-orange);
-    box-shadow: 2px 4px 8px var(--shadow-grey);
-    color: var(--text-white);
-    font-family: 'red rose';
-    letter-spacing: .1ch;
-
-}
-
-.light-button{
-    display: flex;
-    width: 25ch;
-    height: 4rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    border-radius: 30px;
-    border: 2px solid var(--mid-teal);
-    background-color: var(--ow-orange);
-    color: var(--text-white);
-    font-family: 'red rose';
-    letter-spacing: .1ch;
 
 }
 
@@ -816,12 +141,6 @@ button { cursor: pointer;}
 }
 
 body {
-    /* display: grid; */
-    /* grid-template-areas: 
-    "header"
-    "body"
-    "footer"; */
-    
     background-color: var(--main-light);
     font: var(--main-brown);
     margin: 0;
@@ -834,20 +153,36 @@ body *{
     scroll-margin-top: 165px;
 }   
     
-/* || --------------------Template set up------------------ */
+/* || --------------------LAYOUT AND CONTAINERS------------------ */
+/* GEN - PRIMARY CONTAINER */
 .primary-container {
-    max-width: 1240px, 80vw;
-    margin: auto;
+    width: 100%;
+    max-width: 1240px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1.2rem;
 
 }
 
 @media (min-width: 768px){
     .primary-container {
-        width: 90vw;
+        padding: 0 2.8rem;
+        width: 100%;
+        margin: auto; 
     }
 }
 
-/* kevin powell wrappers and containers */
+.fullView {
+    height: 100vh;
+
+}
+
+.midView {
+    height: 60vh;
+
+}
+
+/* kevin powell MAIN CONTAINER */
 #main-container {
     --max-width: 1180px;
     --padding: 1rem;
@@ -863,7 +198,7 @@ body *{
 
 }
 
-
+/* --- BASE LAYOUT --- */
 
 #mainHeader {
     /* grid-area: header; */
@@ -875,15 +210,6 @@ body *{
     z-index: 500;
 }
 
-.fullView {
-    height: 100vh;
-
-}
-
-.midView {
-    height: 60vh;
-
-}
 
 #mainBody {
     grid-row: 2 / 3;
@@ -906,15 +232,6 @@ body *{
     }
 }
     
-
-/* || --------------------SITEWIDE------------------ */
-
-
-
-/* || --------------------ABOUT PAGE------------------ */
-
-
-
 
 /* || --------------------CHAPTER------------------ */
 /* ----INSERT---- */
