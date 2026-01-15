@@ -141,7 +141,7 @@
     font-style: bold;
 }
 
-/* ------ SIDE-BY-SIDE ------ */
+/* ------ SIDE-BY-SIDE ------ */ 
 .side-by-side {
     display: grid;
     
@@ -167,7 +167,9 @@
     border-radius: 20px;
     box-shadow: .5rem .3rem 1.3rem var(--shadow-grey);
     overflow-X: scroll;
-    height: 70svh;
+    padding-bottom: .8rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 
     display: grid;
     grid-template-rows: 10% 35% 45% 10%;
@@ -175,7 +177,11 @@
     gap: 0 10px;
     scrollbar-width: thin;
     /* scrollbar-color: var(--main-yellow) var(--main-pink); */
-    scrollbar-color: var(--grey-brown) var(--grey);
+    scrollbar-color: var(--mid-brown) var(--shadow-yellow);
+}
+.carosel > :global(.sample-card) {
+    flex: 0 0 280px; 
+    scroll-snap-align: start;
 }
 
 .sample-case{
@@ -191,31 +197,36 @@
     border: 2px solid var(--ow-brown);
     border-radius: 8px;
     width: 220px;
-    height: 100%;
+    /* height: 100%; */
+    max-height: max-content;
     justify-self: center;
     align-self: center;
     margin-inline: 18px;
     overflow: hidden;
     
+    transition: all .3s;
 }
 
 
-.sample-card:hover {
-    scale: 1.1;
-    transition: all .3s;
+.sample-card:hover, .mini-poster {
+    scale: 1.05;
     box-shadow: .5rem .3rem 1.3rem var(--shadow-orange);
 }
+.mini-poster {
+    aspect-ratio: 1 ;
+    object-fit: cover;
+    grid-row: 4 / 5;
+    width: 100%;
+    height: 100%;
+    object-position: top;
 
+    transition: transform 0.3s ease;
 
-.sample-card .mini-poster{
-    grid-row: 1;
-    object-position: 50% 50%;
-    object-fit: contain;
-    
-    overflow: scroll;
 }
-.sample-card .mini-content{
-    grid-row: 3 / 5;
+
+.mini-content{
+    grid-row: 2 / 4;
+    z-index: 10;
     background-color: var(--second-yellow);
     color: var(--text-black);
     border-radius: 14px 14px 0 0;
@@ -226,28 +237,13 @@
     font-weight: 700;
     /* padding: 1ch; */
 }
-.sample-card .mini-content-2{
-    grid-row: 3 / 5;
-    background-color: var(--second-brown);
-    color: var(--text-white);
-    font-weight: 700;
-    border-radius: 14px 14px 0 0;
-    padding: .5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
 
 .blog-card-title {
     padding: .6rem;
     text-align: center;
 }
 
-.sample-case{
-    display: grid;
-    grid-template-rows: subgrid;
-    grid-row: 1 / 5;
-}
+
 
 .sample-end-case{
     display: grid;

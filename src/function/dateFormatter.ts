@@ -6,7 +6,7 @@ export const formatEventDate = (startStr: string, endStr: string | null) => {
   const yearOptions: Intl.DateTimeFormatOptions = { year: 'numeric' };
   const fullDateOptions: Intl.DateTimeFormatOptions = { 
     day: 'numeric', 
-    month: 'short', 
+    month: 'short',  
     year: 'numeric' 
   };
 

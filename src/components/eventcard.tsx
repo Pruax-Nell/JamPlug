@@ -1,6 +1,7 @@
 import React from 'react';
 import type { SerializedEvent } from '../types';
-import { formatEventDate } from "../function/dateFormatter";
+// import { formatEventDate } from "../function/dateFormatter";
+import { formatEventDate, formatTime } from '../function/dateHelper';
 
 // We use Pick or just access the 'data' property of our Master Blueprint
 
@@ -34,7 +35,11 @@ export default function EventCard({
   ? (eventPoster as unknown as AstroImage).src 
   : eventPoster;
   
-const dateDisplay = formatEventDate(startDate, endDate);
+// const dateDisplay = formatEventDate(startDate, endDate);
+
+// const { data } = Astro.props;
+const dateRange = formatEventDate(startDate, endDate);
+// const startTime = formatTime(startTime);
 
   return (
     <a href={`/events/${id}`} className="event-card-link">
@@ -61,15 +66,13 @@ const dateDisplay = formatEventDate(startDate, endDate);
             <span>📍</span> {townCity}, {country.replace(/-/g, ' ')}
           </p>
           <p className="meta-item date">
-            <span>📅</span> {dateDisplay}
+            <span>📅</span> {dateRange}
           </p>
           <div className='sub-meta'>
-            <p className="meta-item discipline">
-            {skateDiscipline}
-          </p>
-          <p className="meta-item level">
-            {skillLevel}
-          </p>
+            
+          {skateDiscipline && ( <p className="meta-item discipline">{skateDiscipline}</p>)}
+          {skillLevel && ( <p className="meta-item level">{skillLevel}</p>)}
+          
           </div>
         </div>
 
@@ -80,10 +83,3 @@ const dateDisplay = formatEventDate(startDate, endDate);
   );
 }
 
-// <img 
-          // src={eventPoster} 
-          //   alt={`Poster for ${eventName}`}
-          //   loading="lazy"
-          //   decoding="async"
-          //   className="event-image"
-          // />

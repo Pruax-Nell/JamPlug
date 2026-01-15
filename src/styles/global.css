@@ -11,6 +11,7 @@
     --ob-orange: #7d3e00;
     --mid-orange: #b45c10;
     --grey-orange: #b26e29;
+    --light-orange: #e38f3b;
     
     --shadow-orange: rgba(201, 108, 14, 0.306);
     --shadow-orange-2: rgba(213, 115, 17, 0.493);
@@ -50,8 +51,8 @@
     --shadow-pink-2: #d0096671;
     --shadow-pink-3: #59052c62;
 
-    --main-yellow: #f8ca13;
-    --second-yellow: #e6bf20;
+    --main-yellow: #f3c40c;
+    --second-yellow: #f8d030;
     --ow-yellow: #edd267;
     --ob-yellow: #735d03;
     --mid-yellow: #bf9f13;
@@ -87,7 +88,8 @@
     --shadow-light-2: #cdc9c29f;
     --background-light-3: #fff9ed;
     
-    --main-bg-dark: #262421; 
+    --main-bg-dark: #312e29; 
+    --dark-background: #c5b79c; 
     --main-dark: #262421; 
     --text-black: #262421;
     
@@ -104,34 +106,11 @@
 /* || --------------------DARK/LIGHT MODE------------------ */
 
 
-.dark .menu {
-  background-color: #fff;
-  color: #000;
+.dark body, .dark #site-header{
+    background-color: var(--dark-background);
+    
 }
 
-.dark .nav-links a:hover,
-.dark .nav-links a:focus {
-  color: #0d0950;
-}
-
-.dark .nav-links a {
-  color: #fff;
-}
-
-.dark a {
-  color: #ff9776;
-}
-:root{
-    --main-bg: var(--background-light);
-    --site-text: var(--black);
-}
-[data-theme= 'dark'] {
-    --main-bg: var(--main-bg-dark);
-    --site-text: var(--text-white);
-
-
-
-}
 
 
 
@@ -141,36 +120,31 @@
 }
 
 body {
-    background-color: var(--main-light);
+    background-color: var(--main-bg-light);
     font: var(--main-brown);
     margin: 0;
     
     overflow-x: hidden;
     
 }
+body[data-theme= 'dark'] {
+    background-color: var(--main-bg-dark);
+    font: var(--main-light);
+    margin: 0;
+    
+    overflow-x: hidden;
+    
+}
+
+
+
 
 body *{
     scroll-margin-top: 165px;
 }   
     
 /* || --------------------LAYOUT AND CONTAINERS------------------ */
-/* GEN - PRIMARY CONTAINER */
-.primary-container {
-    width: 100%;
-    max-width: 1240px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 1.2rem;
 
-}
-
-@media (min-width: 768px){
-    .primary-container {
-        padding: 0 2.8rem;
-        width: 100%;
-        margin: auto; 
-    }
-}
 
 .fullView {
     height: 100vh;

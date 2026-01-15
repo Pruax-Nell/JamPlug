@@ -10,10 +10,12 @@ import UpcomingEvents from '../components/upcomingEvents';
 const now = new Date();
 now.setHours(0, 0, 0, 0);
 
+
+
 const publishedEvents: CollectionEntry<'events'>[] = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
   return data.status === 'published';
 });
-
+ 
 const townsByCountry: Record<string, Set<string>> = {};
 const rinks = new Set<string>();
 const ages = new Set<string>();
@@ -84,8 +86,6 @@ const serverOptions = {
   minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b))
 };
 
-
-
 ---
 
 <!-- TODO: tidy page start, add CSS  -->
@@ -99,14 +99,14 @@ const serverOptions = {
 	</div>
 </section>
 <section class="scribe">
-	<div class="primary-container scribe-content">
+	<div class="scribe-content">
 		<div class="">
 			<p>Find Roller skate events happening all over Europe. Small jams, weekend festivals, workshops and more.</p>
 	</div>
 	<div class="left-lean">
-		<p>what are you looking for?</p>
+		<!-- <p>what are you looking for?</p> -->
 	</div>
-	<div class=" half-width-block jam-link-block">
+	<div class="jam-link-block">
 		<h3 id="jam-list-heading">Big Jam List</h3>
 		<Button href="/festivals" variant="secondary" size="lg"> Read More </Button>
 		<span>Find all of Europes multi-day skate festivals</span>
@@ -116,7 +116,7 @@ const serverOptions = {
 <!-- ||-----------------------------------------------EVENTS SECTION -->
 <section class="events-list">
 	<!-- ||------------------------------------------EVENTS TEST -->
-	<div class="primary-container">
+	<div class="">
 		
 		<div>
 			<span>Roller skate events</span>
@@ -150,7 +150,7 @@ const serverOptions = {
 				<h2>Submit an Event</h2>
 				<p>Have an Event, Competition, Jam or Tour to tell us about? We aim to add events weekly, so use the button below to spread the word!</p>
 				<div class="btn-wrap">
-					<Button href="/submit-an-event" variant="secondary" size="lg"> Read More </Button>
+					<Button href="/submit-an-event" variant="secondary" size="xs"> Read More </Button>
 				</div>
 			</div>
 		</div>
@@ -177,16 +177,3 @@ const serverOptions = {
 </section>
 </BaseLayout>
 
-<style is:global>
-
-	.none-returned {
-		display: flex;
-		justify-content: center;
-		justify-self: center;
-		align-items: center;
-		border-radius: 8px;
-		border: 12px double var(--mid-teal);
-		background-color: var(--mid-teal);
-		width: 70%;
-	}
-</style> 

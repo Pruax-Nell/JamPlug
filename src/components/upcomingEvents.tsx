@@ -233,31 +233,7 @@ const renderOptions = (
           </select>
 
         </div>
-        {/* <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
-          <option value="All">All Countries</option>
-          {Object.keys(serverOptions.townsByCountry).map(c => <option key={c} value={c}>{c}</option>)}
-        </select> */}
-
-        {/* <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
-          {MONTH_ORDER.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
-        </select> */}
-
-        {/* <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
-          <option value="All">All Event Type</option>
-          {EVENT_TYPE.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
-        </select> */}
-
-        {/* <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
-          <option value="All">All Disciplines</option>
-          {SKATE_DISCIPLINES.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
-        </select> */}
-
-        {/* <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
-          <option value="All">All Levels</option>
-          {SKILL_LEVEL.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-        </select> */}
-
-
+        
         <button 
           className="reset-button"
           onClick={() => {

@@ -6,7 +6,7 @@ import '../../styles/components.css'
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import Button from '../../components/button.astro';
-import { formatDate } from '../../utility';
+import { formatEventDate, formatTime } from '../../function/dateHelper';
 
 
 export async function getStaticPaths() {
@@ -23,34 +23,34 @@ interface Props {
   // children?: any; 
 }
 
-const { post } = Astro.props;
+const { post } = Astro.props; 
 const { data } = post;
 const { Content } = await render(post);
 
 const galleryImages = [data.flyerImage1, data.flyerImage2, data.flyerImage3, data.flyerImage4, data.flyerImage5].filter(Boolean);
 
 // HELPERS----
-function formatTime(timeObj: any) {
-  if (!timeObj || typeof timeObj !== 'object') return '';
-  const { hour, minute } = timeObj;
+// function formatTime(timeObj: any) {
+//   if (!timeObj || typeof timeObj !== 'object') return '';
+//   const { hour, minute } = timeObj;
   
-  const h = parseInt(hour);
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  const displayHour = h % 12 || 12;
+//   const h = parseInt(hour);
+//   const ampm = h >= 12 ? 'PM' : 'AM';
+//   const displayHour = h % 12 || 12;
   
-  return `${displayHour}:${minute.toString().padStart(2, '0')} ${ampm}`;
-}
+//   return `${displayHour}:${minute.toString().padStart(2, '0')} ${ampm}`;
+// }
 
-const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
-  weekday: 'short', day: 'numeric', month: 'long'
-});
+// const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
+//   weekday: 'short', day: 'numeric', month: 'long'
+// });
 
-const displayEndDate = data.endDate
- ? new Date(data.endDate).toLocaleDateString('en-GB', {
-  weekday: 'short', 
-  day: 'numeric', 
-  month: 'long'
-}) : null ;
+// const displayEndDate = data.endDate
+//  ? new Date(data.endDate).toLocaleDateString('en-GB', {
+//   weekday: 'short', 
+//   day: 'numeric', 
+//   month: 'long'
+// }) : null ;
 
 const lineup = [
   { title: "Organisers", people: data.organisers },
@@ -58,6 +58,9 @@ const lineup = [
   { title: "Coaches", people: data.coaches },
   { title: "Hosts", people: data.hosts }
 ];
+const eventDateString = formatEventDate(data.startDate, data.endDate);
+const eventStartTime = formatTime(data.startTime);
+const eventEndTime = data.endTime ? formatTime(data.endTime) : null;
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
 ---
@@ -65,7 +68,7 @@ console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
 <BaseLayout page_title={data.eventName}>
   <nav class="navigation-controls">
     
-		<Button  variant="outline" size="xs" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
+		<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
 
   </nav>
 
@@ -105,11 +108,11 @@ console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
         </div>
         )}
 
-        {displayEndDate ? ( <p class="time-location">
-             <strong class="strong-date">{displayDate}</strong> • {formatTime(data.startTime)} {data.endTime && ` - ${formatTime(data.endTime)}`} </p>) : (<p> <strong>{displayDate}</strong> • {formatTime(data.startTime)} {displayEndDate && (displayEndDate)} 
-          {data.endTime && ` - ${formatTime(data.endTime)}`}
-        </p>)
-        } 
+        <p class="time-location">
+          <strong class="strong-date">{eventDateString}</strong> 
+          • {eventStartTime} 
+          {eventEndTime && ` - ${eventEndTime}`}
+        </p>
           
         <p class="description-snippet">{data.description}</p>
         
@@ -123,7 +126,7 @@ console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
         <div class="tags"> 
           <span class="event-type-label">{data.eventType}</span>
           <span class="discipline">{data.skateDiscipline}</span>
-          {data.skillLevel && (<span class="level"> #{data.skillLevel} </span>) }
+          {data.skillLevel && (<span class="level"> {data.skillLevel} </span>) }
           {data.offSkates===true && (<span> Non-Skating </span>) }
         </div>
       </div>
@@ -200,7 +203,7 @@ console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
   </article>
   <nav class="navigation-controls">
     
-		<Button  variant="outline" size="xs" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
+		<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
 
   </nav>
 </BaseLayout>
@@ -305,12 +308,6 @@ hr {
     font-weight: 400;
 
 }
-
-strong {
-  color: var(--ob-pink);
-}
-
-
   
 /* --- Shell --- */
   .event-focus {
@@ -383,9 +380,13 @@ strong {
     text-wrap: balance;
   }
   .time-location {
-    font-size: 1.1rem;
-    color: var(--main-purple); /* Indigo accent */
+    font-size: 1rem;
+    color: var(--ob-purple); /* Indigo accent */
     margin-bottom: 1rem;
+  }
+
+  .strong-date {
+    font-size: 1.29rem;
   }
 
   .description-snippet {
@@ -428,15 +429,13 @@ strong {
   background-color: var(--second-purple);
   padding: .3rem .6rem;
   border-radius: 3px 8px 8px 8px;
-  color: var(--main-black);
+  color: var(--main-light);
 
   font-size: 0.875rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.035em;
 }
-
-
 
   /* --- Main Body Content --- */
   .content-body {
@@ -508,7 +507,7 @@ strong {
   background: var(--ow-orange);
 }
 
-  /* --- Gallery Section --- */
+/* --- Gallery Section --- */
 
   .event-gallery-section {
     
@@ -550,7 +549,7 @@ strong {
   .gallery-thumb:hover, .event-image:hover {
     transform: scale(1.02);
     transition: transform 0.2s ease-in-out;
-    cursor: pointer;
+    /* cursor: pointer; */
   }
 
 

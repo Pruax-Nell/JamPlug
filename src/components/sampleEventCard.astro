@@ -1,21 +1,47 @@
 ---
-import "../styles/components.css" ;
+import Image from "astro/components/Image.astro";
+import { formatEventDate } from '../function/dateHelper';
 
+interface Props {
+  url: string;
+  poster: any; // Using 'any' for the Astro image object
+  title: string;
+  city: string;
+  country: string;
+  eventType: string;
+  description: any;
+  // We only take the two dates we need for the helper, not the whole event object
+  timeframe: {
+    startDate: Date | string;
+    endDate?: Date | string | null;
+  };
+}
  
-const { title, url, poster, tags, date, startDate, city, country } = Astro.props;
+const { timeframe, title, url, poster, city, country, eventType, description } = Astro.props;
 
-// const day = startDate.getDate().toString().padStart(2, '0');
-// const month = (startDate.getMonth() + 1).toString().padStart(2, '0');
+const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
 ---
 
 <div class=" sample-case">
     <a href={url} class="sample-card">
-        <img src={poster} alt={title} class="mini-poster">
+        {poster ? (
+            <Image 
+            src={poster} 
+            alt={title} 
+            width={400} 
+            height={500} 
+            class="card-poster"
+            />
+        ) : (
+            <div class="placeholder card-poster">🛼</div>
+        )}
         <div class="mini-content">
             <p>{title}</p>
-            <span>{city}, {country}</span>
-            <!-- <span>{date}</span> -->
-            {tags && <div>{tags}</div>}
+            <span>📍{city}, {country}</span>
+            <span>{eventDateString}</span>
+            <span>{eventType}</span>
+            <p>{description}</p>
         </div>
     </a>
 </div>
+

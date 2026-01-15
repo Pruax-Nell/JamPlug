@@ -1,8 +1,8 @@
 ---
 interface Props {
   href?: string;          
-  theme?: 'orange' | 'teal' | 'purple' | 'pink' | 'brown' | 'white' | 'black';
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'ghost';
+  theme?: 'orangeLight' | 'tealLight' | 'purpleLight' | 'pinkLight' | 'brownLight' | 'whiteLight' | 'blackLight' | 'yellowLight' | 'orangeDark' | 'tealDark' | 'purpleDark' | 'pinkDark' | 'brownDark' | 'whiteDark' | 'blackDark' | 'yellowDark' | 'orange' | 'pink' | 'teal' | 'purple' | 'yellow' | 'brown' | 'white' | 'black';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' ;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   class?: string;          // Allows for extra utility classes (like mt-4)
   [x: string]: any;        // Collects all other attributes (target, id, rel, etc.)
@@ -10,8 +10,8 @@ interface Props {
 
 const { 
   href, 
-  theme = 'orange',
-  variant = 'primary', 
+  theme = 'brownDark',
+  variant = 'secondary', 
   size = 'md', 
   class: className, 
   ...rest 
@@ -26,7 +26,6 @@ const variantClasses = {
   secondary: 'btn-secondary',
   tertiary: 'btn-tertiary',
   outline: 'btn-outline',
-  ghost: 'btn-ghost'
 };
 
 const sizeClasses = {
@@ -37,13 +36,33 @@ const sizeClasses = {
 };
 
 const themeColour = {
-    orange: 'orange',
-    teal: 'teal',
-    purple: 'purple',
-    pink: 'pink',
-    brown: 'brown',
-    white: 'white',
-    black: 'black',
+  orangeDark: 'orange-dark',
+  pinkDark: 'pink-dark',
+  tealDark: 'teal-dark',
+  purpleDark: 'purple-dark',
+  brownDark: 'brown-dark',
+  whiteDark: 'white-dark',
+  blackDark: 'black-dark',
+  yellowDark: 'yellow-dark',
+  
+  orangeLight: 'orange-light',
+  pinkLight: 'pink-light',
+  tealLight: 'teal-light',
+  purpleLight: 'purple-light',
+  brownLight: 'brown-light',
+  whiteLight: 'white-light',
+  blackLight: 'black-light',
+  yellowLight: 'yellow-light',
+
+  orange: 'orange',
+  pink: 'pink',
+  teal: 'teal',
+  purple: 'purple',
+  brown: 'brown',
+  white: 'white',
+  black: 'black',
+  yellow: 'yellow',
+
 };
 
 ---
@@ -63,102 +82,336 @@ const themeColour = {
 
 <style>
   /* Base Styles */
-  .btn {
-    margin: .1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 2px solid transparent;
-    /* line-height: .1rem; */
-    letter-spacing: .3ch;
-    font-family: 'Red Rose';
+.btn {
+  margin: .1rem;
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 600;
+  letter-spacing: .3ch;
+  font-family: 'Red Rose';
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 /* Sizes */
-.btn-xs { padding: 0.5rem 0.8rem; font-size: 0.575rem; }
-.btn-sm { padding: 0.9rem 0.8rem; font-size: 0.875rem; }
+.btn-xs { padding: 0.5rem 0.8rem; font-size: 0.645rem; }
+.btn-sm { padding: 0.9rem 1rem; font-size: 0.895rem; }
 .btn-md { padding: 0.1rem 1rem; font-size: 1rem; }
-.btn-lg { padding: 0.2rem .6rem; font-size: 1.15rem; }
+.btn-lg { padding: 0.2rem 1.1rem; font-size: 1.1rem; }
 
 /* ------------------ PRIMANRY BUTTON */
 .btn-primary {
-    /* border-radius: 18px;
-    background-color: var(--main-bg-dark, );
-    color: var(--main-orange); */
-
-    background-color: var(--main-pink);
-  color: var(--text-white);
-  box-shadow: 4px 4px 0px var(--shadow-pink-3);
+  height: 2.8rem;
+  width: 18ch;
+  border-radius: 15px ;
+  border-width: 6px;
+  border-style: solid double double;
+  
+  box-shadow: 4px 0 15px var(--shadow-pink-3);
 }
 
-[data-theme= 'dark'] {}
-    
 .btn-primary:hover {
-    background-color: var(--ob-brown, );
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px -1px var(--shadow-brown);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px var(--shadow-brown);
+  scale: 1.03;
 }
+
 /* ------------------ SECONDARY BUTTON */
 .btn-secondary {
-    /* border-radius: 5px 12px 12px 12px;
-    background-color: var(--main-purple, );
-    color: var(--text-white); */
+  width: 18ch;
+  height: 2.6rem;
+  border-radius: 27px;
+  border-width: 6px;
+  border-style: solid;
 
-    background-color: var(--main-purple);
-    color: var(--text-white);
-    box-shadow: 4px 4px 0px var(--shadow-purple-3);
+  box-shadow: 4px 4px 0px var(--shadow-purple-3);
 }
+
 .btn-secondary:hover{
     box-shadow: 0 4px 6px -1px var(--shadow-brown);
-    
+    scale: 1.03;
+  }
+
+  /* ------------------ TERTIARY BUTTON */
+  .btn-tertiary {
+  border-radius: 4px 16px 16px 16px;
+  border-width: 4px;
+  border-style: double;
+  box-shadow: 2px 4px 8px var(--shadow-grey);
 }
-/* ------------------ TERTIARY BUTTON */
-.btn-tertiary {
-    /* border-radius: 5px 12px 12px 12px;
-    background-color: var(--background-light,);
-    color: var(--main-dark); */
-    background-color: var(--main-teal);
-    color: var(--main-dark);
-    box-shadow: 4px 4px 0px var(--shadow-teal-3);
-}
+
 .btn-tertiary:hover{
-    box-shadow: 0 4px 6px -1px var(--shadow-brown);
+  box-shadow: 0 4px 6px -1px var(--shadow-brown);
+  border-radius: 16px 4px 16px 16px;
+  scale: 1.04;
     
 }
 
 /* ------------------ OUTLINE BUTTON */
 .btn-outline {
-    background-color: transparent;
-    font-family: 'Red Rose';
-    border-radius: 8px;
-    border-color: var(--main-orange, );
-    color: var(--main-orange, );
+  background-color: transparent;
+  border-radius: 8px;
+  text-transform: uppercase;
+  background-color: none;
+  border-width: 6px;
+  border-style: double;
 }
+
 .btn-outline:hover {
-    background-color: var(--shadow-grey);
+  border-style: solid;
+  scale: 1.04;
 }
 
 .btn:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
-/* 5. YELLOW (Slalom/Skills) */
-.theme-yellow {
-  background-color: var(--main-yellow);
-  color: var(--main-dark);
-  box-shadow: 4px 4px 0px var(--shadow-yellow-3);
-}
-.theme-yellow:hover { background-color: var(--second-yellow); transform: translate(-1px, -1px); box-shadow: 5px 5px 0px var(--shadow-yellow-3); }
+/* --------------- THEME COLOUR ---------------- */
 
-/* 6. BROWN (Official/Distance) */
-.theme-brown {
-  background-color: var(--main-brown);
+/* for light theme */
+.orange-light {
+  background-color: var(--second-orange);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown);
+  border-color: var(--shadow-orange);
+  
+}
+.orange-light:hover {
+  background-color: var(--shadow-orange);
+  border-color: var(--main-orange);
+  color: var(--main-orange);
+  
+  
+}
+.pink-light {
+  background-color: var(--second-pink);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--second-pink);
+  
+}
+.pink-light:hover {
+  background-color: var(--shadow-pink);
+  color: var(--ow-pink);
+  
+
+}
+.teal-light {
+  background-color: var(--second-teal);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--mid-teal);
+  
+}
+.teal-light:hover {
+  background-color: var(--shadow-teal);
+  border-color: var(--second-teal);
+  color: var(--ow-teal);
+  
+  
+}
+.purple-light {
+  background-color: var(--second-purple);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--shadow-purple);
+  
+}
+.purple-light:hover {
+  background-color: var(--shadow-purple);
+  border-color: var(--second-purple);
+  color: var(--ow-purple);
+  
+  
+}
+.brown-light {
+  background-color: var(--second-brown);
   color: var(--text-white);
-  box-shadow: 4px 4px 0px var(--shadow-brown-3);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--shadow-brown);
+  
 }
-.theme-brown:hover { background-color: var(--second-brown); transform: translate(-1px, -1px); box-shadow: 5px 5px 0px var(--shadow-brown-3); }
+.brown-light:hover {
+  background-color: var(--shadow-brown);
+  border-color: var(--ow-brown);
+  color: var(--ow-brown);
+
+
+}
+.white-light {
+  background-color: var(--main-bg-light);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--shadow-light);
+  
+}
+.white-light:hover {
+  background-color: var(--shadow-light-2);
+  color: var(--text-white);
+
+
+}
+.black-light {
+  background-color: var(--grey);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--black);
+  color: var(--text-white);
+}
+.black-light:hover {
+  background-color: var(--shadow-grey);
+  border-color: var(--main-light);
+  color: var(--main-light);
+}
+
+.yellow-light{
+
+  background-color: var(--second-yellow);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--mid-yellow);
+}
+.yellow-light:hover{
+
+  background-color: var(--shadow-yellow);
+  color: var(--main-yellow);
+  border-color: var(--main-yellow);
+}
+
+/* for dark theme */
+.orange-dark {
+  background-color: var(--main-orange);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--mid-orange);
+}
+.orange-dark:hover {
+  background-color: var(--second-orange);
+  border-color: var(--second-orange);
+  color: var(--main-brown);
+
+}
+.teal-dark {
+background-color: var(--main-teal);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--mid-teal);
+}
+.teal-dark:hover {
+  background-color: var(--shadow-teal-2);
+  border-color: var(--shadow-teal-2);
+  color: var(--ob-teal);
+
+}
+.purple-dark {
+background-color: var(--main-purple);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--ob-purple);
+}
+.purple-dark:hover {
+  background-color: var(--shadow-purple);
+  border-color: var(--shadow-purple);
+  color: var(--mid-purple);
+
+}
+.pink-dark {
+background-color: var(--second-pink);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-pink);
+  border-color: var(--mid-pink);
+}
+.pink-dark:hover {
+  background-color: var(--shadow-pink);
+  border-color: var(--shadow-pink);
+  color: var(--mid-pink);
+  
+}
+.brown-dark {
+background-color: var(--main-brown);
+  color: var(--text-white);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--ob-brown);
+}
+.brown-dark:hover {
+  background-color: var(--shadow-brown);
+  border-color: var(--shadow-brown);
+  color: var(--ob-brown);
+
+}
+.yellow-dark {
+background-color: var(--second-yellow);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--mid-yellow);
+}
+.yellow-dark:hover {
+  background-color: var(--ow-yellow);
+  border-color: var(--ow-yellow);
+  color: var(--ob-yellow);
+  
+}
+.white-dark {
+  background-color: var(--shadow-light-2);
+  color: var(--text-black);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--shadow-light);
+}
+.white-dark:hover {
+  background-color: var(--main-light);
+
+}
+.black-dark {
+  background-color: var(--black);
+  color: var(--text-white);
+  box-shadow: 4px 4px 8px var(--shadow-brown-3);
+  border-color: var(--shadow-grey);
+}
+.black-dark:hover {
+  background-color: var(--shadow-grey-2);
+  color: var(--grey);
+
+}
+
+/* solid outlines */
+.orange{
+  color: var(--main-orange);
+  border-color: var(--main-orange);
+}
+.pink{
+  color: var(--main-pink);
+  border-color: var(--main-pink);
+}
+.teal{
+  color: var(--second-teal);
+  border-color: var(--second-teal);
+}
+.purple{
+  color: var(--main-purple);
+  border-color: var(--main-purple);
+}
+.yellow{
+  color: var(--main-yellow);
+  border-color: var(--main-yellow);
+}
+.brown{
+  color: var(--second-brown);
+  border-color: var(--second-brown);
+}
+.white{
+  color: var(--main-light);
+  border-color: var(--main-light);
+}
+.black{
+  color: var(--main-dark);
+  border-color: var(--main-dark);
+}
+    
+
+
+
+
 </style>
