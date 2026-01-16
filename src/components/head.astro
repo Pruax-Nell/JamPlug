@@ -1,41 +1,53 @@
 ---
 // TODO - dynamic frontmatter application
-import Favicon from "../../public/astro.svg";
 import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
 import type { SerializedEvent } from "../types";
-
-
-const { title = "Your Jam Plug UK", ...props } = Astro.props;
 
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
 	Index?: string;
 	SEO?: string;
 	frontmatter?: SerializedEvent['data'];
 }
 
-const { Index, description, SEO } = Astro.props;
+const { 
+  title, 
+  description = SITE_DESCRIPTION,
+  image = "/default-og-image.jpg", // A fallback image in your public folder
+  SEO, Index,
+} = Astro.props;
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const displayTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 ---
 <link rel="sitemap" href="/sitemap-index.xml">
-<title>{title}</title>
-<meta name="description" content="Welcome to my new Astro site!">
 
 <!-- Web analytics -->
 <!-- <script data-goatcounter="https://my-account.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
 
 <!-- Open Graph tags -->
- <link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
 <meta name="description" content= {description}>
 <meta name="SEO" content={SEO}>
-<title>{SITE_TITLE} | {Index} </title>
-<meta property="og:title" content={SITE_TITLE} />
+
+<title>{displayTitle}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
 <meta property="og:type" content="website" />
-<!-- <meta property="og:url" content="http://www.example.com/" /> -->
-<meta property="og:description" content={SITE_DESCRIPTION} />
-<!-- <meta property="og:image" content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"> -->
-<!-- <meta property="og:image:alt" content=""> -->
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
 

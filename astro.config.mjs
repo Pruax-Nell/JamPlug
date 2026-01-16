@@ -15,12 +15,14 @@ import keystatic from '@keystatic/astro';
 
 import node from '@astrojs/node';
 
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
   output: "static",
   prefetch: true,
-  site: 'https://example.com',
+  site: 'https://yourjamplug.uk',
   trailingSlash: 'ignore',
-  integrations: [mdx(), react(), markdoc(), keystatic()],
+  integrations: [mdx(), react(), markdoc(), keystatic(), sitemap()],
 
   vite: {
     plugins: [tailwindcss()],

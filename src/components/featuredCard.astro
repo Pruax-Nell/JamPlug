@@ -1,0 +1,172 @@
+---
+import Image from "astro/components/Image.astro";
+import { formatEventDate } from '../function/dateHelper';
+
+interface Props {
+  url: string;
+  poster: any; // Using 'any' for the Astro image object
+  title: string;
+  city: string;
+  country: string;
+  eventType: string;
+  description: any;
+  // We only take the two dates we need for the helper, not the whole event object
+  timeframe: {
+    startDate: Date | string;
+    endDate?: Date | string | null;
+  };
+}
+ 
+const { timeframe, title, url, poster, city, country, eventType, description } = Astro.props;
+
+const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
+---
+
+<div class=" feature-case">
+    <a href={url} class="feature-card">
+        {poster ? (
+            <Image 
+            class="feature-poster"
+            src={poster} 
+            alt={title} 
+            width={420} 
+            height={500} 
+            />
+        ) : (
+            <div class="placeholder feature-poster">🛼</div>
+        )}
+        <div class="feature-content">
+            <h5 class="ft-title">{title}</h5>
+            <span class="city-country">📍{city}, {country}</span>
+            <span class="event-date">{eventDateString}</span>
+            <span class="event-type">{eventType}</span>
+            <p>{description}</p>
+        </div>
+    </a>
+    <div class="feature-title"><h4>{title}</h4></div>
+</div>
+
+<style>
+
+    
+
+.feature-case{
+    grid-row: 2 / 6;
+}
+
+.feature-card {
+    max-height: 100%;
+
+    display: grid;
+    grid-template-rows: repeat(5, 20%);
+    /* grid-template-columns: auto; */
+
+    border: 2px solid var(--ow-brown);
+    border-radius: 8px;
+    justify-self: center;
+    overflow: hidden;
+    
+    transition: all .3s;
+}
+/* .feature-card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: 1 / 6;
+    border: 2px solid var(--ow-brown);
+    border-radius: 8px;
+    width: 420px;
+    height: 350px;
+    max-height: max-content;
+    justify-self: center;
+    align-self: center;
+    margin-inline: 18px;
+    overflow: hidden;
+    
+    transition: all .3s;
+} */
+
+
+.feature-card:hover, .mini-poster {
+    scale: 1.05;
+    box-shadow: .5rem .3rem 1.3rem var(--shadow-orange);
+}
+.feature-poster {
+    grid-row: 1 / -1;
+    grid-column: 1;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    object-position: center;
+    
+    transition: transform 0.3s ease;
+    
+}
+
+.feature-content{
+    grid-row: 1 / -1 ;
+    grid-column: 1;
+    /* z-index: 10; */
+    background-color: var(--second-brown);
+    
+    color: var(--text-white);
+    /* border-radius: 14px 14px 0 0; */
+    /* padding: .5rem; */
+    /* height: 100%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* gap: 5px; */
+    font-weight: 700;
+    padding: 2.8rem;
+    opacity: 0;
+
+    transition: opacity .6s ease-in-out;
+
+}
+
+.feature-card:hover .feature-content {
+    opacity: 96%;
+}
+
+.ft-title {
+    text-transform: uppercase;
+}
+
+.feature-title{
+    /* grid-row: 2 / 3; */
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    justify-content: center;
+    max-width: 55ch;
+
+}
+
+.feature-title h4 {
+    margin-top: 1.2rem;
+    font-size: minmax(var(--fs-heading-mid), var(--fs-heading-xl));
+}
+
+.event-type{
+    text-transform: uppercase;
+    margin: .3rem 0;
+    padding: .1rem 1rem;
+    border:  1px solid var(--mid-brown);
+    background-color: var(--shadow-yellow);
+    border-radius: 8px;
+
+
+}
+.event-date{
+
+}
+.city-country{
+    margin-bottom: .8rem;
+}
+
+</style>
+

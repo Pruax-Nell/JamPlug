@@ -4,8 +4,9 @@ const Brand = "Your Jam Plug.UK";
 import BaseLayout from "../layouts/baseLayout.astro";
 import SampleBlogCard from "../components/sampleBlogCard.astro";
 import SampleEventCard from "../components/sampleEventCard.astro";
+import FeaturedCard from '../components/featuredCard.astro';
 import Button from '../components/button.astro';
-import EndSamplecard from "../components/endsamplecard.astro"
+import EndSamplecard from "../components/endsamplecard.astro";
 
 import "../styles/home.css";
 import "../styles/components.css";
@@ -64,7 +65,25 @@ const upcomingEvents = (publishedEvents)
 
 // FEATURED EVENTS
 const featuredEvents = (publishedEvents)
-.filter((event) => event.data.isFeatured === true);
+.filter((event) => event.data.isFeatured === true)
+.map(event => ({
+	id: event.id,
+	title: event.data.eventName,
+	poster: event.data.eventPoster,
+	city: event.data.townCity,
+	country: event.data.country,
+	description: event.data.description,
+	eventType: event.data.eventType,
+	featured: event.data.isFeatured,
+	timeframe: {
+		startDate: new Date(event.data.startDate),
+		endDate: event.data.endDate ? new Date(event.data.endDate) : null
+	}
+	
+}))
+.sort(
+	(a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
+);
 	
 // BLOG COLLECTION
 const publishedBlogs = await getCollection('blog')
@@ -98,6 +117,19 @@ const recentBlogs = (publishedBlogs)
 		</div>
 		
 	</section>
+	<!------------------------------------------ FEATURES ---------------->
+	{featuredEvents.length > 0 ? (
+		<section id="feature-section" >
+			<div><h3>Featured Events</h3></div>
+			<div class="carosel">
+		{featuredEvents.map((post) => (
+				<FeaturedCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}/>
+			))}
+			</div>
+			<div class='big-space'></div>
+		</section>
+	) : (<span>special</span>) } 
+
 	<!------------------------------------------ JAM LIST ---------------->
 	<section id="festival-list" class="section scroll-snap center-focus">
 		<div class="blur-back-1 center-div">
@@ -130,7 +162,7 @@ const recentBlogs = (publishedBlogs)
 	<!------------------------------------------ UPCOMING ---------------->
 	<section id="upcoming-events" class="section scroll-snap side-by-side" >
 		<div class="side-a">
-			<h3>Upcoming Events</h3>
+			<h4>Upcoming Events</h4>
 			<Button href="/events" variant="secondary" theme="yellowLight" size="xs"> Read More </Button>
 			<p>small carosel of some events. maybe featured</p>
 			<p>direct to main event page</p>
@@ -139,12 +171,10 @@ const recentBlogs = (publishedBlogs)
 
 			{upcomingEvents.length > 0 ? (
 				<div class="carosel"> 
-				{/* map/dynamic list */}
 			{upcomingEvents.map((post) =>
 				( <SampleEventCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}
 				/>
 			))}
-			{/* add the end card */}
 			<EndSamplecard title="See more Events" url="/events" description="Click me" />
 			</div> ) 
 			: 
@@ -157,7 +187,7 @@ const recentBlogs = (publishedBlogs)
 	<!------------------------------------------ BLOGS ---------------->
 	<section id="skate-news" class="section scroll-snap side-by-side">
 		<div class="side-a">
-			<h3>Skate News</h3>
+			<h4>Skate News</h4>
 			<span>Direct to blog page</span>
 			<Button href="/blog" variant="secondary" theme="orangeDark" size="xs"> Read More </Button>
 		</div>

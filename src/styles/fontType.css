@@ -13,10 +13,11 @@
 @font-face {
     font-family: "Red Rose";
     src: 
-    local("RedRose"),
-    url("/fonts/RedRose-VariableFont_wght.ttf") format("Woff2 supports variations"),
-    url("/fonts/RedRose-VariableFont_wght.woff2") format("woff2-variations");
+        local("RedRose"),
+        url("/fonts/RedRose-VariableFont_wght.woff2") format("woff2-variations");
     font-weight: 0 700;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* side notes */
@@ -24,46 +25,49 @@
     font-family: "Shantelle Sans";
     src:
     local("ShantellSans"),
-    url("ShantellSans-VariableFont.ttf") format('ttf supports variations'),
-    /* url("ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format('ttf supports variations'), */
+    url("ShantellSans-VariableFont.ttf") format("truetype"),
     url("/fonts/ShantellSans-VariableFont.ttf") format('ttf-variations');
-    font-weight: 0 900;
-    
-    
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* || --------------------Text and Typography------------------ */
 :root {
-    
+    /* font-families */
+    --font-titan-head: "Titan One", sans-serif;
+    --font-rose-body: "Red Rose", sans-serif;
+    --font-shantell-notes: "Shantell Sans", sans-serif;
+    /* replace these */
     --font-title: "Titan One", sans-serif;
-
     --font-body: "Red Rose", sans-serif;
 
-    --font-handwriten: "Shantell Sans", sans-serif;
-
+    /* letter-spacing */
     --letter-space-titan: .15ch;
     --letter-space-rose: .2ch;
     --letter-space-shantell: .35ch;
      
-    --fs-title: clamp(1.8rem, 6vw + .2rem, 3.23rem);
-    --fs-title-2: clamp(1.58rem, 5vw + .2rem, 3rem);
+    /* font-size hierarchy */
     
-    --fs-heading-xl: clamp(1.5rem, 2vw + 1rem, 2.5rem);
-    --fs-heading-large: clamp(1.3rem, 2vw + 1rem, 2.1rem);
-    --fs-heading-mid: clamp(1.225rem, 2vw + 1rem, 1.758rem);
-    --fs-heading-small: clamp(1.1rem, 2vw + 1rem, 1.5rem);
+    /* Hero / Page Titles */
+    --fs-title: clamp(2.5rem, 8vw + 1rem, 5rem); 
+    --fs-title-2: clamp(2rem, 6vw + 1rem, 3.5rem); 
     
-    --fs-p1: clamp(1.5rem, 2vw + 1rem, 1.5rem);
-    --fs-p2: clamp(1.25rem, 2vw + 1rem, 1.3rem);
-    --fs-p3: clamp(1.125rem, 2vw + 1rem, 1.1rem);
-    --fs-caption: clamp(.625rem, 2vw + 1rem, 1rem);
-
-    --fs-footer: clamp(.21rem, 2vw + 1rem, .95rem);
+    /* Section Headings */
+    --fs-heading-xl: clamp(1.75rem, 4vw + 1rem, 2.8rem);
+    --fs-heading-large: clamp(1.5rem, 3vw + 1rem, 2.2rem);
+    --fs-heading-mid: clamp(1.25rem, 2vw + 1rem, 1.75rem);
+    --fs-heading-small: clamp(1.1rem, 1vw + 1rem, 1.4rem);
     
-    --fs-note-large: clamp(.8rem, .2rem, .1.3rem);
-    --fs-note-small: clamp(.5rem, .2rem, 1rem);
+    /* Body Text (Standard is 1rem / 16px) */
+    --fs-p1: clamp(1.125rem, 0.5vw + 1rem, 1.25rem); /* Intro text */
+    --fs-p2: 1rem;                                  /* Standard body */
+    --fs-p3: 0.875rem;                              /* Small body */
     
-    --fs-bttn: clamp(.1rem, 1vw + 1rem, 1rem);
+    /* UI Elements */
+    --fs-bttn: clamp(0.9rem, 1vw + 0.5rem, 1.1rem);
+    --fs-caption: clamp(0.75rem, 0.5vw + 0.5rem, 0.9rem);
+    --fs-footer: 0.85rem;
 
     --fs-mobile-1: clamp(.4rem, .6rem, 3rem);
     --fs-mobile-button-1: clamp(.4rem, .6rem, 1rem);
@@ -71,100 +75,132 @@
 }
 
 h1 {
-    font-family: var(--font-title);
-    font-size: var(--fs-title);
+    font-family: var(--font-titan-head);
     letter-spacing: var(--letter-space-titan);
+    font-size: var(--fs-title);
     
 }
 
 h2 {
-    font-family: var(--font-body);
+    font-family: var(--font-rose-body);
+    letter-spacing: var(--letter-space-rose);
     font-size: var(--fs-title-2);
-    letter-spacing: var(--letter-space-titan);
-    font-weight: 900;
     text-transform: uppercase;
     
 }
 
 h3 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-xl);
-    font-weight: 700;
+    font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
+    font-size: var(--fs-heading-xl);
     font-style: bold;
 }
 
 h4 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-large);
+    font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
+    font-size: var(--fs-heading-large);
     font-weight: 600;
 }
 
 h5 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-mid);
+    font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-weight: 500;
+    font-size: var(--fs-heading-mid);
 }
 
 h6 {
-    font-family: var(--font-body);
-    font-size: var(--fs-heading-small);
+    font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-weight: 400;
+    font-size: var(--fs-heading-small);
     text-transform: uppercase;
 }
 
 p {
-    font-family: var(--font-body);
+    font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-weight: 400;
+    line-height: 1.6;
+
+    max-width: 65ch; 
+    margin-bottom: 1.5rem;
     
 }
 
+span {
+    font-family: var(--font-rose-body);
+    letter-spacing: var(--letter-space-rose);
+}
+
+label {
+    font-family: var(--font-rose-body);
+    letter-spacing: var(--letter-space-rose);
+
+}
+
 .p1 {
-    font-weight: 700;
     font-size: var(--fs-p1);
 }
 .p2 {
-    font-weight: 500;
     font-size: var(--fs-p2);
 }
 .p3 {
-    font-weight: 400;
     font-size: var(--fs-p3);
 }
 
 .caption {
     font-size: var(--fs-caption);
     text-transform: uppercase;
-    font-size: .6rem;
-    font-weight: 500;
 }
 
 .note {
-    font-family: var(--font-handwriten);
+    font-family: var(--font-shantell-notes);
     letter-spacing: var(--letter-space-shantell);
-    font-weight: 500;
     font-style: italic;
     text-transform: uppercase;
+    /* Weight, Informality, and Bounce */
+    font-variation-settings: "wght" 600, "INFM" 100, "BNCE" 100;
+    
+    font-size: var(--fs-heading-mid);
+    color: var(--second-brown);
+    display: inline-block;
 }
 
-span {
-    font-family: var(--font-body);
-    letter-spacing: var(--letter-space-rose);
-    font-weight: 200;
+.note:hover {
+    transition: font-variation-settings 0.3s ease;
+    font-variation-settings: "wght" 800, "INFM" 50, "BNCE" 0;
 }
 
-label {
-    font-family: var(--font-body);
-    letter-spacing: var(--letter-space-rose);
-
+.handwritten {
+    font-family: var(--font-shantell-notes);
+    letter-spacing: var(--letter-space-shantell);
+    font-size: var(--fs-heading-mid); /* Notes usually need to be a bit larger to be readable */
+    line-height: 1.4;
+    color: var(--second-teal); /* Optional: give notes a specific color like a marker pen */
+    display: inline-block;
 }
+.note-sticker {
+    background-color: var(--ow-purple); /* Post-it yellow */
+    padding: 1rem;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+    transform: rotate(-2deg);
+    border-radius: 2px;
+}
+
+/* Ensure handwritten text doesn't look too squashed */
+.handwritten, .note {
+    font-variation-settings: "BNCE" 50, "INFM" 50; /* Specific to Shantell Sans features */
+}
+
+.marker-highlight {
+    background: linear-gradient(104deg, rgba(255, 230, 0, 0.4) 0.9%, rgba(255, 230, 0, 0.7) 2.4%, rgba(255, 230, 0, 0.3) 5.8%, rgba(255, 230, 0, 0.1) 93%, rgba(255, 230, 0, 0.7) 96%, rgba(255, 230, 0, 0.2) 98%);
+    border-radius: 1em 0.2em;
+    padding: 0.1em 0.4em;
+    display: inline;
+}
+
 
 .highlight {
-    color: var(--accent-mid-pink)
+    color: var(--second-pink)
 }
 
 .left-lean {

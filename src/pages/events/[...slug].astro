@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro';
-// import '../../styles/event.css'
 import '../../styles/components.css'
 
 import { getCollection, render, type CollectionEntry } from 'astro:content';
@@ -30,28 +29,6 @@ const { Content } = await render(post);
 const galleryImages = [data.flyerImage1, data.flyerImage2, data.flyerImage3, data.flyerImage4, data.flyerImage5].filter(Boolean);
 
 // HELPERS----
-// function formatTime(timeObj: any) {
-//   if (!timeObj || typeof timeObj !== 'object') return '';
-//   const { hour, minute } = timeObj;
-  
-//   const h = parseInt(hour);
-//   const ampm = h >= 12 ? 'PM' : 'AM';
-//   const displayHour = h % 12 || 12;
-  
-//   return `${displayHour}:${minute.toString().padStart(2, '0')} ${ampm}`;
-// }
-
-// const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
-//   weekday: 'short', day: 'numeric', month: 'long'
-// });
-
-// const displayEndDate = data.endDate
-//  ? new Date(data.endDate).toLocaleDateString('en-GB', {
-//   weekday: 'short', 
-//   day: 'numeric', 
-//   month: 'long'
-// }) : null ;
-
 const lineup = [
   { title: "Organisers", people: data.organisers },
   { title: "DJs", people: data.djs },
@@ -63,9 +40,16 @@ const eventStartTime = formatTime(data.startTime);
 const eventEndTime = data.endTime ? formatTime(data.endTime) : null;
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
+const ogImage = post.data.eventPoster ? post.data.eventPoster.src : '/default-og-image.jpg';
+// TODO set default image
 ---
 
-<BaseLayout page_title={data.eventName}>
+<BaseLayout 
+  title={`${post.data.eventName} | Your Jam Plug UK`}
+  description={post.data.description}
+  image={ogImage} 
+  image={post.data.eventPoster?.src} 
+>
   <nav class="navigation-controls">
     
 		<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
@@ -77,7 +61,7 @@ console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
         {data.eventPoster ? (
         <Image 
           src={data.eventPoster} 
-          alt={data.eventName} 
+          alt={`Event Poster TBD ${data.eventName}`} 
           width={350} 
           height={510} 
           class="cover-image"
