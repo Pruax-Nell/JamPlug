@@ -7,6 +7,38 @@ please point out any redundancies, duplicates or inefficient lines of code as we
     PSEUDO CODE for Event Pagination
 // --- ... --- //
 
+//pseudo code::
+  // 1. IMPORTS
+  // 2. TYPES (FilterState, Props)
+  // 3. INITIAL_FILTERS
+
+  // 4. SUB-COMPONENT: LocationSearch
+
+  // export default function UpcomingEvents(...) {
+  // 5. STATE: filters, currentPage
+  
+  // 6. DERIVED GEOGRAPHY (useMemo)
+  // Calculate dynamicRegions based on filters.country
+  // Calculate dynamicTowns based on filters.country + filters.region
+  
+  // 7. FILTERING ENGINE (The big useMemo)
+  // Step A: Does it match the geography?
+  // Step B: Does it match the skate discipline?
+  // Step C: Does it match the boolean (offSkates)?
+  
+  // 8. PAGINATION CALCS
+  // Slice the filteredEvents based on currentPage
+  
+  // 9. HANDLERS
+  // handleFilterChange (Updates state + Syncs URL)
+  
+  // 10. JSX RETURN
+  // Render search bar
+  // Render dropdowns (renderOptions)
+  // Render the EventGrid
+  // Render Pagination
+// }
+
 <!-- SEARCH INDEX / AUTOCOMPLETE -->
 
 For the Town/City and Region fields, you should switch from a standard <select> to a "Combobox" (a text input with a dropdown list).

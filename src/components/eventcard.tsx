@@ -1,6 +1,8 @@
 import React from 'react';
 import type { AstroImage, SerializedEvent, EventCardData } from '../types';
 import { formatEventDate, formatTime } from '../function/dateHelper';
+import { formatLocationLabel } from '../function/stringHelper';
+
 
 // We use Pick or just access the 'data' property of our Master Blueprint
 
@@ -30,6 +32,7 @@ export default function EventCard({
 // const dateDisplay = formatEventDate(startDate, endDate);
 const cardClasses = isFeatured ? "event-card featured" : "event-card";
 const statusClass = eventStatus ? `status-${eventStatus}` : '';
+const labels = formatLocationLabel(location);
 // const { data } = Astro.props;
 const dateRange = formatEventDate(startDate, endDate);
 // const startTime = formatTime(startTime);
@@ -57,7 +60,7 @@ const dateRange = formatEventDate(startDate, endDate);
 
         <div className="card-meta">
           <p className="meta-item location">
-            <span>📍</span> {townCity}, {location.discriminant}
+            <span>📍</span> {townCity}, {labels.country}
           </p>
           <p className="meta-item date">
             <span>📅</span> {dateRange}
