@@ -10,80 +10,50 @@ import UpcomingEvents from '../components/upcomingEvents';
 const now = new Date();
 now.setHours(0, 0, 0, 0);
 
-
-
 const publishedEvents: CollectionEntry<'events'>[] = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
   return data.status === 'published';
 });
- 
-const townsByCountry: Record<string, Set<string>> = {};
-const rinks = new Set<string>();
-const ages = new Set<string>();
 
-// 3. Single-Pass: Filter, Sort, Serialize, and Scan
+const ages = new Set<string>();
+ 
 const clientUpcomingEvents = publishedEvents
-  .filter((event: CollectionEntry<'events'>) => event.data.startDate >= now)
+  .filter((event) => event.data.startDate >= now)
   .sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf())
   .map((event) => {
     const d = event.data;
-	console.log(`[Astro Server] Processing: ${event.id}`);
-    console.log(`[Astro Server] Raw Poster Object:`, d.eventPoster);
-
-    // --- NORMALIZATION HELPER ---
-    const clean = (str: string) => str ? str.trim().replace(/\s+/g, ' ') : "";
-    const city = clean(d.townCity);
-    const rink = clean(d.rink || ""); 
-
-    // --- SCANNING (Building our filter options) ---
-    if (d.country && city) {
-      if (!townsByCountry[d.country]) townsByCountry[d.country] = new Set();
-      townsByCountry[d.country].add(city);
-    }
-    if (rink) rinks.add(rink);
     if (d.minAge) ages.add(d.minAge);
 
-	// eventPoster URL solution
-	const posterString: string | undefined = 
-      d.eventPoster && typeof d.eventPoster === 'object' 
-        ? d.eventPoster.src 
-        : (d.eventPoster as string | undefined);
+    // Normalize the poster URL
+    const posterString = (d.eventPoster && typeof d.eventPoster === 'object' 
+      ? d.eventPoster.src 
+      : d.eventPoster) || undefined;
 
-    // --- SERIALIZATION (The data React receives) ---
+    // SERIALIZATION: The "Lean" object
     return {
       id: event.id,
-	  slug: event.id, 
+	  slug: event.id,
       data: {
-        // ...d,
-		eventName: d.eventName,
-		description: d.description ?? "",
-		country: d.country,
-        townCity: city,
-        rink: rink,
+        eventName: d.eventName,
+        townCity: d.townCity,
+        location: d.location, 
+        continent: d.continent,
         startDate: d.startDate.toISOString(),
-        endDate: d.endDate ? d.endDate.toISOString() : null,
-		skateDiscipline: d.skateDiscipline,
+        endDate: d.endDate?.toISOString() || null,
+        skateDiscipline: d.skateDiscipline,
         skillLevel: d.skillLevel,
         eventType: d.eventType,
-		eventPoster: posterString,
-		minAge: d.minAge,
-
-        // eventPoster: d.eventPoster && typeof d.eventPoster === 'object' && event.data.eventPoster !== null 
-        //   ? d.eventPoster.src 
-        //   : d.eventPoster,
+        eventPoster: posterString,
+        minAge: d.minAge,
+        offSkates: d.offSkates ?? false,
+        rink: d.rink || ""
       },
-    } ;
+    };
   });
 
-// 4. Finalize the Options Object
 const serverOptions = {
-  townsByCountry: Object.fromEntries(
-    Object.entries(townsByCountry).map(([country, citySet]) => [
-      country, 
-      Array.from(citySet as Set<string>).sort()
-    ])
-  ),
-  rink: Array.from(rinks).sort(), // React handle the "All"
-  minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b))
+  // We keep minAge because it's often a fixed list from the server
+  minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b)),
+  // Note: townsByCountry and rinks are now handled inside the React component!
 };
 
 ---

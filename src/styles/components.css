@@ -3,6 +3,112 @@
 /* eventCard tsx */
 /*  */
 
+
+/* || --------------------Utilities------------------ */
+
+:root {
+    --mobile-screen-size: (max-width: 650px);
+    --tablet-screen-size: (min-width: 769px);
+    --desktop-screen-size: (min-width: 992px);
+    --xl-screen-size: (min-width: 1180px);
+    
+}
+ 
+.grid {display: grid;} 
+.flex {display: flex;}
+.column {flex-direction: column;}
+.row {flex-flow: row;}
+.self-center {justify-self: center;}
+.content-center {justify-content: center;}
+.items-center {justify-items: center;}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contain {
+    margin-inline: auto;
+    padding-inline: 1.2rem;
+}
+
+
+ul {list-style: none;}
+a {text-decoration: none; cursor: pointer; color: var(--text-black);}
+a:visited {opacity: 90%; }
+.hidden {display: none;}
+button { cursor: pointer;}
+
+
+* {scroll-behavior: smooth;}
+
+.narrow-ch{
+  width: 45ch;
+}
+.wide-ch{
+  width: 65ch;
+}
+
+.srOnly {
+    display: none;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+
+}
+
+.srText {
+    clip: rect(1px, 1px, 1px, 1px);
+    word-wrap: normal !important;
+    border: 0;
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    overflow-wrap: normal !important;
+    padding: 0;
+    position: absolute !important;
+    width: 1px;
+}
+
+.dev-only {
+  display: block;
+  border: 1px dashed orange;
+}
+
+.debug {
+  outline: 2px solid red !important;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* SPACEING */
+
+.small-space {
+margin-block: .3rem;
+padding-block: .5rem;
+}
+
+.big-space {
+margin-block: .5rem;
+padding-block: .5rem;
+}
+
+
 /* ------------------------UNIVERSAL COMPONENTS LIST ------------------*/
 
 /* || --------------------TOOLKIT------------------ */
@@ -98,109 +204,8 @@
 
 /* || --------------------TOOLKIT------------------ */
 
-
-/* || --------------------Utilities------------------ */
-
-:root {
-    --mobile-screen-size: (max-width: 650px);
-    --tablet-screen-size: (min-width: 769px);
-    --desktop-screen-size: (min-width: 992px);
-    --xl-screen-size: (min-width: 1180px);
-    
-}
-
-.grid {display: grid;} 
-.flex {display: flex;}
-.column {flex-direction: column;}
-.row {flex-flow: row;}
-.self-center {justify-self: center;}
-.content-center {justify-content: center;}
-.items-center {justify-items: center;}
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.contain {
-    margin-inline: auto;
-    padding-inline: 1.2rem;
-}
+/* ------------------------OTHER COMPONENTS LIST ------------------*/
 
 
-ul {list-style: none;}
-a {text-decoration: none; cursor: pointer; color: var(--text-black);}
-a:visited {opacity: 90%; }
-.hidden {display: none;}
-button { cursor: pointer;}
-
-
-* {scroll-behavior: smooth;}
-
-.narrow-ch{
-  width: 45ch;
-}
-.wide-ch{
-  width: 65ch;
-}
-
-.srOnly {
-    display: none;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-
-}
-
-.srText {
-    clip: rect(1px, 1px, 1px, 1px);
-    word-wrap: normal !important;
-    border: 0;
-    clip-path: inset(50%);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    overflow-wrap: normal !important;
-    padding: 0;
-    position: absolute !important;
-    width: 1px;
-}
-
-.dev-only {
-  display: block;
-  border: 1px dashed orange;
-}
-
-.debug {
-  outline: 2px solid red !important;
-}
-
-@media (min-width: 768px) {
-  .mobile-only {
-    display: none !important;
-  }
-}
-
-@media (max-width: 767px) {
-  .desktop-only {
-    display: none !important;
-  }
-}
-
-/* SPACEING */
-
-.small-space {
-margin-block: .3rem;
-padding-block: .5rem;
-}
-
-.big-space {
-margin-block: .5rem;
-padding-block: .5rem;
-}
 
 

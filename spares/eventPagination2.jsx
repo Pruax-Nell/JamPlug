@@ -3,11 +3,11 @@ import '../styles/global.css'
 import '../styles/event.css'
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { formatEventDate } from '../function/dateHelper';
+import { formatEventDate } from '../src/function/dateHelper';
 
 
 import { Image } from 'astro:assets'; 
-import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE } from '../constants';
+import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE } from '../src/constants';
 
 // const EVENTS_PER_PAGE = 20;
 
