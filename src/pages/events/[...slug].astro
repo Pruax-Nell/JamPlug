@@ -5,7 +5,7 @@ import '../../styles/components.css'
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import Button from '../../components/button.astro';
-import { formatEventDate, formatTime } from '../../function/dateHelper';
+import { formatEventDate, formatTime, generateCalendarLink } from '../../function/dateHelper';
 
 
 export async function getStaticPaths() {
@@ -25,7 +25,7 @@ interface Props {
 const { post } = Astro.props; 
 const { data } = post;
 const { Content } = await render(post);
-
+const calendarUrl = generateCalendarLink(event);
 const galleryImages = [data.flyerImage1, data.flyerImage2, data.flyerImage3, data.flyerImage4, data.flyerImage5].filter(Boolean);
 
 // HELPERS----
@@ -100,7 +100,7 @@ const ogImage = post.data.eventPoster ? post.data.eventPoster.src : '/default-og
           
         <p class="description-snippet">{data.description}</p>
         
-        <p> 📍{data.townCity}, {data.country.toLocaleUpperCase()}</p>
+        <p> 📍{data.townCity}, {data.location.discriminant.toLocaleUpperCase()}</p>
 
         <div class="small-space">
           {data.rink && (<span> {data.rink}</span>)}
@@ -117,10 +117,19 @@ const ogImage = post.data.eventPoster ? post.data.eventPoster.src : '/default-og
     </header>
 
     <div class="content-body">
+      <div class="function-space">
+        <a 
+          href={calendarUrl} 
+          download={`${data.eventName}.ics`}
+          class="calendar-btn"
+        >
+          Add to Calendar
+        </a>
+      </div>
       <Content />
       
       <div>
-          {data.organiser && ( 
+          {data.organisers && ( 
           <p>Official page for
           <Button  variant="outline" size="md" href={data.eventLink}> {data.eventName} </Button>
           </p>)}

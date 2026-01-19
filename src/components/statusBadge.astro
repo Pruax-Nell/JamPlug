@@ -1,0 +1,113 @@
+---
+interface Props {
+  href?: string;          
+  theme?: 'orangeLight' | 'tealLight' | 'purpleLight' | 'pinkLight' | 'brownLight' | 'whiteLight' | 'blackLight' | 'yellowLight' | 'orangeDark' | 'tealDark' | 'purpleDark' | 'pinkDark' | 'brownDark' | 'whiteDark' | 'blackDark' | 'yellowDark' | 'orange' | 'pink' | 'teal' | 'purple' | 'yellow' | 'brown' | 'white' | 'black';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' ;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  class?: string;          // Allows for extra utility classes (like mt-4)
+  [x: string]: any;        // Collects all other attributes (target, id, rel, etc.)
+}
+
+const { 
+  href, 
+  theme = 'brownDark',
+  variant = 'secondary', 
+  size = 'md', 
+  class: className, 
+  ...rest 
+} = Astro.props;
+
+// Determine the HTML element based on whether an href is provided
+const Element = href ? 'a' : 'button';
+
+// Mapping variants to CSS classes
+const variantClasses = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  tertiary: 'btn-tertiary',
+  outline: 'btn-outline',
+};
+
+const sizeClasses = {
+    xs: 'btn-xs',
+    sm: 'btn-sm',
+    md: 'btn-md',
+    lg: 'btn-lg'
+};
+
+const themeColour = {
+  orangeDark: 'orange-dark',
+  pinkDark: 'pink-dark',
+  tealDark: 'teal-dark',
+  purpleDark: 'purple-dark',
+  brownDark: 'brown-dark',
+  whiteDark: 'white-dark',
+  blackDark: 'black-dark',
+  yellowDark: 'yellow-dark',
+  
+  orangeLight: 'orange-light',
+  pinkLight: 'pink-light',
+  tealLight: 'teal-light',
+  purpleLight: 'purple-light',
+  brownLight: 'brown-light',
+  whiteLight: 'white-light',
+  blackLight: 'black-light',
+  yellowLight: 'yellow-light',
+
+  orange: 'orange',
+  pink: 'pink',
+  teal: 'teal',
+  purple: 'purple',
+  brown: 'brown',
+  white: 'white',
+  black: 'black',
+  yellow: 'yellow',
+
+};
+
+---
+
+<Element 
+  href={href} 
+  class:list={[
+    'btn', 
+    variantClasses[variant], 
+    sizeClasses[size], 
+    themeColour[theme],
+    className
+  ]} 
+  {...rest}
+>
+  <slot /> </Element>
+
+<style>
+    /* Cancelled State: Make it look 'Dead' */
+.event-card.status-cancelled {
+  opacity: 0.6;
+  filter: grayscale(1);
+  pointer-events: none; /* User can't click it */
+}
+
+/* Sold Out State: Highlight the popularity but dim the image */
+.event-card.status-sold-out .card-image-container::after {
+  content: "SOLD OUT";
+  position: absolute;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  /* ... centering logic ... */
+}
+
+/* Status Badge Styles */
+.status-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 2px 8px;
+  z-index: 10;
+}
+
+.status-cancelled .status-badge { background: #ff0000; }
+.status-sold-out .status-badge { background: #333; }
+</style>

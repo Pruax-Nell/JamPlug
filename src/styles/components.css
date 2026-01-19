@@ -137,7 +137,12 @@ button { cursor: pointer;}
 
 * {scroll-behavior: smooth;}
 
-
+.narrow-ch{
+  width: 45ch;
+}
+.wide-ch{
+  width: 65ch;
+}
 
 .srOnly {
     display: none;

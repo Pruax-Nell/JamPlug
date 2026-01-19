@@ -7,7 +7,7 @@ import HeroImg from "../assets/layout/image9.jpg"
 
 <div class="hero-seat">
     <div class="hero-box">
-        <h1 class="welcome"> For the Skaters </h1>
+        <h1 class="welcome"> Your Jam Plug  </h1>
         <!-- <Image class="hero-item" src={HeroImg} priority alt="Skater Welcome" layout='full-width' width={680}/> -->
     </div>
 </div>
@@ -35,17 +35,22 @@ import HeroImg from "../assets/layout/image9.jpg"
     }
 
     .welcome {
-
-        grid-row: 4/5;
-        grid-column: 2 / 5;
+        font-family: var(--font-rose-body);
+        text-transform: uppercase;
+        /* font-family: var(--font-shantell-notes); */
+        grid-row: 5/6;
+        grid-column: 1 / 5;
         margin: .1ch;
         text-align: center; 
-        font-size: var(--fs-title-2);
+        font-size: var(--fs-heading-large);
         z-index: 5;
         text-wrap: nowrap;
         color: var(--ob-brown);
-        text-shadow: 2px 0 14px var(--shadow-light-2);
-        -webkit-text-stroke: .02px var(--shadow-brown-2);
+        text-shadow: 
+            4px 4px 7px var(--ow-brown), 
+            0 0 .3rem var(--ob-orange);
+        /* -webkit-text-stroke: .02px var(--shadow-brown); */
+        /* -webkit-text-stroke: .02px var(--ob-brown); */
 
     }
 

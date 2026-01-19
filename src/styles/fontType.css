@@ -78,6 +78,8 @@ h1 {
     font-family: var(--font-titan-head);
     letter-spacing: var(--letter-space-titan);
     font-size: var(--fs-title);
+    margin: 2rem .8rem;
+
     
 }
 
@@ -85,6 +87,8 @@ h2 {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
     font-size: var(--fs-title-2);
+    margin: 1.5rem .5rem;
+
     text-transform: uppercase;
     
 }
@@ -94,6 +98,7 @@ h3 {
     letter-spacing: var(--letter-space-rose);
     font-size: var(--fs-heading-xl);
     font-style: bold;
+    margin: 1.2rem .5rem;
 }
 
 h4 {
@@ -101,12 +106,16 @@ h4 {
     letter-spacing: var(--letter-space-rose);
     font-size: var(--fs-heading-large);
     font-weight: 600;
+    margin: 1rem .5rem;
+
 }
 
 h5 {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
     font-size: var(--fs-heading-mid);
+    margin: .8rem .5rem;
+
 }
 
 h6 {
@@ -114,6 +123,8 @@ h6 {
     letter-spacing: var(--letter-space-rose);
     font-size: var(--fs-heading-small);
     text-transform: uppercase;
+    margin: .8rem .5rem;
+
 }
 
 p {

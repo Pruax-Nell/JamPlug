@@ -1,11 +1,9 @@
 import { z, defineCollection } from "astro:content"; 
 import { glob } from "astro/loaders";
-import { SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, GROUPED_COUNTRIES, POST_STATUS, SOCIAL_MEDIA } from '../src/constants'
+import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA } from '../src/constants'
+import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from './data/globe-constants'
 
-const getValues = (constArray: readonly { value: string }[]) => {
-  return constArray.map(c => c.value) as [string, ...string[]];
-};
-
+// zod templates
 const timeObject = z.object({
     hour: z.string(),
     minute: z.string(),
@@ -21,7 +19,25 @@ const personObject = z.object({
   ).optional().nullable().default([]),
 });
 
+// FUTURE USE ... rinks etc
+const businessObject = z.object({
+  name: z.string(),
+  runBy: z.string(),
+  address: z.object({
+    firstLine: z.string(),
+    area: z.string(),
+    postCode: z.string(),
+  }),
+  contact: z.object({
+      mainNo: z.string(), 
+      secondNo: z.string(),
+      emailAddress: z.string(),
+      otherContact: z.string(),
+      website: z.string(),
+  }).optional().nullable().nullable(),
+});
 
+// ------------- Collections ----------------- //
 //  BLOGS *** 
 const blog = defineCollection ({
     loader: glob({ pattern: '**/index.mdoc', base: "src/content/blog"}),
@@ -49,31 +65,54 @@ const blog = defineCollection ({
 //  EVENTS  *** 
 const events = defineCollection({
     loader: glob({pattern: '**/index.mdoc', base: "src/content/events"}),
-    // z.any to temporarily see collection while image path issue persists
     schema: ({ image }) =>  z.object ({
 // CMS admin items 
         status: z.enum(getValues(POST_STATUS)).default('draft'),
         isFeatured: z.boolean().default(false),
+        eventStatus: z.enum(getValues(EVENT_STATUS)).default('').catch(''),
     // Main Info
         eventName: z.string(),
         subheading: z.string().optional(),
         description: z.string().optional(),
+    // filter options --
         startDate: z.coerce.date(), 
         endDate: z.coerce.date().optional(),
-    // Secondary key info
+        continent: z.enum( ALL_CONTINENT_VALUES),
+        location: z.discriminatedUnion('discriminant', [
+            z.object({
+            discriminant: z.literal('united-kingdom'),
+            value: z.enum(getValues(UK_NATION_OPTIONS)),
+            }),
+            z.object({
+                discriminant: z.literal('united-states-of-america'),
+                value: z.enum(getValues(US_STATE_OPTIONS)),
+            }),
+            z.object({
+                discriminant: z.literal('canada'),
+                value: z.enum(getValues(CANADA_PROVINCE_OPTIONS)),
+            }),
+            z.object({
+                discriminant: z.literal('australia'),
+                value: z.enum(getValues(AUS_REGION_OPTIONS)),
+            }),
+            z.object({
+                discriminant: z.enum(OTHER_COUNTRIES),
+                value: z.null().optional(), 
+            }),
+        ]),
+        townCity: z.string(),
+        eventType: z.enum( getValues(EVENT_TYPE)),
+        skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)),
+        skillLevel: z.enum( getValues(SKILL_LEVEL)).optional().or(z.literal('')), 
+        minAge: z.string().optional(),
+        // Secondary key info
+        maxAge: z.string().optional(),
         eventPoster: image().optional().nullable(),
         flyerImage1: image().optional(),
         flyerImage2: image().optional(),
         flyerImage3: image().optional(),
         flyerImage4: image().optional(),
         flyerImage5: image().optional(),
-        country: z.enum( getValues(GROUPED_COUNTRIES)),
-        townCity: z.string(),
-        eventType: z.enum( getValues(EVENT_TYPE)),
-        skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)),
-        skillLevel: z.enum( getValues(SKILL_LEVEL)).optional().or(z.literal('')), 
-        minAge: z.string().optional(),
-        maxAge: z.string().optional(),
 
         startTime: timeObject.optional(), 
         endTime: timeObject.optional(), 
@@ -85,30 +124,19 @@ const events = defineCollection({
                 name: z.string(),
                 directLink: z.string().url().optional().nullable().or(z.literal('')),
             })
-        ).optional().nullable().default([]),
+    ).optional().nullable().default([]),
 
-        organiser: z.string().optional(), 
-        orgLink: z.string().url().optional().or(z.literal('')),
-        organisers: z.array(personObject).optional().nullable().default([]),
+    organisers: z.array(personObject).optional().nullable().default([]),
+    hosts: z.array(personObject).optional().nullable().default([]),
+    coaches: z.array(personObject).optional().nullable().default([]),
+    djs: z.array(personObject).optional().nullable().default([]),
+    
+    rink: z.string().optional(),
+    venueAddress: z.string().optional(),
+    mapCoordinates: z.string().optional(),
 
-        host: z.string().optional(),
-        hostLink: z.string().url().optional().or(z.literal('')),
-        hosts: z.array(personObject).optional().nullable().default([]),
-
-        coach: z.string().optional(),
-        coachLink: z.string().url().optional().or(z.literal('')),
-        coaches: z.array(personObject).optional().nullable().default([]),
-
-        dj: z.string().optional(),
-        djLink: z.string().url().optional().or(z.literal('')),
-        djs: z.array(personObject).optional().nullable().default([]),
-        
-        rink: z.string().optional(),
-        venueAddress: z.string().optional(),
-        mapCoordinates: z.string().optional(),
-
-        offSkates: z.boolean().optional().default(false),
-        repetition: z.string().optional(),
+    offSkates: z.boolean().optional().default(false),
+    repetition: z.string().optional(),
 
     })
 });

@@ -79,7 +79,7 @@
     --text-white: #ebe9e5;
 
     --highlight: #ebe9e5;
-    --highlight-2:rgba(235, 233, 229, 0.644)5;
+    --highlight-2:rgba(225, 214, 192, 0.644)5;
 
     --text-bg-white: #fff9ed44;
     --background-light: #ebe9e5;
@@ -87,6 +87,7 @@
     --shadow-light: #cdc9c270;
     --shadow-light-2: #cdc9c29f;
     --background-light-3: #fff9ed;
+    --blur-light:#ffffff2e;
     
     --main-bg-dark: #312e29; 
     --dark-background: #c5b79c; 

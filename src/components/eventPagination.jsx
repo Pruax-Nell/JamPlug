@@ -1,10 +1,10 @@
-// ...CODE B...
 import '../styles/components.css'
 import '../styles/global.css'
 import '../styles/event.css'
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { formatEventDate } from '../function/dateFormatter';
+import { formatEventDate } from '../function/dateHelper';
+
 
 import { Image } from 'astro:assets'; 
 import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE } from '../constants';
@@ -12,7 +12,9 @@ import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LE
 // const EVENTS_PER_PAGE = 20;
 
 const INITIAL_FILTERS = {
+  continent: 'All',
   country: 'All',
+  region: 'All', // This covers US States, UK Nations, etc.
   eventType: 'All',
   skateDiscipline: 'All',
   minAge: 'All', 
@@ -28,115 +30,41 @@ const EventFilters = ({ events }) => {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
   
-  // Now 'events' will be an empty array by default if nothing is passed in. -NOTE- can set the default directly in the arguments
-// const EventFilters = ({ events = [] }) => {
-// }
-// -------------------------
-  
-  // useMemo ensures we only scan the event list once unless the list changes
-//   const uniqueOptions = useMemo(() => {
-
-//     const townsByCountry = {}; 
-
-//     safeEvents.forEach((event) => {
-//       const { country, townCity } = event.data;
-//       if (country && townCity) {
-//         if (!townsByCountry[country]) townsByCountry[country] = new Set();
-//         townsByCountry[country].add(townCity);
-//       }
-//     });
-
-//     const options = {
-//       country: new Set(),
-//       eventType: new Set(),
-//       skateDiscipline: new Set(),
-//       minAge: new Set(['18+', '21+']),
-//       skillLevel: new Set(),
-//       townsByCountry
-//       // townCity: new Set(availableTowns) ,
-//       // month: MONTH_ORDER ,
-//     };
-
-//     const normalizeTown = (str) => {
-//   if (!str) return '';
-//   return str
-//     .trim()                                
-//     .toLowerCase()                         
-//     .split(' ')                            
-//     .map(word => word.charAt(0).toUpperCase() + word.slice(1)) 
-//     .join(' ');                            
-// };
-
-//     safeEvents.forEach((event) => {
-//       const d = event.data;
-//       if (d.country) options.country.add(d.country) ;
-//       if (d.eventType) options.eventType.add(d.eventType);
-//       if (d.skateDiscipline) options.skateDiscipline.add(d.skateDiscipline);
-//       if (d.minAge) options.minAge.add(d.minAge);
-//       if (d.skillLevel) options.skillLevel.add(d.skillLevel);
-//       if (d.townCity) options.townCity.add(normalizeTown(d.townCity));
-
-//       // Extract month name from ISO date string
-//       if (d.startDate) {
-//         const date = new Date(d.startDate);
-//         const monthName = date.toLocaleString('en-GB', { month: 'long' });
-//       }
-//     });
-
-//     // Helper to turn Set into sorted array with 'All' at the top
-//     const format = (set) => ['All', ...Array.from(set).sort()];
-
-//     return {
-//       country: [{value: 'All', label: 'All'}, ...GROUPED_COUNTRIES],
-//       eventType: [{value: 'All', label: 'All'}, ...EVENT_TYPE],
-//       skateDiscipline: [{value: 'All', label: 'All'}, ...SKATE_DISCIPLINES],
-//       skillLevel: [{value: 'All', label: 'All'}, ...SKILL_LEVEL],
-//       month: [{value: 'All', label: 'All'}, ...MONTH_ORDER],
-//       // townCity: format(options.townsByCountry),
-//       townCity: filters.country === 'All' 
-//         ? ['All'] 
-//       : ['All', ...Array.from(townsByCountry[filters.country] || []).sort()],
-//       minAge: format(options.minAge),
-//     };
-//     // return {
-//     //   country: GROUPED_COUNTRIES,
-//     //   eventType: EVENT_TYPE,
-//     //   skateDiscipline: SKATE_DISCIPLINES,
-//     //   minAge: format(options.minAge),
-//     //   skillLevel: SKILL_LEVEL,
-//     //   townCity: format(townsByCountry),
-//     //   month: MONTH_ORDER,
-//     // };
-//   }, [safeEvents]);
-
 const uniqueOptions = useMemo(() => {
-    // 1. Build a dictionary of towns grouped by country value
-    const townsByCountry = {};
+    const continents = new Set();
+    const countriesByContinent = {};
+    const regionsByCountry = {};
+    const townsByRegion = {};
 
     safeEvents.forEach((event) => {
-      const { country, townCity } = event.data;
-      if (country && townCity) {
-        // We use the country VALUE (slug) as the key
-        if (!townsByCountry[country]) townsByCountry[country] = new Set();
-        townsByCountry[country].add(townCity);
-      }
+        const { continent, country, region, townCity } = event.data;
+
+        if (continent) continents.add(continent);
+        
+        if (continent && country) {
+            if (!countriesByContinent[continent]) countriesByContinent[continent] = new Set();
+            countriesByContinent[continent].add(country);
+        }
+
+        if (country && region) {
+            if (!regionsByCountry[country]) regionsByCountry[country] = new Set();
+            regionsByCountry[country].add(region);
+        }
+
+        if (region && townCity) {
+            if (!townsByRegion[region]) townsByRegion[region] = new Set();
+            townsByRegion[region].add(townCity);
+        }
     });
 
-    // 2. Prepare the static options from constants.ts
-    // We keep them as objects {value, label} so the UI is pretty but logic is fast
     return {
-      country: [{ value: 'All', label: 'All' }, ...GROUPED_COUNTRIES],
-      eventType: [{ value: 'All', label: 'All' }, ...EVENT_TYPE],
-      skateDiscipline: [{ value: 'All', label: 'All' }, ...SKATE_DISCIPLINES],
-      skillLevel: [{ value: 'All', label: 'All' }, ...SKILL_LEVEL],
-      month: [{ value: 'All', label: 'All' }, ...MONTH_ORDER],
-      // We pass the raw Set dictionary for the towns helper below
-      townCity: townsByCountry,
-      // Fixed minAge logic
-      minAge: ['All', '18+', '21+'],
+        continents: ['All', ...Array.from(continents).sort()],
+        countriesByContinent,
+        regionsByCountry,
+        townsByRegion,
+        // ... your other existing options (eventType, etc)
     };
 }, [safeEvents]);
-// VISIBLE BREAK
 
 
  // 3. Dynamic Town Selection
@@ -228,13 +156,28 @@ const uniqueOptions = useMemo(() => {
       {/* 6. FILTER BAR */}
       <div id='filter-component' className="">
         <div className="filter-group">
-          <FilterSelect label="Country" name="country" options={uniqueOptions.country} />
+          <FilterSelect label="Continent" name="continent" options={uniqueOptions.continents} />
+          {filters.continent !== 'All' && (
+              <FilterSelect 
+                  label="Country" 
+                  name="country" 
+                  options={['All', ...Array.from(uniqueOptions.countriesByContinent[filters.continent] || [])]} 
+              />
+          )}
+          {filters.country !== 'All' && uniqueOptions.regionsByCountry[filters.country] && (
+              <FilterSelect 
+                  label="State/Region" 
+                  name="region" 
+                  options={['All', ...Array.from(uniqueOptions.regionsByCountry[filters.country] || [])]} 
+              />
+          )}
+          <FilterSelect label="Town" name="townCity" options={dynamicTowns} className="filter-box" />
+          
           <FilterSelect label="Event Type" name="eventType" options={uniqueOptions.eventType} className="filter-box" />
           <FilterSelect label="Discipline" name="skateDiscipline" options={uniqueOptions.skateDiscipline} className="filter-box" />
           <FilterSelect label="Age Limit" name="minAge" options={uniqueOptions.minAge} className="filter-box" />
           <FilterSelect label="Skill Level" name="skillLevel" options={uniqueOptions.skillLevel} className="filter-box" />
           <FilterSelect label="Month" name="month" options={uniqueOptions.month} className="filter-box" />
-          <FilterSelect label="Town" name="townCity" options={dynamicTowns} className="filter-box" />
         </div>
         
         <div className="filter-return">

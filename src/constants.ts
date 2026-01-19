@@ -1,9 +1,19 @@
+import { slugify } from "./function/stringHelper";
+
 export const SITE_TITLE  = "Your Jam Plug UK | Europe's Skate Event Directory";
 export const SITE_DESCRIPTION = 'For Roller Skaters who want to skate';
 
 export const HOMEPAGE_FEATURE_LIMIT = 8;
 export const EVENTS_PER_PAGE = 20;
 
+// ----------------------  EVENT UPDATE LIST
+export const EVENT_STATUS = [
+  { label: 'Cancelled', value: 'cancelled' },
+  { label: 'Sold Out', value: 'sold-out' },
+  { label: 'Rescheduled', value: 'rescheduled' },
+  { label: '-', value: '' },
+
+] as const;
 // ----------------------  MEDIA LIST
 export const SOCIAL_MEDIA = [
   { label: 'Socials', value: 'socials' },
@@ -89,55 +99,17 @@ export const SKILL_LEVEL =  [
     {value: 'advanced', label: 'Advanced (Professional)'},
 ] as const;
 
-//  ---------------------- COUNTRY logic
-export interface CountryOption {
-  readonly value: string;
-  readonly label: string;
-}
+export const OCCURANCE_REP =  [
+    {value: 'annual', label: 'Annual'},
+    {value: 'seasonal', label: 'Seasonal'},
+    {value: 'special', label: 'Speacial Occurance'},
+    {value: 'other', label: 'Other'},
+] as const;
 
-export interface CountryGroup {
-  readonly label: string;
-  readonly options: CountryOption[];
-}
-
-
-// Small helper to turn "San Marino" into "san-marino"
-const slugify = (str: string) => 
-  str.toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]/g, '');
-
-export const ALL_COUNTRIES: CountryGroup[] = [
-  {
-    label: "United Kingdom & Ireland",
-    options: ["England", "Ireland", "Northern Ireland", "Scotland", "Wales"]
-      .sort().map(name => ({ value: slugify(name), label: name }))
-  },
-  {
-    label: "International",
-    options: [
-      "Aland Islands", "Albania", "Andorra", "Armenia", "Austria", "Azerbaijan", "Belarus", 
-      "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", 
-      "Denmark", "Estonia", "Finland", "France", "Georgia", "Germany", 
-      "Greece", "Hungary", "Iceland", "Italy", "Kazakhstan", 
-      "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", 
-      "Malta", "Moldova", "Monaco", "Montenegro", "Netherlands", "Norway", 
-      "Poland", "Portugal", "Romania", "Russia", "San Marino", "Serbia", 
-      "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Turkey", 
-      "Ukraine", "Vatican City" 
-    ]
-      .sort().map(name => ({ value: slugify(name), label: name }))
-  }
-];
-
-export const GROUPED_COUNTRIES = ALL_COUNTRIES.flatMap(g => g.options) as readonly CountryOption[];
-
-export type SkateDisciplines = (typeof SKATE_DISCIPLINES)[number]['value'];
+// export type CountryValue = (typeof GROUPED_COUNTRIES)[number]['value'];
 export type BlogCategory = (typeof BLOG_CATEGORY)[number]['value'];
+export type SkateDisciplines = (typeof SKATE_DISCIPLINES)[number]['value'];
 export type MonthOrder = (typeof MONTH_ORDER)[number]['value'];
-export type CountryValue = (typeof GROUPED_COUNTRIES)[number]['value'];
 export type SkillLevel = (typeof SKILL_LEVEL)[number]['value'];
 export type EventType = (typeof EVENT_TYPE)[number]['value'];
 export type PostStatus = (typeof POST_STATUS)[number]['value'];

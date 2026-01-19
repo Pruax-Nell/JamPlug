@@ -223,6 +223,18 @@
     box-shadow: 0 7px 20px var(--mid-orange);
 }
 
+.event-card.featured {
+  border: 2px solid #ff4500; /* Distinct border color */
+  background: #fff5f2;      /* Subtle background tint */
+  transform: scale(1.02);   /* Make it slightly larger */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.event-card.featured:hover {
+    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    
+}
+
 /* EVENT CARD IMAGE */
 .card-image-container {
     grid-row: 1 / 4;

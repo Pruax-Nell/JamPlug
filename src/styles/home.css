@@ -51,7 +51,7 @@
     flex-direction: column;
     width: 90%;
     height: 85%;
-    padding: 1rem 2rem;
+    padding: 1rem .8rem;
 
     justify-content: space-around;
     justify-self: center;
@@ -105,6 +105,8 @@
     display: flex;
     align-content: center;
     justify-content: center;
+    height: max-content;
+    margin-top: 2rem;
 }
 
 
@@ -170,6 +172,25 @@
     text-underline-offset: 50%;
     text-decoration: underline var(--grey-yellow);
 }
+/* ------ FESTIVAL SECTION ------ */ 
+
+#festival-list h3 {
+    font-size: var(--fs-title-2);
+    text-wrap: stable;
+    color: var(--text-white);
+    text-shadow: 
+    4px 4px 7px var(--second-brown), 
+    0 0 .3rem var(--text-black);
+
+}
+
+.year-highlight {
+    color: var(--text-white);
+    text-shadow: 2px 3px 8px var(--second-brown), 3px 1px 15px var(--text-black);
+}
+
+
+
 /* ------ SIDE-BY-SIDE ------ */ 
 .side-by-side {
     display: grid;

@@ -1,115 +1,145 @@
-//  ...CODE A...
 import '../styles/components.css'
 import '../styles/global.css'
 import '../styles/event.css'
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { formatEventDate } from '../function/dateFormatter';
-// import type { SerializedEvent } from '../types';
 
 import { Image } from 'astro:assets'; 
-import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, DISCIPLINE_TAGS, SKILL_LEVEL, FOOTWARE_CHOICE } from '../constants';
- 
-const BASE_URL = import.meta.env.BASE_URL
+import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE } from '../constants';
 
-const EVENTS_PER_PAGE = 20;
+// const EVENTS_PER_PAGE = 20;
 
+const INITIAL_FILTERS = {
+  country: 'All',
+  eventType: 'All',
+  skateDiscipline: 'All',
+  minAge: 'All', 
+  skillLevel: 'All', 
+  month: 'All',
+  townCity: 'All',
+};
+
+
+// -------------------------
 const EventFilters = ({ events }) => {
   const safeEvents = events || [];
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
+  
+const uniqueOptions = useMemo(() => {
+    // 1. Build a dictionary of towns grouped by country value
+    const townsByCountry = {};
 
-  // 1. GENERATE DYNAMIC OPTIONS ...code a...
-  const uniqueOptions = useMemo(() => { 
-    // -NOTE- creates a container to prepare for incoming loop's information.
-    const townsByCountry = {}; 
-// -NOTE- difference between {} object -key and value, and [] array -list of obj/string etc.
     safeEvents.forEach((event) => {
       const { country, townCity } = event.data;
       if (country && townCity) {
+        // We use the country VALUE (slug) as the key
         if (!townsByCountry[country]) townsByCountry[country] = new Set();
         townsByCountry[country].add(townCity);
       }
     });
 
-    // Helper to add 'All' to any constant list
-    const withAll = (list) => [{ value: 'All', label: 'All' }, ...list];
-
+    // 2. Prepare the static options from constants.ts
+    // We keep them as objects {value, label} so the UI is pretty but logic is fast
     return {
-      country: withAll(GROUPED_COUNTRIES), 
-      eventType: withAll(EVENT_TYPE),
-      skateDiscipline: withAll(DISCIPLINE_TAGS),
-      skillLevel: withAll(SKILL_LEVEL),
-      month: withAll(MONTH_ORDER),
-      // Towns are special: they depend on the country filter
-      // townsByCountry,
+      country: [{ value: 'All', label: 'All' }, ...GROUPED_COUNTRIES],
+      eventType: [{ value: 'All', label: 'All' }, ...EVENT_TYPE],
+      skateDiscipline: [{ value: 'All', label: 'All' }, ...SKATE_DISCIPLINES],
+      skillLevel: [{ value: 'All', label: 'All' }, ...SKILL_LEVEL],
+      month: [{ value: 'All', label: 'All' }, ...MONTH_ORDER],
+      // We pass the raw Set dictionary for the towns helper below
       townCity: townsByCountry,
-      // Fixed minAge logic TODO change to dynamic list to allow other age settings
+      // Fixed minAge logic
       minAge: ['All', '18+', '21+'],
     };
-  }, [safeEvents]);
-// end of calculation -NOTE- depends on safeEvents
+}, [safeEvents]);
+// VISIBLE BREAK
 
-  // 2. GET CURRENT TOWNS BASED ON SELECTED COUNTRY
-  const availableTowns = useMemo(() => {
-    const countryVal = filters.country;
-    if (countryVal === 'All') return ['All'];
 
-    const towns = options.townsByCountry[countryVal] || new Set();
+ // 3. Dynamic Town Selection
+  // Combines your previous two hooks into one working version
+  const dynamicTowns = useMemo(() => {
+    const selectedCountry = filters.country;
+    if (selectedCountry === 'All') return ['All'];
+    
+    // Use the correct key name from your uniqueOptions object
+    const towns = uniqueOptions.townsByCountry[selectedCountry] || new Set();
     return ['All', ...Array.from(towns).sort()];
-  }, [filters.country, options.townsByCountry]);
+  }, [filters.country, uniqueOptions]);
 
-  // 3. FILTER LOGIC
-  // AKA THE GATE CHECK 
+  // This calculates the 'Source of Truth' for the filtered results
   const filteredEvents = useMemo(() => {
     return safeEvents.filter((event) => {
       const d = event.data;
-
       const date = new Date(d.startDate);
-      const eventMonth = date.toLocaleString('en-GB', { month: 'long' }).toLowerCase();
       
-      const match = (filterVal, dataVal) => filterVal === 'All' || dataVal === filterVal;
+      const eventMonth = date.toLocaleString('en-GB', { month: 'long' });
+      
+      const matchesCountry = filters.country === 'All' || d.country === filters.country;
+      const matchesType = filters.eventType === 'All' || d.eventType === filters.eventType;
+      const matchesDiscipline = filters.skateDiscipline === 'All' || d.skateDiscipline === filters.skateDiscipline;
+      const matchesAge = filters.minAge === 'All' || d.minAge === filters.minAge;
+      const matchesSkill = filters.skillLevel === 'All' || d.skillLevel === filters.skillLevel;
+      const matchesMonth = filters.month === 'All' || eventMonth === filters.month.toLowerCase();
+      const matchTown = filters.townCity === 'All' || d.townCity === filters.townCity;
 
-      return (
-        match(filters.country, d.country) &&
-        match(filters.eventType, d.eventType) &&
-        match(filters.skateDiscipline, d.skateDiscipline) &&
-        match(filters.skillLevel, d.skillLevel) &&
-        match(filters.month.toLowerCase(), eventMonth) &&
-        match(filters.townCity, d.townCity)
-      );
+      // Event must pass ALL filters to be included
+      return matchesCountry && matchesType && matchesDiscipline && matchesAge && matchesSkill && matchesMonth && matchTown;
     });
   }, [safeEvents, filters]);
 
-  // Reset town when country changes to prevent "Ghost" filtering
-  useEffect(() => {
-    setFilters(prev => ({ ...prev, townCity: 'All' }));
-  }, [filters.country]);
+  // PAGINATION 
+  const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE);
 
+  const paginatedEvents = useMemo(() => {
+    const startIndex = (currentPage - 1) * EVENTS_PER_PAGE;
+    const endIndex = startIndex + EVENTS_PER_PAGE;
+    return filteredEvents.slice(startIndex, endIndex);
+  }, [filteredEvents, currentPage]);
+
+  // If user changes a filter, always go back to page 1
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
+
+  // --- Handlers ---
+  const handleFilterChange = (key, value) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      document.getElementById('events-anchor')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // TODO TYPE.VALUE vs TYPE.LABEL
   // --- UI Components ---
   const FilterSelect = ({ label, name, options }) => (
-    <div className=" filter-box">
-      <label className="label">
-        {label}
-      </label>
-
+    <div className="filter-box">
+      <label className="label">{label}</label>
       <select
         value={filters[name]}
         onChange={(e) => handleFilterChange(name, e.target.value)}
-        className=""
       >
-        {options.map((opt) => (
-          <option key={opt} value={opt}>{opt}</option>
-        ))}
+        {options.map((opt) => {
+          // Check if opt is an object {value, label} or just a string
+          const isObj = typeof opt === 'object' && opt !== null;
+          const val = isObj ? opt.value : opt;
+          const lab = isObj ? opt.label : opt;
+
+          return (
+            <option key={val} value={val}>
+              {lab}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
 
-  const handleFilterChange = (name, value) => {
-    setFilters(prev => ({ ...prev, [name]: value }));
-    setCurrentPage(1); // Reset to first page on filter change
-  };
-  
   return (
     <div className="primary-container" id="events-anchor">
       
@@ -122,7 +152,7 @@ const EventFilters = ({ events }) => {
           <FilterSelect label="Age Limit" name="minAge" options={uniqueOptions.minAge} className="filter-box" />
           <FilterSelect label="Skill Level" name="skillLevel" options={uniqueOptions.skillLevel} className="filter-box" />
           <FilterSelect label="Month" name="month" options={uniqueOptions.month} className="filter-box" />
-          <FilterSelect label="Town" name="townCity" options={uniqueOptions.townCity} className="filter-box" />
+          <FilterSelect label="Town" name="townCity" options={dynamicTowns} className="filter-box" />
         </div>
         
         <div className="filter-return">
@@ -155,6 +185,7 @@ const EventFilters = ({ events }) => {
                 <div className="img-wrapper ">
                     {post.data.eventPoster ? (
                         <Image 
+                        // TODO change src path
                             src= {`/content/flyers/${post.data.eventPoster}`} 
                             alt={post.data.eventName}
                             width={230}
@@ -281,6 +312,5 @@ const EventFilters = ({ events }) => {
     </div>
   );
 };
-// end of const EventFilters variable/function
 
 export default EventFilters;

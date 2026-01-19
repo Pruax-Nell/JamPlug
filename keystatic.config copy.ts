@@ -1,11 +1,8 @@
 // keystatic.config.ts
 import { config, fields, collection } from '@keystatic/core';
-import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS } from './src/constants'
-import { ALL_CONTINENT_VALUES, CONTINENT_DATA, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, US_STATE_OPTIONS, UK_NATION_OPTIONS, CANADA_PROVINCE_OPTIONS, AUS_REGION_OPTIONS } from './src/data/globe-constants';
-import { GLOBE_CONTINENTS } from './src/data/geo/continents';
-
-
-
+import { SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS } from './src/constants'
+// Since you defined startTime and endTime as fields.object in Keystatic, we match that structure in Zod. When you want to display it in your Astro component, you would use: {event.data.startTime.hour}:{event.data.startTime.minute}.
+ 
 export default config({
   storage: {
     kind: 'local',
@@ -112,12 +109,8 @@ export default config({
           options: POST_STATUS,
           defaultValue: 'draft',
         }),
+        // published: fields.date({ label: 'Published Date' }),
         isFeatured: fields.checkbox({ label: 'Is Featured' }),
-        eventStatus: fields.select({ 
-          label: 'Event Status',
-          options: EVENT_STATUS,
-          defaultValue: '',
-        }),
       // Main Info
         eventName: fields.slug({ name: { label: 'Event Name', validation: { isRequired: true } } }),
         subheading: fields.text({ label: 'Sub Heading'}),
@@ -128,66 +121,6 @@ export default config({
         startDate: fields.date({ label: 'Start Date', validation: { isRequired: true } }),
         endDate: fields.date({ label: 'End Date' }),
     // Secondary key info
-    location: fields.conditional(
-      fields.select({ 
-        label: 'Country',
-        options: CONTINENT_DATA.flatMap(c => c.countries),
-            defaultValue: 'united-kingdom',
-          }),
-          {
-            // If United Kingdom is selected, show this specific dropdown
-            'united-kingdom': fields.select({
-              label: 'UK Nation',
-              options: UK_NATION_OPTIONS,
-              defaultValue: 'uk-england',
-            }),
-            // If USA is selected, show this one
-            'united-states-of-america': fields.select({
-              label: 'US State',
-              options: US_STATE_OPTIONS,
-              defaultValue: 'us-new-york',
-            }),
-            // If CANADA is selected, show this one
-            'canada': fields.select({
-              label: 'Canada Province',
-              options: CANADA_PROVINCE_OPTIONS,
-              defaultValue: 'can-alberta',
-            }),
-            // If AUSTRALIA is selected, show this one
-            'australia': fields.select({
-              label: 'Australia Region',
-              options: AUS_REGION_OPTIONS,
-              defaultValue: 'aus-victoria',
-            }),
-            // For every other country value, we show nothing (empty)
-            other: fields.empty(),
-          }
-        ),
-        townCity: fields.text({ 
-          label: 'Town / City',
-          description: 'e.g. London, Bristol, Lille',
-          validation: { isRequired: true }
-        }),
-        eventType: fields.select({ 
-          label:'Event Type',
-          options: EVENT_TYPE,
-          defaultValue: 'other',
-        }),
-        skateDiscipline: fields.select({ 
-          label: 'Skate Discipline',
-          options: SKATE_DISCIPLINES,
-          defaultValue: 'other', 
-        }),
-        skillLevel: fields.select({
-          label: 'Level requirement',
-          options:[
-            {label: '-- Optional Selection --', value: ''},
-            ...SKILL_LEVEL
-          ],
-          defaultValue: '', 
-        }),
-        minAge: fields.text({ label: 'Minimum Age' }),
-        maxAge: fields.text({ label: 'Maximum Age' }),
         eventPoster: fields.image({
           label: 'Event Poster',
           directory: 'src/content/images/events',
@@ -222,8 +155,51 @@ export default config({
           label: 'Flyer 5',
           directory: 'src/content/images/events',
           publicPath: '../../images/events/',
-          transformFilename: (name) => `flyer-5-${name.replaceAll(/\s+/g, '-')}`
+          transformFilename: (name) => `flyer-4-${name.replaceAll(/\s+/g, '-')}`
         }),
+        continent: fields.select({
+          label: 'Continent',
+          options: ALL_COUNTRIES_FLAT,
+          defaultValue: 'england',
+          
+        }),
+        country: fields.select({
+          label: 'Country',
+          options: ALL_COUNTRIES_FLAT,
+          defaultValue: 'england',
+          
+        }),
+        townCity: fields.text({ 
+          label: 'Town / City',
+          description: 'e.g. London, Bristol, Lille',
+          validation: { isRequired: true }
+        }),
+        eventType: fields.select({ 
+          label:'Event Type',
+          options: [
+            { label: '-- Selection Required --', value: '' }, 
+            ...EVENT_TYPE 
+          ],
+          defaultValue: '',
+        }),
+        skateDiscipline: fields.select({ 
+          label: 'Skate Discipline',
+          options: [
+            {label: '-- Selection Required --', value: ''},
+            ...SKATE_DISCIPLINES
+          ],
+          defaultValue: '', 
+        }),
+        skillLevel: fields.select({
+          label: 'Level requirement',
+          options:[
+            {label: '-- Optional Selection --', value: ''},
+            ...SKILL_LEVEL
+          ],
+          defaultValue: '', 
+        }),
+        minAge: fields.text({ label: 'Minimum Age' }),
+        maxAge: fields.text({ label: 'Maximum Age' }),
 
         startTime: fields.object({
           hour: fields.select({
@@ -267,6 +243,8 @@ export default config({
             label: 'Ticket Links'
           }
         ),
+        organiser: fields.text({ label: 'Organiser'}),
+        orgLink: fields.url({ label: 'Organisers link'}),
         organisers: fields.array(
           fields.object({
             name: fields.text({label: 'Org Name'}),
@@ -290,6 +268,8 @@ export default config({
             itemLabel: (props) => props.fields.name.value || 'Organiser',
           }
         ),
+        host: fields.text({ label: 'Event Host' }),
+        hostLink: fields.url({ label: 'host link'}),
         hosts: fields.array(
           fields.object({
             name: fields.text({label: 'Host Name'}),
@@ -313,6 +293,8 @@ export default config({
             itemLabel: (props) => props.fields.name.value || 'Host',
           }
         ),
+        coach: fields.text({ label: 'Coach' }),
+        coachLink: fields.url({ label: 'coach link'}),
         coaches: fields.array(
           fields.object({
             name: fields.text({label: 'Coach Name'}),
@@ -336,6 +318,8 @@ export default config({
             itemLabel: (props) => props.fields.name.value || 'Coach',
           }
         ),
+        dj: fields.text({ label: 'DJ' }),
+        djLink: fields.url({ label: 'dj link'}),
         djs: fields.array(
           fields.object({
             name: fields.text({label: 'DJ Name'}),

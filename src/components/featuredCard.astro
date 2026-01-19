@@ -10,6 +10,7 @@ interface Props {
   country: string;
   eventType: string;
   description: any;
+  offskates: string;
   // We only take the two dates we need for the helper, not the whole event object
   timeframe: {
     startDate: Date | string;
@@ -41,6 +42,9 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
             <span class="event-date">{eventDateString}</span>
             <span class="event-type">{eventType}</span>
             <p>{description}</p>
+            <!-- {event.data.offSkates && (
+                <span className="badge badge-social">Social / Off-Skates</span>
+                )} -->
         </div>
     </a>
     <div class="feature-title"><h4>{title}</h4></div>
@@ -132,6 +136,7 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
     opacity: 96%;
 }
 
+
 .ft-title {
     text-transform: uppercase;
 }
@@ -143,14 +148,19 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
     justify-self: center;
     justify-content: center;
     max-width: 55ch;
-
+    
 }
 
 .feature-title h4 {
     margin-top: 1.2rem;
     font-size: minmax(var(--fs-heading-mid), var(--fs-heading-xl));
+    text-transform: capitalize;
 }
 
+.feature-case:hover .feature-title{
+    display: none;
+    opacity: 0;
+}
 .event-type{
     text-transform: uppercase;
     margin: .3rem 0;
