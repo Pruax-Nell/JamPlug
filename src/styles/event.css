@@ -21,14 +21,15 @@
 
 .jam-link-block {
     width: 95%;
-    height: 50svh;
+    min-height: 320px;
+    height: 55svh;
     padding: 2ch;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 
-    background-color: var(--shadow-yellow);
+    background-color: var(--shadow-orange-2);
     border-color: var();
     border-radius: 8px;
     box-shadow: 0 0 6px 0 var(--grey-orange),0 0 40px 0 var(--shadow-purple);
@@ -60,19 +61,45 @@
 /* ||--------------------------------------------- UPCOMING EVENTS */
 
 /* ------------------ FILTER -------------- */
+
 .filter-bar {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    background: var(--mid-teal);
-    padding: 1rem;
+    gap: 16px;
+    padding: 24px;
+    background: var(--shadow-brown);
     border-radius: 12px;
+    margin-bottom: 32px;
+    align-items: flex-end;
     align-items: center;
 }
 
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 300px;
+  width: 100%;
+  border: 1.2px dotted var(--shadow-brown-2);
+  padding: 18px;
+  border-radius: 4px;
+}
 
-.filter-bar select {
+.filter-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 10px;
+}
+
+
+.filter-group span {
+    margin-top: 6px;
+}
+
+.filter-group select {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
     min-width: 200px;
@@ -87,33 +114,61 @@
     font-weight: 400;
 }
 
-.filter-bar select:focus {
+
+.filter-group select:focus {
     border-color: var(--ow-yellow);
     border-width: 2.6px;
     outline: none;
 }
 
-.duo-filter {
-    display: flex;
-    flex-direction: column;
-    padding: .1rem;
-    gap: 1ch;
+/* Graying out (0) results */
+select option:disabled {
+    color: #ccc;
+    font-style: italic;
 }
+
+.search-input {
+    /* width: 100%; */
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--ow-yellow);
+    border-width: 2.6px;
+    outline: none;
+}
+
 
 .reset-button {
     padding: 0.6rem 1.2rem;
-    background-color: var(--grey);
-    color: white;
+    background-color: var(--shadow-purple);
+    color: var(--ob-teal);
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 600;
+    font-family: var(--font-rose-body);
+    font-weight: 800;
     transition: background 0.2s;
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
 }
 
 .reset-button:hover {
     background-color: var(--black);
+  background: #e0e0e0;
+  color: #d9534f; /* Hint of red on hover to indicate "clear" */
 }
+
+
 
 @media (max-width: 560px) {
 
@@ -130,12 +185,12 @@
         height: 2.5rem;
         
     }
-    
-    .duo-filter{
+    /* filter-group */
+    /* .duo-filter{
         flex-direction: column;
         width: 100%;
         justify-content: space-between;
-    }
+    } */
 
 }
 
@@ -145,12 +200,12 @@
         height: 2.2rem;
         
     }
-
-    .duo-filter {
+/* filter-group */
+    /* .duo-filter {
 
         flex-direction: column;
 
-    }
+    } */
 }
 
 .results-meta {
@@ -162,17 +217,26 @@
 }
 
 /* ------------------ EVENT GRID -------------- */
-/* This is the "magic" part. It tells the browser: "Make columns at least 300px wide, but fill the remaining space." */
 .event-grid {
   display: grid;
-  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 310px));
   gap: 2rem;
+  gap: 24px;
   margin-top: 2rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(95%, 320px), 380px));
   grid-auto-flow: dense;
   justify-content: center;
 }
 
+
+.no-events-fallback {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  background: #fdfdfd;
+  border: 2px dashed #eee;
+  border-radius: 12px;
+  color: #888;
+}
 
 .no-results-message {
   grid-column: 1 / -1; 
@@ -401,6 +465,28 @@
   cursor: not-allowed;
 }
 
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+  padding-bottom: 40px;
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 /* ||-----------------------------------------------50/50 SECTION */
 

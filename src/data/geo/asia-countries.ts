@@ -1,6 +1,5 @@
 export const RAW_ASIA_COUNTRIES =[
     "Afghanistan",
-    "Armenia",
     "Azerbaijan",
     "Bahrain",
     "Bangladesh",
@@ -8,8 +7,6 @@ export const RAW_ASIA_COUNTRIES =[
     "Brunei",
     "Cambodia",
     "China",
-    "Cyprus",
-    "Georgia",
     "India",
     "Indonesia",
     "Iran",
@@ -33,7 +30,6 @@ export const RAW_ASIA_COUNTRIES =[
     "Palestine",
     "Philippines",
     "Qatar",
-    "Russia",
     "Saudi Arabia",
     "Singapore",
     "South Korea",
@@ -43,10 +39,9 @@ export const RAW_ASIA_COUNTRIES =[
     "Tajikistan",
     "Thailand",
     "Timor-Leste",
-    "Turkey",
     "Turkmenistan",
     "United Arab Emirates",
-    // (UAE)
+    // (UAE)npx 
     "Uzbekistan",
     "Vietnam",
     "Yemen",

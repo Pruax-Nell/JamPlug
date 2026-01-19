@@ -32,7 +32,6 @@
 
 // ------------- IMPORTS AND CONSTANTS
 // styles and aesthetics
-import '../styles/filters.css'
 import '../styles/global.css'
 import '../styles/event.css'
 import EventCard from './eventcard';
@@ -427,17 +426,17 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
   return (
     <div className="events-page-wrapper">
       <section className="filter-bar">
+        <span>Filter your Skate Events</span>
       
-      <div className="filter-group">
-        <label>Search Town, Region, or Country</label>
+      <div className='filter-group'>
+        <label>A&#41; Search Town, Region, or Country</label>
         <LocationSearch 
           initialEvents={initialEvents} 
           onFilterChange={handleFilterChange} 
           value={filters.townCity}
         />
-      </div>
-
-      <div className='duo-filter'>
+        <span>OR</span>
+        <label>B&#41; Choose in order: Continent, Country, Region, Town/City</label>
         <select value={filters.continent} onChange={(e) => handleFilterChange('continent', e.target.value)}>
           <option value="All">Any Continent</option>
           {renderOptions(continentOptions, activeFilterValues.continent)}
@@ -448,8 +447,8 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
           {renderOptions(availableCountries, activeFilterValues.countries)}
         </select>
         
-        <span className='divider'></span>
         
+        <span className='caption'>Region/City will appear once 'Country' is selected</span>
         <select value={filters.region} onChange={(e) => handleFilterChange('region', e.target.value)}>
           <option value="All">Any {regionLabel}</option>
           {dynamicRegions.map(reg => (
@@ -458,58 +457,52 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         </select>
 
         <select value={filters.townCity} onChange={(e) => handleFilterChange('townCity', e.target.value)}>
-          <option value="">Any City</option>
+          <option value="All">Any City</option>
           {dynamicTowns.map(t => <option key={t} value={t}>{t}</option>)}
         </select>
+
+
       </div>
 
-            <div className='duo-filter'>
+      <div className='filter-group'>
+        
+        <span>Choose When:</span>
+        <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
+          <option value="All">Any Month</option>
+          {renderOptions(MONTH_ORDER, activeFilterValues.months)}
+        </select>
+
+        <span>Choose What:</span>
         <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
-          <option value="All">Any Type</option>
+          <option value="All">Any Event Type</option>
           {renderOptions(EVENT_TYPE, activeFilterValues.types)}
         </select>
-        <span className='divider'></span>
-
 
         <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
-          <option value="All">Any Discipline</option>
+          <option value="All">Any Skate Discipline</option>
           {renderOptions(SKATE_DISCIPLINES, activeFilterValues.disciplines)}
         </select>
-      </div>
-
-      <div className='duo-filter'>
-      <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
-        <option value="All">Any Month</option>
-        {renderOptions(MONTH_ORDER, activeFilterValues.months)}
-      </select>
-      <span className='divider'></span>
-
-
-      <select value={filters.minAge} onChange={(e) =>     handleFilterChange('minAge', e.target.value)}>
-        <option value="All">Any Age</option>
-        {serverOptions.minAge.map(age => (
-          <option key={age} value={age}>{age}</option>
-        ))}
-      </select>
-        
-      </div>
-      
-      <div className='duo-filter'>
+        <select 
+          value={filters.offSkates} 
+          onChange={(e) => handleFilterChange('offSkates', e.target.value)}
+        >
+          <option value="all"> 'On/Off Skates' </option>
+          <option value="skating">🛼 On-Skates Only</option>
+          <option value="off-skates">👟 Off-Skates / Socials</option>
+        </select>
 
         <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
           <option value="All">Any Level</option>
           {renderOptions(SKILL_LEVEL, activeFilterValues.levels)}
         </select>
-          <span className='divider'></span>
 
-        <select 
-          value={filters.offSkates} 
-          onChange={(e) => handleFilterChange('offSkates', e.target.value)}
-        >
-          <option value="all">All Event Formats</option>
-          <option value="skating">🛼 On-Skates Only</option>
-          <option value="off-skates">👟 Off-Skates / Socials</option>
+        <select value={filters.minAge} onChange={(e) =>     handleFilterChange('minAge', e.target.value)}>
+          <option value="All">Any Age</option>
+          {serverOptions.minAge.map(age => (
+            <option key={age} value={age}>{age}</option>
+          ))}
         </select>
+
 
       </div>
 

@@ -25,7 +25,7 @@ interface Props {
 const { post } = Astro.props; 
 const { data } = post;
 const { Content } = await render(post);
-const calendarUrl = generateCalendarLink(event);
+// const calendarUrl = generateCalendarLink(event);
 const galleryImages = [data.flyerImage1, data.flyerImage2, data.flyerImage3, data.flyerImage4, data.flyerImage5].filter(Boolean);
 
 // HELPERS----
@@ -131,6 +131,14 @@ const { googleUrl, icsDataUri } = getCalendarUrls(data);
           Add to Apple / Outlook
         </a>
       </div>
+
+      <a 
+  href={icsDataUri} 
+  download={`${data.eventName.replace(/\s+/g, '_')}.ics`} 
+  class="calendar-download-btn"
+>
+  <span class="icon">📅</span> Add to Calendar (Apple/Outlook/Mobile)
+</a>
     </div>
       <Content />
       
@@ -220,6 +228,24 @@ const { googleUrl, icsDataUri } = getCalendarUrls(data);
 
 <style>
 /* TODO--- */
+.calendar-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background-color: #222; /* Neutral dark for generic/Apple feel */
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s;
+  font-family: var(--font-rose-body);
+}
+
+.calendar-download-btn:hover {
+  background-color: #444;
+}
+
   .calendar-section {
     margin-top: 3rem;
     padding: 2rem;

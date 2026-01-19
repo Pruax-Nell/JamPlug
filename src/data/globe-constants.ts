@@ -79,7 +79,7 @@ export const ALL_REGION_VALUES = [
 ] as [string, ...string[]];
 
 export const OTHER_COUNTRIES = ALL_COUNTRY_VALUES.filter(
-  val => !['united-kingdom', 'united-states-of-america', 'canada'].includes(val)
+  val => !['united-kingdom', 'united-states-of-america', 'canada', 'australia'].includes(val)
 ) as [string, ...string[]];
 
 // Helper to extract values for Zod Schema
