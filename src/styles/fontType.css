@@ -147,6 +147,12 @@ label {
     letter-spacing: var(--letter-space-rose);
 
 }
+small {
+    font-family: var(--font-rose-body);
+    letter-spacing: var(--letter-space-rose);
+    font-size: var(--fs-foot);
+
+}
 
 .p1 {
     font-size: var(--fs-p1);

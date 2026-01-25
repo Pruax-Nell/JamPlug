@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro"
+
+import Button from "../components/button.astro";
+
+import "../styles/global.css";
+import "../styles/submit.css";
+
+
+---
+
+<BaseLayout> 
+    
+    
+    <!-- || ------------------------------------------PAGE TOP -->
+    <section class="frame-fence pageTop primary-container">
+        <!-- ||------------------------- DIRECTIONS  -->
+        <hgroup>
+            <h2 class="half-title">Talk to Us</h2>
+                <p>Submit your message below</p>
+            </hgroup>
+    </section>
+        
+        
+    <!-- ||------------------------------------- FORM SECTION  -->
+    <section class="frame-fence primary-container dual-field">
+        
+        <!-- -||----------------------- FORM FIELD  -->
+        <div class="form-wrap form-field">
+            <form>
+                <input type="hidden" name="form_category" value="General Enquiry" />
+                <input type="text" id="" placeholder="First Name" name="" required>
+                <label for="" >First Name</label>
+                <input type="text" id="" placeholder="Surname" name="" >
+                <label for="" >Surname</label>
+                <input type="text" id="" placeholder="YourEmail@Address.co.uk" name="" >
+                <label for="" >Email:</label>
+                <input type="text" id="" placeholder="Type your Message Here" name="" minlength="10">
+                <label for="" >Your Message:</label>
+
+                <textarea ></textarea>
+                <input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+
+                <Button variant="tertiary" size="lg" theme="purpleLight">Submit</Button>
+
+            </form>
+
+        </div>
+    </section>
+    <section>
+        <p>Other Options:</p>
+        <div class="direction-box">
+            <p><a href="/submit-an-event">Submit an Event</a></p>
+            <p><a href="/submit-a-business">Submit a Group/Business</a></p>
+            <p><a href="">Join the Newsletter</a></p>
+        </div>
+    </section>
+        
+</BaseLayout>

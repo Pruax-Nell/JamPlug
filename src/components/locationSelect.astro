@@ -1,0 +1,104 @@
+---
+import { CONTINENT_DATA } from '../data/globe-constants';
+---
+
+<div class="location-picker-container">
+  <div class="form-field">
+    <label for="continent">Continent</label>
+    <select name="continent" class="continent-select form-input">
+      <option value="">-- Select Continent --</option>
+      {CONTINENT_DATA.map(c => <option value={c.continent}>{c.continent}</option>)}
+    </select>
+  </div>
+
+  <div class="country-wrapper hidden">
+    <div class="form-field">
+      <label for="country">Country</label>
+      <select name="country" class="country-select form-input">
+        <option value="">-- Select Country --</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="region-wrapper hidden">
+    <div class="form-field">
+      <label for="region">State / Province / Region</label>
+      <select name="region" class="region-select form-input">
+        <option value="">-- Select Region --</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { CONTINENT_DATA, getRegionOptions } from '../data/globe-constants';
+
+  function initLocationPickers() {
+    const containers = document.querySelectorAll('.location-picker-container');
+
+    containers.forEach(container => {
+      const contSelect = container.querySelector('.continent-select') as HTMLSelectElement;
+      const countrySelect = container.querySelector('.country-select') as HTMLSelectElement;
+      const regionSelect = container.querySelector('.region-select') as HTMLSelectElement;
+      
+      const countryWrapper = container.querySelector('.country-wrapper');
+      const regionWrapper = container.querySelector('.region-wrapper');
+
+      contSelect?.addEventListener('change', () => {
+        const selectedCont = contSelect.value;
+        
+        countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
+        regionWrapper?.classList.add('hidden');
+        
+        if (selectedCont) {
+          const continent = CONTINENT_DATA.find(c => c.continent === selectedCont);
+          continent?.countries.forEach(country => {
+            const opt = document.createElement('option');
+            opt.value = country.value;
+            opt.textContent = country.label;
+            opt.dataset.hasRegions = country.hasRegions ? "true" : "false";
+            countrySelect.appendChild(opt);
+          });
+          countryWrapper?.classList.remove('hidden');
+        } else {
+          countryWrapper?.classList.add('hidden');
+        }
+      });
+
+      countrySelect?.addEventListener('change', () => {
+        const selectedCountry = countrySelect.value;
+        const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+        const hasRegions = selectedOption.dataset.hasRegions === "true";
+
+        regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
+
+        if (hasRegions) {
+          const regions = getRegionOptions(selectedCountry);
+          regions.forEach(reg => {
+            const opt = document.createElement('option');
+            opt.value = reg.value;
+            opt.textContent = reg.label;
+            regionSelect.appendChild(opt);
+          });
+          regionWrapper?.classList.remove('hidden');
+        } else {
+          regionWrapper?.classList.add('hidden');
+        }
+      });
+    });
+  }
+
+  initLocationPickers();
+  
+  // Optional: If you use Astro view transitions, re-run init
+  document.addEventListener('astro:after-swap', initLocationPickers);
+</script>
+
+<style>
+  .hidden { display: none; }
+  .location-picker-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>

@@ -4,19 +4,15 @@ import "../styles/directory.css";
 const pageTitle = "UK & Ireland Skate Directory";
 
 ---
-<!-- // sticky scrolling headings that overlap as you go down. 
-//sectional by region
-//'jump to' side bar - js maybe --> 
 <BaseLayout>
-	<!-- <section id="pageGrid"> -->
 		<!-- ------------------Page title--------------------->
-		<section id="pageTop">
+		<section id="pageTop" class="frame-fence">
 			<div>
 				<h1 class="title">{pageTitle}</h1>
 			</div>
 		</section>
 			<!-- ------------------Sticky Bar menu--------------------->
-		<section id="menuBar">
+		<section id="menuBar" class="frame-fence">
 			<div > 
 				<a href="#England-region"  class="scroll-link"><button>England</button></a>
 				<a href="#Nireland-region" class="scroll-link"><button>Northern Ireland</button></a>
@@ -25,11 +21,11 @@ const pageTitle = "UK & Ireland Skate Directory";
 				<a href="#Wales-region" class="scroll-link"><button>Wales</button></a>
 			</div>
 		</section>	
-		<div class="scrollWatch backBlur">
+		<div class=" scrollWatch backBlur">
 
 		</div>
 		<!-- ------------------ Content--------------------->
-		<section id="contentTop">
+		<section id="contentTop" class="frame-fence">
 			<!-- Directory sections  -->
 			<section id="directory">
 				<!-- ---------------England section--------------- -->
@@ -218,7 +214,6 @@ const pageTitle = "UK & Ireland Skate Directory";
 				<div class="scrollWatch"></div>
 			</section>
 		</section>
-		<!-- </section> -->
 	</BaseLayout>
 
 <style>

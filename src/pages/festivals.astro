@@ -19,12 +19,12 @@ const monthOrder = [
     "July", "August", "September", "October", "November", "December"
 ];
 
-const justAdded = (bigEvents)
-.filter(
-    event => {
-        return event.data.published >= thirtyDaysAgo;
-    }
-)
+// const justAdded = (bigEvents)
+// .filter(
+//     event => {
+//         return event.data.published >= thirtyDaysAgo;
+//     }
+// )
 
 const groupedEvents = bigEvents.reduce((acc: Record<string, any[]>, event) => {
     const month = event.data.startDate.toLocaleString(['en-GB', 'en-US'], { month: 'long' });
@@ -59,7 +59,7 @@ const now = new Date();
 ---
 
 <BaseLayout>
-<section class="welcome">
+<section class="frame-fence welcome">
     <div>
         <h1>Big Jam List</h1>
     </div>
@@ -84,7 +84,7 @@ const now = new Date();
         </div>
     </div>
 </section>
-<section>
+<section class="frame-fence">
     <div class="jam-direct"> 
         <span><a class="jam-year-button-down jam-year-button"> 2025 </a></span>
         <h2 class="year-title">2026</h2>
@@ -138,7 +138,7 @@ const now = new Date();
         
     </div>
 </section>
-<section >
+<section class="frame-fence">
     <div class="middle">
         <p>looking for more events? </p>
         <a href="/events" class="tertiary-button"> Browse the event list </a>

@@ -1,0 +1,20 @@
+---
+
+import BaseLayout from '../layouts/baseLayout.astro';
+---
+
+<BaseLayout title="Thank You!">
+  <section class="thanks-container">
+    <h1>We Got it!</h1>
+    <p>Thanks for submitting your event. Our team is checking the details now.</p>
+    <a href="/events" class="button">Back to Events</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks-container {
+    text-align: center;
+    padding: 10% 5%;
+  }
+  h1 { color: var(--main-orange); font-size: 3rem; }
+</style>

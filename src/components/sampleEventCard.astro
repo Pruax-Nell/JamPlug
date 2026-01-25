@@ -22,8 +22,8 @@ const { timeframe, title, url, poster, city, country, eventType, description } =
 const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
 ---
 
-<div class=" sample-case">
-    <a href={url} class="sample-card">
+<a href={url} class="sample-case">
+    <div class=" sample-card">
         {poster ? (
             <Image 
             src={poster} 
@@ -36,12 +36,12 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
             <div class="placeholder card-poster">🛼</div>
         )}
         <div class="mini-content">
-            <p>{title}</p>
+            <p class="card-title">{title}</p>
             <span>📍{city}, {country}</span>
             <span>{eventDateString}</span>
             <span>{eventType}</span>
             <p>{description}</p>
         </div>
-    </a>
-</div>
+    </div>
+</a>
 

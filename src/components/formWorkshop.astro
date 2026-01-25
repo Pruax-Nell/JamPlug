@@ -1,0 +1,366 @@
+---
+import Button from "../components/button.astro";
+import LocationPicker from '../components/locationSelect.astro';
+
+
+---
+          
+<!-- <div id="workshop-form" class="hidden"> -->
+    <div class="event-form">
+        <!--------------------------- FORM START -->
+        
+        <!-- WORKSHOP SUBMISSION FORM -->
+                  <form 
+  action="https://submit-form.com/your-id" 
+  method="POST" 
+  enctype="multipart/form-data"
+  >
+  <input type="hidden" name="form_category" value="Skate Workshop" />
+        <!-- TITLE INFO -->
+        <div class="row-1 span-full cell-block">
+            <h3 class="field-title fitted self-center">Skate Workshop</h3>
+            <span>Developing skate technique</span>
+        </div>
+        <input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <!-- Host / Coach -->
+        <div class="row-2 span-full cell-block">
+            <label class="fitted" for="organiser-name"> Worshop Coach
+                <span><span>*</span></span>
+            </label>
+            <div >
+                <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="Who is coaching the workshop?">
+                
+            </div>
+        </div>
+        
+        <!-- ORGANISER -->
+        <div class="row-3 span-full cell-block">
+            <label class="fitted" for="organiser-name"> Organiser
+                <!-- <span><span>*</span></span> -->
+            </label>
+            <div >
+                <input type="text" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="If different from coach">
+                <input type="email" class="long-fit field-box" name="organiser-name" data-tooltip="Lead organiser and/or group" placeholder="organiser@email.com">
+            </div>
+        </div>
+
+        <!-- SKATES OR NO change to check -->
+        <fieldset class="row-4 span-half time-container cell-block">
+            <legend>
+                Skates or Shoes?
+                <!-- <span><span>*</span></span> -->
+            </legend>
+            <div class="time-field">
+                <div>
+                    <input type="radio" id="skates-on" name="skates-on">
+                    <label class="" for="skates-on">Skates</label>
+                </div>
+                <div>
+                    <input type="radio" id="skates-off" name="skates-on">
+                    <label class="" for="skates-off">Shoes</label>                            
+                </div>
+                <div>
+                    <input type="radio" id="hybrid" name="skates-on">
+                    <label class="" for="hybrid">Both</label>                            
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- SKATES OR NO change to check -->
+        <fieldset class="row-4 span-half time-container cell-block">
+            <legend>
+                Minimum Age
+                <!-- <span><span>*</span></span> -->
+            </legend>
+            <div class="time-field">
+                <div>
+                    <input type="radio" id="5-plus" name="age-req">
+                    <label class="" for="5-plus">5+</label>
+                </div>
+                
+                <div>
+                    <input type="radio" id="18-plus" name="age-req">
+                    <label class="" for="18-plus">18+</label>                            
+                </div>
+                <div>
+                    <input type="radio" id="21-plus" name="age-req">
+                    <label class="" for="21-plus">21+</label>                            
+                </div>
+                <!-- <div>
+                    <input type="radio" id="other-age" name="age-req">
+                    <label class="" for="other-age">Other</label>                            
+                </div> -->
+            </div>
+        </fieldset>
+                    
+        <!-- EVENT NAME -->
+        <div class="row-5 span-full cell-block">
+            <label class="fitted"> Event Name
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div >
+                <input type="text" class="long-fit field-box">
+            </div>
+        </div>
+                            
+        <!-- START DATE -->
+        <div class="row-6 span-half cell-block">
+            <label>Start Date
+                <span><span>*</span></span>
+            </label>
+            <div>
+                <input type="date" class="field-box">
+            </div>
+            <!-- pop up calendar to select dates -->
+            <input type="hidden">
+        </div>
+    <LocationPicker/>
+        <!-- END DATE -->
+        <div class="row-6 span-half cell-block">
+            <label>End Date
+                <span><span>*</span></span>
+            </label>
+            <div>
+                <input type="date" class="field-box">
+            </div>
+            <!-- pop up calendar to select dates -->
+            <input type="hidden">
+        </div>
+
+        <!-- START TIME -->
+        <fieldset class="row-7 span-half time-container cell-block">
+            <legend>
+                Start Time
+                <span><span>*</span></span>
+            </legend>
+            <div class="time-field">
+                <div>
+                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                    <label class="srOnly" for="">Hours</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                    <label class="srOnly" for="">Minutes</label>                            
+                </div>
+                <div class="#">
+                    <select name="InputAP" id="#" class="field-box-2">
+                        <option value="am">AM</option>
+                        <option value="pm">PM</option>
+                    </select> 
+                    <label class="am-pm-label srOnly" for="">AM/PM</label>                                
+                </div>
+            </div>
+        </fieldset>
+    
+        <!-- END TIME -->
+        <fieldset class="row-7 span-half time-container cell-block">
+            <legend>
+                End Time
+                <span><span>*</span></span>
+            </legend>
+            <div class="time-field">
+                <div>
+                    <input type="number" maxlength="2"  value="" min="0" max="12" step="1" placeholder="HH" aria-required="true" class="field-box">
+                    <label class="srOnly" for="input_6_29_1">Hours</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input type="number" maxlength="2"  value="" min="0" max="59" step="1" placeholder="MM" aria-required="true" class="field-box">
+                    <label class="srOnly" for="input_6_29_1">Minutes</label>                            
+                </div>
+                <div class="#">
+                    <select name="InputAP" id="#" class="field-box-2">
+                        <option value="am">AM</option>
+                        <option value="pm">PM</option>
+                    </select> 
+                    <label class="am-pm-label srOnly" for="input_6_29_3">AM/PM</label>                                
+                </div>
+            </div>
+        </fieldset>
+        
+        <!-- LEVEL REQ -->
+        <div class="row-8 span-full cell-block" >
+            <label> Level pre requisite
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <!-- <input type="text"> -->
+                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                    <option value="">no requirement / beginner learn to skate</option>
+                    <option value="">Beginner ability: stand, stop, glide</option>
+                    <option value="">Beg-inter ability: one-foot balance</option>
+                    <option value="">intermediate ability: strong stops, </option>
+                    <option value="">Skate games</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- LEVEL REQ -->
+        <div class="row-9 span-full cell-block" >
+            <label> Skate dicipline
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <!-- <input type="text"> -->
+                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                    <option value="">Artistic</option>
+                    <option value="">Roller Derby</option>
+                    <option value="">Roller Hockey</option>
+                    <option value="">Speed Skate</option>
+                    <option value="">Street</option>
+                    <option value="">Ramps</option>
+                    <option value="">Dance</option>
+                    <option value="">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- WORKSHOP TYPE -->
+        <div class="row-10 span-full cell-block" >
+            <label> Workshop Type
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <!-- <input type="text"> -->
+                <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false">
+                    <option value="">Skate Night</option>
+                    <option value="">Open session</option>
+                    <option value="">Workshop</option>
+                    <option value="">Street skate</option>
+                    <option value="">Skate games</option>
+                    <option value="">Competition</option>
+                    <option value="">Audition</option>
+                    <option value="">Social</option>
+                    <option value="">Other</option>
+                </select>
+                
+            </div>
+        </div>
+
+        <!-- EVENT NAME -->
+        <div class="row-11 span-full cell-block" >
+            <label> Location / Venue Name
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <input type="text" class="long-fit field-box">
+            </div>
+        </div>
+        
+        <!-- ADDRESS LINES -->
+        <div class="row-12 span-full cell-block">
+            <label> Address Line 1</label>
+            <div>
+                <input type="text" class="long-fit field-box">
+            </div>
+        </div>
+        <div class="row-13 span-full cell-block">
+            <label> Address Line 2</label>
+            <div>
+                <input type="text" class="long-fit field-box">
+            </div>
+        </div>
+
+        <!-- TOWN/CITY -->
+        <div class="row-14 span-full cell-block">
+            <label> Town/City
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <input type="text" class="long-fit field-box">
+            </div>
+        </div>
+
+        <!-- POSTCODE -->
+        <div class="row-15 span-half cell-block">
+            <label> PostCode</label>
+            <div>
+                <input type="text" class="field-box">
+            </div>
+        </div>
+
+        <!-- UPLOAD IMAGE -->
+        <div id="#" class="row-16 span-full cell-block" data-js-reload="#">
+            <label class="#" for="#">Event image or poster
+                <span class="gfield_required">
+                    <span class="gfield_required gfield_required_asterisk">*</span>
+                </span>
+            </label>
+            <div class="#">
+                <input type="hidden" name="MAX_FILE_SIZE" value="#">
+                <input name="#" id="#" type="file" class="field-box-2" aria-describedby="#" onchange="">
+                <span class="#" id="#">Max. file size: 16 MB.</span>
+                <div class="#" id="#"></div>
+            </div>
+        </div>
+        
+        <!-- INFO BOX -->
+        <div class="row-17 span-full cell-block">
+            <label> Event Information
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <input type="text" class="describe-it field-box">
+            </div>
+        </div>
+        
+        <!-- SOCIALS URL 1 -->
+        <div class="row-18 span-full cell-block">
+            <label> URL or social media 1
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <input type="text" class="small-fit field-box">
+            </div>
+        </div>
+        <!-- SOCIALS URL 1 -->
+        <div class="row-19 span-full cell-block" >
+            <label> URL or social media 2
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <input type="text" class="small-fit field-box">
+            </div>
+        </div>
+        <!-- SOCIALS URL 1 -->
+        <div class="row-20 span-full cell-block" >
+            <label> URL or social media 3
+                <span>
+                    <span>*</span>
+                </span>
+            </label>
+            <div>
+                <input type="text" class="small-fit field-box">
+            </div>
+        </div>
+        
+        <!-- SUBMIT BUTTON -->
+        <div class="long-fit row-last span-full cell-block">
+            <div class="btn-wrap">
+                <Button variant="tertiary" size="lg" theme="purpleLight" type="submit">Submit Event</Button>
+            </div>
+        </div>
+    </form>
+    <!-- WORKSHOP Form End  -->
+    </div>
+<!-- </div> -->

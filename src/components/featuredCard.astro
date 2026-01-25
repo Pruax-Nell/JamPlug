@@ -10,7 +10,7 @@ interface Props {
   country: string;
   eventType: string;
   description: any;
-  offskates: string;
+  offskates?: string;
   // We only take the two dates we need for the helper, not the whole event object
   timeframe: {
     startDate: Date | string;

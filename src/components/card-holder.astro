@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets";
+import { formatEventDate } from '../function/dateHelper';
+
+interface Props {
+  variant: "event" | "blog" | "placeholder";
+  url: string;
+  title: string;
+  heading?: string;
+  description?: string;
+  // Event Specific
+  poster?: any;
+  city?: string;
+  country?: string;
+  eventType?: string;
+  timeframe?: {
+    startDate: Date | string;
+    endDate?: Date | string | null;
+  };
+  // Blog Specific
+  subtitle?: string;
+  category?: string;
+  discipline?: string;
+}
+
+const { 
+  variant, 
+  url, 
+  title, 
+  subtitle,
+  heading,
+  description, 
+  poster, 
+  city, 
+  country, 
+  eventType, 
+  timeframe, 
+  category,
+  discipline, 
+} = Astro.props;
+
+// Logic for event dates
+const eventDateString = (variant === 'event' && timeframe) 
+  ? formatEventDate(timeframe.startDate, timeframe.endDate) 
+  : null;
+---
+
+<a href={url} class={`sample-case variant-${variant}`}>
+    
+    {variant === "event" && (
+    <div class={`post-card card-${variant}`}>
+        {poster ? (
+            <Image src={poster} alt={title} width={400} height={500} class="poster-block" />
+        ) : (
+            <div class="placeholder poster-block">🛼</div>
+        )}
+
+        <div class={`content-block ${variant}-content`}>
+
+            <p class="card-heading">{title}</p>
+
+            <div class="info-bloc">
+                <span>📍{city}, {country}</span>
+                <span>{eventDateString}</span>
+            </div>
+
+            <div class="badge-block">
+                <span class="type-badge">{eventType}</span>
+                <p class="desc">{description}</p>
+            </div>
+
+        </div>
+    </div>
+    )}
+
+    {variant === "blog" && (
+    <div class={`post-card card-${variant}`}>
+
+            
+        {poster ? (
+            <Image src={poster} alt={title} width={300} height={400} class="poster-block" />
+            <div class={`content-block ${variant}-content`}>
+                <p class="card-heading">{title}</p>
+                <span>{subtitle}</span>
+
+                <p>{description}</p>
+                <span>{category}</span>
+                <span>{discipline}</span>   
+            </div>
+        ) : (
+            <div class="blog-top">
+                <p class="card-heading">{title}</p>
+                <span>{subtitle}</span>
+            </div>
+
+            <div class="blog-base">
+                <p>{description}</p>
+                <span>{category}</span>
+                <span>{discipline}</span>
+            </div>
+            
+        )}
+
+    </div>
+    )}
+
+    {variant === "placeholder" && (
+        <div class={` ${variant}-content`}>
+            <p class="card-heading">{heading}</p>
+            <span>{description}</span>
+            <span class="arrow">→</span>
+        </div>
+    )}
+
+</a>
+

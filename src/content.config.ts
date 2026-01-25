@@ -2,42 +2,12 @@ import { z, defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA } from '../src/constants'
 import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from './data/globe-constants'
+import { timeObject, personObject, locationSchema, businessObject } from "./shared.config";
 
-// zod templates
-const timeObject = z.object({
-    hour: z.string(),
-    minute: z.string(),
-});
-
-const personObject = z.object({
-  name: z.string(),
-  socialLinks: z.array(
-    z.object({
-      platform: z.enum(getValues(SOCIAL_MEDIA)).default('socials'),
-      url: z.string().url().optional().or(z.literal('')),
-    })
-  ).optional().nullable().default([]),
-});
-
-// FUTURE USE ... rinks etc
-const businessObject = z.object({
-  name: z.string(),
-  runBy: z.string(),
-  address: z.object({
-    firstLine: z.string(),
-    area: z.string(),
-    postCode: z.string(),
-  }),
-  contact: z.object({
-      mainNo: z.string(), 
-      secondNo: z.string(),
-      emailAddress: z.string(),
-      otherContact: z.string(),
-      website: z.string(),
-  }).optional().nullable().nullable(),
-});
 
 // ------------- Collections ----------------- //
+
+
 //  BLOGS *** 
 const blog = defineCollection ({
     loader: glob({ pattern: '**/index.mdoc', base: "src/content/blog"}),
@@ -61,6 +31,7 @@ const blog = defineCollection ({
         
     }),
 });
+
 
 //  EVENTS  *** 
 const events = defineCollection({
@@ -116,6 +87,7 @@ const events = defineCollection({
 
         startTime: timeObject.optional(), 
         endTime: timeObject.optional(), 
+
     // Bonus info - option to add multiple lines ideal
         eventLink: z.string().url().optional().or(z.literal('')),
         ticketLink: z.string().url().optional().or(z.literal('')),
@@ -140,6 +112,7 @@ const events = defineCollection({
 
     })
 });
+
 
 // ORGANISERS ***
 

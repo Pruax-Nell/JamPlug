@@ -10,7 +10,7 @@ const { title, url, tags, description } = Astro.props;
         <p class="blog-card-title">{title}</p>
     <div class="mini-content-2">
         <span>{description}</span>
-        <!-- {tags && <span>{tags}</span>} -->
+        {tags && <span>{tags}</span>}
     </div>
     </a>
-</div>
+</div> 

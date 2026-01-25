@@ -35,6 +35,7 @@
 import '../styles/global.css'
 import '../styles/event.css'
 import EventCard from './eventcard';
+import CardHolder from './card-holder.astro';
 
 // REACT and CONSTANTS 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -428,90 +429,94 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
       <section className="filter-bar">
         <span>Filter your Skate Events</span>
       
-      <div className='filter-group'>
-        <label>A&#41; Search Town, Region, or Country</label>
-        <LocationSearch 
-          initialEvents={initialEvents} 
-          onFilterChange={handleFilterChange} 
-          value={filters.townCity}
-        />
-        <span>OR</span>
-        <label>B&#41; Choose in order: Continent, Country, Region, Town/City</label>
-        <select value={filters.continent} onChange={(e) => handleFilterChange('continent', e.target.value)}>
-          <option value="All">Any Continent</option>
-          {renderOptions(continentOptions, activeFilterValues.continent)}
-        </select>
+        <section className='filter-section'>
+          <div className='filter-group'>
+          <span>Choose Where:</span>
 
-        <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
-          <option value="All">Any Country</option>
-          {renderOptions(availableCountries, activeFilterValues.countries)}
-        </select>
-        
-        
-        <span className='caption'>Region/City will appear once 'Country' is selected</span>
-        <select value={filters.region} onChange={(e) => handleFilterChange('region', e.target.value)}>
-          <option value="All">Any {regionLabel}</option>
-          {dynamicRegions.map(reg => (
-            <option key={reg.value} value={reg.value}>{reg.label}</option>
-          ))}
-        </select>
+          <label>A&#41; Search Town, Region, or Country</label>
+          <LocationSearch 
+            initialEvents={initialEvents} 
+            onFilterChange={handleFilterChange} 
+            value={filters.townCity}
+          />
+          <span>OR</span>
+          <label>B&#41; Choose in order: Continent, Country, Region, Town/City</label>
+          <select value={filters.continent} onChange={(e) => handleFilterChange('continent', e.target.value)}>
+            <option value="All">Any Continent</option>
+            {renderOptions(continentOptions, activeFilterValues.continent)}
+          </select>
 
-        <select value={filters.townCity} onChange={(e) => handleFilterChange('townCity', e.target.value)}>
-          <option value="All">Any City</option>
-          {dynamicTowns.map(t => <option key={t} value={t}>{t}</option>)}
-        </select>
+          <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
+            <option value="All">Any Country</option>
+            {renderOptions(availableCountries, activeFilterValues.countries)}
+          </select>
+          
+          
+          <small className='caption'>Region/City will appear once 'Country' is selected</small>
+          <select value={filters.region} onChange={(e) => handleFilterChange('region', e.target.value)}>
+            <option value="All">Any {regionLabel}</option>
+            {dynamicRegions.map(reg => (
+              <option key={reg.value} value={reg.value}>{reg.label}</option>
+            ))}
+          </select>
 
-
-      </div>
-
-      <div className='filter-group'>
-        
-        <span>Choose When:</span>
-        <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
-          <option value="All">Any Month</option>
-          {renderOptions(MONTH_ORDER, activeFilterValues.months)}
-        </select>
-
-        <span>Choose What:</span>
-        <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
-          <option value="All">Any Event Type</option>
-          {renderOptions(EVENT_TYPE, activeFilterValues.types)}
-        </select>
-
-        <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
-          <option value="All">Any Skate Discipline</option>
-          {renderOptions(SKATE_DISCIPLINES, activeFilterValues.disciplines)}
-        </select>
-        <select 
-          value={filters.offSkates} 
-          onChange={(e) => handleFilterChange('offSkates', e.target.value)}
-        >
-          <option value="all"> 'On/Off Skates' </option>
-          <option value="skating">🛼 On-Skates Only</option>
-          <option value="off-skates">👟 Off-Skates / Socials</option>
-        </select>
-
-        <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
-          <option value="All">Any Level</option>
-          {renderOptions(SKILL_LEVEL, activeFilterValues.levels)}
-        </select>
-
-        <select value={filters.minAge} onChange={(e) =>     handleFilterChange('minAge', e.target.value)}>
-          <option value="All">Any Age</option>
-          {serverOptions.minAge.map(age => (
-            <option key={age} value={age}>{age}</option>
-          ))}
-        </select>
+          <select value={filters.townCity} onChange={(e) => handleFilterChange('townCity', e.target.value)}>
+            <option value="All">Any City</option>
+            {dynamicTowns.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
 
 
-      </div>
+        </div>
 
-      <button className="reset-button" onClick={handleReset}>
-        Clear All Filters
-      </button>
+        <div className='filter-group'>
 
+          <span>Choose When:</span>
+          <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
+            <option value="All">Any Month</option>
+            {renderOptions(MONTH_ORDER, activeFilterValues.months)}
+          </select>
+
+          <span>Choose What:</span>
+          <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
+            <option value="All">Any Event Type</option>
+            {renderOptions(EVENT_TYPE, activeFilterValues.types)}
+          </select>
+
+          <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
+            <option value="All">Any Skate Discipline</option>
+            {renderOptions(SKATE_DISCIPLINES, activeFilterValues.disciplines)}
+          </select>
+          <select 
+            value={filters.offSkates} 
+            onChange={(e) => handleFilterChange('offSkates', e.target.value)}
+          >
+            <option value="all"> 'On/Off Skates' </option>
+            <option value="skating">🛼 On-Skates Only</option>
+            <option value="off-skates">👟 Off-Skates / Socials</option>
+          </select>
+
+          <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
+            <option value="All">Any Level</option>
+            {renderOptions(SKILL_LEVEL, activeFilterValues.levels)}
+          </select>
+
+          <select value={filters.minAge} onChange={(e) =>     handleFilterChange('minAge', e.target.value)}>
+            <option value="All">Any Age</option>
+            {serverOptions.minAge.map(age => (
+              <option key={age} value={age}>{age}</option>
+            ))}
+          </select>
+
+
+        </div>
       </section>
 
+        <button className="reset-button" onClick={handleReset}>
+          Clear All Filters
+        </button>
+
+      </section>
+      
       <div className="results-meta">
         <p>
           Showing <strong className='highlight'>{filteredEvents.length}</strong> 
@@ -521,13 +526,15 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
       </div>
 
       <div className="event-grid">
+        {visibleEvents && (<span className='scroll-hint'> ~ Scroll Start ~ </span>)}
         {visibleEvents.length > 0 ? (
           visibleEvents.map(event => (
             <EventCard 
-              key={event.id} 
-              id={event.id} 
-              {...event.data} 
+            key={event.id} 
+            id={event.id} 
+            {...event.data} 
             />
+
           ))
         ) : (
           <div className="no-events-fallback">
@@ -535,6 +542,8 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
             <p>Try adjusting your filters or check back later for new dates.</p>
           </div>
         )}
+        {visibleEvents && (<span className='scroll-hint'> * Scroll End * </span>)}
+        
       </div>
     
       {/* Final Pagination (Only need one version) */}

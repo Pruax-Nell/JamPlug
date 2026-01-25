@@ -8,24 +8,22 @@ import HeroImg from "../assets/layout/image9.jpg"
 <div class="hero-seat">
     <div class="hero-box">
         <h1 class="welcome"> Your Jam Plug  </h1>
-        <!-- <Image class="hero-item" src={HeroImg} priority alt="Skater Welcome" layout='full-width' width={680}/> -->
     </div>
 </div>
 
 <style>
     .hero-seat {
-        width: 1fr;
-        height: 60svh;
-        /* height: max-content; */
+        width: auto;
+        max-height: 60svh;
         background-image: 
         linear-gradient(var(--shadow-brown-2), var(--shadow-brown-2), var(--shadow-orange-3)),
         url("../assets/layout/image9.jpg");
         background-size: 200%;
         background-position: bottom center;
-        /* backdrop-filter: blur(.1rem); */
     }
 
-    .hero-box{display: grid;
+    .hero-box{
+        display: grid;
         grid-template-columns: 5% repeat(5, 18%) 5%;
         grid-template-rows: .5fr repeat(3, 1fr) .2fr;
         height: 100%;
@@ -37,7 +35,6 @@ import HeroImg from "../assets/layout/image9.jpg"
     .welcome {
         font-family: var(--font-rose-body);
         text-transform: uppercase;
-        /* font-family: var(--font-shantell-notes); */
         grid-row: 5/6;
         grid-column: 1 / 5;
         margin: .1ch;
@@ -49,13 +46,11 @@ import HeroImg from "../assets/layout/image9.jpg"
         text-shadow: 
             4px 4px 7px var(--ow-brown), 
             0 0 .3rem var(--ob-orange);
-        /* -webkit-text-stroke: .02px var(--shadow-brown); */
-        /* -webkit-text-stroke: .02px var(--ob-brown); */
 
     }
 
     .hero-item{
-        width: 100%;
+        width: auto;
     }
 
 </style>

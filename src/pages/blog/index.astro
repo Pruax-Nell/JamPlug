@@ -23,22 +23,26 @@ const blogPosts = allPosts
 const pageTitle = "Roll/Skate/Blog";
 ---
 <BaseLayout page_title={pageTitle}>
+  <section class="frame-fence">
+    <h1>the new blog page...! </h1>
+    <p>This is where I will post about my journey learning Astro. again</p>
+  </section>
 
-  
-  <h1>the new blog page...! </h1>
-  <p>This is where I will post about my journey learning Astro. again</p>
+  <section class="frame-fence">
+    <span>Component test below</span>
+    <ul>
+      {blogPosts.map((blog: CollectionEntry<'blog'>) => (
+        <BlogPost 
+        id={blog.id} 
+        data={blog.data}
+        />
+      ))}
+    </ul>
+  </section>
 
-  <span>Component test below</span>
-  <ul>
-    {blogPosts.map((blog: CollectionEntry<'blog'>) => (
-      <BlogPost 
-      id={blog.id} 
-      data={blog.data}
-      />
-    ))}
-  </ul>
-
+  <section class="frame-fence">
     <p>
       <a href="/tags/">tag list</a>
     </p>
+  </section>
 </BaseLayout> 

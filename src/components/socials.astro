@@ -1,16 +1,21 @@
 ---
-const BASE_URL = import.meta.env.BASE_URL
+import { Image } from "astro:assets";
+// Import the images directly
+import emailIcon from "../assets/email.png";
+import instaIcon from "../assets/instagram.png";
+import tiktokIcon from "../assets/tik-tok.png";
 
 ---
  
 <a href="mailto:skater@yourjamplug.com"  class="socialRound">
-    <img src={BASE_URL + 'src/assets/email.png'} alt="email">
+    <Image src={emailIcon} alt="Email" width={20} height={20} class="social-bagde" />
 </a>
 <a href="https://www.instagram.com/yourjamplug.uk" target="_blank" class="socialRound">
-    <img src={BASE_URL + 'src/assets/instagram.png'} alt="Instagram">
+    <Image src={instaIcon} alt="Instagram" width={20} height={20} class="social-bagde" />
 </a>
 <a href="https://www.tiktok.com/@skaters.jam.plug" target="_blank" class="socialRound">
-    <img src={BASE_URL + 'src/assets/tik-tok.png'} alt="Tiktok">
+    <Image src={tiktokIcon} alt="TikTok" width={20} height={20} class="social-bagde" />
+    
 </a>
 
 <style>
@@ -21,11 +26,9 @@ const BASE_URL = import.meta.env.BASE_URL
         background: var(--main-orange);
     }
 
-    a > img {
+    .social-badge {
         width: 20px;
         height: 20px;
-        /* padding: 1ch; */
-        
         
     }
     

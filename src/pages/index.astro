@@ -7,6 +7,7 @@ import SampleEventCard from "../components/sampleEventCard.astro";
 import FeaturedCard from '../components/featuredCard.astro';
 import Button from '../components/button.astro';
 import EndSamplecard from "../components/endsamplecard.astro";
+import CardHolder from "../components/card-holder.astro";
 
 import "../styles/home.css";
 import "../styles/components.css";
@@ -48,7 +49,7 @@ const upcomingEvents = (publishedEvents)
 	title: event.data.eventName,
 	poster: event.data.eventPoster,
 	city: event.data.townCity,
-	country: event.data.country,
+	country: event.data.location.discriminant,
 	description: event.data.description,
 	eventType: event.data.eventType,
 	featured: event.data.isFeatured,
@@ -71,7 +72,7 @@ const featuredEvents = (publishedEvents)
 	title: event.data.eventName,
 	poster: event.data.eventPoster,
 	city: event.data.townCity,
-	country: event.data.country,
+	country: event.data.location.discriminant,
 	description: event.data.description,
 	eventType: event.data.eventType,
 	featured: event.data.isFeatured,
@@ -86,11 +87,23 @@ const featuredEvents = (publishedEvents)
 );
 	
 // BLOG COLLECTION
-const publishedBlogs = await getCollection('blog')
+const publishedBlogs = await getCollection('blog', ({ data }) => {
+  return data.status === 'published';
+});
 
 const recentBlogs = (publishedBlogs)
-.filter( (post) => post.data.status === 'published')
-.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf(), )
+.map(event => ({
+	id: event.id,
+	title: event.data.title,
+	subtitle: event.data.subtitle,
+	published: event.data.published,
+	poster: event.data.coverImage,
+	description: event.data.description,
+	category: event.data.blogCategory,
+	discipline: event.data.skateDiscipline,
+	
+}))
+.sort((a, b) => b.published.valueOf() - a.published.valueOf(), )
 .slice(0, 8);
 
 	
@@ -99,27 +112,25 @@ const recentBlogs = (publishedBlogs)
 	
 <BaseLayout>
 	<!------------------------------------------ HERO ---------------->
-	<section  id="hero-section" class="section scroll-snap">
+	<section  id="hero-section" class="frame-fence scroll-snap">
 		<Hero />
 	</section>
 
 	<!------------------------------------------ MISSION ---------------->
-	<section id="our-mission" class=" scroll-snap stack-section stack-1">
-		<div class="l-top heading-banner">
+	<section id="our-mission" class="frame-fence scroll-snap  ">
+		<div class=" heading-banner">
 			<h3>Helping skater's skate</h3>
 			<span class="p1">Mission Statement: "For the Skaters"</span>
 		</div>
 		
-		<div class="l-mid">
-			<div class="nav-button">
-				<Button href="/about" variant="secondary" theme="brownDark" size="lg"> Read about Us </Button>
-			</div>
+		<div class="nav-button center-flex">
+			<Button href="/about" variant="secondary" theme="brownDark" size="lg" class=""> Read about Us </Button>
 		</div>
 		
 	</section>
 	<!------------------------------------------ FEATURES ---------------->
 	{featuredEvents.length > 0 ? (
-		<section id="feature-section" >
+		<section id="feature-section"  class="frame-fence">
 			<div><h3>Featured Events</h3></div>
 			<div class="carosel">
 		{featuredEvents.map((post) => (
@@ -131,80 +142,97 @@ const recentBlogs = (publishedBlogs)
 	) : (<span>special</span>) } 
 
 	<!------------------------------------------ JAM LIST ---------------->
-	<section id="festival-list" class="section scroll-snap center-focus">
+	<section id="festival-list" class="frame-fence scroll-snap">
 		<div class="blur-back-1 center-div">
 			<div class="">
 				<h3 class="title"> Big Jam List <span class="year-highlight">2026</span> </h3>
 				<!-- <span class="sub-heading">All the Skate Festivals of Europe</span> -->
 			</div>
 			<div class="items-center">
-				<div class="">
-					<Button href="/festivals" variant="tertiary" theme="pinkLight" size="lg"> Find Skate Festivals </Button>
-				</div>
+				<Button href="/festivals" variant="tertiary" theme="pinkLight" size="lg"> Find Skate Festivals </Button>
 			</div>
 		</div>
 		
 	</section>
 	<!------------------------------------------ DIRECTORY ---------------->
-	<section id="learn-to-skate" class=" scroll-snap stack-section stack-2">
-		<div class="l-top heading-banner">
+	<section id="learn-to-skate" class="frame-fence scroll-snap ">
+		<div class="heading-banner">
 			<h3>To the directory</h3>
 			<span>Your A-to-Z of Skating</span>
 			<p class="narrow-ch self-center p1">Find rinks, skate shops and community groups who hold lessons or events</p>
 		</div>
-		<div class="l-mid ">
-			<div class="nav-button">
-				<Button href="/directory" variant="secondary" theme="brownDark" size="lg"> Read More </Button>
-			</div>
+		<div class="nav-button center-flex">
+			<Button href="/directory" variant="secondary" theme="brownDark" size="lg"> Browse the UK Directory </Button>
 		</div>
-		
+	
 	</section>
 	<!------------------------------------------ UPCOMING ---------------->
-	<section id="upcoming-events" class="section scroll-snap side-by-side" >
+	<section id="upcoming-events" class="frame-fence scroll-snap side-by-side" >
 		<div class="side-a">
 			<h4>Upcoming Events</h4>
-			<Button href="/events" variant="secondary" theme="yellowLight" size="xs"> Read More </Button>
+			<div><Button href="/events" variant="secondary" theme="yellowLight" size="xs"> See All Events </Button></div>
 			<p>small carosel of some events. maybe featured</p>
 			<p>direct to main event page</p>
 		</div>
 		<div class=" event-previews side-b">
 
 			{upcomingEvents.length > 0 ? (
-				<div class="carosel"> 
-			{upcomingEvents.map((post) =>
-				( <SampleEventCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}
+				<div class="carosel">
+			{upcomingEvents.map((post) => (
+				<CardHolder 
+				variant="event"
+				title={post.title}
+				url={`/events/${post.id}/`}
+				poster={post.poster}
+				city={post.city}
+				country={post.country}
+				timeframe={post.timeframe}
+				description={post.description}
 				/>
 			))}
-			<EndSamplecard title="See more Events" url="/events" description="Click me" />
+
+			<CardHolder 
+				variant="placeholder"
+				title="See more Events"
+				url="/events"
+				description="Browse All Events"
+			/>
 			</div> ) 
 			: 
 			// OR show none returned
-			(<div class="none-returned"><p>no events found</p></div>)}
+			(<div class="none-returned"><p>no events to show yet</p></div>)}
 			
 		</div>
 
 	</section>
 	<!------------------------------------------ BLOGS ---------------->
-	<section id="skate-news" class="section scroll-snap side-by-side">
+	<section id="skate-news" class="frame-fence scroll-snap side-by-side">
 		<div class="side-a">
 			<h4>Skate News</h4>
 			<span>Direct to blog page</span>
-			<Button href="/blog" variant="secondary" theme="orangeDark" size="xs"> Read More </Button>
+			<div><Button href="/blog" variant="secondary" theme="orangeDark" size="xs"> See All Blog Posts </Button></div>
 		</div>
 		<div class="side-b">
-			{publishedBlogs.length > 0 ? (
+			{recentBlogs.length > 0 ? (
 				<div class="carosel"> 
-				{/* map/dynamic list */}
-			{publishedBlogs.map((post) =>
-				( <SampleBlogCard title={post.data.title} url={`/blog/${post.id}/`} description={post.data.description}
+			{recentBlogs.map((post) =>
+				( <CardHolder variant="blog" 
+				title={post.title} 
+				url={`/blog/${post.id}/`} 
+				subtitle={post.subtitle}  
+				description={post.description} 
+				category={post.category} discipline={post.discipline}
 				/>
 			))}
-			{/* add the end card */}
-			<EndSamplecard title="See more Posts" url="/blog/" description="Click me" />
+				<CardHolder 
+				variant="placeholder" 
+				title="See more Posts" 
+				url="/blog/" 
+				description="Browse More Blog Posts" 
+				/>
 			</div> ) 
 			: 
-			// OR show none returned
-			(<div class="none-returned"><p>~No blog posts found~</p></div>)}
+			(<div class="none-returned"><p>~No blog posts yet~</p></div>)}
 			
 		</div>
 	</section>

@@ -1,0 +1,188 @@
+---
+
+import Button from "../components/button.astro";
+import LocationPicker from '../components/locationSelect.astro';
+
+import { getValues, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, CONTINENT_DATA } from "../data/globe-constants";
+
+const continentList = (ALL_CONTINENT_VALUES)
+.map
+.toString
+---
+
+<form 
+action="https://submit-form.com/your-id" 
+method="POST" 
+enctype="multipart/form-data"
+>
+<input type="hidden" name="form_category" value="Skate Business" />
+<!-- <div class="form-field">
+    <label for="continent-select">Continent</label>
+    <select id="continent-select" name="continent" class="form-input">
+      <option value="">-- Select Continent --</option>
+      {CONTINENT_DATA.map(c => <option value={c.continent}>{c.continent}</option>)}
+    </select>
+  </div>
+
+  <div class="form-field hidden" id="country-wrapper">
+    <label for="country-select">Country</label>
+    <select id="country-select" name="country" class="form-input">
+      <option value="">-- Select Country --</option>
+    </select>
+  </div>
+
+  <div class="form-field hidden" id="region-wrapper">
+    <label for="region-select">State / Province / Region</label>
+    <select id="region-select" name="region" class="form-input">
+      <option value="">-- Select Region --</option>
+    </select>
+  </div> -->
+
+  <fieldset>
+    <legend> What is your Skate Business?</legend>
+    <label for="">  Rink / Skate Venue</label>
+    <input type="checkbox" placeholder="" value="" name="" maxlength="">
+
+    <label for=""> Retail </label>
+    <input type="checkbox" aria-describedby="span-id" >
+    
+    <label for="">  Community group </label>
+    <input type="checkbox">
+    
+    <label for=""> Other </label>
+    <input type="checkbox">
+
+    <label for="">*if Other: </label>
+    <input type="text" id="" name="" placeholder="Other..."  minlength="" class="form-input">
+</fieldset>
+<input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Business Name</label>
+</div>
+<div class="form-field">
+    <input type="email" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Business email</label>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Business Owner</label>
+    <span>Example format: xx xxx x xxxx</span>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder="Name"  minlength="" class="form-input">
+    <label for="">Ideal Point of Contact</label>
+    <input type="text" id="" name="" placeholder="email@address.com"  minlength="" class="form-input">
+    <label for="">Email:</label>
+    <span>PR/Comms or Admin team member (aside from owner)</span>
+</div>
+<div class="form-field">
+  <label for="">Location</label>
+  <LocationPicker />
+<!--     
+    <select name="" id="">
+        {ALL_CONTINENT_VALUES.map ( value => (<option value={value}>{ value }</option>))}
+    </select>
+    
+    <select name="" id="">
+        {ALL_COUNTRY_VALUES.map( value => ( <option value={value}>{value}</option>))}
+        
+    </select>
+    
+    <select name="" id="">
+        {ALL_REGION_VALUES.map( value => ( <option value={value}>{value}</option>))}
+    </select> -->
+
+    <input type="text" id="" name="" placeholder="Town / City | i.e. Leeds"  minlength="4" class="form-input">
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Products/Services/speciality</label>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Social Link 1</label>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Social Link 1</label>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Social Link 1</label>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Social Link 1</label>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">Social Link 1</label>
+</div>
+<div class="form-field">
+    <input type="text" id="" name="" placeholder=""  minlength="" class="form-input">
+    <label for="">long text for Other</label>
+</div>
+
+    <Button variant="tertiary" size="lg" theme="purpleLight">Submit to Directory</Button>
+</form>
+
+
+<!-- <script>
+  import { CONTINENT_DATA, getRegionOptions } from '../data/globe-constants';
+
+  const contSelect = document.getElementById('continent-select') as HTMLSelectElement;
+  const countrySelect = document.getElementById('country-select') as HTMLSelectElement;
+  const regionSelect = document.getElementById('region-select') as HTMLSelectElement;
+  
+  const countryWrapper = document.getElementById('country-wrapper');
+  const regionWrapper = document.getElementById('region-wrapper');
+
+  contSelect?.addEventListener('change', (e) => {
+    const selectedCont = (e.target as HTMLSelectElement).value;
+    
+    countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
+    regionWrapper?.classList.add('hidden');
+    
+    if (selectedCont) {
+      const continent = CONTINENT_DATA.find(c => c.continent === selectedCont);
+      continent?.countries.forEach(country => {
+        const opt = document.createElement('option');
+        opt.value = country.value;
+        opt.textContent = country.label;
+        opt.dataset.hasRegions = country.hasRegions ? "true" : "false";
+        countrySelect.appendChild(opt);
+      });
+      countryWrapper?.classList.remove('hidden');
+    } else {
+      countryWrapper?.classList.add('hidden');
+    }
+  });
+
+  countrySelect?.addEventListener('change', (e) => {
+    const selectedCountry = (e.target as HTMLSelectElement).value;
+    const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+    const hasRegions = selectedOption.dataset.hasRegions === "true";
+
+    regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
+
+    if (hasRegions) {
+      const regions = getRegionOptions(selectedCountry);
+      regions.forEach(reg => {
+        const opt = document.createElement('option');
+        opt.value = reg.value;
+        opt.textContent = reg.label;
+        regionSelect.appendChild(opt);
+      });
+      regionWrapper?.classList.remove('hidden');
+    } else {
+      regionWrapper?.classList.add('hidden');
+    }
+  });
+</script> -->
+
+<style>
+  .hidden { display: none; }
+  .form-field { margin-bottom: 1rem; }
+</style>

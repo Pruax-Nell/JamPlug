@@ -1,24 +1,24 @@
 ---
-
-import BaseLayout from "../layouts/baseLayout.astro";
-
-// event forms
 import FormOther from "../components/formOther.astro"
+import FormBusiness from "../components/formBusiness.astro"
 import FormNight from "../components/formNight.astro"
 import FormSocial from "../components/formSocial.astro"
 import FormWeekend from "../components/formWeekend.astro"
 import FormWorkshop from "../components/formWorkshop.astro"
 import FormFestival from "../components/formfestival.astro"
 
-// styled button
+import BaseLayout from "../layouts/baseLayout.astro";
 import Button from "../components/button.astro";
 
 import "../styles/global.css";
 import "../styles/submit.css";
+import Formfestival from "../components/formfestival.astro"
+
 
 ---
 
-<BaseLayout> 
+<BaseLayout>
+        <!-- || ------------------------------------------PAGE TOP -->
     <section class="frame-fence pageTop primary-container">
         <div class="primary-container"><h1>Submit your Event</h1></div>
     </section>
@@ -26,6 +26,8 @@ import "../styles/submit.css";
         <!-- ||------------------------------------- FORM SECTION  -->
         <section class="frame-fence primary-container dual-field">
 
+            
+            
             <!-- ||------------------------- DIRECTIONS  -->
             <div class="info half-container">
                 <div>
@@ -48,23 +50,24 @@ import "../styles/submit.css";
                     
                 </div>
             </div>
+        </section>
+        <section id="form-field">
 
-            <!-- -||----------------------- FORM FIELD  -->
-            <div class="form-wrap half-container S3">
-                <div class="form-field">
-                    <div id="placeholder-form" class=""><div class=""><h3 class="srOnly">Placeholder</h3><p>Select an Event Type above to reveal the appropriate submission form.</p></div></div>
-                    <div id="general-form" class="hidden"><FormOther /> </div>
-                    <div id="workshop-form" class="hidden"> <FormWorkshop /> </div>
-                    <div id="weekend-form" class="hidden"> <FormWeekend /> </div>
-                    <div id="social-form" class="hidden"> <FormSocial /> </div>
-                    <div id="night-form" class="hidden"> <FormNight /> </div>
-                    <div id="festival-form" class="hidden"> <FormFestival /> </div>
+                    <!-- DEFAULT PLACEHOLDER/HINT -->
+<div id="placeholder-form" class=""><div class=""><h3 class="srOnly">Placeholder</h3><p>Select an Event Type above to reveal the appropriate submission form.</p></div></div>
+<div id="general-form" class="hidden"><FormOther /> </div>
+<div id="workshop-form" class="hidden"> <FormWorkshop /> </div>
+<div id="weekend-form" class="hidden"> <FormWeekend /> </div>
+<div id="social-form" class="hidden"> <FormSocial /> </div>
+<div id="night-form" class="hidden"> <FormNight /> </div>
+<div id="festival-form" class="hidden"> <FormFestival /> </div>
 
-                <!-- FORM-FIELD END -->
-                </div>
-            <!-- FORM-WRAP END -->
-            </div>
-        <!-- FORM-SECTION END -->
+
+        
+
         </section>
 
+
+
 </BaseLayout>
+

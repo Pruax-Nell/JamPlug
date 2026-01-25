@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro"
+import FormBusiness from "../components/formBusiness.astro"
+ 
+import Button from "../components/button.astro";
+
+import "../styles/global.css";
+import "../styles/submit.css";
+
+
+---
+
+<BaseLayout> 
+    
+    
+    <!-- || ------------------------------------------PAGE TOP -->
+    <section class="frame-fence pageTop primary-container">
+        <div class="primary-container"><h1>Submit your Business</h1></div>
+        <!-- ||------------------------- DIRECTIONS  -->
+        <hgroup>
+            <h2 class="half-title">How it works</h2>
+                <p>Select a form to submit your community event</p>
+            </hgroup>
+    </section>
+        
+        
+    <!-- ||------------------------------------- FORM SECTION  -->
+    <section class="frame-fence primary-container dual-field">
+        
+        <!-- -||----------------------- FORM FIELD  -->
+        <div class="form-wrap form-field">
+            <FormBusiness/>
+        </div>
+    </section>
+        
+</BaseLayout>

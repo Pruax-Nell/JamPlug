@@ -56,32 +56,33 @@ const { googleUrl, icsDataUri } = getCalendarUrls(data);
 		<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
 
   </nav>
+<section class="frame-fence">
 
   <article class="event-focus">
-      <div class=" poster-frame">
-        {data.eventPoster ? (
+    <div class=" poster-frame">
+      {data.eventPoster ? (
         <Image 
-          src={data.eventPoster} 
-          alt={`Event Poster TBD ${data.eventName}`} 
-          width={350} 
-          height={510} 
-          class="cover-image"
+        src={data.eventPoster} 
+        alt={`Event Poster TBD ${data.eventName}`} 
+        width={350} 
+        height={510} 
+        class="cover-image"
         />
       ) : (
         // TODO create alt event poster
         <div class="placeholder-poster ">🛼</div>
       )}
       </div>
-
-    <header>
-      <div class="event-header-info">
-        <h4 class="event-title">{data.eventName.toLocaleUpperCase()}</h4>
-        <div class="sub-heading">
-          {data.subheading && (
-            <span>{data.subheading}</span>
-          )}
-        </div>
-
+      
+      <header>
+        <hgroup class="event-header-info">
+          <h4 class="event-title">{data.eventName.toLocaleUpperCase()}</h4>
+          <div class="sub-heading">
+            {data.subheading && (
+              <span>{data.subheading}</span>
+            )}
+        </hgroup>
+        
         {data.minAge && (
           <div class="age-tag">
           {data.minAge && (
@@ -93,58 +94,58 @@ const { googleUrl, icsDataUri } = getCalendarUrls(data);
         </div>
         )}
 
-        <p class="time-location">
-          <strong class="strong-date">{eventDateString}</strong> 
-          • {eventStartTime} 
-          {eventEndTime && ` - ${eventEndTime}`}
-        </p>
-          
-        <p class="description-snippet">{data.description}</p>
-        
-        <p> 📍{data.townCity}, {data.location.discriminant.toLocaleUpperCase()}</p>
+<p class="time-location">
+  <strong class="strong-date">{eventDateString}</strong> 
+  • {eventStartTime} 
+  {eventEndTime && ` - ${eventEndTime}`}
+</p>
 
-        <div class="small-space">
-          {data.rink && (<span> {data.rink}</span>)}
-          {data.venueAddress && (<span> {data.venueAddress}</span>)}
-        </div>
-        
-        <div class="tags"> 
-          <span class="event-type-label">{data.eventType}</span>
-          <span class="discipline">{data.skateDiscipline}</span>
-          {data.skillLevel && (<span class="level"> {data.skillLevel} </span>) }
-          {data.offSkates===true && (<span> Non-Skating </span>) }
-        </div>
-      </div>
-    </header>
+<p class="description-snippet">{data.description}</p>
 
-    <div class="content-body">
-<div class="calendar-section">
-      <h3>Plan your trip</h3>
-      <p>Add this event to your personal calendar so you don't miss a beat.</p>
+<p> 📍{data.townCity}, {data.location.discriminant.toLocaleUpperCase()}</p>
+
+<div class="small-space">
+  {data.rink && (<span> {data.rink}</span>)}
+  {data.venueAddress && (<span> {data.venueAddress}</span>)}
+</div>
+
+<div class="tags"> 
+  <span class="event-type-label">{data.eventType}</span>
+  <span class="discipline">{data.skateDiscipline}</span>
+  {data.skillLevel && (<span class="level"> {data.skillLevel} </span>) }
+  {data.offSkates===true && (<span> Non-Skating </span>) }
+</div>
+</div>
+</header>
+
+<div class="content-body">
+  <div class="calendar-section">
+    <h3>Plan your trip</h3>
+    <p>Add this event to your personal calendar so you don't miss a beat.</p>
+    
+    <div class="calendar-buttons">
+      <a href={googleUrl} target="_blank" class="button-google">
+        Add to Google Calendar
+      </a>
       
-      <div class="calendar-buttons">
-        <a href={googleUrl} target="_blank" class="button-google">
-          Add to Google Calendar
-        </a>
-        
-        <a href={icsDataUri} download={`${data.eventName}.ics`} class="button-ics">
-          Add to Apple / Outlook
-        </a>
-      </div>
-
-      <a 
-  href={icsDataUri} 
-  download={`${data.eventName.replace(/\s+/g, '_')}.ics`} 
-  class="calendar-download-btn"
->
-  <span class="icon">📅</span> Add to Calendar (Apple/Outlook/Mobile)
-</a>
+      <a href={icsDataUri} download={`${data.eventName}.ics`} class="button-ics">
+        Add to Apple / Outlook
+      </a>
     </div>
-      <Content />
-      
-      <div>
-          {data.organisers && ( 
-          <p>Official page for
+    
+    <a 
+    href={icsDataUri} 
+    download={`${data.eventName.replace(/\s+/g, '_')}.ics`} 
+    class="calendar-download-btn"
+    >
+    <span class="icon">📅</span> Add to Calendar (Apple/Outlook/Mobile)
+  </a>
+</div>
+<Content />
+
+<div>
+  {data.organisers && ( 
+    <p>Official page for
           <Button  variant="outline" size="md" href={data.eventLink}> {data.eventName} </Button>
           </p>)}
         
@@ -152,15 +153,15 @@ const { googleUrl, icsDataUri } = getCalendarUrls(data);
           <Button href={data.ticketLink} variant='outline' size='sm' > Buy tickets here</Button>
         )}
 
-      </div>
+</div>
 
-      <div>
-        <h3>More Event Details:</h3>
-        <section class="lineup-container">
-          {lineup.map((group) => (
-          /* 1. Only render the section if the group exists and has people */
-          group.people && group.people.length > 0 && (
-            <div class={`group-${group.title.toLowerCase()}`}>
+<div>
+  <h3>More Event Details:</h3>
+  <section class="lineup-container">
+    {lineup.map((group) => (
+      /* 1. Only render the section if the group exists and has people */
+      group.people && group.people.length > 0 && (
+        <div class={`group-${group.title.toLowerCase()}`}>
               <h4>{group.title}</h4>
               
               <ul class="people-list">
@@ -187,11 +188,11 @@ const { googleUrl, icsDataUri } = getCalendarUrls(data);
           )
         ))}
       </section>
-      </div>
     </div>
-
-    {galleryImages.length > 0 && (
-      <section class="event-gallery-section">
+  </div>
+  
+  {galleryImages.length > 0 && (
+    <section class="event-gallery-section">
         <div class="gallery-grid">
           {galleryImages.map((img, index) => (
             <div class="gallery-item">
@@ -201,17 +202,19 @@ const { googleUrl, icsDataUri } = getCalendarUrls(data);
                 width={200} 
                 height={350}
                 class="event-image"
-              />
+                />
             </div>
           ))}
         </div>
       </section>
     )}
   </article>
+</section>
+
   <nav class="navigation-controls">
     
-		<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
-
+    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
+    
   </nav>
 </BaseLayout>
 
