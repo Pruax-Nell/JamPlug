@@ -66,7 +66,7 @@ export const FOOTWEAR_CHOICE = [
 ] as const;
 
 export const SKATE_DISCIPLINES = [
-  {value:'rhythm-dance', label: 'Rhythm & Dance'},
+  {value:'rhythm-style', label: 'Rhythm & Style'},
   // Rhythm
   // Jam, Rhythm, JB, Artistic, and casual rink skating.
   {value:'sport-games', label: 'Sport & Games'},

@@ -112,7 +112,6 @@ export const SearchableSelect = ({ label, value, options, onChange, placeholder,
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Sync searchTerm with current value when it changes
   useEffect(() => {
     const currentOption = options.find(o => o.value === value);
     setSearchTerm(currentOption ? currentOption.label : value === 'All' ? '' : value);

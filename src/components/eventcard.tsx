@@ -4,7 +4,6 @@ import { formatEventDate, formatTime } from '../function/dateHelper';
 import { formatLocationLabel } from '../function/stringHelper';
 
 
-// We use Pick or just access the 'data' property of our Master Blueprint
 
 type EventCardProps = SerializedEvent['data'] & {
   id: string;

@@ -1,0 +1,110 @@
+---
+import Button from '../../button.astro';
+
+interface Props {
+  role: string;
+  fieldName: string;
+}
+
+const { role, fieldName } = Astro.props;
+---
+
+<div class="dynamic-group form-field" data-field-name={fieldName} data-role={role} aria-live="polite">
+  <p class="field-title">{role}</p>
+  
+  <div class="fields-container" data-index="0">
+    <div class="dynamic-row">
+
+        <div class="row-label">#1</div>
+
+        <input type="text" name={`${fieldName}[0][name]`} placeholder={`${role} Name`} class="name-field" aria-label={`${role} 1 Name`}/>
+
+        <input type="url" name={`${fieldName}[0][social]`} placeholder="Instagram/Social URL" class="link-field" aria-label={`${role} 1 Social Link`}/>
+
+        <button type="button" class="remove-btn remove-row-btn hidden">×</button>
+
+    </div>
+  </div>
+
+  <Button variant="outline" theme="brownDark" size="sm" class="add-row-btn add-more" type="button">
+    + Add Another {role}
+  </Button>
+
+</div>
+
+<script>
+  function setupDynamicFields() {
+    const groups = document.querySelectorAll('.dynamic-group');
+
+    groups.forEach(group => {
+      const addBtn = group.querySelector('.add-row-btn');
+      const container = group.querySelector('.fields-container');
+      const fieldName = group.getAttribute('data-field-name');
+      const role = group.getAttribute('data-role');
+
+      if (!container || !addBtn || !fieldName) return;
+
+      function reIndexRows() {
+
+        const rows = container!.querySelectorAll('.dynamic-row');
+
+        rows.forEach((row, index) => {
+          const label = row.querySelector('.row-label');
+          if (label) label.textContent = `#${index + 1}`;
+
+          const nameInput = row.querySelector('.name-field') as HTMLInputElement;
+          const linkInput = row.querySelector('.link-field') as HTMLInputElement;
+
+          if (nameInput) {
+            nameInput.name = `${fieldName}[${index}][name]`;
+            nameInput.setAttribute('aria-label', `${role} ${index + 1} Name`);
+          }
+          if (linkInput) {
+            linkInput.name = `${fieldName}[${index}][social]`;
+            linkInput.setAttribute('aria-label', `${role} ${index + 1} Social Link`);
+          }
+        });
+      }
+
+      addBtn.addEventListener('click', () => {
+        const rows = container.querySelectorAll('.dynamic-row');
+        const nextIndex = rows.length; 
+        
+        const row = document.createElement('div');
+        row.classList.add('dynamic-row');
+
+        row.innerHTML = `
+          <div class="row-label">#${nextIndex + 1}</div>
+          <input type="text" name="${fieldName}[${nextIndex}][name]" placeholder="${role} Name" class="name-field" />
+          <input type="url" name="${fieldName}[${nextIndex}][social]" placeholder="Social Media URL" class="link-field" />
+          <button type="button" class="remove-btn remove-row-btn" aria-label="Remove this row">×</button>
+        `;
+
+        container.appendChild(row);
+
+        row.querySelector('.remove-row-btn')?.addEventListener('click', () => {
+          row.remove();
+          reIndexRows(); 
+        });
+      });
+
+
+      container.querySelectorAll('.remove-row-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const targetRow = (e.target as HTMLElement).closest('.dynamic-row');
+          if (targetRow) {
+            targetRow.remove();
+            reIndexRows();
+          }
+        });
+      });
+    });
+  }
+
+  setupDynamicFields();
+  document.addEventListener('astro:after-swap', setupDynamicFields);
+</script>
+
+<style>
+  .hidden { display: none; }
+</style>

@@ -1,10 +1,12 @@
 ---
 import BaseLayout from "../layouts/baseLayout.astro";
 import BigList from "../components/big-list.astro";
+import CardHolder from "../components/card-holder.astro";
 
 import '../styles/components.css'
 import '../styles/global.css'
 import '../styles/event.css'
+import '../styles/home.css'
 
 import { getCollection } from "astro:content";
 const bigEvents = await getCollection('events', ({ data }) => {
@@ -29,23 +31,19 @@ const monthOrder = [
 const groupedEvents = bigEvents.reduce((acc: Record<string, any[]>, event) => {
     const month = event.data.startDate.toLocaleString(['en-GB', 'en-US'], { month: 'long' });
     
-    // If this month doesn't exist in our object yet, create an empty array for it
     if (!acc[month]) {
         acc[month] = [];
     }
     
-    // Push the event into the correct month bucket
     acc[month].push(event);
     
     return acc;
 }, {});
 
-// Sort events 
 Object.values(groupedEvents).forEach(monthArray => {
     monthArray.sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf());
 });
 
-const now = new Date();
 
 // Helper function to calculate days left
 // function getDaysRemaining(targetDate) {
@@ -56,32 +54,50 @@ const now = new Date();
 //     return days;
 // }
 
+// GENERAL UTILITY
+const now = new Date();
+now.setHours(0, 0, 0, 0);
+
+
+// UPCOMING EVENTS
+const publishedEvents = await getCollection('events', ({ data }) => {
+  return data.status === 'published';
+});
+
+const upcomingEvents = (publishedEvents)
+.map(event => ({
+	id: event.id,
+	title: event.data.eventName,
+	poster: event.data.eventPoster,
+	city: event.data.townCity,
+	country: event.data.location.discriminant,
+	description: event.data.description,
+	eventType: event.data.eventType,
+	featured: event.data.isFeatured,
+	timeframe: {
+		startDate: new Date(event.data.startDate),
+		endDate: event.data.endDate ? new Date(event.data.endDate) : null
+	}
+	
+}))
+.sort(
+	(a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
+)
+.slice(0, 8);
+
 ---
 
 <BaseLayout>
 <section class="frame-fence welcome">
-    <div>
+    <hgroup>
         <h1>Big Jam List</h1>
-    </div>
-    <div>
         <p>Bigger that your local Skate night!</p>
-    </div>
+    </hgroup>
+
     <div class="jam-req">
-        <div class="tri-brick brick-1">
-            <span class="side-a">What is a Skate Festival?</span>
-            <span class="side-b">+ An overnight skate trip!</span>
-        
-        </div>
-        <div class="tri-brick brick-2">
-            <span class="side-a">Who is it for?</span>
-            <span class="side-b">+ Something for all levels unless it specifies otherwise!</span>
-        
-        </div>
-        <div class="tri-brick brick-3">
-            <span class="side-a">Why go?</span>
-            <span class="side-b">1. why not... 2. it's a holiday AND everyone will be skating</span>
-        
-        </div>
+        <p><span class="bold-point ">Q:</span> What is a Skate Festival?</p>
+        <p><span class="bold-point ">A:</span> A Multi-night, schedule-packed, skate-escape! Worth waiting all year for~</p>
+        <p class="note">How we catagorise events: <a href="/ourProcess/#YJP=FAQ"> Check our F.A.Q here</a></p>
     </div>
 </section>
 <section class="frame-fence">
@@ -91,65 +107,125 @@ const now = new Date();
         <span><a class="jam-year-button-up jam-year-button"> 2027 </a></span>
     </div>
     <div id="jam-list">
-        <div>
-            {monthOrder.map((month) => {
-            // 1. Try to find events for this month in our grouped object
-            const eventsInMonth = groupedEvents[month] || [];
+        {monthOrder.map((month) => {
+        const eventsInMonth = groupedEvents[month] || [];
 
-            return (
-            <div class="month-block">
-                <h2>{month}</h2>
+        return (
+        <div class="month-block">
+            <h2>{month}</h2>
 
-                {eventsInMonth.length > 0 ? (
-                <ul>
-                    {eventsInMonth.map((event) => (
-                    <li class="jam-item"><a href={`/events/${event.id}/`}>
-                            
-                        <div class="jam-content">
-                            <div class="jam-title">
-                                {event.data.published >= thirtyDaysAgo && (
-                                    <span class="highlight-new ">NEW!</span>
-                                )}
-                                    
-                                <div class="jam-bold">
-                                    <p>{event.data.eventName} </p>
-                                    <p>{event.data.description}</p>
-                                </div>
-                            </div>
-
-                            <div class="divider">  </div>
-
-                            <div class="jam-info">
-                                <p>{event.data.townCity} - {event.data.country}</p>
-
-                                <p>{event.data.startDate.toDateString()}</p>
+            {eventsInMonth.length > 0 ? (
+            <ul>
+                {eventsInMonth.map((event) => (
+                <li class="jam-item"><a href={`/events/${event.id}/`}>
+                        
+                    <div class="jam-content">
+                        <div class="jam-title">
+                            {event.data.published >= thirtyDaysAgo && (
+                                <span class="highlight-new ">NEW!</span>
+                            )}
+                                
+                            <div class="jam-bold">
+                                <p>{event.data.eventName} </p>
+                                <p>{event.data.description}</p>
                             </div>
                         </div>
-                    </a></li>
-                    ))}
-                </ul>
-                ) : (
-                <p class="no-events">...</p>
-                )}
-            </div>
-            );
-            })}
+
+                        <div class="divider">  </div>
+
+                        <div class="jam-info">
+                            <p>{event.data.townCity} - {event.data.country}</p>
+
+                            <p>{event.data.startDate.toDateString()}</p>
+                        </div>
+                    </div>
+                </a></li>
+                ))}
+            </ul>
+            ) : (
+            <p class="no-events">...</p>
+            )}
         </div>
+        );
+        })}
         
     </div>
 </section>
 <section class="frame-fence">
-    <div class="middle">
-        <p>looking for more events? </p>
-        <a href="/events" class="tertiary-button"> Browse the event list </a>
-    </div>
+    <h4>General Upcoming Events: </h4>
+    <!-- <a href="/events" class="tertiary-button"> Browse the event list </a> -->
+    {upcomingEvents.length > 0 ? (
+				<div class="carosel" role="list" aria-label="Upcoming Events">
+			{upcomingEvents.map((post) => (
+				<CardHolder 
+				variant="event"
+				title={post.title}
+				url={`/events/${post.id}/`}
+				poster={post.poster}
+				city={post.city}
+				country={post.country}
+				timeframe={post.timeframe}
+				description={post.description}
+				/>
+			))}
+
+			<CardHolder 
+				variant="placeholder"
+				title="See more Events"
+				url="/events"
+				description="Browse All Events"
+			/>
+			</div> ) 
+			: 
+			// OR show none returned
+			(<div class="none-returned"><p>no events to show yet</p></div>)}
 </section>
 
 
 </BaseLayout>
 
 <style>
+    .welcome {
+        justify-items: center;
+        min-height: 10rem;
+        background-color: var(--shadow-purple);
+        border-radius: 0 0 22px 22px;
+        padding: .5rem;
+        gap: 2rem;
+    }
 
+    @media (max-width: 620px){
+        .welcome {
+            padding-top: 3rem;
+        }
+    }
+
+    .bold-point{
+        background-color: var(--second-teal);
+        border-radius: 8px;
+        padding: .1rem .3rem;
+        font-size: var(--fs-p1);
+        font-weight: 800;
+    }
+
+    
+    .jam-req {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: space-around;
+        margin-block: 2rem;
+        max-width: 65ch;
+        
+    }
+
+    #jam-list {
+        background-color: var(--main-teal);
+        background-color: var(--shadow-orange-2);
+        border-radius: 28px;
+        padding: 3rem .8rem;
+    }
+    
     .middle{
         justify-items: center;
         align-content: center;
@@ -159,41 +235,8 @@ const now = new Date();
         border-bottom: 13px double var(--ow-orange) ;
     }
 
-    .welcome {
-        justify-items: center;
-    }
 
-    .jam-req {
-        display: flex;
-        /* gap: 2%; */
-        justify-content: space-around;
-
-    }
-
-    .tri-brick{
-        width: 200px;
-        height: 120px;
-        padding: .5rem;
-        text-align: center;
-        border-radius: 4px;
-        align-content: center;
-    }
-
-    .side-b{
-        display: none;
-    }
-    
-    .tri-brick:hover{
-        background-color: var(--shadow-purple);
-
-        .side-b{
-            display: block;
-        }
-
-        .side-a{
-            display: none;
-        }
-    }
+   
 
     .jam-direct {
         display: flex;

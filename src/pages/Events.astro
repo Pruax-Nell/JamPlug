@@ -61,48 +61,36 @@ const serverOptions = {
 <BaseLayout>
 <!-- ||-----------------------------------------------INTRO SECTION -->
 
-<section class="frame-fence intro">
-	<div class="primary-container">
-		<!-- title container -->
-		<div> 
+<section id="events-header" class="frame-fence page-head">
+		<hgroup class="header-group"> 
 			<h1>Events</h1>
-		</div>
-	</div>
+			<p>Find Roller skate events happening all over Europe. Small jams, weekend festivals, workshops and more.</p>
+		</hgroup>
 </section>
 <!-- ||-----------------------------------------------SCRIBE SECTION -->
 
 <section class="frame-fence scribe">
-	<div class="scribe-content">
-		<div class="">
-			<p>Find Roller skate events happening all over Europe. Small jams, weekend festivals, workshops and more.</p>
-	</div>
-	<div class="left-lean">
-		<!-- <p>what are you looking for?</p> -->
-	</div>
+		
 	<div class="jam-link-block">
 		<h3 id="jam-list-heading">Big Jam List</h3>
 		<Button href="/festivals" variant="secondary" size="lg"> Read More </Button>
 		<span>Find all of Europes multi-day skate festivals</span>
 	</div>
-	</div>
 </section>
 <!-- ||-----------------------------------------------EVENTS SECTION -->
 <section class="frame-fence events-list">
 	<!-- ||------------------------------------------EVENTS TEST -->
-	<div class="">
 		
-		<div>
-			<span>Roller skate events</span>
-			<h2>Upcoming Events</h2>
-		</div>
-
-		<UpcomingEvents 
-			client:load
-			initialEvents={clientUpcomingEvents}
-			serverOptions={serverOptions}
-		/>
-
+	<div class="header-group">
+		<span>Roller skate events</span>
+		<h2>Upcoming Events</h2>
 	</div>
+
+	<UpcomingEvents 
+		client:load
+		initialEvents={clientUpcomingEvents}
+		serverOptions={serverOptions}
+	/>
 
 </section>
 <!-- ||------------------------------------------------50/50 SECTION -->

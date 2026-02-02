@@ -39,36 +39,38 @@ const {
   discipline, 
 } = Astro.props;
 
+const shortDesc = description?.split(' ').slice(0, 12).join(' ') + '...';
+const midDesc = description?.split(' ').slice(0, 20).join(' ') + '...';
+
 // Logic for event dates
 const eventDateString = (variant === 'event' && timeframe) 
   ? formatEventDate(timeframe.startDate, timeframe.endDate) 
   : null;
 ---
 
-<a href={url} class={`sample-case variant-${variant}`}>
+<div class={`sample-case variant-${variant}`}>
     
     {variant === "event" && (
     <div class={`post-card card-${variant}`}>
         {poster ? (
-            <Image src={poster} alt={title} width={400} height={500} class="poster-block" />
+            <Image src={poster} alt="" width={400} height={500} class="poster-block" />
         ) : (
-            <div class="placeholder poster-block">🛼</div>
+            <div class="placeholder poster-block" aria-hidden="true">🛼</div>
         )}
 
         <div class={`content-block ${variant}-content`}>
+            <p class="card-heading">
+                <a href={url} class="stretched-link">{title}</a>
+            </p>
 
-            <p class="card-heading">{title}</p>
+            <span class="info i-1">📍 {city}, {country}</span>
+            <span class="info i-2">{eventDateString}</span>
 
-            <div class="info-bloc">
-                <span>📍{city}, {country}</span>
-                <span>{eventDateString}</span>
-            </div>
 
             <div class="badge-block">
                 <span class="type-badge">{eventType}</span>
-                <p class="desc">{description}</p>
+                <p class="desc info">{shortDesc}</p>
             </div>
-
         </div>
     </div>
     )}
@@ -76,41 +78,353 @@ const eventDateString = (variant === 'event' && timeframe)
     {variant === "blog" && (
     <div class={`post-card card-${variant}`}>
 
+        {poster ? ( <Image src={poster} alt="" width={300} height={400} class="poster-block" />
+        
+        <div class={`content-block ${variant}-content`}>
+            <p class="card-heading">
+                <a href={url} class="stretched-link">{title}</a>
+            </p>
+            {subtitle && <span>{subtitle}</span>}
+            <p class="desc">{midDesc}</p>
+            <div class="meta-tags">
+                <span class="meta-item cat">{category}</span>
+                <span class="meta-item dis">{discipline}</span>
+            </div>
+        </div> ) : (
             
-        {poster ? (
-            <Image src={poster} alt={title} width={300} height={400} class="poster-block" />
-            <div class={`content-block ${variant}-content`}>
-                <p class="card-heading">{title}</p>
-                <span>{subtitle}</span>
-
-                <p>{description}</p>
-                <span>{category}</span>
-                <span>{discipline}</span>   
+            <div class={`content-block ${variant}-content-2`}>
+            <p class="card-heading">
+                <a href={url} class="stretched-link">{title}</a>
+            </p>
+            {subtitle && <span>{subtitle}</span>}
+            <p class="desc">{midDesc}</p>
+            <div class="meta-tags">
+                <span class="meta-item cat">{category}</span>
+                <span class="meta-item dis">{discipline}</span>
             </div>
-        ) : (
-            <div class="blog-top">
-                <p class="card-heading">{title}</p>
-                <span>{subtitle}</span>
-            </div>
-
-            <div class="blog-base">
-                <p>{description}</p>
-                <span>{category}</span>
-                <span>{discipline}</span>
-            </div>
-            
-        )}
-
+        </div>)}
     </div>
     )}
 
     {variant === "placeholder" && (
-        <div class={` ${variant}-content`}>
-            <p class="card-heading">{heading}</p>
+        <div class={`${variant}-content`}>
+            <p class="card-heading">
+                <a href={url} class="stretched-link">{heading || title}</a>
+            </p>
             <span>{description}</span>
-            <span class="arrow">→</span>
+            <span class="arrow" aria-hidden="true">→</span>
         </div>
     )}
+</div>
 
-</a>
 
+<style>
+    
+.sample-case{
+
+
+    display: block;  
+    flex: 0 0 20rem ;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    margin: 1rem auto;
+
+    scroll-snap-align: center;
+    text-decoration: none;
+    color: inherit;
+    scroll-snap-align: center;
+    border-radius: 12px;
+
+    position: relative; 
+    overflow: clip;
+    transition: transform 0.3s ease;
+
+}
+
+
+
+.sample-case:hover .post-card {
+    transform: translateY(-4px);
+}
+
+
+.sample-case a:not(.stretched-link),
+.sample-case button {
+    position: relative;
+    z-index: 15;
+}
+
+.sample-case:focus-within {
+    outline: 2px solid var(--main-orange);
+    outline-offset: 4px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px var(--shadow-orange);
+}
+    
+@media (prefers-reduced-motion: no-preference) {
+    .sample-case {
+        transition: outline-offset 0.2s ease, transform 0.2s ease;
+    }
+}
+
+.sample-case:active {
+    transform: scale(0.98); /* Slightly shrinks the card when pressed */
+    filter: brightness(0.9); /* Subtle darken effect */
+}
+
+.card-heading a {
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+}
+
+.stretched-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10; /* Covers the whole card */
+}
+
+.stretched-link:focus {
+    outline: none;
+}
+
+
+/* universal card */
+.post-card {
+    height: 100%;
+    
+    display: grid;
+    grid-template-rows: repeat(5, 20%);
+    grid-template-columns: auto;
+    overflow: clip;
+
+    border: 2px solid var(--ow-brown);
+    border-radius: 12PX;
+    background: var(--shadow-orange);
+    box-shadow: 0 0 4px 0 var(--box-teal),0 0 40px 0 var(--shadow-yellow);
+    
+    transition: 
+        transform 1s .1s ease, 
+        box-shadow 0.5s ease, 
+        grid-row .5s ease;
+}
+
+.post-card:hover  {
+    scale: 1.03;
+    box-shadow: .5rem .3rem 1.3rem var(--shadow-orange);
+}
+
+
+@media (max-width: 680px) {
+
+    .sample-case{
+        max-width: 16.6rem;
+        margin-block: 1rem;
+        flex: 0 0 15rem;
+        
+    }
+
+    .post-card {
+        max-width: 100%;
+
+
+    } 
+
+    .content-block{
+        max-width: 100%;
+    }
+
+}
+
+.poster-block {
+    transition: 
+        transform 0.4s ease-in-out, 
+        scale 0.4s ease;
+
+}
+
+.content-block {
+    grid-row: 3 / -1;
+    z-index: 5;
+    min-height: 100%;
+    
+    border-radius: 14px 14px 0 0;
+    padding: .8rem .6rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    font-weight: 700;
+
+    font-size: var(--fs-p1);
+    background-color: var(--shadow-pink);
+}
+
+.card-event .content-block{
+    color: var(--text-white);
+    background-color: var(--ob-pink);
+    
+}
+.card-blog .content-block{
+    color: var(--text-black);
+    background-color: var(--grey-purple);
+
+}
+
+.content-block.blog-content-2{
+    grid-row: 2 / -1;
+}
+
+.content-block >* {
+    margin-left: 1.2rem;
+}
+
+.card-heading {
+    font-size: var(--fs-heading-mid);
+    margin-inline: auto;
+    margin-bottom: 0.35rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.info {
+    text-transform: capitalize;
+    font-size: var(--fs-p3);
+}
+
+.type-badge{
+    text-transform: uppercase;
+}
+
+.desc {
+    font-size: var(--fs-p3);
+    line-height: 1.5;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.meta-tags{
+    justify-self: flex-end;
+    margin-top: auto;
+    align-self: flex-end;
+    display: flex;
+    gap: 1.5rem;
+}
+.meta-item {
+    border: 4px double ;
+    border-radius: 8px;
+    padding: .5rem .8rem;
+    text-transform: uppercase;
+    font-size: var(--fs-footer);
+}
+
+.meta-item.cat {
+    
+
+}
+.meta-item.dis {
+
+}
+/* -----------VARIETY STYLES---------- */
+
+/* EVENT */
+.variant-event{
+
+
+}
+
+.card-event{
+    
+
+}
+.event-content{
+    
+    
+}
+
+/* BLOG */
+#skate-news .carosel {
+    min-height: 450px;
+}
+
+.card-blog{
+
+}
+
+.post-card.card-blog {
+    /* min-width: 20.5rem; */
+    max-width: 100%;
+    min-height: auto;
+    grid-row: 2 / -2;
+    overflow: hidden;
+}
+
+.variant-blog{
+    height: auto;
+    padding: 0 .1rem;
+    background-color: var(--shadow-orange);
+    
+}
+
+
+
+
+/* PLACEHOLDER */
+
+.variant-placeholder .post-card {
+background: var(--ob-orange);
+}
+
+.variant-placeholder{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 200px;
+    height: inherit;
+    background-color: var(--shadow-pink);
+    width: clamp(15.625rem, 20rem + 5vw, 26.25rem);
+
+    align-content: center;
+
+    justify-content: center;
+
+    transition: background-color .8s ease-in-out;
+
+}
+
+.placeholder-content{
+    text-align: center;
+    font-size: var(--fs-heading-large);
+
+    transition: 
+        background-color .3s ease-in;
+}
+@media (max-width: 680px) {
+
+    .sample-case{
+        max-width: 16.6rem;
+        margin-block: 1rem;
+        flex: 0 0 16rem;
+        
+    }
+
+    .post-card {
+        max-width: 100%;
+
+
+    } 
+
+    .content-block{
+        max-width: 100%;
+    }
+
+
+}
+
+
+</style>

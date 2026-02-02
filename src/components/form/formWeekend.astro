@@ -1,0 +1,55 @@
+---
+import Button from "../../components/button.astro";
+import PersonField from "../../components/form/fields/personField.astro";
+import LocationPicker from '../../components/form/fields/locationSelect.astro';
+import SocialSelect from "../../components/form/fields/socialSelect.astro";
+import NameField from "./fields/nameField.astro";
+import GalleryField from "./fields/galleryField.astro";
+
+import { SKILL_LEVEL, SKATE_DISCIPLINES,  } from "../../constants";
+
+const form = "social";
+
+
+---
+<!-- SKATE WEEKENDER SUBMISSION FORM -->
+<hgroup class="form-title-group">
+    <h3 class="form-title">Skate Weekender</h3>
+    <span>An overnight skate trip - 2 days of fun</span>
+</hgroup>
+
+<form 
+action="https://submit-form.com/your-id" 
+method="POST" 
+enctype="multipart/form-data"
+>
+<input type="hidden" name="form_category" value="Skate Weekend" />
+    <!-- TITLE INFO -->
+     <section class="form-section">
+         <NameField form="weekend"/>
+     </section>
+     <section class="form-section">
+         <LocationPicker form="weekend"/>
+     </section>
+
+     <section class="form-section" id="weekend-persons-section" >
+
+        <hgroup class="field-title-group">
+            <p class="field-title">Event Team: </p>
+            <p></p>
+            <span id="add-hint">All fields are optional. One Person per line. Use the "Add Person" button to add more fields</span>
+        </hgroup>
+        
+        <PersonField role="Organiser" fieldName="organiser" />
+        <PersonField role="Host" fieldName="host" />
+        <PersonField role="DJ" fieldName="dj" />
+        <PersonField role="Coach" fieldName="coach" />
+        
+    </section>
+    
+    <div class="btn-wrap form-field">
+        <Button variant="tertiary" size="lg" theme="purpleLight" type="submit">Submit Event</Button>
+    </div>
+</form>
+<!-- SOCIAL form end -->
+<!-- </div> -->

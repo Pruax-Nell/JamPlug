@@ -1,14 +1,16 @@
 ---
 
 import BaseLayout from "../layouts/baseLayout.astro";
+import { EVENT_TYPE } from "../constants";
 
 // event forms
-import FormOther from "../components/formOther.astro"
-import FormNight from "../components/formNight.astro"
-import FormSocial from "../components/formSocial.astro"
-import FormWeekend from "../components/formWeekend.astro"
-import FormWorkshop from "../components/formWorkshop.astro"
-import FormFestival from "../components/formfestival.astro"
+import FormOther from "../components/form/formOther.astro"
+import FormNight from "../components/form/formNight.astro"
+import FormSocial from "../components/form/formSocial.astro"
+import FormWeekend from "../components/form/formWeekend.astro"
+import FormWorkshop from "../components/form/formWorkshop.astro"
+import FormFestival from "../components/form/formfestival.astro"
+
 
 // styled button
 import Button from "../components/button.astro";
@@ -19,52 +21,48 @@ import "../styles/submit.css";
 ---
 
 <BaseLayout> 
-    <section class="frame-fence pageTop primary-container">
-        <div class="primary-container"><h1>Submit your Event</h1></div>
-    </section>
+<section class="form-fence">
+    <hgroup class="submission-title">
+        <h1>Submit your Event</h1>
+        <p>For events to be listed on this site, use the forms below</p>
+    </hgroup>
+</section>
 
-        <!-- ||------------------------------------- FORM SECTION  -->
-        <section class="frame-fence primary-container dual-field">
+<!-- ||------------------------------------- FORM SECTION  -->
+<section class="form-fence form-directions">
+    <!-- ||------------------------- DIRECTIONS  -->
+    <div class="form-field" id="select-form">
+        <label for="event-type">Select a Form:</label>
+        <select name="event-type" id="event-type" class="mid-fit fitted">
+            <option value="none">-- Please Choose an Event Type --</option>
+            <option value="festival-form">Skate Festival</option>
+            <option value="night-form">Skate Night</option>
+            <option value="social-form">Skate Social</option> 
+            <option value="weekend-form">Weekend</option>
+            <option value="workshop-form">Workshop</option>
+            <option value="general-form">Other</option >
+        </select>
+    </div>
+        
+</section>
 
-            <!-- ||------------------------- DIRECTIONS  -->
-            <div class="info half-container">
-                <div>
-                    <h2 class="half-title">How it works</h2>
-                    <p>Select a form to submit your community event</p>
-                </div>
-                <div>
-                    <div>
-                        <label for="event-type">What type of event are you hosting?</label>
-                        <select name="event-type" id="event-type" class="mid-fit fitted">
-                            <option value="none">-- Please Choose an Event Type --</option>
-                            <option value="festival-form">Skate Festival</option>
-                            <option value="night-form">Skate Night</option>
-                            <option value="social-form">Skate Social</option> 
-                            <option value="weekend-form">Weekend</option>
-                            <option value="workshop-form">Workshop</option>
-                            <option value="general-form">Other</option>
-                        </select>
-                    </div>
-                    
-                </div>
-            </div>
+<!-- -||----------------------- FORM FIELD  -->
+<section class="form-fence">
+        <div id="placeholder-form" class="form-wrap"><div class=""><h3 class="srOnly">Placeholder</h3><p>Select an Event Type above to reveal the appropriate submission form.</p></div></div>
+        <div id="general-form" class="hidden form-wrap"><FormOther /> </div>
+        <div id="workshop-form" class="hidden form-wrap"> <FormWorkshop /> </div>
+        <div id="weekend-form" class="hidden form-wrap"> <FormWeekend /> </div>
+        <div id="social-form" class="hidden form-wrap"> <FormSocial /> </div>
+        <div id="night-form" class="hidden form-wrap"> <FormNight /> </div>
+        <div id="festival-form" class="hidden form-wrap"> <FormFestival /> </div>
+</section>
 
-            <!-- -||----------------------- FORM FIELD  -->
-            <div class="form-wrap half-container S3">
-                <div class="form-field">
-                    <div id="placeholder-form" class=""><div class=""><h3 class="srOnly">Placeholder</h3><p>Select an Event Type above to reveal the appropriate submission form.</p></div></div>
-                    <div id="general-form" class="hidden"><FormOther /> </div>
-                    <div id="workshop-form" class="hidden"> <FormWorkshop /> </div>
-                    <div id="weekend-form" class="hidden"> <FormWeekend /> </div>
-                    <div id="social-form" class="hidden"> <FormSocial /> </div>
-                    <div id="night-form" class="hidden"> <FormNight /> </div>
-                    <div id="festival-form" class="hidden"> <FormFestival /> </div>
-
-                <!-- FORM-FIELD END -->
-                </div>
-            <!-- FORM-WRAP END -->
-            </div>
-        <!-- FORM-SECTION END -->
-        </section>
-
+<section class="form-fence direct-other">
+    <p>Other Options:</p>
+    <div class="direction-box">
+        <p class="direction-item"><a href="/enquiry">General Enquiry</a></p>
+        <p class="direction-item"><a href="/submit-a-business">Submit a Group/Business</a></p>
+        <p class="direction-item"><a href="">Join the Newsletter</a></p>
+    </div>
+</section>
 </BaseLayout>

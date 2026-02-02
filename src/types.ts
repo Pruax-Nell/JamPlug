@@ -64,10 +64,27 @@ export interface EventCardData {
   eventStatus?: string;
 }
 
+export interface BlogCardData {
+  title: string;
+  subtitle?: string;
+  description: string;
+  published: string;
+  blogCategory: string;
+  skateDiscipline?: string;
+  coverImage?: string;
+
+}
+
   // This represents the "Cleaned" data sent to React
   export interface SerializedEvent {
     id: string;
     slug: string;
     data: EventCardData; // Nesting the interface we defined above
+  }
+
+  export interface SerializedBlog {
+    id: string;
+    slug: string;
+    data: BlogCardData; 
   }
 

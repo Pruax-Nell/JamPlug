@@ -1,0 +1,179 @@
+---
+import { CONTINENT_DATA } from '../../../data/globe-constants';
+
+interface Props {
+    form?: string;
+    no?: string;
+    [x: string]: any;
+}
+
+const {
+    form, 
+    no,
+    ...rest
+
+} = Astro.props;
+---
+
+<div class="form-field location-group">
+  <div class="location-picker-container">
+
+    <div class="form-field">
+      <label for="continent">Continent<span class="req-star">*</span></label>
+      <select id={`${form}-continent`} name="continent" class="continent-select form-input" required>
+        <option value="">-- Select --</option>
+        {CONTINENT_DATA.map(c => <option value={c.continent}>{c.continent}</option>)}
+      </select>
+    </div>
+
+    <div class="form-field country-wrapper">
+      <label for={`${form}-country`}>Country<span class="req-star">*</span></label>
+      <select id={`${form}-country`} name="country" class="country-select form-input" disabled required>
+        <option value="">-- Select --</option>
+      </select>
+    </div>
+
+    <div class="form-field region-wrapper">
+      <label for={`${form}-region`}>State / Region</label>
+      <select id={`${form}-region`} name="region" class="region-select form-input" disabled>
+        <option value="">-- Select --</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-field town-container">
+    <label for={`${form}-town-city-field`}>Town / City <span class="req-star">*</span></label>
+    <input type="text" id={`${form}-town-city-field`} name="town_city" placeholder="e.g. Leeds" minlength="3" class="form-input" required>
+  </div>
+  
+  <div class="address-fields form-field">
+    <p class="small-heading">Street Address:</p>
+    <label for={`${form}-1lineadd`} class="srOnly">Adress First Line</label>
+    <input id={`${form}-1lineadd`} type="text" name="address_line_1" placeholder="Building number and street name" />
+    <label for={`${form}-2lineadd`} class="srOnly">Address second Line</label>
+    <input id={`${form}-2lineadd`} type="text" name="address_line_2" placeholder="Suite, Unit, or Floor (Optional)" />
+    <label for={`${form}-3lineadd`} class="srOnly">Address Post Code</label>
+    <input id={`${form}-3lineadd`} type="text" name="post_code" placeholder="Postcode / ZIP" />
+  </div>
+</div>
+  
+<script>
+  import { CONTINENT_DATA, getRegionOptions } from '../../../data/globe-constants';
+
+  function initLocationPickers() {
+    const containers = document.querySelectorAll('.location-picker-container');
+
+    containers.forEach(container => {
+      const contSelect = container.querySelector('.continent-select') as HTMLSelectElement;
+      const countrySelect = container.querySelector('.country-select') as HTMLSelectElement;
+      const regionSelect = container.querySelector('.region-select') as HTMLSelectElement;
+
+      contSelect?.addEventListener('change', () => {
+        const selectedCont = contSelect.value;
+        countrySelect.innerHTML = '<option value="">-- Select --</option>';
+        regionSelect.innerHTML = '<option value="">-- Select --</option>';
+        regionSelect.disabled = true;
+
+        if (selectedCont) {
+          const continent = CONTINENT_DATA.find(c => c.continent === selectedCont);
+          continent?.countries.forEach(country => {
+            const opt = document.createElement('option');
+            opt.value = country.value;
+            opt.textContent = country.label;
+            opt.dataset.hasRegions = country.hasRegions ? "true" : "false";
+            countrySelect.appendChild(opt);
+          });
+          countrySelect.disabled = false; // ENABLE
+        } else {
+          countrySelect.disabled = true; // DISABLE
+        }
+      });
+
+      countrySelect?.addEventListener('change', () => {
+        const selectedCountry = countrySelect.value;
+        const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+        const hasRegions = selectedOption.dataset.hasRegions === "true";
+
+        regionSelect.innerHTML = '<option value="">-- Select --</option>';
+
+        if (hasRegions && selectedCountry) {
+          const regions = getRegionOptions(selectedCountry);
+          regions.forEach(reg => {
+            const opt = document.createElement('option');
+            opt.value = reg.value;
+            opt.textContent = reg.label;
+            regionSelect.appendChild(opt);
+          });
+          regionSelect.disabled = false; // ENABLE
+        } else {
+          regionSelect.disabled = true; // DISABLE
+        }
+      });
+    });
+  }
+
+  initLocationPickers();
+  document.addEventListener('astro:after-swap', initLocationPickers);
+</script>
+
+<style>
+  .location-picker-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
+  .town-container {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+  
+  
+  .form-input:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    opacity: 0.6;
+    border-color: #ddd;
+  }
+
+  .address-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+@media (max-width: 780px) {
+  .location-picker-container {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr; 
+    gap: 1rem;
+  }
+  
+
+  
+    .form-field {
+      width: 100%;
+    }
+    
+    .form-input{
+      height: 3rem;
+      padding: .4rem;
+    }
+    
+    .location-picker-container {
+      grid-template-columns: 1fr; 
+    }
+
+    .address-fields{
+        flex-direction: column;
+        width: 100%;
+        box-sizing: border-box;
+    }
+  }
+</style>

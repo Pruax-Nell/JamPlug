@@ -7,10 +7,10 @@
 /* || --------------------Utilities------------------ */
 
 :root {
-    --mobile-screen-size: (max-width: 650px);
-    --tablet-screen-size: (min-width: 769px);
-    --desktop-screen-size: (min-width: 992px);
-    --xl-screen-size: (min-width: 1180px);
+  --mobile-screen-size: (max-width: 650px);
+  --tablet-screen-size: (min-width: 769px);
+  --desktop-screen-size: (min-width: 992px);
+  --xl-screen-size: (min-width: 1180px);
     
 }
  
@@ -39,14 +39,27 @@ a:visited {opacity: 90%; }
 .hidden {display: none;}
 button { cursor: pointer;}
 
+.remove-btn {
+  border-radius: 4px;
+  border: .2px solid brown;
+  color: var(--mid-brown);
+  font-weight: 900;
+}
+
+.remove-btn:hover {
+  box-shadow: 0 0 4px var(--shadow-grey);
+}
+
 
 * {scroll-behavior: smooth;}
 
 .narrow-ch{
   width: 45ch;
+  max-width: 100%;
 }
 .wide-ch{
   width: 65ch;
+  max-width: 100%;
 }
 
 .srOnly {
@@ -54,10 +67,13 @@ button { cursor: pointer;}
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
+    width: 1px;
     overflow: hidden;
     position: absolute;
     white-space: nowrap;
-    width: 1px;
+    border-width: 0;
+    padding: 0;
+    margin: -1px;
 
 }
 
@@ -113,86 +129,77 @@ padding-block: .5rem;
 
 /* || --------------------TOOLKIT------------------ */
 
-@media (max-width: 780px) {
-  .kit-box > * {
-      width: 35px;
-      margin: 1ch 0;
-  }
-
-    
-}
-
 #tool-kit {
   z-index: 20000;
+
   position: fixed;
   bottom: 20px;
   left: 8px;
-  width: fit-content;
+  width: 40px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--shadow-light-2);
   
-  padding-block: .4ch;
+  padding: .2rem;
   border-radius: 10px;
   border: 1px dotted var(--grey);
-  
+  background-color: var(--shadow-light-2);
   
   transition: bottom 0.35s cubic-bezier(0.485, -0.050, 0.285, 1.505);
 }
 
 #tool-kit:hover {
-    background-color: var(--shadow-grey);
-    box-shadow: var(--shadow-light-2);
-    
-    transition: All .6s;
+  background-color: var(--shadow-grey);
+  box-shadow: var(--shadow-light-2);
+  
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
     
 }
 
 .kit-box {
-    display: flex;
-    
-    height: 100%;
-    width: 45px;
-    margin-inline: .2rem;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  
+  height: 100%;
+  aspect-ratio: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 
 /* SEPARATOR */
 .kit-space {
-    padding: .1ch;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
+
+.kit-space span {
+  width: 100%;
+  text-align: center;
+}
+
 /* ------------------TO PAGE TOP------------------ */
 
-.upArrow {
-    width: 35px;
-    justify-items: center;
-}
 
 .upArrow:hover, #themeToggle:hover{
-    scale: 1.4;
+  scale: 1.2;
 }
 
 #toTop   {
-    justify-items: center;
-    align-content: center;
-    transition: display .5s, opacity .4s;
-    background: none;
-    border: 0;
-    width: 100%;
+  transition: display .5s, opacity .4s;
+  background: none;
+  border: 0;
+  width: 100%;
 }
 
 
 #themeToggle {
-    border: 0;
-    background: none;
-    height: fit-content;
-    width: 100%;
+  border: 0;
+  background: none;
+  height: fit-content;
+  width: 100%;
 }
 .sun { fill: black; }
 .moon { fill: transparent; }
@@ -202,10 +209,11 @@ padding-block: .5rem;
 
 
 
-/* || --------------------TOOLKIT------------------ */
+
 
 /* ------------------------OTHER COMPONENTS LIST ------------------*/
 
+/* || -------------------- x ------------------ */
 
 
 

@@ -1,0 +1,100 @@
+---
+import Button from "../../components/button.astro";
+import PersonField from "../../components/form/fields/personField.astro";
+import LocationPicker from '../../components/form/fields/locationSelect.astro';
+import SocialSelect from "../../components/form/fields/socialSelect.astro";
+import NameField from "./fields/nameField.astro";
+import GalleryField from "./fields/galleryField.astro";
+
+import { SKILL_LEVEL, SKATE_DISCIPLINES,  } from "../../constants";
+
+const form = "night";
+
+---        
+<hgroup class="form-title-group">
+    <h3 class="form-title">Skate Night</h3>
+    <span class="content-center">Skate Night = Club Night</span>
+</hgroup>
+
+<form 
+action="https://submit-form.com/your-id" 
+method="POST" 
+enctype="multipart/form-data"
+>
+<input type="hidden" name="form_category" value="Skate Night" />
+<input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+
+
+<section class="form-section" id={`${form}-base-section`} >
+
+    <NameField form={form}/>
+        
+</section>
+
+<section class="form-section" id={`${form}-local-section`} >
+
+    <fieldset class="form-field">
+        <legend class="field-title">Main Location of Operations:</legend>
+        <LocationPicker form={form}/>
+        
+        <div class="form-field">
+            <label for={`${form}-rink`}>Rink:</label>
+            <input type="text" id={`${form}-rink`} placeholder="Skateland">
+        </div>
+    </fieldset>
+
+</section>
+
+<section class="form-section" id={`${form}-details-section`} >
+
+       <!-- MIN AGE -->
+    <div class="form-field">
+        <label for={`${form}-minage`}>Minimum Age:</label>
+        <input type="text" id={`${form}-minage`} placeholder="21+">
+    </div>
+       <!-- max AGE -->
+    <div class="form-field">
+        <label for={`${form}-maxage`}>Max Age:</label>
+        <input type="text" id={`${form}-maxage`} >
+    </div>
+    
+   
+    <div class="form-field">
+        <label for={`${form}-post-link`}>Event post:</label>
+        <input type="url" id={`${form}-post-link`} placeholder="Your social media post">
+    </div>
+
+    <div class="form-field">
+        <label for={`${form}-ticket-link`}>Ticket Link:</label>
+        <input type="url" id={`${form}-ticket-link`} placeholder="Your social media post">
+    </div>
+
+</section>
+
+<section class="form-section" id={`${form}-media-section`} >
+   
+<GalleryField form={form} />
+</section>
+
+
+<section class="form-section" id={`${form}-persons-section`} >
+
+    <hgroup class="field-title-group">
+        <p class="field-title">Event Team: </p>
+        <p></p>
+        <span id="add-hint">All fields are optional. One Person per line. Use the "Add Person" button to add more fields</span>
+    </hgroup>
+    
+    <PersonField role="Organiser" fieldName="organiser" />
+    <PersonField role="DJ" fieldName="dj" />
+    <PersonField role="Host" fieldName="host" />
+    
+</section>
+
+    <div class="btn-wrap form-field">
+        <Button variant="tertiary" size="lg" theme="purpleLight" type="submit">Submit Event</Button>
+    </div>
+
+</form>
+    <!-- SKATE NIGHT form end -->
+<!-- </div> -->

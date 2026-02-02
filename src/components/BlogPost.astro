@@ -5,46 +5,168 @@ import type { CollectionEntry } from "astro:content";
 
 type BlogData = CollectionEntry<'blog'>['data'];
 interface Props {
-  data: Pick<BlogData,  | 'title' | 'description' | 'coverImage' | 'subtitle' | 'blogCategory' | 'skateDiscipline' >;
+  data: Pick<BlogData, 'title' | 'description' | 'coverImage' | 'subtitle' | 'blogCategory' | 'skateDiscipline' >;
   id: string;
 }
 
 const { data, id } = Astro.props;
-
+const postUrl = `/blog/${id}/`;
 
 --- 
 
-<li>
-    <a href={`/blog/${id}/`} > {data.title}
-        <div>
-           {data.coverImage && (<Image 
-                src={data.coverImage}
-                alt={data.title}
-                width={250}
-                height={260}
-                format="webp"
-            />)}
+<li class="to-post">
+    <article class="cont-block">
+        {data.coverImage && (
+          <a href={postUrl} class="cover-link" aria-hidden="true" tabindex="-1">
+            <Image 
+              src={data.coverImage}
+              alt=""
+              width={300}
+              height={300}
+              format="webp"
+              class="cover"
+            />
+          </a>
+        )}
+
+        <div class="info-content">
+            <a href={postUrl} class="title-link">
+                <h4 class="header">{data.title}</h4>
+            </a>
+            <p class="subtitle">{data.subtitle}</p>
+            <p class="description">{data.description}</p>
+            
+            <a href={postUrl} class="read-more" aria-label={`Read more about ${data.title}`}>
+                Read post <span aria-hidden="true">→</span>
+            </a>
+
+            {/* Added logic to hide pipe if one category is missing */}
+            {(data.blogCategory || data.skateDiscipline) && (
+              <div class="tags">
+                {data.blogCategory} 
+                {data.blogCategory && data.skateDiscipline && <span class="divider">||</span>} 
+                {data.skateDiscipline}
+              </div>
+            )}
         </div>
-        <div>
-            <h5>{data.title}</h5>
-            <span>{data.subtitle}</span>
-            <p>{data.description}</p>
-            <span>read this post</span>
-            <div>{data.blogCategory}</div>
-            <div>{data.skateDiscipline}</div>
-        </div>
-    </a> 
+    </article>
 </li>
 
 
 <style>
-    a {
-        border: 2px solid var(--main-purple);
-        border-radius: 8px;
-        padding: 5px;
-        width: 250px;
 
+    .tags{
+        text-transform: uppercase;
+        font-size: var(--fs-caption);
+        color: var(--ob-purple);
+        padding: .5rem .7rem;
+    }
+
+    .cover{
+        width: 300px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 8px;
+        flex: 0 2 auto;
+    }
+
+    .header {
+        padding: 1rem 0;
+        font-size: var(--fs-heading-large);
+        text-decoration: .2px underline;
+        text-underline-offset: .3rem;
+        
+    }
+
+    .read-more, .cover-link {
+        position: relative;
+        z-index: 2; /* Keeps these items clickable on top of the stretched link */
+    }
+
+    .to-post{
+        border-top: 3px solid var(--main-pink);
+        padding: 2rem .5rem;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        position: relative;
+
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+        border-radius: 12px;
+    }
+
+    .to-post:hover,
+    .to-post:focus-within {
+        transform: translateY(-8px);
+        background-color: rgba(255, 255, 255, 0.03); /* Subtle highlight */
+        box-shadow: 0 10px 20px var(--shadow-grey);
+    }
+
+    .title-link::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1; /* Spans the link over the whole .to-post container */
+    }
+    
+    .cont-block{
+        display: flex;
+        flex-direction: row;
+        gap: 2.7rem;
+        align-items: flex-start;
+        
+    }
+
+    .title-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .title-link:hover .header {
+        color: var(--ob-purple);
+        text-decoration-color: var(--ob-purple);
+    }
+
+    .cover-link {
+        display: block;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .cover-link:hover {
+        transform: scale(1.02);
+    }
+
+    .read-more {
+        display: block;
+        margin-block: 1rem;
+        font-weight: bold;
+        color: var(--ob-purple);
+        text-decoration: none;
+    }
+
+    .divider {
+        margin-inline: 0.5rem;
+        opacity: 0.5;
+    }
+
+    @media (max-width: 550px){
+        .cont-block{
+            flex-direction: column;
+            gap: 1.3rem;
+            justify-items: center;
+            margin-inline: auto;
+            max-width: 35ch;
+        }
+        .cover {
+            width: 100%; /
+            max-width: 100%;
+        }
+        
     }
 </style>

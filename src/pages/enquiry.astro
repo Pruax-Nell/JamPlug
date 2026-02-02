@@ -6,53 +6,79 @@ import Button from "../components/button.astro";
 import "../styles/global.css";
 import "../styles/submit.css";
 
+// event forms
+import FormOther from "../components/form/formOther.astro"
+import FormNight from "../components/form/formNight.astro"
+import FormSocial from "../components/form/formSocial.astro"
+import FormWeekend from "../components/form/formWeekend.astro"
+import FormWorkshop from "../components/form/formWorkshop.astro"
+import FormFestival from "../components/form/formfestival.astro"
+
+
 
 ---
 
 <BaseLayout> 
-    
-    
-    <!-- || ------------------------------------------PAGE TOP -->
-    <section class="frame-fence pageTop primary-container">
-        <!-- ||------------------------- DIRECTIONS  -->
-        <hgroup>
-            <h2 class="half-title">Talk to Us</h2>
-                <p>Submit your message below</p>
-            </hgroup>
+    <section class="form-fence">
+        <hgroup class="form-title-group">
+            <h2 class="form-title">Talk to Us</h2>
+            <p>Submit your message below</p>
+        </hgroup>
     </section>
-        
-        
+
     <!-- ||------------------------------------- FORM SECTION  -->
-    <section class="frame-fence primary-container dual-field">
-        
+    <section class="form-fence ">
         <!-- -||----------------------- FORM FIELD  -->
-        <div class="form-wrap form-field">
-            <form>
-                <input type="hidden" name="form_category" value="General Enquiry" />
-                <input type="text" id="" placeholder="First Name" name="" required>
-                <label for="" >First Name</label>
-                <input type="text" id="" placeholder="Surname" name="" >
-                <label for="" >Surname</label>
-                <input type="text" id="" placeholder="YourEmail@Address.co.uk" name="" >
-                <label for="" >Email:</label>
-                <input type="text" id="" placeholder="Type your Message Here" name="" minlength="10">
-                <label for="" >Your Message:</label>
-
-                <textarea ></textarea>
+        <!-- <div id="general-form" class=" form-wrap"><FormOther /> </div> -->
+        <!-- <div id="workshop-form" class=" form-wrap"> <FormWorkshop /> </div> -->
+        <!-- <div id="weekend-form" class=" form-wrap"> <FormWeekend /> </div> -->
+        <!-- <div id="social-form" class=" form-wrap"> <FormSocial /> </div> -->
+        <!-- <div id="night-form" class=" form-wrap"> <FormNight /> </div> -->
+        <!-- <div id="festival-form" class=" form-wrap"> <FormFestival /> </div> -->
+        
+        <div class="form-wrap">
+             <form 
+            action="https://submit-form.com/your-id" 
+            method="POST" 
+            enctype="multipart/form-data"
+            >
                 <input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+                <input type="hidden" name="form_category" value="General Enquiry" />
+                <div>
+                    <label for="1name" >First Name</label>
+                    <input  type="text" id="1name" placeholder="First Name" name="" required>
+                </div>
 
-                <Button variant="tertiary" size="lg" theme="purpleLight">Submit</Button>
+                <div>
+                    <label for="2name" >Surname</label>
+                    <input  type="text" id="2name" placeholder="Surname" name="" >
+                </div>
 
+                <div>
+                    <label for="3email" >Email:</label>
+                    <input  type="text" id="3email" placeholder="YourEmail@Address.co.uk" name="" >
+                </div>
+
+                <div>
+                    <label for="4message" >Your Message:</label>
+                    <textarea id="4message" ></textarea>
+                </div>
+ 
+
+                <div class="btn-wrap form-field">
+                    <Button variant="tertiary" size="lg" theme="purpleLight" type="submit">Submit Event</Button>
+                </div>
             </form>
 
         </div>
     </section>
-    <section>
+
+    <section class="form-fence direct-other">
         <p>Other Options:</p>
         <div class="direction-box">
-            <p><a href="/submit-an-event">Submit an Event</a></p>
-            <p><a href="/submit-a-business">Submit a Group/Business</a></p>
-            <p><a href="">Join the Newsletter</a></p>
+            <p class="direction-item"><a href="/submit-an-event">Submit an Event</a></p>
+            <p class="direction-item"><a href="/submit-a-business">Submit a Group/Business</a></p>
+            <p class="direction-item"><a href="">Join the Newsletter</a></p>
         </div>
     </section>
         

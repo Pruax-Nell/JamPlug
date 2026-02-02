@@ -1,3 +1,6 @@
+
+
+
 // --- RINK DATA --- //
 create a collection of rinks and relate them to events and other.
 add a rink every time its discovered. 
@@ -68,7 +71,6 @@ description: -------
 startDate: ------- 
 endDate: ------- 
 
-eventPoster:  ------- image
 country:   ------- set list data / ennum / object-array
 townCity:  ------- dynamic set list - depends on country list
 eventType: -------  set list data / ennum / object-array
@@ -78,6 +80,7 @@ minAge: -------  set list [all / 18+ / 21+ ...] or dynamic from strings
 maxAge: -------  dynamic from strings 
 startTime: ------- 
 endTime:  ------- 
+eventPoster:  ------- image
 
 eventLink: -------
 ticketLink: -------

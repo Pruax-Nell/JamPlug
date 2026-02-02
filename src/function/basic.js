@@ -6,6 +6,32 @@
 // FORM SUBMISSION
 
 
+// || Email Validation
+/**
+ * Generic Email Validator
+ * @param {HTMLInputElement} input - The email input element to validate
+ * @param {string} customMsg - Optional custom message for type mismatch
+ */
+export function validateEmail(input, customMsg = "Please enter a valid email address.") {
+  if (!input) return true;
+
+  const isValid = input.validity.valid;
+
+  if (!isValid) {
+    input.setAttribute('aria-invalid', 'true');
+    
+    if (input.validity.valueMissing) {
+      input.setCustomValidity("This field is required.");
+    } else if (input.validity.typeMismatch) {
+      input.setCustomValidity(customMsg);
+    }
+  } else {
+    input.setAttribute('aria-invalid', 'false');
+    input.setCustomValidity("");
+  }
+
+  return isValid;
+}
 
 // || Nav Menu open/close button
 

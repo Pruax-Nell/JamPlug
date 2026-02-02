@@ -1,0 +1,273 @@
+---
+
+import Button from "../../components/button.astro";
+import LocationPicker from '../../components/form/fields/locationSelect.astro';
+import SocialSelect from "../../components/form/fields/socialSelect.astro";
+
+const form = "business";
+
+---
+
+
+<form 
+action="https://submit-form.com/your-id" 
+method="POST" 
+enctype="multipart/form-data"
+>
+<input type="hidden" name="form_category" value="Skate Business" />
+
+<section id="busi-heading" class="form-section">
+  <hgroup class="form-title-group">
+    <p class="set-right">Required information will be marked with a <span class="req-star">*</span></p>
+  </hgroup>
+  <input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+</section>
+  
+<section id="business-form-base" class="form-section">
+  
+  <div class="form-field ">
+    <label for="busi-name">Business Name<span class="req-star">*</span></label>
+    
+    <input id="busi-name" type="text" name="comp_name" placeholder="Company Name"  minlength="3" class="form-input" required>
+  </div>
+
+  <div class="form-field ">
+    
+    <label for="b-cat"><span class="req-star">*</span>Select Business Category:</label>
+    <select name="Business_type" id="B-cat" required>
+      <option value="venue">Venues	|| Rinks, Skate Parks, Dedicated Skate Studios, Pop-up Spaces. </option>
+      <option value="retail">Retail & Gear	|| Skate Shops (Brick & Mortar), Online Boutiques, Second-hand Dealers.</option>
+      <option value="manufacture">Manufacturing ||	Boot Makers, Plate/Hardware, Wheels/Bearings, Accessory Brands (Leashes, Toe Stops).</option>
+      <option value="education">Education	|| Certified Instructors, Skate Schools, Dance/Derby Coaches, Workshop Providers.</option>
+
+      <option value="community">Community ||	Non-profits, Social Clubs, Meet-up Groups, Roller Derby Leagues.</option>
+      <option value="services">Services	|| Skate Techs (Mounting/Maintenance), Event Photographers, Specialized Insurance.</option>
+
+      <option value="other">Other || specify in textarea below</option>
+    </select>
+  </div>
+  
+  <!-- Conditional field -->
+  <div class="form-field ">
+    <label for="pro-description">Products/Services/speciality:</label>
+    <textarea id="prod-description" placeholder="(optional) what is your product e.g. skate boot manufacturer, wheels..."></textarea>
+  </div>
+
+  <div class="form-field ">
+    
+    <fieldset>
+    <legend class="field-title">Main Location of Operations:</legend>
+    <LocationPicker />
+    </fieldset>
+  </div>
+
+</section>
+
+<section id="business-form-contact" class="form-section">
+  <p class="form-title">Contact Details </p>
+
+  <div class="form-field">
+    <label for="own-by">Business Owner: </label>
+    <input type="text" id="own-by" name="business_owner" placeholder="Name of Owner(s)"  minlength="" class="form-input">
+  </div>
+  
+  <div class="form-field">
+    <label for="comp-email">Main Email Address<span class="req-star">*</span></label>
+    
+    <input type="email" id="comp-email" name="business_email" placeholder="Company@email.com"  minlength="" class="form-input" required>
+  </div>
+
+  <div class="form-field">
+    <label for="busi-no">Business Phone Number: </label>
+    <input type="number" id="busi-no" name="business_phone" placeholder="calling code + number | (+44) 075..."  minlength="" class="form-input">
+
+  </div>
+  
+  
+  <div class="form-field">
+    <p> Online platforms: </p>
+    <span class="small-note">Use the 'Add Link' button to add more platforms.</span>
+    <SocialSelect />
+  </div>
+</section>
+
+<section id="business-form-offline" class="form-section">
+
+  <div class="form-field">
+    <div class="check-box">
+        <label for="busi-check">Business Not online?</label>
+       <input type="checkbox" id="busi-check" name="online_check" placeholder=""  minlength="" class="form-input">
+    </div>
+    <span class="small-note">If your business is not online for any reason (unless, it's temporary), check the box above.</span>
+  </div>
+  
+</section>
+
+<section id="business-form-choices" class="form-field">
+  
+<fieldset class="share-box">
+  <legend>Select your choices:</legend>
+  <div class="check-box">
+    <input type="checkbox" id="b2b-check" name="b2b_check" class="form-input network-toggle" aria-controls="network-fields" aria-expanded="false">
+    <label for="b2b-check">Are you interested in B2B network?</label>
+  </div>
+  
+  <div class="check-box">
+    <input type="checkbox" id="whole-check" name="wholesale_check" placeholder=""  minlength="" class="form-input">
+    <label for="whole-check">Do you have Wholesale Availability?</label>
+  </div>
+  
+  <div class="check-box">
+    <input type="checkbox" id="rent-check" name="rental_check" placeholder=""  minlength="" class="form-input">
+    <label for="rent-check">Do you have Rental Ability?</label>
+  </div>
+</fieldset>
+  
+</section>
+
+<section id="network-fields" class="hidden">
+  
+  <section class="form-section">
+    <p class="instruction-field">Beyond this point is optional but recommended!</p>
+  </section>
+
+  <section id="busi-heading-2" class="form-section">
+    <hgroup class="form-title-group form-field">
+      <h3 class="form-title"> Industry Market</h3>
+      <p>For professionals who are interested in joining a global B2B network dedicated to Roller Sports.</p>
+    </hgroup>
+  </section>
+
+  <section id="business-form-pro" class="form-section">
+
+    <div class="form-field">
+      <label for="biz-est">Year of Establishment:</label>
+      <input type="number" id="biz-est" name="established_year" min="1900"  class="form-input" placeholder="When did your company launch? ">
+    </div>
+    <div class="form-field">
+      <label for="bio-short">Short company bio:</label>
+      <textarea name="comp_bio_short" id="bio-short" placeholder="How would you introduce your company?"></textarea>
+    </div>
+
+    <div class="form-field">
+      <label for="biz-reach">Current Market Reach: </label>
+      <select name="market_reach" id="biz-reach">
+        <option value="local">Local Community</option>
+        <option value="national">National</option>
+        <option value="international">International / Global</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="coreprod">core product(s)</label>
+      <textarea name="core_products" id="coreprod" placeholder="wheels, plates, ..."></textarea>
+    </div>
+    <div class="form-field">
+      <label for="look4">Looking for anything specific by joining the directory?</label>
+      <textarea name="looking_for" id="look4" placeholder="Do you need roller skaters for product placement? skate rinks to form contracts? shops to supply?.."></textarea>
+    </div>
+  </section>
+
+
+
+</section>
+
+    <div class="btn-wrap form-field">
+        <Button variant="tertiary" size="lg" theme="purpleLight" type="submit">Submit Event</Button>
+    </div>
+  
+</form>
+
+<div id="form-success" class="hidden success-banner">
+    <h3>Awesome! 🛼</h3>
+    <p>Your business has been submitted. Our team will review it shortly!</p>
+    <Button id="reset-form" variant="outline" size="sm">Submit another</Button>
+</div>
+
+
+<style>
+  .hidden { display: none; }
+
+</style>
+
+<script>
+  import { validateEmail } from '../../function/basic';
+
+  function initBusinessForm() {
+    const b2bToggle = document.querySelector('.network-toggle') as HTMLInputElement;
+    const b2bFields = document.querySelector('#network-fields');
+
+    if (b2bToggle && b2bFields) {
+      b2bToggle.addEventListener('change', () => {
+        const isChecked = b2bToggle.checked;
+        isChecked ? b2bFields.classList.remove('hidden') : b2bFields.classList.add('hidden');
+        b2bToggle.setAttribute('aria-expanded', isChecked.toString());
+      });
+    }
+
+    const form = document.querySelector('form');
+    const emailInput = document.querySelector('#comp-email') as HTMLInputElement;
+    const successMessage = document.querySelector('#form-success');
+    const submitBtn = form?.querySelector('.center-button');
+
+    if (emailInput) {
+      emailInput.addEventListener('blur', () => {
+        validateEmail(emailInput, "Please provide a valid company email.");
+      });
+
+      emailInput.addEventListener('input', () => {
+        emailInput.setCustomValidity("");
+        emailInput.setAttribute('aria-invalid', 'false');
+      });
+    }
+
+    form?.addEventListener('submit', (event) => {
+      if (emailInput && !validateEmail(emailInput)) {
+        event.preventDefault(); 
+        emailInput.reportValidity(); 
+      }
+    });
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Stop the page from redirecting
+
+      // Final validation check
+      if (emailInput && !validateEmail(emailInput)) {
+        emailInput.reportValidity();
+        return;
+      }
+
+      // 1. Loading State
+      if (submitBtn) {
+        submitBtn.textContent = "Sending...";
+        submitBtn.setAttribute('disabled', 'true');
+      }
+
+      // 2. Send the Data via Fetch
+      const formData = new FormData(form);
+      
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          // 3. Success State
+          form.classList.add('hidden');
+          successMessage?.classList.remove('hidden');
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (error) {
+        alert("Oops! Something went wrong. Please try again.");
+        submitBtn?.removeAttribute('disabled');
+        if (submitBtn) submitBtn.textContent = "Submit to Directory";
+      }
+    });
+  }
+
+  initBusinessForm();
+  document.addEventListener('astro:after-swap', initBusinessForm);
+</script>

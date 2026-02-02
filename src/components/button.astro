@@ -85,30 +85,32 @@ const themeColour = {
 .btn {
   margin: .1rem;
   display: inline-flex;
-
+  min-height: 1rem;
   align-items: center;
   justify-content: center;
+  vertical-align: middle;
 
   font-weight: 600;
   letter-spacing: .3ch;
+  text-align: center;
   font-family: 'Red Rose';
   text-decoration: none;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 /* Sizes */
-.btn-xs { padding: 0.5rem 0.8rem; font-size: 0.645rem; }
-.btn-sm { padding: 0.9rem 1rem; font-size: 0.895rem; }
-.btn-md { padding: 0.1rem 1rem; font-size: 1rem; }
-.btn-lg { padding: 0.4rem 1.2rem; font-size: 1.1rem; }
+.btn-xs { padding: 0.3rem 0.8rem; font-size: 0.775rem; }
+.btn-sm { padding: 0.5rem .6rem; font-size: 0.895rem; }
+.btn-md { padding: 0.6rem 1rem; font-size: 1rem; }
+.btn-lg { padding: 0.8rem 1.2rem; font-size: 1.1rem; }
 
 /* ------------------ PRIMANRY BUTTON */
 .btn-primary {
-  height: 2.8rem;
-  width: 18ch;
+  min-height: 2.8rem;
+  min-width: 18ch;
   border-radius: 15px ;
-  border-width: 6px;
+  border-width: .3rem;
   border-style: solid double double;
   
   box-shadow: 4px 0 15px var(--shadow-pink-3);
@@ -122,8 +124,8 @@ const themeColour = {
 
 /* ------------------ SECONDARY BUTTON */
 .btn-secondary {
-  width: 18ch;
-  height: 2.6rem;
+  min-width: 18ch;
+  min-height: 2.9rem;
   border-radius: 27px;
   border-width: 6px;
   border-style: solid;
@@ -132,12 +134,12 @@ const themeColour = {
 }
 
 .btn-secondary:hover{
-    box-shadow: 0 4px 6px -1px var(--shadow-brown);
-    scale: 1.03;
-  }
+  box-shadow: 0 4px 6px -1px var(--shadow-brown);
+  scale: 1.03;
+}
 
-  /* ------------------ TERTIARY BUTTON */
-  .btn-tertiary {
+/* ------------------ TERTIARY BUTTON */
+.btn-tertiary {
   border-radius: 4px 16px 16px 16px;
   border-width: 4px;
   border-style: double;
@@ -410,8 +412,4 @@ background-color: var(--second-yellow);
   border-color: var(--main-dark);
 }
     
-
-
-
-
 </style>

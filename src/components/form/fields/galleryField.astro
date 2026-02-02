@@ -1,0 +1,55 @@
+---
+
+interface Props {
+    form: string;
+}
+
+const {
+    form
+} = Astro.props;
+
+---
+
+<div class="field-title-group">
+    <p class="field-title">Media Gallery: </p>
+    <p>Upload your main event poster + gallery. Up to 6 images in total</p>
+</div>
+
+<div class="form-field" data-js-reload="#">
+    <label class="#" for={`${form}-media-gallery`}>Event image or poster<span class="req-star">*</span></label>
+
+    <div class="form-field">
+        <!-- <input type="hidden" name="MAX_FILE_SIZE"> -->
+
+        <input 
+            name={`${form}-media-gallery[]`} 
+            id={`${form}-media-gallery`}
+            type="file" 
+            class="" 
+            aria-describedby={`${form}-media-tip`} 
+            accept="image/*"
+            onchange=""
+            data-form-id={`${form}-media-gallery`}
+            multiple>
+
+        <span class="" id={`${form}-media-tip`}>Max. file size: 16 MB.</span>
+    </div>
+    <div id={`${form}-preview-grid`} class="preview-grid"></div>
+</div>
+
+<script>
+
+    const fileInputs = document.querySelectorAll('input[type="file"][data-form-id]');
+
+    fileInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            const target = e.target as HTMLInputElement;
+            const files = target.files;
+            
+            if (files && files.length > 6) {
+                alert("Whoa there! You can only upload a maximum of 6 images.");
+                target.value = ""; 
+            }
+        });
+    });
+</script>

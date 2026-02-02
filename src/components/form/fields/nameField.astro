@@ -1,0 +1,81 @@
+---
+import type { restoreFocus } from 'astro/virtual-modules/transitions-swap-functions.js';
+
+
+interface Props {
+    form?: string;
+    no?: string;
+    [x: string]: any;
+
+}
+
+const {
+    form, 
+    no,
+    ...rest
+
+} = Astro.props;
+---
+<fieldset>
+    <div class="form-field">
+        <label class="" for={`${form}-event-name`}> Event Name<span class="req-star">*</span></label>
+        <input id={`${form}-event-name`} type="text" class="" name="gen-event-name" data-tooltip="" required placeholder="Sk8 Mania">
+    </div>
+    
+    <div class="form-field">
+        <label class="" for={`${form}-sub-name`}> Sub Heading</label>
+        <input id={`${form}-sub-name`} type="text" class="" name={`${form}-sub-name`}  aria-describedby={`${form}-name-tip`} placeholder="Save the last Skate">
+        <span id={`${form}-name-tip`} class="small-note">e.g. "Sk8 Mania: Save the last skate"</span>
+    </div>
+
+        <!-- EVENT INFO BLOCK -->
+    <div class="form-field">
+        <label for={`${form}-general-info`}> Event Information<span class="req-star">*</span></label>
+        <textarea name="event-info" id={`${form}-general-info`} class="event-info-box" cols="80" rows="30" placeholder="Provide further event description here: " required ></textarea>
+    </div>
+    
+</fieldset>
+
+    <fieldset class="form-field">
+        <legend class="field-title srOnly">Event Dates</legend>
+
+        <div class="grid-cols-2">
+
+            <div class="form-field">
+                <label for={`${form}-date-start`}>Start Date<span class="req-star">*</span></label>
+                <input id={`${form}-date-start`} type="date" class="field-box" required>
+            </div>
+            
+            <div class="form-field">
+                <label for={`${form}-date-end`}>End Date</label>
+                <input id={`${form}-date-end`} type="date" class="field-box" data-tooltip="If single day event, leave blank">
+            </div>
+        </div>
+
+    </fieldset>
+
+        <!-- START TIME -->
+    <fieldset class="form-field">
+        <legend data-tooltip="Use 24HR clock" class="small-heading srOnly">Event Times<span class="req-star">*</span></legend>
+
+        <div class="form-field">
+            <label class="" for={`${form}-time-start`}>Start Time</label>
+            <input id={`${form}-time-start`} type="time" maxlength="2"  value="" min="0" max="23" step="60" placeholder="HH" aria-required="true" class="field-box">
+        </div>
+
+        <div class="form-field">
+            <label class="" for={`${form}-time-end`}>End Time</label>
+            <input id={`${form}-time-end`} type="time" maxlength="2"  value="" min="0" max="23" step="60" placeholder="HH" aria-required="true" class="field-box">
+        </div>
+
+    </fieldset>
+
+
+<style>
+
+    .event-info-box {
+        height: 13rem;
+    }
+
+
+</style>

@@ -1,0 +1,182 @@
+---
+import React from 'react';
+import type { AstroImage, SerializedBlog, BlogCardData } from '../types';
+import Image from 'astro/components/Image.astro';
+import { formatEventDate } from '../function/dateHelper';
+
+type BlogCardProps = SerializedBlog['data'] & {
+  id: string;
+};
+
+const {
+  id,
+  title,
+  subtitle,
+  description,
+  skateDiscipline,
+  coverImage,
+  blogCategory,
+  published,
+  
+} = Astro.props
+  
+const dateDisplay = formatEventDate(published);
+// const postUrl = `/blog/${id}/`;
+// const cleanSlug = id.replace('/index', '');
+const cleanSlug = id.includes('/') ? id.split('/')[0] : id;
+const postUrl = `/blog/post/${cleanSlug}/`;
+
+---
+
+<article class={`blog-card ${blogCategory}`}>
+  
+  <div class="card-image">
+    {coverImage ? (
+      <Image src={coverImage} alt={title} height={300} width={300} class="cover-image" />
+    ) : (
+      <div class='image-replacement'> 
+        <span class="blog-label ">SKATE</span>
+        <span class="blog-label date">{dateDisplay}</span>
+      </div>
+    )}
+  </div> 
+
+  <div class="card-text">
+      <hgroup class="card-header">
+      <a href={postUrl} class="blog-card-link" aria-label={title}></a>
+      <h3 class="blog-title">{title}</h3>
+      <p class='blog-subtitle'> {subtitle}</p>
+    </hgroup> 
+
+    <div class="card-meta">
+      <p class='blog-description'>{description}</p>
+      <div class="meta-row">
+        <span class="meta-item cate">{blogCategory}</span>
+        {skateDiscipline && ( <span class="meta-item disc">{skateDiscipline}</span>)}
+      </div>
+    </div>
+  </div>
+
+</article>
+
+<style>
+
+  .blog-card{
+    position: relative;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    max-width: 880px;
+    width: 100%;
+    min-height: 14rem;
+    gap: 2.4rem;
+    padding: 1rem;
+    margin-block: 1rem;
+    border: 2px double var(--shadow-grey);
+    border-radius: 18px;
+    background-color: var(--clear-orange);
+    /* color: var(--text-white); */
+  }
+
+  .blog-card-link{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+  @media (max-width: 580px){
+    .blog-card{
+      flex-direction: column;
+
+
+    }
+
+    .card-image{
+      
+    }
+    
+    .cover-image{
+      aspect-ratio: 4 / 3;
+      width: 100%;
+    }
+
+    .image-replacement{
+      text-align: center;
+    }
+  }
+  
+  /* .cover-replacement{
+    display: flex;
+    flex-direction: column;
+
+    border: 2px dotted var(--grey);
+    text-transform: uppercase;
+
+  } */
+
+  .cover-image {
+    border-radius: 12px;
+  }
+
+  .card-header{
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog-title{
+    text-transform: uppercase;
+  }
+  .blog-subtitle{
+    padding-left: .3rem;
+  }
+
+  .card-meta{
+    padding: .5rem;
+  }
+
+.meta-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center; 
+  gap: 0.5rem;
+  padding: .3rem .8rem;
+  font-size: .9rem;
+  color: var(--black);
+}
+
+
+.disc {
+    /* width: 40%; */
+    background-color: var(--ow-teal);
+    padding: .3rem .6rem;
+    /* width: max-content; */
+    font-size: .64rem;
+    border-radius: 3px 8px 8px 8px;
+    color: var(--main-black);
+    text-transform: uppercase;
+    
+    
+}
+.cate {
+    /* width: 40%; */
+    background-color: var(--ow-purple);
+    font-size: .64rem;
+    padding: .3rem .6rem;
+    border-radius: 3px 8px 8px 8px;
+    color: var(--main-black);
+    text-transform: uppercase;
+
+}
+
+
+
+</style>

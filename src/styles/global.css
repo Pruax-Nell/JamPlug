@@ -2,8 +2,48 @@
 @import './fontType.css';
 @import './spare.css';
 
+/* || ----------------------- CSS RESET MINI-------------- */
+
+/* A Modern, Minimal Reset */
+
+/* 1. Use a more intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margins */
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+/* 3. Make images and media easier to work with */
+img, picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* 4. Inherit fonts for inputs and buttons */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 5. Remove list styles (optional, but common for forms/navs) */
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+    scroll-padding-top: 0.5rem; 
+    scroll-behavior: smooth; 
+}
+
 /* || -----------------------BRAND COLOURS-------------- */
 :root {
+
+
+
     /* NEW COLOUR SYSTEM */
     --main-orange: #e47200;
     --second-orange: #ff9224;
@@ -16,6 +56,7 @@
     --shadow-orange: rgba(201, 108, 14, 0.306);
     --shadow-orange-2: rgba(213, 115, 17, 0.493);
     --shadow-orange-3: #8443016e;
+    --clear-orange: #f8dcc0ed;
     
     --main-purple: #8422e0;
     --second-purple: #9c49ea;
@@ -27,10 +68,11 @@
     --shadow-purple: #9c49ea5a;
     --shadow-purple-2: #9c49ea95;
     --shadow-purple-3: #3d017668;
+    --clear-purple: #b894d95a;
     
     --main-teal: #14c1a4;
     --second-teal: #27d9be;
-    --ow-teal: #7bd4c5;
+    --ow-teal: #79c7ba;
     --ob-teal: #124941;
     --special-teal: #0b8774;
     --mid-teal: #178c7b;
@@ -39,6 +81,7 @@
     --shadow-teal: #4bc9b444;
     --shadow-teal-2: #0b8a7571;
     --shadow-teal-3: #134a4167;
+    --clear-teal: #a8c7c2d0;
 
     --main-pink: #d80066;
     --second-pink: #ff449b;
@@ -50,17 +93,19 @@
     --shadow-pink: #ff449b41;
     --shadow-pink-2: #d0096671;
     --shadow-pink-3: #59052c62;
-
+    --clear-pink: #f8d6e7cc;
+    
     --main-yellow: #f3c40c;
     --second-yellow: #f8d030;
     --ow-yellow: #edd267;
     --ob-yellow: #735d03;
     --mid-yellow: #bf9f13;
     --grey-yellow: #8f7b29;
-
+    
     --shadow-yellow: #f6d3466e;
     --shadow-yellow-2: #a182048e;
     --shadow-yellow-3: #4339126e;
+    --clear-yellow: #faeaa9dd;
 
     --main-brown: #582b1c;
     --second-brown: #743f2d;
@@ -68,11 +113,12 @@
     --ob-brown: #41221a;
     --mid-brown: #4b1b0b;
     --grey-brown: #4e3830;
-
+    
     --shadow-brown: #4620167c;
     --shadow-brown-2: #271a17ac;
     --shadow-brown-3: #1b0f0dac;
-
+    --clear-brown: #efe1e1;
+    
     --main-bg-light: #fff9ed;
     --main-light: #fff9ed;
 
@@ -80,6 +126,7 @@
 
     --highlight: #ebe9e5;
     --highlight-2:rgba(225, 214, 192, 0.644)5;
+    --highlight-3: #ebe9e58b;
 
     --text-bg-white: #fff9ed44;
     --background-light: #ebe9e5;
@@ -112,12 +159,20 @@
     
 }
 
-
-
-
 /* --------------------Structure and foundation------------------ */
 :root {
     --head-height: clamp(72px, 15vh, 80px);
+
+    /* PADDING/MARGINS */
+    --space-sm: clamp(0.75rem, 1vw + 0.5rem, 1rem); 
+    
+    --space-md: clamp(1.25rem, 2vw + 0.75rem, 2rem);
+    
+    --space-lg: clamp(2.5rem, 5vw + 1rem, 5rem);
+    
+    --space-xl: clamp(3.75rem, 8vw + 1.5rem, 7.5rem);
+
+    --form-gap: clamp(1rem, 1.5vw + 0.5rem, 1.5rem);
 }
 
 body {
@@ -141,16 +196,39 @@ body *{
     scroll-margin-top: 165px;
 }   
 
-div + div {
-    margin-block: .8rem;
-}
     
 /* -------------------- BASE LAYOUT ------------------- */
 .frame-fence {
+    scroll-snap-type: y proximity ;
+    min-height: 15rem;
     padding: 1.6rem 1rem;
-    width: auto;
-    overflow-y: hidden;
-    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    /* overflow-y: hidden; */
+    /* margin-bottom: var(--space-sm); */
+}
+
+
+@media (max-width: 780px) {
+    
+    .frame-fence{
+        padding: .1rem;
+    }
+
+}
+
+/* title + subtitle duo */
+.header-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-block: var(--space-md);
+    padding-left: 2rem;
+}
+
+.page-head {
+    align-self: center;
 }
 
 .center-flex {
@@ -159,18 +237,11 @@ div + div {
     align-items: center;
 }
 
-.grid-pen {
-    display: grid;
-}
-.flex-pen {
-    display: flex;
-}
-
 
 /* kevin powell MAIN CONTAINER */
 #main-container {
     --max-width: 1180px;
-    --padding: 1rem;
+    --padding: 1.2rem;
 
     display: grid;
     grid-template-columns: 
@@ -178,8 +249,8 @@ div + div {
     min(var(--max-width), 100% - var(--padding) * 2)
     minmax(var(--padding), 1fr);
     
-    grid-template-rows: 
-    auto, auto, auto;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
 
 }
 
@@ -198,16 +269,30 @@ div + div {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     min-height: 80vh;
-    /* flex-grow: 1; */
+
     scroll-behavior: smooth;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md, 2rem);
 }
 
 #mainFooter {
     grid-row: 3 / 4;
     grid-column: 1 / -1;
     min-height: 95svh;
+    padding-top: 1rem;
     
 }
+
+/* max-width: 100% and flex-basis: 300px */
+/* flex children: min-width: 0 */
+
+/* Parent: Needs max-width: 100% and overflow: hidden (the safety net).
+
+Child: Needs width: 0 (to kill global 100% rules), flex-grow: 1 (to fill space), and min-width: 0 (to allow shrinking). */
     
 
 /* || --------------------CHAPTER------------------ */
@@ -215,7 +300,3 @@ div + div {
 /* NOTES */
 
 /* ... */
-
-/* || --------------------CHAPTER------------------ */
-/* ----INSERT---- */
-/* NOTES */

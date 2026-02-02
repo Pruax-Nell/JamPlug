@@ -80,7 +80,7 @@ const featuredEvents = (publishedEvents)
 		startDate: new Date(event.data.startDate),
 		endDate: event.data.endDate ? new Date(event.data.endDate) : null
 	}
-	
+	 
 }))
 .sort(
 	(a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
@@ -112,26 +112,28 @@ const recentBlogs = (publishedBlogs)
 	
 <BaseLayout>
 	<!------------------------------------------ HERO ---------------->
-	<section  id="hero-section" class="frame-fence scroll-snap">
+	<section  id="hero-section" class="frame-fence">
 		<Hero />
 	</section>
 
 	<!------------------------------------------ MISSION ---------------->
-	<section id="our-mission" class="frame-fence scroll-snap  ">
-		<div class=" heading-banner">
-			<h3>Helping skater's skate</h3>
-			<span class="p1">Mission Statement: "For the Skaters"</span>
+	<section id="our-mission" class="frame-fence">
+	<div class="direction-box">
+		<div class="heading-banner">
+			<h3 class="heading">Helping skater's skate</h3>
+			<span class="heading-sub">Mission Statement: "For the Skaters"</span>
 		</div>
 		
 		<div class="nav-button center-flex">
 			<Button href="/about" variant="secondary" theme="brownDark" size="lg" class=""> Read about Us </Button>
 		</div>
+	</div>
 		
 	</section>
 	<!------------------------------------------ FEATURES ---------------->
 	{featuredEvents.length > 0 ? (
 		<section id="feature-section"  class="frame-fence">
-			<div><h3>Featured Events</h3></div>
+			<h3>Featured Events</h3>
 			<div class="carosel">
 		{featuredEvents.map((post) => (
 				<FeaturedCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}/>
@@ -142,32 +144,32 @@ const recentBlogs = (publishedBlogs)
 	) : (<span>special</span>) } 
 
 	<!------------------------------------------ JAM LIST ---------------->
-	<section id="festival-list" class="frame-fence scroll-snap">
-		<div class="blur-back-1 center-div">
-			<div class="">
+	<section id="festival-list" class="frame-fence">
+		<div class="center-div">
+			<div class="items-center">
 				<h3 class="title"> Big Jam List <span class="year-highlight">2026</span> </h3>
-				<!-- <span class="sub-heading">All the Skate Festivals of Europe</span> -->
 			</div>
 			<div class="items-center">
 				<Button href="/festivals" variant="tertiary" theme="pinkLight" size="lg"> Find Skate Festivals </Button>
 			</div>
 		</div>
-		
 	</section>
 	<!------------------------------------------ DIRECTORY ---------------->
-	<section id="learn-to-skate" class="frame-fence scroll-snap ">
-		<div class="heading-banner">
-			<h3>To the directory</h3>
-			<span>Your A-to-Z of Skating</span>
-			<p class="narrow-ch self-center p1">Find rinks, skate shops and community groups who hold lessons or events</p>
-		</div>
-		<div class="nav-button center-flex">
-			<Button href="/directory" variant="secondary" theme="brownDark" size="lg"> Browse the UK Directory </Button>
+	<section id="learn-to-skate" class="frame-fence ">
+		<div class="direction-box">
+			<div class="heading-banner">
+				<h3 class="heading">To the directory</h3>
+				<span class="heading-sub">Your A-to-Z of Skating</span>
+				<p class="direct-sub">Find rinks, skate shops and community groups who hold lessons or events</p>
+			</div>
+			<div class="nav-button center-flex">
+				<Button href="/directory" variant="secondary" theme="brownDark" size="lg"> Browse the UK Directory </Button>
+			</div>
 		</div>
 	
 	</section>
 	<!------------------------------------------ UPCOMING ---------------->
-	<section id="upcoming-events" class="frame-fence scroll-snap side-by-side" >
+	<section id="upcoming-events" class="frame-fence side-by-side" >
 		<div class="side-a">
 			<h4>Upcoming Events</h4>
 			<div><Button href="/events" variant="secondary" theme="yellowLight" size="xs"> See All Events </Button></div>
@@ -177,7 +179,7 @@ const recentBlogs = (publishedBlogs)
 		<div class=" event-previews side-b">
 
 			{upcomingEvents.length > 0 ? (
-				<div class="carosel">
+				<div class="carosel" role="list" aria-label="Upcoming Events">
 			{upcomingEvents.map((post) => (
 				<CardHolder 
 				variant="event"
@@ -206,7 +208,7 @@ const recentBlogs = (publishedBlogs)
 
 	</section>
 	<!------------------------------------------ BLOGS ---------------->
-	<section id="skate-news" class="frame-fence scroll-snap side-by-side">
+	<section id="skate-news" class="frame-fence side-by-side">
 		<div class="side-a">
 			<h4>Skate News</h4>
 			<span>Direct to blog page</span>
@@ -214,7 +216,7 @@ const recentBlogs = (publishedBlogs)
 		</div>
 		<div class="side-b">
 			{recentBlogs.length > 0 ? (
-				<div class="carosel"> 
+				<div class="carosel" role="list" aria-label="Recent Blog Posts"> 
 			{recentBlogs.map((post) =>
 				( <CardHolder variant="blog" 
 				title={post.title} 

@@ -1,13 +1,6 @@
 
 /* ||-------------------------------------INTRO AND SCRIBE */
-.intro {
-    margin-bottom: 60px;
-}
 
-.scribe {
-    margin-bottom: 80px;
-    
-}
 
 .scribe-content{
     display: flex;
@@ -16,14 +9,14 @@
 }
 
 .scribe-content div {
-    margin-top: 4ch;
+    margin-top: 2rem;
 }
 
 .jam-link-block {
     width: 95%;
-    min-height: 320px;
-    height: 55svh;
-    padding: 2ch;
+    height: 320px;
+    min-height: 55svh;
+    padding: .8rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,8 +38,8 @@
 
 /* ||-------------------------------------------------EVENTS LIST */
 .events-list {
-    margin: 20px 0;
-    padding-top: 10px;
+    margin: .8rem 0;
+    padding-top: .5rem;
     height: max-content;
     margin-bottom: 2rem;
 }
@@ -55,7 +48,7 @@
 .events-page-wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  /* padding: 2rem 1rem; */
 }
 
 /* ||--------------------------------------------- UPCOMING EVENTS */
@@ -66,11 +59,11 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 16px;
-    padding: 24px;
+    gap: 1rem;
+    padding: 1.5rem;
     background: var(--shadow-brown);
     border-radius: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 2.3rem;
     align-items: flex-start;
 }
 
@@ -91,7 +84,7 @@
   width: 50%;
   /* flex: .5; */
   border: 1.2px dotted var(--shadow-brown-2);
-  padding: 18px;
+  padding: 1.2rem;
   border-radius: 4px;
 }
 
@@ -101,12 +94,12 @@
   color: var(--black);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
 
 .filter-group span {
-    margin-top: 6px;
+    margin-top: .4rem;
 }
 
 .filter-group select {
@@ -127,7 +120,7 @@
 
 .filter-group select:focus {
     border-color: var(--ow-yellow);
-    border-width: 2.6px;
+    border-width: .28rem;
     outline: none;
 }
 
@@ -137,7 +130,7 @@ select option:disabled {
 }
 
 .search-input {
-    padding: 10px 12px;
+    padding: .8rem 1rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 0.95rem;
@@ -161,7 +154,7 @@ select option:disabled {
     font-family: var(--font-rose-body);
     font-weight: 800;
     transition: background 0.2s;
-    padding: 10px 20px;
+    padding: 1rem 1.2rem;
     background: #f0f0f0;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -196,7 +189,7 @@ select option:disabled {
     .filter-section{
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: .6rem;
         max-width: 100%;
 
     }
@@ -204,7 +197,7 @@ select option:disabled {
     .filter-group {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: .8rem;
         max-width: 100%;
         width: 90%;
 
@@ -214,7 +207,7 @@ select option:disabled {
     }
 
     .search-input {
-        padding: 8px 10px;
+        padding: 1rem 1.2rem;
         width: 90%;
 
     }
@@ -246,7 +239,7 @@ select option:disabled {
 .event-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(310px, 310px));
-  gap: 24px;
+  gap: 1rem;
   margin-top: 2rem;
   grid-auto-flow: dense;
   justify-content: center;
@@ -257,19 +250,18 @@ select option:disabled {
 }
 
 
-
-@media (max-width:820px) {
+@media (max-width:750px) {
 
     .event-grid{
-        background-color: var(--highlight);
-        border-radius: 18px;
-        border: 3px dotted var(--shadow-brown);
-        padding: 10px 3px;
-        max-height: 580px;
         overflow-y: scroll;
-        width: 80%;
+        padding: 2.2rem 4rem;
+        max-height: 580px;
+        /* width: 80%; */
         justify-self: center;
-
+        
+        border-radius: 18px;
+        background-color: var(--highlight);
+        border: 3px dotted var(--shadow-brown);
     }
 
     .scroll-hint{
@@ -280,20 +272,11 @@ select option:disabled {
 }
 
 
-@media (max-width:620px) {
-    
-    .event-grid{
-        grid-template-columns: repeat(auto-fill, 480px);
-        max-height: 620px;
-        overflow-y: scroll;
-
-    }
-}
 
 .no-events-fallback {
     grid-column: 1 / -1;
     text-align: center;
-    padding: 60px 20px;
+    padding: 3rem 2.3rem;
     border: 2px dashed #eee;
     color: var(--black);
     border-radius: 8px;
@@ -446,7 +429,7 @@ select option:disabled {
     flex-direction: column;
     flex-grow: 1; 
     /* justify-content: space-evenly; */
-    gap: 20px;
+    gap: 1.2rem;
     border-radius: 26px 26px 0 0 ;
     background-color: var(--main-brown);
     background-color: var(--ow-brown);
@@ -499,15 +482,18 @@ select option:disabled {
     flex-direction: column;
     justify-content: space-evenly;
 }
-.sub-meta {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
 
+
+.sub-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 1rem;
+    width: 100%;
+}
 
 .meta-item {
   display: flex;
+  width: 100%;
   align-items: center; 
   gap: 0.5rem;
   margin-bottom: 0.5rem;
@@ -517,7 +503,7 @@ select option:disabled {
 
 
 .discipline {
-    width: 40%;
+    /* width: 40%; */
     background-color: var(--main-yellow);
     padding: .3rem .6rem;
     /* width: max-content; */
@@ -529,7 +515,7 @@ select option:disabled {
     
 }
 .level {
-    width: 40%;
+    /* width: 40%; */
     background-color: var(--main-purple);
     font-size: .64rem;
     padding: .3rem .6rem;
@@ -542,7 +528,7 @@ select option:disabled {
 @media (max-width: 420px) {
     .card-body {
         padding: 1rem;
-        gap: 15px;
+        gap: 1rem;
     
     }
     
@@ -593,10 +579,10 @@ select option:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
-    margin-top: 48px;
-    margin-bottom: 60px;
-    padding-bottom: 30px;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
 }
 
 .pagination button {
@@ -617,69 +603,69 @@ select option:disabled {
 .fifty-fifty-section {
     margin: 60px 0;
     padding: 10px;
-    height: 580px;
+    /* min-height: 600px; */
     
 }
 
 .half-box {
-    /* aspect-ratio: 1 / 1; */
-
-    /* display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 20%); */
     display: flex;
     flex-direction: row;
-    max-height: 100%;
-    gap: 0;
-    object-fit: scale-down;
+    width: 100%;
+    align-items: stretch;
+    overflow: hidden;
 }
 
+.half-box .image,
+.half-box .content-wrap {
+    flex: 1 1 50%; /* This is the secret to 50:50 */
+    min-width: 0;   /* Foundational fix: prevents flex-bleeding */
+}
 
 /* ---- IMAGE HALF */
 
 .half-box .image {
+    line-height: 0;
     overflow: hidden;
-    aspect-ratio: 1 / 1;
-    max-height: 100%;
 }
-
-img #half-img {
-    /* height: 100%; */
-    object-fit: contain;
-    object-position: 50% 50%;
- }
 
 #half-img {
-    max-height: 600px;
-    width: minmax(300px, 50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+    /* max-height: 600px; */
+
+    transition: transform 0.5s ease;
 }
 
+.half-box:hover #half-img {
+    transform: scale(1.1); 
+}
 
 /* ---- CONTENT HALF */
 
 .content-wrap {
-    width: 1fr;
-    padding: 20px;
+    padding: 2rem;
     background-color: var(--second-orange);
-    /* box-sizing: content-box; */
-    width: minmax(300px, 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically centers text */
 }
 
 .inner-wrap {
-    display: grid;
-    grid-template-rows: 40% 30% 30%;
-
-    justify-items: center;
+    /* Avoid fixed 40/30/30 rows; let content breathe */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     align-items: center;
-    height: 100%;
-    gap: 0;
+    text-align: center;
 }
 
 
 .inner-wrap > p {
-    text-align: center;
-    width: clamp(85%, 15ch, 90%);
-    font-size: var(--fs-p3);
+    max-width: 45ch; 
+    font-size: var(--fs-p2);
+    line-height: 1.6;
 }
 
 .inner-wrap > h2 {
@@ -691,60 +677,40 @@ img #half-img {
 
 .btn-wrap {
     display: flex;
-    margin: 10px 0;
+    margin: .2rem 0;
     width: 100%;
     box-sizing: border-box;
     justify-content: space-around;
 }
 
 
-@media (max-width: 590px) {
+@media (max-width: 720px) {
 
 .fifty-fifty-section {
-    margin: 60px 0;
-    padding: 10px;
-    height: 690px;
+    margin: 2rem 0;
+    padding: .3rem;
     
 }
 
-.half-box {
-    /* aspect-ratio: 1 / 1; */
-
-    /* display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 20%); */
-    display: flex;
-    flex-direction: column;
-    max-height: 100%;
-    gap: 0;
-}
+    .half-box {
+        flex-direction: column;
+        height: auto;
+    }
 
 
-/* ---- IMAGE HALF */
-
-/* the case */
 .half-box .image {
-    overflow: hidden;
-}
-
-/* the img */
-#half-img {
+    aspect-ratio: 16 / 9;
     object-fit: cover;
+}
+
+
+    .half-box .content-wrap {
+        flex: 1 1 auto; /* Allow text to grow as much as it needs */
+    }
 
 }
 
 
-/* ---- CONTENT HALF */
-
-.content-wrap {
-}
-
-}
-@media (max-width: 390px) {
-
-
- 
-}
 /* ||-----------------------------------------------PAST EVENTS SECTION */
 
 .past-events {

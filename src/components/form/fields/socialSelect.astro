@@ -1,0 +1,101 @@
+---
+import { SOCIAL_MEDIA} from "../../../constants"
+import Button  from '../../../components/button.astro'
+
+interface Props {
+  fieldName?: string; // e.g., "link", "socials", or "organizer_socials"
+}
+
+const { fieldName = "link" } = Astro.props;
+
+---
+
+<div class="social-group-container" data-field-name={fieldName}>
+  <div class="social-list" aria-live="polite">
+
+    <div class="social-row" data-index="0">
+      <!-- DYNAMIC INPUTS -->
+      <div class="field-pair">
+        <select name={`${fieldName}[0][platform]`} class="form-input" required>
+          <option value="">-- Platform --</option>
+          {SOCIAL_MEDIA.map((item) => (
+            <option value={item.value}>{item.label}</option>
+          ))}
+        </select>
+        
+        <input 
+          type="url" 
+          name={`${fieldName}[0][url]`} 
+          placeholder="https://www.instagram.com/yourname" 
+          class="form-input"
+          required
+          pattern="https?://.*"
+          title="Please include the full URL starting with http:// or https://"
+        />
+        
+        <button type="button" class="remove-social-btn hidden" aria-label="Remove link">×</button>
+      </div>
+      <!-- APPENDED CHILD GOES HERE -->
+    </div>
+    
+  </div>
+  <Button variant="outline" theme="brownDark" size="md" class="add-social-btn add-more-btn" type="button">+Add Another link</Button>
+</div>
+
+<script>
+  import { SOCIAL_MEDIA } from "../../../constants";
+
+  function initSocialSelect() {
+    const groups = document.querySelectorAll('.social-group-container');
+
+    groups.forEach(group => {
+      const addBtn = group.querySelector('.add-social-btn');
+      const list = group.querySelector('.social-list');
+      const fieldName = group.getAttribute('data-field-name');
+      
+      if (!list || !fieldName) return;
+      
+      let nextIndex = list.querySelectorAll('.social-row').length;
+      
+      addBtn?.addEventListener('click', () => {
+        const row = document.createElement('div');
+        row.classList.add('social-row');
+        
+        // Use your constants to build the options string
+        const optionsHTML = SOCIAL_MEDIA.map(m => 
+          `<option value="${m.value}">${m.label}</option>`
+        ).join('');
+
+        row.innerHTML = `
+          <div class="field-pair">
+            <select name="${fieldName}[${nextIndex}][platform]" class="form-input" required>
+              <option value="">-- Platform --</option>
+              ${optionsHTML}
+            </select>
+            <input 
+              type="url" 
+              name="${fieldName}[${nextIndex}][url]" 
+              placeholder="https://..." 
+              class="form-input" 
+              required
+              pattern="https?://.*"
+              title="Full URL required"
+            />
+            <button type="button" class="remove-btn remove-social-btn">×</button>
+          </div>
+        `;
+
+        list.appendChild(row);
+
+        nextIndex++;
+
+        row.querySelector('.remove-social-btn')?.addEventListener('click', () => {
+          row.remove();
+        });
+      });
+    });
+  }
+
+  initSocialSelect();
+  document.addEventListener('astro:after-swap', initSocialSelect);
+</script>

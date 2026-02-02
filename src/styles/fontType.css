@@ -50,34 +50,31 @@
     /* font-size hierarchy */
     
     /* Hero / Page Titles */
-    --fs-title: clamp(2.5rem, 8vw + 1rem, 5rem); 
-    --fs-title-2: clamp(2rem, 6vw + 1rem, 3.5rem); 
+    --fs-hero: clamp(1.75rem, 5vw + 1rem, 4rem);
+    --fs-title: clamp(1.75rem, 5vw + 1rem, 4rem); 
+    --fs-title-2: clamp(1.5rem, 4vw + 1rem, 3.2rem);
     
     /* Section Headings */
-    --fs-heading-xl: clamp(1.75rem, 4vw + 1rem, 2.8rem);
-    --fs-heading-large: clamp(1.5rem, 3vw + 1rem, 2.2rem);
-    --fs-heading-mid: clamp(1.25rem, 2vw + 1rem, 1.75rem);
-    --fs-heading-small: clamp(1.1rem, 1vw + 1rem, 1.4rem);
+    --fs-heading-xl: clamp(1.35rem, 3vw + 0.5rem, 2.2rem);
+    --fs-heading-large: clamp(1.25rem, 2vw + 0.5rem, 1.8rem);
+    --fs-heading-mid: clamp(1.1rem, 1.5vw + 0.5rem, 1.5rem);
+    --fs-heading-small: clamp(1.05rem, 0.5vw + 1rem, 1.2rem);
     
     /* Body Text (Standard is 1rem / 16px) */
-    --fs-p1: clamp(1.125rem, 0.5vw + 1rem, 1.25rem); /* Intro text */
-    --fs-p2: 1rem;                                  /* Standard body */
-    --fs-p3: 0.875rem;                              /* Small body */
+    --fs-p1: clamp(1rem, 0.5vw + 0.9rem, 1.125rem);
+    --fs-p2: clamp(1rem, 0.2vw + 0.95rem, 1.05rem);       
+    --fs-p3: clamp(0.875rem, 0.1vw + 0.85rem, 0.95rem);
     
     /* UI Elements */
-    --fs-bttn: clamp(0.9rem, 1vw + 0.5rem, 1.1rem);
-    --fs-caption: clamp(0.75rem, 0.5vw + 0.5rem, 0.9rem);
-    --fs-footer: 0.85rem;
-
-    --fs-mobile-1: clamp(.4rem, .6rem, 3rem);
-    --fs-mobile-button-1: clamp(.4rem, .6rem, 1rem);
-    
+    --fs-bttn: clamp(0.9rem, 0.5vw + 0.8rem, 1.1rem);
+    --fs-caption: clamp(0.8rem, 0.2vw + 0.75rem, 0.9rem);
+    --fs-footer: clamp(0.75rem, 0.1vw + 0.7rem, 0.85rem);
 }
 
 h1 {
     font-family: var(--font-titan-head);
     letter-spacing: var(--letter-space-titan);
-    font-size: var(--fs-title);
+    font-size: var(--fs-title-2);
     margin: 2rem .8rem;
 
     
@@ -86,7 +83,7 @@ h1 {
 h2 {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-size: var(--fs-title-2);
+    font-size: var(--fs-heading-xl);
     margin: 1.5rem .5rem;
 
     text-transform: uppercase;
@@ -96,7 +93,7 @@ h2 {
 h3 {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-size: var(--fs-heading-xl);
+    font-size: var(--fs-heading-large);
     font-style: bold;
     margin: 1.2rem .5rem;
 }
@@ -104,7 +101,7 @@ h3 {
 h4 {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-size: var(--fs-heading-large);
+    font-size: var(--fs-heading-mid);
     font-weight: 600;
     margin: 1rem .5rem;
 
@@ -113,15 +110,15 @@ h4 {
 h5 {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-size: var(--fs-heading-mid);
+    font-size: var(--fs-heading-small);
     margin: .8rem .5rem;
-
+    
 }
 
 h6 {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-size: var(--fs-heading-small);
+    font-size: var(--fs-p1);
     text-transform: uppercase;
     margin: .8rem .5rem;
 
@@ -150,7 +147,7 @@ label {
 small {
     font-family: var(--font-rose-body);
     letter-spacing: var(--letter-space-rose);
-    font-size: var(--fs-foot);
+    font-size: var(--fs-caption);
 
 }
 
@@ -174,12 +171,12 @@ small {
     letter-spacing: var(--letter-space-shantell);
     font-style: italic;
     text-transform: uppercase;
-    /* Weight, Informality, and Bounce */
     font-variation-settings: "wght" 600, "INFM" 100, "BNCE" 100;
     
-    font-size: var(--fs-heading-mid);
-    color: var(--second-brown);
+    font-size: var(--fs-caption);
+    color: var(--ob-brown);
     display: inline-block;
+    max-width: 35ch;
 }
 
 .note:hover {
@@ -190,22 +187,21 @@ small {
 .handwritten {
     font-family: var(--font-shantell-notes);
     letter-spacing: var(--letter-space-shantell);
-    font-size: var(--fs-heading-mid); /* Notes usually need to be a bit larger to be readable */
+    font-size: var(--fs-heading-mid); 
     line-height: 1.4;
-    color: var(--second-teal); /* Optional: give notes a specific color like a marker pen */
+    color: var(--second-teal); 
     display: inline-block;
 }
 .note-sticker {
-    background-color: var(--ow-purple); /* Post-it yellow */
+    background-color: var(--ow-purple); 
     padding: 1rem;
     box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
     transform: rotate(-2deg);
     border-radius: 2px;
 }
 
-/* Ensure handwritten text doesn't look too squashed */
 .handwritten, .note {
-    font-variation-settings: "BNCE" 50, "INFM" 50; /* Specific to Shantell Sans features */
+    font-variation-settings: "BNCE" 50, "INFM" 50; 
 }
 
 .marker-highlight {

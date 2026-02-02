@@ -1,0 +1,117 @@
+---
+import Button from "../../components/button.astro";
+import PersonField from "../../components/form/fields/personField.astro";
+import LocationPicker from '../../components/form/fields/locationSelect.astro';
+import SocialSelect from "../../components/form/fields/socialSelect.astro";
+import NameField from "./fields/nameField.astro";
+import GalleryField from "./fields/galleryField.astro";
+
+import { SKILL_LEVEL, SKATE_DISCIPLINES,  } from "../../constants";
+
+// interface Props {
+//     form: string;
+// }
+
+// const { form } = Astro.props;
+
+---
+<hgroup class="form-title-group">
+    <h3 class="form-title">Skate Workshop</h3>
+    <span>Developing skate technique</span>
+</hgroup>
+          
+<!-- WORKSHOP SUBMISSION FORM -->
+<form 
+action="https://submit-form.com/your-id" 
+method="POST" 
+enctype="multipart/form-data"
+>
+<input type="hidden" name="form_category" value="Skate Workshop" />
+<input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+
+
+    <section class="form-section">
+        <NameField form="workshop" />
+
+    </section>
+
+    <section class="form-section">
+        <LocationPicker form="workshop" />
+
+    </section>
+
+    <section class="form-section">
+        
+        <div class="form-field">
+            <label class="field-title"> Skate Dicipline?<span class="req-star">*</span></label>
+            <select name="" id="" class="mid-fit field-box" aria-required="true" aria-invalid="false" required>
+                {SKATE_DISCIPLINES.map(d => <option value={d.value}>{d.label}</option>)}
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="boot-req">Footwear requirement? <span class="req-star">*</span> </label>
+            <select name="" id="boot-req" data-tooltip="Some events are off-skates but FOR skaters, some are hybrid" required>
+                <option value="skates">Skates</option>
+                <option value="shoes">Shoes</option>
+                <option value="hybrid">Hybrid</option>
+            </select>
+            <span class="">Is there space for a dancefloor? or is it rink only?</span>
+        </div>
+        
+        <div class="form-field">
+            <label for="gen-level-select"> Level requirement
+                
+            </label>
+            <select name="" id="gen-level-select" class=""  aria-invalid="false" required>
+                {SKILL_LEVEL.map(l => (<option value={l.value}> {l.label}</option>))}
+                
+            </select>
+        </div>
+
+        <!-- MIN AGE -->
+        <div class="form-field">
+            <label for="gen-minage">Minimum Age:</label>
+            <input type="text" id="gen-minage" placeholder="21+" required>
+        </div>
+        <!-- max AGE -->
+        <div class="form-field">
+            <label for="gen-minage">Max Age:</label>
+            <input type="text" id="gen-minage" >
+        </div>
+        
+        
+        <div class="form-field">
+            <label for="gen-minage">Skate Rink:</label>
+            <input type="text" id="gen-minage" >
+        </div>
+        
+        <div class="form-field">
+            <label for="gen-minage">Event post:</label>
+            <input type="url" id="gen-minage" placeholder="Your social media post">
+        </div>
+
+        <div class="form-field">
+            <label for="gen-minage">Ticket Link:</label>
+            <input type="url" id="gen-minage" placeholder="Your social media post">
+        </div>
+    </section>
+
+    <section class="form-section">
+        <PersonField role="Organiser" fieldName="organiser" />
+        <PersonField role="Coach" fieldName="coach" />
+    </section>
+
+    <section class="form-section">
+        <GalleryField form="workshop" />
+    </section>
+
+
+   
+<!-- SUBMIT BUTTON -->
+    <div class="btn-wrap form-field">
+        <Button variant="tertiary" size="lg" theme="purpleLight" type="submit">Submit Event</Button>
+    </div>
+        
+</form>
+<!-- WORKSHOP Form End  -->

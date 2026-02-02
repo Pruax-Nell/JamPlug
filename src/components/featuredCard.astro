@@ -4,14 +4,14 @@ import { formatEventDate } from '../function/dateHelper';
 
 interface Props {
   url: string;
-  poster: any; // Using 'any' for the Astro image object
+  poster: any; 
   title: string;
   city: string;
   country: string;
   eventType: string;
   description: any;
   offskates?: string;
-  // We only take the two dates we need for the helper, not the whole event object
+
   timeframe: {
     startDate: Date | string;
     endDate?: Date | string | null;
@@ -24,7 +24,7 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
 ---
 
 <div class=" feature-case">
-    <a href={url} class="feature-card">
+    <div class="feature-card">
         {poster ? (
             <Image 
             class="feature-poster"
@@ -34,20 +34,30 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
             height={500} 
             />
         ) : (
-            <div class="placeholder feature-poster">🛼</div>
-        )}
-        <div class="feature-content">
-            <h5 class="ft-title">{title}</h5>
+            // <div class="placeholder feature-poster">🛼</div>
+            <div class="ft-content">
+            <h5 class="ft-title">
+                <a href={url} class="main-link">{title}</a>
+            </h5>
             <span class="city-country">📍{city}, {country}</span>
             <span class="event-date">{eventDateString}</span>
             <span class="event-type">{eventType}</span>
             <p>{description}</p>
-            <!-- {event.data.offSkates && (
-                <span className="badge badge-social">Social / Off-Skates</span>
-                )} -->
+            
         </div>
-    </a>
-    <div class="feature-title"><h4>{title}</h4></div>
+        )}
+        <div class="feature-content">
+            <h5 class="ft-title">
+                <a href={url} class="main-link">{title}</a>
+            </h5>
+            <span class="city-country">📍{city}, {country}</span>
+            <span class="event-date">{eventDateString}</span>
+            <span class="event-type">{eventType}</span>
+            <p>{description}</p>
+            
+        </div>
+    </div>
+    <h4 class="feature-title" aria-label="Event Title">{title}</h4>
 </div>
 
 <style>
@@ -55,15 +65,32 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
     
 
 .feature-case{
-    grid-row: 2 / 6;
+    flex: 0 2 26rem ;
+    width: 100%;
+    max-width: 26rem;
+    margin: 0 auto;
+
+}
+
+@media (max-width: 580px){
+    .feature-case{
+        max-width: 16.6rem;
+        margin-block: 1rem;
+    }
+
+    .feature-title{
+        text-align: center;
+    }
 }
 
 .feature-card {
-    max-height: 100%;
+    /* max-width: 420px; */
+    /* width: 100%; */
+    aspect-ratio: 4 / 5;
+    position: relative;
 
     display: grid;
     grid-template-rows: repeat(5, 20%);
-    /* grid-template-columns: auto; */
 
     border: 2px solid var(--ow-brown);
     border-radius: 8px;
@@ -72,34 +99,14 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
     
     transition: all .3s;
 }
-/* .feature-card {
-    display: grid;
-    grid-template-rows: subgrid;
-    grid-row: 1 / 6;
-    border: 2px solid var(--ow-brown);
-    border-radius: 8px;
-    width: 420px;
-    height: 350px;
-    max-height: max-content;
-    justify-self: center;
-    align-self: center;
-    margin-inline: 18px;
-    overflow: hidden;
-    
-    transition: all .3s;
-} */
 
 
-.feature-card:hover, .mini-poster {
-    scale: 1.05;
-    box-shadow: .5rem .3rem 1.3rem var(--shadow-orange);
-}
-.feature-poster {
+.feature-poster, .ft-content {
     grid-row: 1 / -1;
     grid-column: 1;
     object-fit: cover;
     aspect-ratio: 4 / 5;
-    width: 100%;
+    height: 100%;
     object-position: center;
     
     transition: transform 0.3s ease;
@@ -109,58 +116,86 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
 .feature-content{
     grid-row: 1 / -1 ;
     grid-column: 1;
-    /* z-index: 10; */
     background-color: var(--second-brown);
-    
     color: var(--text-white);
-    /* border-radius: 14px 14px 0 0; */
-    /* padding: .5rem; */
-    /* height: 100%; */
+    gap: var(--space-sm);
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     align-content: center;
     justify-items: center;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* gap: 5px; */
     font-weight: 700;
-    padding: 2.8rem;
+    padding: var(--space-md);
     opacity: 0;
-
+    
     transition: opacity .6s ease-in-out;
-
+    
 }
 
 .feature-card:hover .feature-content {
     opacity: 96%;
 }
 
+.ft-content{
+    grid-row: 1 / -1 ;
+    grid-column: 1;
+    background-color: var(--shadow-brown-2);
+    color: var(--text-white);
+    gap: var(--space-sm);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    font-weight: 700;
+    padding: var(--space-md);
+    
+    transition: background-color .6s ease-in-out;
+}
+.feature-card:hover .ft-content {
+    background-color: var(--second-brown);
+}
 
 .ft-title {
     text-transform: uppercase;
 }
 
-.feature-title{
-    /* grid-row: 2 / 3; */
+.main-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10; 
+}
+
+.feature-content p, .feature-content span {
+    position: relative;
+    z-index: 11; 
+    pointer-events: none; 
+}
+
+.feature-title {
+    max-width: 100%;
     display: flex;
     align-items: center;
     justify-self: center;
     justify-content: center;
     max-width: 55ch;
-    
-}
-
-.feature-title h4 {
-    margin-top: 1.2rem;
+    margin-block: 0.5rem;
     font-size: minmax(var(--fs-heading-mid), var(--fs-heading-xl));
     text-transform: capitalize;
 }
 
 .feature-case:hover .feature-title{
-    display: none;
+    visibility: hidden;
     opacity: 0;
 }
+
+
 .event-type{
     text-transform: uppercase;
     margin: .3rem 0;
@@ -169,13 +204,30 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
     background-color: var(--shadow-yellow);
     border-radius: 8px;
 
-
 }
+
 .event-date{
 
 }
+
 .city-country{
     margin-bottom: .8rem;
+}
+
+@media (max-width: 780px) {
+
+    .feature-case {
+        width: 100%;
+        padding: 0 1rem; 
+    }
+    
+    .feature-content {
+        padding: 1.5rem; 
+    }
+
+    .feature-title {
+        font-size: var(--fs-heading-mid); 
+    }
 }
 
 </style>

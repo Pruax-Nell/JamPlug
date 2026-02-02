@@ -2,7 +2,6 @@
 import '../styles/global.css'
 import '../styles/components.css'
 
-
 import { getCollection } from "astro:content";
 
 const bigEvents = await getCollection('events', ({ data }) => {
@@ -14,31 +13,12 @@ const now = new Date();
 const thirtyDaysAgo = new Date();
 thirtyDaysAgo.setDate(now.getDate() - 30);
 
-const justAdded = (bigEvents)
-    .filter(
-        event => {
-            return event.data.published <= thirtyDaysAgo;
-        }
-    )
- 
-const janList = (bigEvents)
-    .filter(
-        event => {
-                return event.data.startDate.getMonth() === 0o1;
-            }
-    )
-    .sort(
-        (a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf(),
-    )
-
-
 const { eventName, url, description, area, country,  category, age } = Astro.props;
 ---
 
 <a href={url} >
     <div>
         <div>
-            {justAdded && <span class="new-highlight">NEW!</span>}
             <p>{eventName}</p>
         </div>
         <div>
