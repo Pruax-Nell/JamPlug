@@ -1,16 +1,5 @@
 // src/utils/dateHelpers.ts
 
-/**
- * Formats Keystatic time object {hour, minute} to "12:00 PM"
- */
-// export function formatTime(timeObj: { hour: string; minute: string } | any) {
-//   if (!timeObj || typeof timeObj !== 'object') return '';
-//   const h = parseInt(timeObj.hour);
-//   const ampm = h >= 12 ? 'PM' : 'AM';
-//   const displayHour = h % 12 || 12;
-//   return `${displayHour}:${timeObj.minute.toString().padStart(2, '0')} ${ampm}`;
-// }
-
 export function formatTime(timeObj: any) {
   try {
     if (!timeObj || typeof timeObj !== 'object') return '';
@@ -25,18 +14,16 @@ export function formatTime(timeObj: any) {
   }
 }
 
-/**
- * Formats a single date or a range into a readable string
- */
-// export const formatEventDate = (startStr: string | Date, endStr?: string | Date | null) => {
-//   const start = new Date(startStr);
-//   const end = endStr ? new Date(endStr) : null;
+export function formatDate(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
 
-//   const fullDateOptions: Intl.DateTimeFormatOptions = { 
-//     day: 'numeric', 
-//     month: 'short',  
-//     year: 'numeric' 
-//   };
+  return new Date(date).toLocaleDateString(undefined, options);
+}
+
 
 export const formatEventDate = (startStr: string | Date, endStr?: string | Date | null) => {
   try {
@@ -77,52 +64,53 @@ export const formatEventDate = (startStr: string | Date, endStr?: string | Date 
   }
 };
 
-//   if (!end || start.toDateString() === end.toDateString()) {
-//     return start.toLocaleDateString('en-GB', fullDateOptions);
-//   }
-
-//   if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
-//     const month = start.toLocaleDateString('en-GB', { month: 'short' });
-//     return `${start.getDate()} – ${end.getDate()} ${month} ${start.getFullYear()}`;
+export const getCalendarUrls = (eventData: any) => {
+  try {
+    // Ensure we are working with Date objects
+    const start = new Date(eventData.startDate);
+    // Fallback to start if no end date
+    const end = eventData.endDate ? new Date(eventData.endDate) : start;
     
-//   }
+    if (isNaN(start.getTime())) throw new Error("Invalid Start Date");
 
-//   if (start.getFullYear() === end.getFullYear()) {
-//     const startPart = start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-//     return `${startPart} – ${end.toLocaleDateString('en-GB', fullDateOptions)}`;
-//   }
+    const formatCalDate = (date: Date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    
+    const sStr = formatCalDate(start);
+    const eStr = formatCalDate(end);
 
-//   return `${start.toLocaleDateString('en-GB', fullDateOptions)} – ${end.toLocaleDateString('en-GB', fullDateOptions)}`;
-// };
+    const title = encodeURIComponent(eventData.eventName || 'Event');
+    const description = encodeURIComponent(eventData.description || "");
+    // Use rink if available, otherwise just townCity
+    const locationStr = eventData.rink ? `${eventData.townCity}, ${eventData.rink}` : eventData.townCity;
+    const location = encodeURIComponent(locationStr || "");
 
+    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${sStr}/${eStr}&details=${description}&location=${location}`;
 
-export const generateCalendarLink = (event: any) => {
-  const { eventName, description, startDate, startTime, location, townCity } = event.data;
+    const icsContent = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "BEGIN:VEVENT",
+      `SUMMARY:${eventData.eventName}`,
+      `DTSTART:${sStr}`,
+      `DTEND:${eStr}`,
+      `LOCATION:${locationStr}`,
+      `DESCRIPTION:${eventData.description || ""}`,
+      "BEGIN:VALARM",
+      "TRIGGER:-PT24H",
+      "ACTION:DISPLAY",
+      "DESCRIPTION:Reminder",
+      "END:VALARM",
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("\r\n");
 
-  // Format date/time to YYYYMMDDTHHMMSSZ
-  const formatForCal = (dateStr: string, timeObj: any) => {
-    const d = new Date(dateStr);
-    const hh = timeObj.hour.padStart(2, '0');
-    const mm = timeObj.minute.padStart(2, '0');
-    return d.toISOString().replace(/-/g, '').split('T')[0] + `T${hh}${mm}00Z`;
-  };
+    // Safe Base64 for UTF-8 characters (handles accents/emojis in event names)
+    const base64Content = btoa(unescape(encodeURIComponent(icsContent)));
+    const icsDataUri = `data:text/calendar;base64,${base64Content}`;
 
-  const start = formatForCal(startDate, startTime);
-  const loc = `${townCity}, ${location.value || ''}, ${location.discriminant}`;
-
-  // The .ics template
-  const icsContent = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "BEGIN:VEVENT",
-    `SUMMARY:${eventName}`,
-    `DESCRIPTION:${description || ''}`,
-    `LOCATION:${loc}`,
-    `DTSTART:${start}`,
-    `DTEND:${start}`, // You can calculate end time similarly
-    "END:VEVENT",
-    "END:VCALENDAR"
-  ].join("\n");
-
-  return `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
+    return { googleUrl, icsDataUri };
+  } catch (e) {
+    console.error("Calendar Link Error:", e);
+    return { googleUrl: '#', icsDataUri: '#' };
+  }
 };

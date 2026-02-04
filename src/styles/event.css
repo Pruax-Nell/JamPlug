@@ -1,31 +1,22 @@
 
 /* ||-------------------------------------INTRO AND SCRIBE */
 
-
-.scribe-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.scribe-content div {
-    margin-top: 2rem;
-}
-
 .jam-link-block {
-    width: 95%;
-    height: 320px;
-    min-height: 55svh;
+    max-width: 45rem;
+    height: 20rem;
+    min-height: 30svh;
+    justify-self: center;
+
     padding: .8rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 
-    background-color: var(--shadow-orange-2);
+    background-color: var(--shadow-purple-2);
     border-color: var();
     border-radius: 8px;
-    box-shadow: 0 0 6px 0 var(--grey-orange),0 0 40px 0 var(--shadow-purple);
+    box-shadow: 0 0 16px 0 var(--second-yellow),0 0 40px 0 var(--shadow-purple);
 
 
 }
@@ -39,16 +30,14 @@
 /* ||-------------------------------------------------EVENTS LIST */
 .events-list {
     margin: .8rem 0;
-    padding-top: .5rem;
-    height: max-content;
-    margin-bottom: 2rem;
+    /* padding-top: .5rem; */
+    /* height: max-content; */
 }
 
 
 .events-page-wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  /* padding: 2rem 1rem; */
 }
 
 /* ||--------------------------------------------- UPCOMING EVENTS */
@@ -61,7 +50,8 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1.5rem;
-    background: var(--shadow-brown);
+    background: var(--special-teal);
+    color: var(--text-white);
     border-radius: 12px;
     margin-bottom: 2.3rem;
     align-items: flex-start;
@@ -89,12 +79,13 @@
 }
 
 .filter-group label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--black);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-white);
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
 }
 
 

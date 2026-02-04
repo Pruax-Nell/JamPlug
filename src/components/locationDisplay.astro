@@ -1,0 +1,29 @@
+---
+interface Props {
+  location: any;
+  townCity?: string;
+  showFull?: boolean; // Toggle between "London, England" or just "England"
+}
+
+const { location, townCity, showFull = true } = Astro.props;
+
+// Level 1: Continent
+const continent = location?.discriminant;
+// Level 2: Country
+const country = location?.value?.discriminant;
+// Level 3: Region (Only exists for Big 4)
+const region = location?.value?.value?.discriminant;
+
+const format = (slug: string) => slug?.split('-').map(word => 
+  word.charAt(0).toUpperCase() + word.slice(1)
+).join(' ').replace(/^(Uk |Us |Can |Aus )/, '');
+
+const displayCountry = country ? format(country) : '';
+const displayRegion = region ? format(region) : '';
+---
+
+<span class="location-display">
+  {showFull && townCity && <span>{townCity}, </span>}
+  {displayRegion && <span>{displayRegion}, </span>}
+  <span class="country-name">{displayCountry}</span>
+</span>

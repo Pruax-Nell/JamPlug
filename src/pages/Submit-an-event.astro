@@ -1,7 +1,6 @@
 ---
 
 import BaseLayout from "../layouts/baseLayout.astro";
-import { EVENT_TYPE } from "../constants";
 
 // event forms
 import FormOther from "../components/form/formOther.astro"
@@ -21,6 +20,9 @@ import "../styles/submit.css";
 ---
 
 <BaseLayout> 
+<nav class="navigation-controls">
+    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+</nav>
 <section class="form-fence">
     <hgroup class="submission-title">
         <h1>Submit your Event</h1>
@@ -66,3 +68,4 @@ import "../styles/submit.css";
     </div>
 </section>
 </BaseLayout>
+

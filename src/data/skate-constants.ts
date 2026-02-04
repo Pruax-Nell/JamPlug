@@ -1,4 +1,4 @@
-import { slugify } from "./function/stringHelper";
+import { slugify } from "../function/stringHelper";
 
 export const SITE_TITLE  = "Your Jam Plug UK | Europe's Skate Event Directory";
 export const SITE_DESCRIPTION = 'For Roller Skaters who want to skate';

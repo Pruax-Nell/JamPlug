@@ -7,7 +7,7 @@ import { formatEventDate } from '../src/function/dateHelper';
 
 
 import { Image } from 'astro:assets'; 
-import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE } from '../src/constants';
+import { GROUPED_COUNTRIES, MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE } from '../src/data/skate-constants';
 
 // const EVENTS_PER_PAGE = 20;
 

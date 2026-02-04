@@ -31,9 +31,9 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout >
-  <nav class="navigation-controls">
+<nav class="navigation-controls">
   
-  <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/blog'"> ← Go to Blog </Button>
+  <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/blog'"> ← Previous Page </Button>
 
 </nav>
 <article class="blog-container">
@@ -88,11 +88,7 @@ const { Content } = await render(post);
   )}
 
 </article>
-<nav class="navigation-controls">
-  
-  <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/blog' "> ← Go Back </Button>
 
-</nav>
 </BaseLayout>
 
 

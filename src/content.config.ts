@@ -1,8 +1,10 @@
 import { z, defineCollection } from "astro:content"; 
 import { glob } from "astro/loaders";
-import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA } from '../src/constants'
+import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA } from './data/skate-constants'
 import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from './data/globe-constants'
-import { timeObject, personObject, locationSchema, businessObject } from "./shared.config";
+import { timeObject, personObject, locationSchema, businessObject } from "./function/configBlocks/zod-blocks";
+import { slugify } from "./function/stringHelper";
+
 
 
 // ------------- Collections ----------------- //
@@ -32,7 +34,6 @@ const blog = defineCollection ({
     }),
 });
 
-
 //  EVENTS  *** 
 const events = defineCollection({
     loader: glob({pattern: '**/index.mdoc', base: "src/content/events"}),
@@ -48,29 +49,21 @@ const events = defineCollection({
     // filter options --
         startDate: z.coerce.date(), 
         endDate: z.coerce.date().optional(),
-        continent: z.enum( ALL_CONTINENT_VALUES),
-        location: z.discriminatedUnion('discriminant', [
-            z.object({
-            discriminant: z.literal('united-kingdom'),
-            value: z.enum(getValues(UK_NATION_OPTIONS)),
-            }),
-            z.object({
-                discriminant: z.literal('united-states-of-america'),
-                value: z.enum(getValues(US_STATE_OPTIONS)),
-            }),
-            z.object({
-                discriminant: z.literal('canada'),
-                value: z.enum(getValues(CANADA_PROVINCE_OPTIONS)),
-            }),
-            z.object({
-                discriminant: z.literal('australia'),
-                value: z.enum(getValues(AUS_REGION_OPTIONS)),
-            }),
-            z.object({
-                discriminant: z.enum(OTHER_COUNTRIES),
-                value: z.null().optional(), 
-            }),
-        ]),
+        // location: z.object({
+        //     discriminant: z.enum(ALL_CONTINENT_VALUES as any),
+        //     value: z.object({
+        //         discriminant: z.enum(ALL_COUNTRY_VALUES as any),
+        //         value: z.union([
+        //             z.object({
+        //                 discriminant: z.enum(ALL_REGION_VALUES as any),
+        //                 value: z.any()
+        //             }),
+        //             z.null(),
+        //             z.undefined()
+        //         ]).optional()
+        //     })
+        // }),
+        location: locationSchema,
         townCity: z.string(),
         eventType: z.enum( getValues(EVENT_TYPE)),
         skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)),

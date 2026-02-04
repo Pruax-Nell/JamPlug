@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../../../layouts/baseLayout.astro'; 
 import BlogCard from '../../../../components/blogCard.astro';
-import { SKATE_DISCIPLINES, BLOG_CATEGORY } from '../../../../constants';
+import Button from '../../../../components/button.astro';
+import { SKATE_DISCIPLINES, BLOG_CATEGORY } from '../../../../data/skate-constants';
 import { getCollection } from 'astro:content';
 import type {Page, GetStaticPaths} from 'astro';
 import type { CollectionEntry } from 'astro:content';
@@ -112,6 +113,11 @@ if (discipline === 'street') socialImage = "/images/street-skating-hero.jpg";
 ---
 
 <BaseLayout page_title={pageTitle} description={metaDescription} image={socialImage}>
+<nav class="navigation-controls">
+  
+  <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+
+</nav>
 
   <section class="frame-fence">
       <hgroup class="page-title-group">
@@ -204,6 +210,12 @@ if (discipline === 'street') socialImage = "/images/street-skating-hero.jpg";
       <a href={page.url.next} class={`nav-arrow ${!page.url.next ? 'disabled' : ''}`}>&raquo;</a>
   </nav>
   )}
+
+<nav class="navigation-controls">
+  
+  <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Back to Events </Button>
+
+</nav>
 </BaseLayout>
 
 <style>

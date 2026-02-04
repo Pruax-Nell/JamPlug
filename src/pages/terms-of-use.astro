@@ -1,10 +1,15 @@
 ---
 import BaseLayout from "../layouts/baseLayout.astro";
+import Button from "../components/button.astro";
+
 const pageTitle = "Terms of Use";
 
 ---
 
 <BaseLayout>
+<nav class="navigation-controls">
+    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+</nav>
 
 <h1> is this working...? </h1>
 <section class="frame-fence"></section>

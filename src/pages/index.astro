@@ -2,11 +2,8 @@
 const Brand = "Your Jam Plug.UK";
 
 import BaseLayout from "../layouts/baseLayout.astro";
-import SampleBlogCard from "../components/sampleBlogCard.astro";
-import SampleEventCard from "../components/sampleEventCard.astro";
 import FeaturedCard from '../components/featuredCard.astro';
 import Button from '../components/button.astro';
-import EndSamplecard from "../components/endsamplecard.astro";
 import CardHolder from "../components/card-holder.astro";
 
 import "../styles/home.css";
@@ -16,16 +13,16 @@ import { Image } from "astro:assets";
 import { getCollection, getEntries } from "astro:content";
 
 import Hero from '../components/hero.astro';
-import Img1 from "../assets/layout/image1.jpg"
-import Img2 from "../assets/layout/image2.jpg"
-import Img3 from "../assets/layout/image3.jpg"
-import Img4 from "../assets/layout/image4.jpg"
-import Img5 from "../assets/layout/image5.jpg"
-import Img6 from "../assets/layout/image6.jpg"
-import Img7 from "../assets/layout/image7.jpg"
-import Img8 from "../assets/layout/image8.jpg"
-import Img9 from "../assets/layout/image9.jpg"
-import Img10 from "../assets/layout/image10.jpg"
+import Img1 from "../content/images/use/image1.jpg"
+import Img2 from "../content/images/use/image2.jpg"
+import Img3 from "../content/images/use/image3.jpg"
+import Img4 from "../content/images/use/image4.jpg"
+import Img5 from "../content/images/use/image5.jpg"
+import Img6 from "../content/images/use/image6.jpg"
+import Img7 from "../content/images/use/image7.jpg"
+import Img8 from "../content/images/use/image8.jpg"
+import Img9 from "../content/images/use/image9.jpg"
+import Img10 from "../content/images/use/image10.jpg"
 
 const identity = {
 	branding: "your jam plug uk",
@@ -133,7 +130,7 @@ const recentBlogs = (publishedBlogs)
 	<!------------------------------------------ FEATURES ---------------->
 	{featuredEvents.length > 0 ? (
 		<section id="feature-section"  class="frame-fence">
-			<h3>Featured Events</h3>
+			<h3 class="heading">Featured Events</h3>
 			<div class="carosel">
 		{featuredEvents.map((post) => (
 				<FeaturedCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}/>
@@ -141,7 +138,7 @@ const recentBlogs = (publishedBlogs)
 			</div>
 			<div class='big-space'></div>
 		</section>
-	) : (<span>special</span>) } 
+	) : (<span class="decor-alt"></span>) } 
 
 	<!------------------------------------------ JAM LIST ---------------->
 	<section id="festival-list" class="frame-fence">
@@ -171,10 +168,9 @@ const recentBlogs = (publishedBlogs)
 	<!------------------------------------------ UPCOMING ---------------->
 	<section id="upcoming-events" class="frame-fence side-by-side" >
 		<div class="side-a">
-			<h4>Upcoming Events</h4>
-			<div><Button href="/events" variant="secondary" theme="yellowLight" size="xs"> See All Events </Button></div>
-			<p>small carosel of some events. maybe featured</p>
-			<p>direct to main event page</p>
+			<h3>Upcoming Events</h3>
+			<div><Button href="/events" variant="secondary" theme="pinkDark" size="lg"> See All Events </Button></div>
+			<p>Find your next skate event.</p>
 		</div>
 		<div class=" event-previews side-b">
 
@@ -190,6 +186,7 @@ const recentBlogs = (publishedBlogs)
 				country={post.country}
 				timeframe={post.timeframe}
 				description={post.description}
+				eventType={post.eventType}
 				/>
 			))}
 
@@ -202,7 +199,7 @@ const recentBlogs = (publishedBlogs)
 			</div> ) 
 			: 
 			// OR show none returned
-			(<div class="none-returned"><p>no events to show yet</p></div>)}
+			(<div class="none-returned"><p>No events to show yet</p> <p>Come back Tomorrow</p> </div>)}
 			
 		</div>
 
@@ -210,9 +207,9 @@ const recentBlogs = (publishedBlogs)
 	<!------------------------------------------ BLOGS ---------------->
 	<section id="skate-news" class="frame-fence side-by-side">
 		<div class="side-a">
-			<h4>Skate News</h4>
-			<span>Direct to blog page</span>
-			<div><Button href="/blog" variant="secondary" theme="orangeDark" size="xs"> See All Blog Posts </Button></div>
+			<h3>Skate News</h3>
+			<span>Our latest blog posts on all things SKATE!</span>
+			<div><Button href="/blog" variant="secondary" theme="pinkDark" size="lg"> See All Blog Posts </Button></div>
 		</div>
 		<div class="side-b">
 			{recentBlogs.length > 0 ? (

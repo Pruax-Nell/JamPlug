@@ -1,7 +1,9 @@
 import React from 'react';
-import type { AstroImage, SerializedEvent, EventCardData } from '../types';
+import LocationShort from './locationShort.astro';
+import type { AstroImage, SerializedEvent, EventCardData } from '../function/types';
 import { formatEventDate, formatTime } from '../function/dateHelper';
-import { formatLocationLabel } from '../function/stringHelper';
+// import { formatLocationLabel } from '../function/stringHelper';
+import { formatLocation } from '../data/globe-constants';
 
 
 
@@ -31,7 +33,7 @@ export default function EventCard({
 // const dateDisplay = formatEventDate(startDate, endDate);
 const cardClasses = isFeatured ? "event-card featured" : "event-card";
 const statusClass = eventStatus ? `status-${eventStatus}` : '';
-const labels = formatLocationLabel(location);
+const labels = formatLocation(location);
 // const { data } = Astro.props;
 const dateRange = formatEventDate(startDate, endDate);
 // const startTime = formatTime(startTime);
@@ -59,7 +61,12 @@ const dateRange = formatEventDate(startDate, endDate);
 
         <div className="card-meta">
           <p className="meta-item location">
-            <span>📍</span> {townCity}, {labels.country}
+            <span>📍</span> 
+            {/* {townCity}, {labels.country} */}
+            <LocationShort 
+              location={location} 
+              townCity={townCity} 
+            />
           </p>
           <p className="meta-item date">
             <span>📅</span> {dateRange}

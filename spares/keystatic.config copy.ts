@@ -1,6 +1,6 @@
 // keystatic.config.ts
 import { config, fields, collection } from '@keystatic/core';
-import { SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS } from './src/constants'
+import { SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS } from '../src/data/skate-constants'
 // Since you defined startTime and endTime as fields.object in Keystatic, we match that structure in Zod. When you want to display it in your Astro component, you would use: {event.data.startTime.hour}:{event.data.startTime.minute}.
  
 export default config({

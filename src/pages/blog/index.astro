@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro'; 
 import BlogCard from '../../components/blogCard.astro';
-import { SKATE_DISCIPLINES, BLOG_CATEGORY } from '../../constants';
+import { SKATE_DISCIPLINES, BLOG_CATEGORY } from '../../data/skate-constants';
 import { getCollection } from 'astro:content';
 import type {Page, GetStaticPaths} from 'astro';
 import type { CollectionEntry } from 'astro:content';
@@ -82,7 +82,7 @@ const metaDescription = `Browse our collection of ${displayDisc} articles in the
 <BaseLayout page_title={pageTitle} description={metaDescription}>
 
   <section class="frame-fence">
-      <hgroup class="page-title-group">
+      <hgroup class="header-group">
           <h1>YJP BLOG</h1>
           <p>All Things SKATE</p>
       </hgroup>
@@ -171,15 +171,14 @@ const metaDescription = `Browse our collection of ${displayDisc} articles in the
         <a href={page.url.next} class={`nav-arrow ${!page.url.next ? 'disabled' : ''}`}>&raquo;</a>
     </nav>
     )}
+
 </BaseLayout>
 
 
 <style>
 
 /* HEADER */
-.page-title-group{
-  text-align: center;
-}
+
 
 @media (max-width: 580px){
   

@@ -17,9 +17,12 @@
     background-color: var(--main-yellow);
 
     background-image: 
-    linear-gradient( var(--shadow-pink-2), var(--shadow-pink-2), var(--shadow-teal-2)),
+    /* linear-gradient( var(--shadow-pink-2), var(--shadow-pink-2), var(--shadow-teal-2)), */
+    linear-gradient( var(--shadow-teal), var(--shadow-teal-2)),
+    linear-gradient( transparent, var(--shadow-teal-2)),
     url(/src/assets/layout/image5.jpg);
     background-size: cover;
+    background-position: bottom;
     
 }
  
@@ -96,15 +99,20 @@
 
 
 #our-mission .direction-box{
-    border-radius: 4px;
-    border: 13px solid var(--mid-orange);
-    border-image: linear-gradient(to top, var(--grey-orange), var(--mid-orange), var(--main-orange)) 1;
+    border-radius: 14px;
+    /* border: 10px dashed var(--ob-purple); */
+    /* border: 3px solid var(--shadow-grey); */
+    /* background-color: var(--shadow-purple-2); */
+    /* border-image: linear-gradient(to top, var(--grey-orange), var(--mid-orange), var(--main-orange)) 1; */
     
 }
 
 #learn-to-skate .direction-box {
-    border: 13px solid var(--ob-purple);
-    border-image: linear-gradient(to bottom, var(--grey-orange), var(--mid-orange), var(--main-orange)) 1;
+    border-radius: 14px;
+    /* border: 10px dashed var(--ob-purple); */
+    /* border: 3px solid var(--shadow-grey); */
+    /* background-color: var(--shadow-yellow); */
+    /* border-image: linear-gradient(to bottom, var(--grey-orange), var(--mid-orange), var(--main-orange)) 1; */
 
 }
 
@@ -138,13 +146,13 @@
 #feature-section > .carosel {
     background-color: #fffeff;
     background-color: var(--background-light);
-    border-left: 5px double var(--mid-orange);
+    border-left: 5px double var(--mid-purple);
     border-right: 5px double var(--mid-purple);
     border-top: 0;
     border-bottom: 0;
     border-radius: 100px;
     box-shadow: 
-    -2rem .1rem 3rem var(--shadow-orange), 
+    -2rem .1rem 3rem var(--shadow-purple), 
     2rem .1rem 3rem var(--shadow-purple);
     scrollbar-width: thin;
     scrollbar-color: var(--mid-brown) var(--shadow-yellow);
@@ -159,8 +167,10 @@
 
 #feature-section h3 {
     text-align: center;
-    text-underline-offset: 50%;
-    text-decoration: underline var(--grey-orange);
+    text-underline-offset: .8rem;
+    color: var(--ob-purple);
+    text-decoration: underline var(--shadow-teal);
+    font-size: var(--fs-title-2);
 }
 
 
@@ -236,7 +246,7 @@
     
     border: 2px solid var(--ob-orange);
     border-radius: 20px;
-    box-shadow: .5rem .3rem 1.3rem var(--shadow-grey);
+    box-shadow: 0 0 1.3rem var(--shadow-grey);
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
@@ -259,37 +269,35 @@
 }
 
 .none-returned {
-    padding: 5px;
+    padding: 1rem;
     margin-block: 2rem;
     justify-items: center;
     align-items: center;
-    background-color: var(--shadow-brown);
-    min-height: 3rem;
+    background-color: var(--shadow-pink);
+    min-height: 5rem;
     border-radius: 8px;
 }
 
 
+#upcoming-events .variant-placeholder {
+    background-color: var(--shadow-yellow);
+}
 
 #upcoming-events .variant-placeholder:hover {
-    background-color: var(--grey-pink);
+    background-color: var(--mid-yellow);
+}
+
+
+
+
+#skate-news .variant-placeholder {
+    background-color: var(--shadow-teal);
 }
 
 #skate-news .variant-placeholder:hover {
-    background-color: var(--mid-purple);
+    background-color: var(--mid-teal);
 }
 
 
-#upcoming-events .variant-placeholder {
-    background-color: var(--shadow-pink);
-}
-
-#skate-news .variant-placeholder {
-    background-color: var(--shadow-orange);
-}
-
-
-#skate-news {
-    margin-bottom: 2rem; 
-}
 
 

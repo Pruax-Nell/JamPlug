@@ -1,47 +1,56 @@
 ---
 import { CONTINENT_DATA } from '../../../data/globe-constants';
+import { slugify } from '../../../function/stringHelper';
+
+const geoData = CONTINENT_DATA.map(c => ({
+  slug: slugify(c.continent),
+  countries: c.countries
+}));
+
 
 interface Props {
     form?: string;
     no?: string;
+    fieldLegend: string;
     [x: string]: any;
 }
 
 const {
     form, 
     no,
+    fieldLegend,
     ...rest
 
 } = Astro.props;
 ---
+<fieldset class="form-field location-picker-container">
+  <legend class="field-title">{fieldLegend}</legend>
 
-<div class="form-field location-group">
-  <div class="location-picker-container">
-
-    <div class="form-field">
-      <label for="continent">Continent<span class="req-star">*</span></label>
-      <select id={`${form}-continent`} name="continent" class="continent-select form-input" required>
-        <option value="">-- Select --</option>
-        {CONTINENT_DATA.map(c => <option value={c.continent}>{c.continent}</option>)}
+  <div class="location-selector-container form-field">
+    <div class="form-field continent-wrapper">
+      <label for="continent" class="block text-sm font-bold">Continent<span class="req-star">*</span></label>
+      <select id={`${form}-continent`} class="continent-select form-input" name="location.discriminant">
+        {CONTINENT_DATA.map(c => (
+          <option value={slugify(c.continent)}>{c.continent}</option>
+        ))}
       </select>
     </div>
 
     <div class="form-field country-wrapper">
-      <label for={`${form}-country`}>Country<span class="req-star">*</span></label>
-      <select id={`${form}-country`} name="country" class="country-select form-input" disabled required>
-        <option value="">-- Select --</option>
-      </select>
+      <label for={`${form}-country`} class="block text-sm font-bold">Country<span class="req-star">*</span></label>
+      <select id={`${form}-country`} class="country-select form-input" name="location.value.discriminant">
+        </select>
     </div>
 
-    <div class="form-field region-wrapper">
-      <label for={`${form}-region`}>State / Region</label>
-      <select id={`${form}-region`} name="region" class="region-select form-input" disabled>
-        <option value="">-- Select --</option>
-      </select>
+    <div class="region-container region-wrapper form-field hidden">
+      <label for={`${form}-region`} class="block text-sm font-bold">Region / Nation</label>
+      <select id={`${form}-region`} class="region-select form-input" name="location.value.value.discriminant">
+        </select>
     </div>
   </div>
 
-  <div class="form-field town-container">
+
+  <div class=" town-container form-field">
     <label for={`${form}-town-city-field`}>Town / City <span class="req-star">*</span></label>
     <input type="text" id={`${form}-town-city-field`} name="town_city" placeholder="e.g. Leeds" minlength="3" class="form-input" required>
   </div>
@@ -55,63 +64,92 @@ const {
     <label for={`${form}-3lineadd`} class="srOnly">Address Post Code</label>
     <input id={`${form}-3lineadd`} type="text" name="post_code" placeholder="Postcode / ZIP" />
   </div>
-</div>
-  
+
+</fieldset>
+
 <script>
   import { CONTINENT_DATA, getRegionOptions } from '../../../data/globe-constants';
+  import { slugify } from '../../../function/stringHelper';
 
   function initLocationPickers() {
     const containers = document.querySelectorAll('.location-picker-container');
 
     containers.forEach(container => {
+      // Prevent double-initialization
+      if ((container as HTMLElement).dataset.initialized === 'true') return;
+
       const contSelect = container.querySelector('.continent-select') as HTMLSelectElement;
       const countrySelect = container.querySelector('.country-select') as HTMLSelectElement;
       const regionSelect = container.querySelector('.region-select') as HTMLSelectElement;
+      const regionWrapper = container.querySelector('.region-container') as HTMLElement;
 
-      contSelect?.addEventListener('change', () => {
-        const selectedCont = contSelect.value;
-        countrySelect.innerHTML = '<option value="">-- Select --</option>';
-        regionSelect.innerHTML = '<option value="">-- Select --</option>';
+      if (!contSelect || !countrySelect) return;
+
+      // UPDATE COUNTRIES
+      contSelect.addEventListener('change', () => {
+        const selectedSlug = contSelect.value;
+        
+        // Reset children
+        countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
+        regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
         regionSelect.disabled = true;
+        regionWrapper.classList.add('hidden');
 
-        if (selectedCont) {
-          const continent = CONTINENT_DATA.find(c => c.continent === selectedCont);
-          continent?.countries.forEach(country => {
-            const opt = document.createElement('option');
-            opt.value = country.value;
-            opt.textContent = country.label;
-            opt.dataset.hasRegions = country.hasRegions ? "true" : "false";
-            countrySelect.appendChild(opt);
-          });
-          countrySelect.disabled = false; // ENABLE
+        if (selectedSlug) {
+          const continentData = CONTINENT_DATA.find(c => slugify(c.continent) === selectedSlug);
+          
+          if (continentData) {
+            continentData.countries.forEach(country => {
+              const opt = document.createElement('option');
+              opt.value = country.value;
+              opt.textContent = country.label;
+              opt.dataset.hasRegions = country.hasRegions ? "true" : "false";
+              countrySelect.appendChild(opt);
+            });
+            countrySelect.disabled = false;
+          }
         } else {
-          countrySelect.disabled = true; // DISABLE
+          countrySelect.disabled = true;
         }
       });
 
-      countrySelect?.addEventListener('change', () => {
+      // UPDATE REGIONS
+      countrySelect.addEventListener('change', () => {
         const selectedCountry = countrySelect.value;
         const selectedOption = countrySelect.options[countrySelect.selectedIndex];
         const hasRegions = selectedOption.dataset.hasRegions === "true";
 
-        regionSelect.innerHTML = '<option value="">-- Select --</option>';
+        regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
 
         if (hasRegions && selectedCountry) {
           const regions = getRegionOptions(selectedCountry);
-          regions.forEach(reg => {
-            const opt = document.createElement('option');
-            opt.value = reg.value;
-            opt.textContent = reg.label;
-            regionSelect.appendChild(opt);
-          });
-          regionSelect.disabled = false; // ENABLE
+          if (regions.length > 0) {
+            regions.forEach(reg => {
+              const opt = document.createElement('option');
+              opt.value = reg.value;
+              opt.textContent = reg.label;
+              regionSelect.appendChild(opt);
+            });
+            regionSelect.disabled = false;
+            regionWrapper.classList.remove('hidden');
+          } else {
+            hideRegion();
+          }
         } else {
-          regionSelect.disabled = true; // DISABLE
+          hideRegion();
         }
       });
+
+      function hideRegion() {
+        regionSelect.disabled = true;
+        regionWrapper.classList.add('hidden');
+      }
+
+      (container as HTMLElement).dataset.initialized = 'true';
     });
   }
 
+  // Initialize
   initLocationPickers();
   document.addEventListener('astro:after-swap', initLocationPickers);
 </script>
@@ -176,4 +214,32 @@ const {
         box-sizing: border-box;
     }
   }
+
+  /* 1. State-based styling */
+.form-input:disabled {
+  background-color: #f3f4f6; /* Light gray */
+  cursor: not-allowed;
+  opacity: 0.6;
+  border-color: #d1d5db;
+}
+
+/* 2. Smooth reveal for the Region field */
+.region-container {
+  transition: all 0.3s ease-in-out;
+  max-height: 200px;
+  opacity: 1;
+  overflow: hidden;
+}
+
+/* When hidden, collapse and fade out */
+.region-container.hidden {
+  display: block !important; /* Overriding 'hidden' to allow animation */
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  pointer-events: none;
+}
+
+
 </style>

@@ -1,8 +1,10 @@
 // keystatic.config.ts
 import { config, fields, collection } from '@keystatic/core';
-import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS } from './src/constants'
-import { ALL_CONTINENT_VALUES, CONTINENT_DATA, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, US_STATE_OPTIONS, UK_NATION_OPTIONS, CANADA_PROVINCE_OPTIONS, AUS_REGION_OPTIONS } from './src/data/globe-constants';
+import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS } from './src/data/skate-constants'
+import { getRegionOptions, continentKeys, ALL_CONTINENT_VALUES, CONTINENT_DATA, ALL_COUNTRY_VALUES, US_STATE_OPTIONS, UK_NATION_OPTIONS, CANADA_PROVINCE_OPTIONS, AUS_REGION_OPTIONS, } from './src/data/globe-constants';
 import { GLOBE_CONTINENTS } from './src/data/geo/continents';
+import { slugify } from './src/function/stringHelper';
+import { locationBlock } from './src/function/configBlocks/key-block';
 
 
 
@@ -128,41 +130,7 @@ export default config({
         startDate: fields.date({ label: 'Start Date', validation: { isRequired: true } }),
         endDate: fields.date({ label: 'End Date' }),
     // Secondary key info
-    location: fields.conditional(
-      fields.select({ 
-        label: 'Country',
-        options: CONTINENT_DATA.flatMap(c => c.countries),
-            defaultValue: 'united-kingdom',
-          }),
-          {
-            // If United Kingdom is selected, show this specific dropdown
-            'united-kingdom': fields.select({
-              label: 'UK Nation',
-              options: UK_NATION_OPTIONS,
-              defaultValue: 'uk-england',
-            }),
-            // If USA is selected, show this one
-            'united-states-of-america': fields.select({
-              label: 'US State',
-              options: US_STATE_OPTIONS,
-              defaultValue: 'us-new-york',
-            }),
-            // If CANADA is selected, show this one
-            'canada': fields.select({
-              label: 'Canada Province',
-              options: CANADA_PROVINCE_OPTIONS,
-              defaultValue: 'can-alberta',
-            }),
-            // If AUSTRALIA is selected, show this one
-            'australia': fields.select({
-              label: 'Australia Region',
-              options: AUS_REGION_OPTIONS,
-              defaultValue: 'aus-victoria',
-            }),
-            // For every other country value, we show nothing (empty)
-            other: fields.empty(),
-          }
-        ),
+        location: locationBlock,
         townCity: fields.text({ 
           label: 'Town / City',
           description: 'e.g. London, Bristol, Lille',
@@ -172,6 +140,7 @@ export default config({
           label:'Event Type',
           options: EVENT_TYPE,
           defaultValue: 'other',
+          // validation: { isRequired: true },
         }),
         skateDiscipline: fields.select({ 
           label: 'Skate Discipline',

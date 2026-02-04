@@ -1,0 +1,68 @@
+---
+import { CONTINENT_DATA } from '../../data/globe-constants';
+import { slugify } from '../../function/stringHelper';
+---
+
+<form id="event-form">
+  <select id="continent-select" name="location.discriminant">
+    {CONTINENT_DATA.map(c => (
+      <option value={slugify(c.continent)}>{c.continent}</option>
+    ))}
+  </select>
+
+  <select id="country-select" name="location.value.discriminant">
+    </select>
+</form>
+
+<div class="form-group">
+  <label>Continent</label>
+  <select id="cont-select" name="location.discriminant">
+    {CONTINENT_DATA.map(c => <option value={c.slug}>{c.continent}</option>)}
+  </select>
+
+  <label>Country</label>
+  <select id="coun-select" name="location.value.discriminant">
+    </select>
+</div>
+
+<script id="geo-data" type="application/json" is:inline define:vars={{ CONTINENT_DATA }}>
+  window.GEO_DATA = CONTINENT_DATA;
+</script>
+
+<script>
+  import { CONTINENT_DATA } from '../../data/globe-constants';
+  import { slugify } from '../../function/stringHelper';
+
+  const continentSelect = document.getElementById('continent-select') as HTMLSelectElement;
+  const countrySelect = document.getElementById('country-select') as HTMLSelectElement;
+
+ if (continentSelect && countrySelect) {
+    continentSelect.addEventListener('change', (e) => {
+      
+      const target = e.currentTarget as HTMLSelectElement;
+      const selectedSlug = target.value;
+      
+      const data = CONTINENT_DATA.find(c => slugify(c.continent) === selectedSlug);
+      
+      if (data) {
+        countrySelect.innerHTML = data.countries.map(c => 
+          `<option value="${c.value}">${c.label}</option>`
+        ).join('');
+      }
+    });
+  }
+  
+  const contSelect = document.getElementById('cont-select') as HTMLSelectElement;
+  const counSelect = document.getElementById('coun-select') as HTMLSelectElement;
+
+  contSelect.addEventListener('change', () => {
+    const selected = window.GEO_DATA.find(c => c.slug === contSelect.value);
+    
+    // Efficiently swap options
+    counSelect.innerHTML = selected.countries
+      .map(c => `<option value="${c.value}">${c.label}</option>`)
+      .join('');
+  });
+
+
+</script>

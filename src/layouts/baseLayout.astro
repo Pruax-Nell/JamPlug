@@ -3,11 +3,12 @@ import "../styles/global.css";
 import "../styles/components.css";
 import "../styles/header.css"
 import "../styles/footer.css";
-import {SITE_TITLE, SITE_DESCRIPTION} from "../constants";
+import {SITE_TITLE, SITE_DESCRIPTION} from "../data/skate-constants";
 
 import Head from "../components/head.astro";
 import Socials from "../components/socials.astro" ;
 import { ClientRouter } from 'astro:transitions';
+import Button from "../components/button.astro";
 
 import Navigation from "../components/navigation.astro";
 import Toolkit from "../components/toolkit.astro";
@@ -69,8 +70,14 @@ const BASE_URL = import.meta.env.BASE_URL
 		</section>
 
 		<section id="mainBody">
+			
 			<!-- || Content slot -->
 			<slot />
+			<nav class="navigation-controls">
+  
+			<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+
+			</nav>
 		</section>
 
 		<section id="mainFooter">

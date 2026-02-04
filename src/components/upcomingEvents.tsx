@@ -39,12 +39,14 @@ import CardHolder from './card-holder.astro';
 
 // REACT and CONSTANTS 
 import React, { useState, useMemo, useEffect } from 'react';
-import type { SearchableSelectProps, SerializedEvent, EventCardData, EventLocation, SelectOption } from '../types';
+import type { SearchableSelectProps, SerializedEvent, EventCardData, EventLocation, SelectOption } from '../function/types';
 import { formatEventDate } from '../function/dateHelper';
-import { formatLocationLabel } from '../function/stringHelper';
+// import { formatLocationLabel } from '../function/stringHelper';
+import { formatLocation } from '../data/globe-constants';
+
 
 //  DATA 
-import { MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE,  } from '../constants';
+import { MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE,  } from '../data/skate-constants';
 import {getRegionOptions, ALL_CONTINENT_VALUES, CONTINENT_DATA } from '../data/globe-constants'
 
 const continentOptions = ALL_CONTINENT_VALUES.map(c => ({
@@ -162,7 +164,7 @@ export const LocationSearch = ({ initialEvents, onFilterChange, value }: Locatio
   const locationSuggestions = useMemo(() => {
     const rawSuggestions = initialEvents.map(event => {
       const { townCity, location } = event.data;
-      const labels = formatLocationLabel(location);
+      const labels = formatLocation(location);
       
       
       return {

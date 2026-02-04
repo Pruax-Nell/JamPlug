@@ -1,0 +1,49 @@
+---
+// src/components/DisplayLocation.astro
+interface Props {
+  location: any;
+  townCity: string;
+}
+
+const { location, townCity } = Astro.props;
+
+// Level 2: Country (not displayed, but used to find the region)
+// Level 3: Region (discriminant: uk-england, us-new-york, etc.)
+const continentSlug = location?.discriminant;
+const countrySlug = location?.value?.discriminant;
+const regionSlug = location?.value?.value?.discriminant;
+
+// Helper to clean up slugs: "uk-england" -> "England"
+const formatLabel = (slug: string) => {
+  if (!slug) return '';
+  return slug
+    .replace(/^(uk-|us-|can-|aus-)/, '') // Remove prefix
+    .replace(/-/g, ' ')                  // Dashes to spaces
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
+const displayCountry = formatLabel(countrySlug);
+const displayRegion = formatLabel(regionSlug);
+---
+
+<div class="location-wrapper">
+  <span class="town">{townCity}</span>
+  {displayRegion && <span class="region">, {displayRegion}</span>}
+  {displayCountry && <span class="country">, {displayCountry}</span>}
+</div>
+
+<style>
+  .location-wrapper {
+    font-family: 'Red Rose', sans-serif;
+    font-size: 0.9rem;
+  }
+  .town {
+    font-weight: 700;
+    color: var(--main-pink);
+  }
+  .region, .country {
+    color: var(--main-text);
+  }
+</style>

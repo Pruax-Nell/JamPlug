@@ -17,40 +17,40 @@
 }
 
 .title {
-    text-align: center;
+    /* text-align: center; */
     text-wrap: balance;
 }
 
-/* -------------------- || page title section */
-#pageTop {
-    grid-row: 1;
-    grid-column: 2;
-    justify-items: center;
+.subtitle{
+    /* text-align: center; */
+    text-wrap: balance;
+    
 }
+
+/* -------------------- || page title section */
 
 /* -------------------- || sticky menu */
 #menuBar {
     z-index: 20;
+
     display: flex;
     flex-direction: row;
-    width: 100%;
-    height: 4.5rem;
-    font-size: var(--fs-caption);
-    max-height: 100%;
-    padding-block: .5rem;
-    justify-content: right;
-    align-items: center;
     gap: .6rem;
-
+    
     position: sticky;
     top: var(--menu-position);
+    
+    height: 4rem;
+    padding-block: .3rem;
+    justify-content: right;
+    align-items: center;
     
     border-radius: 3px;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-
+    
 }
 
 
@@ -60,18 +60,26 @@
     }
 }
 
-#menuBar .scroll-link {
+.directory-nav{
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.directory-nav .scroll-link {
 
     padding: 0.5rem;
     flex: 1 1;
     /* flex: 0 0 8rem; */
     /* width: 100%; */
     height: 100%;
-
-    border-radius: 3px;
+    
+    border-radius: 8px;
     border-width: 0;
-    aspect-ratio: 4 / 2;
-
+    aspect-ratio: 2 / 1;
+    
     text-align: center;
     text-wrap: balance;
     align-content: center;
@@ -85,12 +93,16 @@
     transition: background-color .6s;
 }
 
-#menuBar .scroll-link:hover {
+.directory-nav .scroll-link:hover {
     background-color: var(--ob-brown);
+}
+.directory-nav .scroll-link.active-link {
+    background-color: var(--ob-brown);
+    box-shadow: inset 0 0 10px var(--shadow-orange-3);
 }
 
 @media (max-width: 700px) {
-     #menuBar {
+     .directory-nav {
         top: 79px;
         padding-inline: 3rem;
         width: 100%;
@@ -100,14 +112,13 @@
         /* flex-wrap: wrap; */
      }
      
-     #menuBar .scroll-link {
+     .directory-nav .scroll-link {
         text-orientation: sideways;
         height: 3.2rem;
         padding: 0.2rem;
         font-size: var(--fs-caption);
      }
 }
-
 
 
 /* -------------------- || Directory content */
@@ -135,6 +146,7 @@
     border-bottom: 3px solid var(--main-orange);
     margin-bottom: 1rem;
     height: auto;
+    padding: .3rem;
 }
 
 #England-region {
@@ -159,8 +171,8 @@
 }
 
 .listBlocks {
-    margin: 1ch 0;
     margin-bottom: 2rem;
+    max-width: 100%;
 }
 
 .blockTitle {
@@ -187,7 +199,7 @@
         columns: 2;
     }
 }
-@media (max-width: 650px) {
+@media (max-width: 680px) {
     .blockList {
         columns: 1;
     }

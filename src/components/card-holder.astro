@@ -68,8 +68,8 @@ const eventDateString = (variant === 'event' && timeframe)
 
 
             <div class="badge-block">
-                <span class="type-badge">{eventType}</span>
                 <p class="desc info">{shortDesc}</p>
+                <span class="type-badge">{eventType}</span>
             </div>
         </div>
     </div>
@@ -264,17 +264,22 @@ const eventDateString = (variant === 'event' && timeframe)
 }
 
 .card-event .content-block{
-    color: var(--text-white);
-    background-color: var(--ob-pink);
+    color: var(--text-black);
+    background-color: var(--ow-yellow);
     
+}
+.card-blog{
+    background-color: var(--grey-teal);
+
 }
 .card-blog .content-block{
     color: var(--text-black);
-    background-color: var(--grey-purple);
-
+    background-color: var(--ow-orange);
+    
 }
 
 .content-block.blog-content-2{
+    background-color: var(--ow-teal);
     grid-row: 2 / -1;
 }
 
@@ -296,7 +301,12 @@ const eventDateString = (variant === 'event' && timeframe)
 }
 
 .type-badge{
+    width: max-content;
+    padding: .2ch 1ch;
+    border-radius: 8px;
+    border: 1px solid white;
     text-transform: uppercase;
+    background-color: var(--text-bg-white);
 }
 
 .desc {
@@ -325,27 +335,45 @@ const eventDateString = (variant === 'event' && timeframe)
 }
 
 .meta-item.cat {
+    border-color: var(--ob-brown);
     
-
+    
 }
 .meta-item.dis {
+    border-color: var(--ob-brown);
 
 }
 /* -----------VARIETY STYLES---------- */
-
-/* EVENT */
-.variant-event{
-
+.event-preview .carosel{
+    min-height: 450px;
 
 }
 
-.card-event{
-    
+/* EVENT */
+.variant-event{
+    height: auto;
+    padding: 0 .05rem;
 
+}
+
+.post-card.card-event {
+    /* min-width: 20.5rem; */
+    max-width: 100%;
+    min-height: auto;
+    grid-row: 2 / -2;
+    overflow: hidden;
 }
 .event-content{
     
     
+}
+
+.badge-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 100%;
 }
 
 /* BLOG */
@@ -385,6 +413,7 @@ background: var(--ob-orange);
     display: flex;
     flex-direction: column;
     flex: 0 0 200px;
+    padding: .3rem;
     height: inherit;
     background-color: var(--shadow-pink);
     width: clamp(15.625rem, 20rem + 5vw, 26.25rem);
@@ -398,12 +427,14 @@ background: var(--ob-orange);
 }
 
 .placeholder-content{
+    padding: .3rem;
     text-align: center;
     font-size: var(--fs-heading-large);
 
     transition: 
         background-color .3s ease-in;
 }
+
 @media (max-width: 680px) {
 
     .sample-case{
