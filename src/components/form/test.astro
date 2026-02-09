@@ -17,7 +17,7 @@ import { slugify } from '../../function/stringHelper';
 <div class="form-group">
   <label>Continent</label>
   <select id="cont-select" name="location.discriminant">
-    {CONTINENT_DATA.map(c => <option value={c.slug}>{c.continent}</option>)}
+    {CONTINENT_DATA.map(c => <option value={c.continent}>{c.continent}</option>)}
   </select>
 
   <label>Country</label>
@@ -55,14 +55,13 @@ import { slugify } from '../../function/stringHelper';
   const contSelect = document.getElementById('cont-select') as HTMLSelectElement;
   const counSelect = document.getElementById('coun-select') as HTMLSelectElement;
 
-  contSelect.addEventListener('change', () => {
-    const selected = window.GEO_DATA.find(c => c.slug === contSelect.value);
+  // contSelect.addEventListener('change', () => {
+  //   const selected = window.CONTINENT_DATA.find(c => c.slug === contSelect.value);
     
-    // Efficiently swap options
-    counSelect.innerHTML = selected.countries
-      .map(c => `<option value="${c.value}">${c.label}</option>`)
-      .join('');
-  });
+  //   counSelect.innerHTML = selected.countries
+  //     .map(c => `<option value="${c.value}">${c.label}</option>`)
+  //     .join('');
+  // });
 
 
 </script>

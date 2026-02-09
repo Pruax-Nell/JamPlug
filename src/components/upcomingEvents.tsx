@@ -3,54 +3,52 @@
   // 2. TYPES (FilterState, Props)
   // 3. INITIAL_FILTERS
 
-  // 4. SUB-COMPONENT: LocationSearch
+  // 4. SUB-COMPONENT: Location Search
 
-  // export default function UpcomingEvents(...) {
+  // export default function Upcoming Events(...) {
   // 5. STATE: filters, currentPage
   
   // 6. DERIVED GEOGRAPHY (useMemo)
-  // Calculate dynamicRegions based on filters.country
-  // Calculate dynamicTowns based on filters.country + filters.region
+  // Calculate dynamic Regions based on filters.country
+  // Calculate active Options based on filters.country + filters.region
   
   // 7. FILTERING ENGINE (The big useMemo)
   // Step A: Does it match the geography?
   // Step B: Does it match the skate discipline?
-  // Step C: Does it match the boolean (offSkates)?
+  // Step C: Does it match the boolean (footwear)?
   
   // 8. PAGINATION CALCS
-  // Slice the filteredEvents based on currentPage
+  // Slice the filtered Events based on current Page
   
   // 9. HANDLERS
-  // handleFilterChange (Updates state + Syncs URL)
+  // handle FilterChange (Updates state + Syncs URL)
   
   // 10. JSX RETURN
   // Render search bar
-  // Render dropdowns (renderOptions)
+  // Render dropdowns (render Options)
   // Render the EventGrid
   // Render Pagination
 // }
 
 // ------------- IMPORTS AND CONSTANTS
-// styles and aesthetics
+// styles and components
 import '../styles/global.css'
 import '../styles/event.css'
 import EventCard from './eventcard';
-import CardHolder from './card-holder.astro';
 
 // REACT and CONSTANTS 
 import React, { useState, useMemo, useEffect } from 'react';
-import type { SearchableSelectProps, SerializedEvent, EventCardData, EventLocation, SelectOption } from '../function/types';
-import { formatEventDate } from '../function/dateHelper';
-// import { formatLocationLabel } from '../function/stringHelper';
+import type { SerializedEvent, EventCardData, EventLocation, SelectOption } from '../function/types';
+import { formatEventDate, } from '../function/dateHelper';
+import { formatLabel, capitalize, slugify } from '../function/stringHelper';
 import { formatLocation } from '../data/globe-constants';
 
-
 //  DATA 
-import { MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE,  } from '../data/skate-constants';
+import { MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE, FOOTWEAR_CHOICE  } from '../data/skate-constants';
 import {getRegionOptions, ALL_CONTINENT_VALUES, CONTINENT_DATA } from '../data/globe-constants'
 
 const continentOptions = ALL_CONTINENT_VALUES.map(c => ({
-  label: c,
+  label: formatLabel(c),
   value: c
 }));
 
@@ -58,352 +56,409 @@ const continentOptions = ALL_CONTINENT_VALUES.map(c => ({
 
 // ------------- TYPES AND INTERFACE
 
-interface ServerOptions {
-  minAge: string[];
-}
-
 interface UpcomingEventsProps {
   initialEvents: SerializedEvent[];
   serverOptions: ServerOptions;
   eventsPerPage?: number;
 }
 
+// Server sourced 
+interface ServerOptions {
+  minAge: string[];
+}
+
 interface FilterState {
-  //static
+  location: LocationContext;
+  attributes: AttributeContext;
+}
+
+// Location group for 'where' filter (hierarchical)
+interface LocationContext {
   continent: string;
   country: string;
-  region: string; 
+  region: string;
   townCity: string;
+}
+
+interface AttributeContext {
   month: string;
   eventType: string;
   skateDiscipline: string;
   skillLevel: string;
-  // scraped
+  footwear: string;
   minAge: string;
-  offSkates: string;
 }
 
 interface LocationSearchProps {
+  locationFilters: LocationContext; // Only gets the location object
+  onLocationChange: (key: keyof LocationContext, value: string) => void;
   initialEvents: SerializedEvent[];
-  onFilterChange: (key: keyof FilterState, value: string) => void;
-  value: string; 
 }
 
-// ... 
-
 const INITIAL_FILTERS: FilterState = {
-  //static location 
-  continent: 'All',
-  country: 'All',
-  region: 'All',
-  // dependant^, scraped
-  townCity: '', // All
-  // static other
-  month: 'All',
-  eventType: 'All',
-  skateDiscipline: 'All',
-  skillLevel: 'All',
-  // scraped
-  minAge: 'All',
-  offSkates: 'All',
-};
-// ------------- COMPONENT FUNCTION
+ location: {
+    continent: 'All',
+    country: 'All',
+    region: 'All',
+    townCity: '',
+ }, 
 
-// ----- SEARCHSELECT
-export const SearchableSelect = ({ label, value, options, onChange, placeholder, disabled }: SearchableSelectProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    const currentOption = options.find(o => o.value === value);
-    setSearchTerm(currentOption ? currentOption.label : value === 'All' ? '' : value);
-  }, [value, options]);
-
-  const filteredOptions = options.filter(opt =>
-    opt.label.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
- return (
-    <div className={`searchable-select ${disabled ? 'disabled' : ''}`}>
-      <label>{label}</label>
-      <input
-        type="text"
-        value={searchTerm}
-        placeholder={placeholder}
-        disabled={disabled}
-        onFocus={() => setIsOpen(true)}
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-          setIsOpen(true);
-        }}
-        onBlur={() => setTimeout(() => setIsOpen(false), 200)} // Delay to allow clicks
-      />
-      {isOpen && filteredOptions.length > 0 && (
-        <ul className="options-list">
-          {filteredOptions.map(opt => (
-            <li key={opt.value} onClick={() => onChange(opt.value)}>
-              {opt.label}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+  attributes: {
+    minAge: 'All',
+    month: 'All',
+    eventType: 'All',
+    skateDiscipline: 'All',
+    skillLevel: 'All',
+    footwear: 'All',
+  }
 };
 
 // ---- LOCATION DATA 
-export const LocationSearch = ({ initialEvents, onFilterChange, value }: LocationSearchProps) => {
-  const [inputValue, setInputValue] = useState(value || '');
+export const LocationSearch = ({ onLocationChange, locationFilters, initialEvents }: LocationSearchProps) => {
+
+  const [inputValue, setInputValue] = useState(locationFilters.townCity || '');
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-      if (value === '' || value === 'All') {
+      if (locationFilters.townCity === '' || locationFilters.townCity === 'All') {
         setInputValue('');
-      }
-    }, [value]);
+      } else {
+      // setInputValue(locationFilters.townCity);
+        if (inputValue !== locationFilters.townCity) {
+          setInputValue(locationFilters.townCity)
+        }
+    }
+  }, [locationFilters.townCity]);
 
   const locationSuggestions = useMemo(() => {
     const rawSuggestions = initialEvents.map(event => {
       const { townCity, location } = event.data;
       const labels = formatLocation(location);
-      
+      const subLabel = labels.regionLabel || labels.countryLabel;
       
       return {
-        label: `${townCity}, ${labels.full}`,
+        label: townCity ? `${townCity}, ${subLabel}` : labels.full,
         values: {
+          continent: location.discriminant,
+          country: location.value?.discriminant || 'All',
+          region: location.value?.value || 'All',
           townCity,
-          country: location.discriminant,
-          region: location.value || 'All'
         }
       };
     });
+    const unique = Array.from(new Map(rawSuggestions.map(s => [s.label, s])).values());
 
-    const uniqueSuggestions = rawSuggestions.filter((item, index, self) =>
-      index === self.findIndex((t) => t.label === item.label)
-    );
+    return unique.sort((a, b) => a.label.localeCompare(b.label));
 
-    return uniqueSuggestions.sort((a, b) => a.label.localeCompare(b.label));
   }, [initialEvents]);
 
-  useEffect(() => {
-    const match = locationSuggestions.find(s => s.label === inputValue);
-    if (match && match.values.townCity !== value) {
-      onFilterChange('country', match.values.country);
-      onFilterChange('region', match.values.region);
-      onFilterChange('townCity', match.values.townCity);
-    }
-  }, [inputValue, locationSuggestions, onFilterChange, value]);
+  const filteredSuggestions = useMemo(() => {
+    if (!inputValue.trim()) return locationSuggestions;
 
-  // 4. THE BODY (The Return statement)
+    const matches = locationSuggestions.filter(s =>
+      s.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    const isExactMatch = locationSuggestions.some(s => s.label === inputValue);
+    
+    return (isExactMatch && isOpen) ? locationSuggestions : matches;
+
+  }, [inputValue, locationSuggestions, isOpen]);
+
+  const handleSelect = (suggestion: typeof locationSuggestions[0]) => {
+    setInputValue(suggestion.values.townCity); 
+    setIsOpen(false);
+
+    onLocationChange('continent', suggestion.values.continent);
+    onLocationChange('country', suggestion.values.country);
+    onLocationChange('region', suggestion.values.region);
+    onLocationChange('townCity', suggestion.values.townCity);
+  };
+
   return (
-    <div className="location-search-wrapper">
-      <input
-        type="text"
-        list="location-options"
-        placeholder="City, Region, or Country..."
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        className="search-input"
-      />
-      <datalist id="location-options">
-        {locationSuggestions.map((suggestion, index) => (
-          <option key={index} value={suggestion.label} />
-        ))}
-      </datalist>
-    </div>
-  );
-};
+  <div className="filter-group location-search-wrapper" style={{ position: 'relative' }}>
+    <label htmlFor='location-search-input' className='input-label'> Search :</label>
 
-// ----- EVENTS DATA
+    <input
+      id='location-search-input'
+      type="text"
+      role='combobox'
+      aria-controls='listbox'
+      placeholder="City, Region, or Country..."
+      value={inputValue}
+      onFocus={() => setIsOpen(true)}
+      onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+      onChange={(e) => {
+        const val = e.target.value;
+        setInputValue(val);
+        onLocationChange('townCity', val);
+        setIsOpen(true);
+      }}
+      className="input-box"
+    />
+
+    {isOpen && (filteredSuggestions.length > 0 || inputValue.trim() !== '') && (
+      <ul className="location-options-list" role='listbox' >
+        {filteredSuggestions.length > 0 ? (
+          filteredSuggestions.map((suggestion, index) => (
+            <li
+              role='option'
+              key={index}
+              onMouseDown={() => handleSelect(suggestion)}
+              className="suggestion-item"
+            >
+              {suggestion.label}
+            </li>
+          ))
+        ) : (
+          <li className="suggestion-no-results">
+            No active events found for "<strong>{inputValue}</strong>"
+          </li>
+        )}
+      </ul>
+    )}
+  </div>
+);
+};
+// ------------------------- ----------- --------------------------- ||
+// ------------------------- EVENTS DATA --------------------------- ||
 export default function UpcomingEvents({ initialEvents, serverOptions }: UpcomingEventsProps) {
   
   // ---  5. STATE ---
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
   const [dynamicRegions, setDynamicRegions] = useState<SelectOption[]>([]);
-  const [regionLabel, setRegionLabel] = useState('Region'); //switch "State" and "Nation"
+  const [regionLabel, setRegionLabel] = useState('Region'); 
 
-  const availableCountries = useMemo(() => {
-    if (filters.continent === 'All') return CONTINENT_DATA.flatMap(c => c.countries);
-    return CONTINENT_DATA.find(c => c.continent === filters.continent)?.countries || [];
-  }, [filters.continent]);
+  const getRegionOptions = (selectedCountry: string): SelectOption[] => {
+    if (!selectedCountry || selectedCountry === 'All') return [];
 
-  const dynamicTowns = useMemo(() => {
-    const towns = initialEvents
-    .filter((event) => {
-      const d = event.data;
-      const matchesCountry = filters.country === 'All' || d.location?.discriminant === filters.country;
-      
-      const matchesRegion = filters.region === 'All' || d.location?.value === filters.region;
+    const regions = initialEvents
+      .filter(event => {
+        const loc = event.data.location;
+        return loc.value?.discriminant === selectedCountry;
+      })
+      .map(event => event.data.location.value?.value) 
+      .filter((region): region is string => !!region);
 
-      return matchesCountry && matchesRegion;
-    })
-    .map((event) => event.data.townCity);
+    const uniqueRegions = Array.from(new Set(regions)).sort();
 
-  return ['All', ...new Set(towns)].sort();
-
-  }, [filters.country, filters.region, initialEvents]);
-
-
-  const filteredEvents = useMemo(() => {
-    return initialEvents.filter((event) => {
-      const d = event.data;
-      const loc = d.location; 
-
-    const matchLevel = 
-    filters.skillLevel === 'All' || 
-    (event.data.skillLevel && event.data.skillLevel === filters.skillLevel);
-
-    const matchAge = 
-    filters.minAge === 'All' || 
-    (event.data.minAge && event.data.minAge === filters.minAge);
-
-    const matchContinent = filters.continent === 'All' || d.continent === filters.continent;
-
-    const matchCountry = filters.country === 'All' || 
-    loc.discriminant.toLowerCase().includes(filters.country.toLowerCase());
-
-    const matchRegion = filters.region === 'All' || 
-      (loc.value && loc.value.toLowerCase().includes(filters.region.toLowerCase()));
-
-    const matchTown = filters.townCity === '' || 
-      d.townCity.toLowerCase().includes(filters.townCity.toLowerCase());
-
-    const matchDiscipline = filters.skateDiscipline === 'All' || d.skateDiscipline === filters.skateDiscipline;
-
-    const matchType = filters.eventType === 'All' || d.eventType === filters.eventType;
-
-    const matchOffSkates = filters.offSkates === 'All' ? true : 
-      filters.offSkates === 'Off-Skates' ? d.offSkates === true : d.offSkates === false;
-
-      const matchMonth = filters.month === 'All' || (() => {
-        const eventMonth = new Date(d.startDate).toLocaleString('en-GB', { month: 'long' }).toLowerCase();
-        return eventMonth === filters.month;
-      })();
-
-
-    return matchContinent && matchCountry && matchRegion && matchTown && matchDiscipline && matchType && matchOffSkates && matchAge && matchLevel && matchMonth ;
-
-      
-    });
-  }, [filters, initialEvents]);
-
-
-  const activeFilterValues = useMemo(() => {
-    // Helper to extract values and remove any that are undefined or null
-    const getActiveSet = (key: keyof SerializedEvent['data']) => {
-      return new Set(
-        initialEvents
-          .map(e => e.data[key])
-          .filter((val): val is string => typeof val === 'string') // This removes undefined/null
-      );
-    };
-
-    return {
-      continent: getActiveSet('continent'),
-      countries: new Set(initialEvents.map(e => e.data.location.discriminant)),
-      regions: new Set(initialEvents.map(e => e.data.location.value).filter(Boolean)),
-      types: getActiveSet('eventType'),
-      disciplines: getActiveSet('skateDiscipline'),
-      levels: getActiveSet('skillLevel'),
-      months: new Set(
-        initialEvents.map(e => 
-          new Date(e.data.startDate)
-          .toLocaleString('en-GB', { month: 'long' })
-          .toLowerCase()
-        )
-      )
-    };
-  }, [initialEvents]);
+    return uniqueRegions.map(reg => ({
+      value: reg,
+      label: formatLabel(reg)
+    }));
+  };
 
   useEffect(() => {
-    const countryValue = filters.country;
+    const selectedCountry = filters.location.country;
 
-    // 1. Reset the region filter whenever the country changes
-    setFilters(prev => ({ ...prev, region: 'All' }));
-
-    // 2. Fetch the correct regions (Level 3)
-    const options = getRegionOptions(countryValue);
-    setDynamicRegions(options);
-
-    // 3. Optional: Dynamic Labeling for better UX
-    if (countryValue === 'united-states') {
+    if (selectedCountry === 'united-states-of-america') {
       setRegionLabel('State');
-    } else if (countryValue === 'united-kingdom') {
-      setRegionLabel('Nation');
-    } else if (countryValue === 'canada') {
+    } else if (selectedCountry === 'canada') {
       setRegionLabel('Province');
-    }else {
-      setRegionLabel('Region');
+    } else if (selectedCountry === 'united-kingdom') {
+      setRegionLabel('Nation');
+    } else {
+      setRegionLabel('Region'); 
     }
 
-  }, [filters.country]);
+    if (selectedCountry === 'All') {
+      setDynamicRegions([]); 
+    } else {
+      const availableRegions = getRegionOptions(selectedCountry);
+      setDynamicRegions(availableRegions);
+    }
+  }, [filters.location.country, initialEvents]);
+
+  const availableCountries = useMemo(() => {
+    
+    if (filters.location.continent === 'All') return CONTINENT_DATA.flatMap(c => c.countries);
+    return CONTINENT_DATA.find(c => c.continent === filters.location.continent)?.countries || [];
+  }, [filters.location.continent]);
+  
+  // console.log('Available:', availableCountries)
+
+  const { filteredEvents, activeOptions } = useMemo(() => {
+
+    const geography = {
+      continents: new Set<string>(),
+      countries: new Set<string>(),
+      regions: new Set<string>(),
+      towns: new Set<string>(),
+      ages: new Set<string>(),
+    };
+
+    const attributes = {
+      types: new Set<string>(),
+      disciplines: new Set<string>(),
+      levels: new Set<string>(),
+      months: new Set<string>(),
+      footwear: new Set<string>(),
+    };
+
+    const filtered = initialEvents.filter((event) => {
+      const d = event.data;
+      const { location: loc, attributes: attr } = filters;
+
+      const eventMonth = new Date(d.startDate).toLocaleString('en-GB', { month: 'long' }).toLowerCase();
+
+  // 1. Geography Check
+      const matchContinent = loc.continent === 'All' || d.location.discriminant === loc.continent;
+
+      const matchCountry = loc.country === 'All' || d.location.value?.discriminant === loc.country;
+
+      const matchRegion = loc.region === 'All' || d.location.value?.value === loc.region;
+      
+      const searchStr = loc.townCity.toLowerCase().trim();
+      const matchTown = !searchStr || d.townCity.toLowerCase().includes(searchStr.split(',')[0]);
+
+      const isLocationMatch = matchContinent && matchCountry && matchRegion && matchTown;
+
+      // 2. Populate Dropdown Logic
+      geography.continents.add(d.location.discriminant);
+      // if (matchContinent) geography.countries.add(d.location.value?.discriminant || '');
+      if (matchContinent && matchTown) { 
+        const countrySlug = d.location.value?.discriminant;
+        if (countrySlug) {
+          geography.countries.add(countrySlug)
+        }
+      }
+
+      if (matchContinent && matchCountry && matchTown) {
+        const regionSlug = d.location.value?.value;
+        if (regionSlug) {
+          geography.regions.add(regionSlug);
+        }
+      }
+
+      if (isLocationMatch) {
+        attributes.types.add(d.eventType.toLowerCase());
+        attributes.disciplines.add(d.skateDiscipline?.toLowerCase() ?? '');
+        attributes.levels.add(d.skillLevel?.toLowerCase() ?? '');
+        attributes.months.add(eventMonth);
+        attributes.footwear.add(d.footwear.toLowerCase());
+        geography.ages.add(d.minAge ?? '');
+      }
+
+      // if (matchContinent && matchCountry) geography.regions.add(d.location.value?.value || '');
+      // if (matchContinent && matchCountry && matchRegion) geography.towns.add(d.townCity);
+      geography.ages.add(d.minAge ?? '');
+
+
+      if (isLocationMatch) {
+        attributes.types.add(d.eventType.toLowerCase());
+        attributes.disciplines.add(d.skateDiscipline?.toLowerCase() ?? '');
+        attributes.levels.add(d.skillLevel?.toLowerCase() ?? '');
+        attributes.months.add(eventMonth);
+        attributes.footwear.add(d.footwear.toLowerCase());
+      }
+
+      // 3. Final Boolean Check
+      const matchDiscipline = attr.skateDiscipline === 'All' || d.skateDiscipline === attr.skateDiscipline;
+      const matchType = attr.eventType === 'All' || d.eventType === attr.eventType;
+      const matchMonth = attr.month === 'All' || eventMonth === attr.month.toLowerCase();
+      const matchLevel = attr.skillLevel === 'All' || d.skillLevel === attr.skillLevel;
+      const matchAge = attr.minAge === 'All' || d.minAge === attr.minAge;
+      const matchFootwear = attr.footwear === 'All' || d.footwear === attr.footwear;
+      
+
+      return isLocationMatch && matchDiscipline && matchType && matchFootwear && matchMonth && matchLevel && matchAge;
+    });
+
+    return { filteredEvents: filtered, activeOptions: { ...geography, ...attributes } };
+  }, [initialEvents, filters]);
 
   const renderOptions = (
-    constantList: readonly { readonly value: string; readonly label: string }[],
+    constantList: readonly { value: string; label: string }[],
     activeSet: Set<string>
   ) => {
     return constantList.map((item) => {
-      // 1. "All" or "Any" should NEVER be disabled, otherwise users get stuck
       const isDefault = item.value === 'All' || item.value === '';
       
-      // 2. Disable if not in the set AND it's not the default option
-      const isDisabled = !isDefault && !activeSet.has(item.value);
-
+      const isDisabled = !isDefault && !activeSet.has(item.value.toLowerCase());
+      
       return (
-        <option key={item.value} value={item.value} disabled={isDisabled}>
+        <option 
+          key={item.value} 
+          value={item.value} 
+          disabled={isDisabled}
+          className={isDisabled ? 'option-disabled' : ''}>
           {item.label} {isDisabled ? '(0)' : ''}
         </option>
       );
     });
   };
 
-    useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const updatedFilters = { ...INITIAL_FILTERS };
-      
-      (Object.keys(INITIAL_FILTERS) as Array<keyof FilterState>).forEach(key => {
-        const val = params.get(key);
-        if (val) updatedFilters[key] = val;
-      });
-      
-      setFilters(updatedFilters);
-    }, []); 
-  
+ 
   // ---  HANDLERS ---
-  const handleFilterChange = (key: keyof FilterState, value: string) => {
-  setFilters(prev => {
-    const newFilters = { ...prev, [key]: value };
-    
-    if (key === 'continent') {
-      newFilters.country = 'All';
-      newFilters.region = 'All';
-      newFilters.townCity = '';
-    } else if (key === 'country') {
-      newFilters.region = 'All';
-      newFilters.townCity = '';
-    } else if (key === 'region') {
-      newFilters.townCity = '';
-    }
+  const handleFilterChange = (
+    group: keyof FilterState, // 'location' | 'attributes', 
+    key: string, 
+    value: string
+    ) => {
+      setFilters(prev => {const updatedGroup = { 
+          ...prev[group], 
+          [key]: value 
+        };
 
-    const params = new URLSearchParams(window.location.search);
+        if (group === 'location') {
+          const locGroup = updatedGroup as LocationContext;
+
+          if (key === 'continent') {
+            locGroup.country = 'All';
+            locGroup.region = 'All';
+            locGroup.townCity = '';
+          } else if (key === 'country') {
+            locGroup.region = 'All';
+            locGroup.townCity = '';
+          }
+        }
+
+      const newFilters = {
+        ...prev,
+        [group]: updatedGroup
+      };
+
+      updateURLParams(newFilters);
+      
+      return newFilters;
+    });
+
+    setCurrentPage(1);
+  };
+
+  const updateURLParams = (state: FilterState) => {
+    const params = new URLSearchParams();
     
-    Object.entries(newFilters).forEach(([fKey, fVal]) => {
-      if (fVal === 'All' || fVal === '') {
-        params.delete(fKey);
-      } else {
-        params.set(fKey, fVal);
+    const flat = { ...state.location, ...state.attributes };
+
+    Object.entries(flat).forEach(([key, value]) => {
+      if (value && value !== 'All' && value !== '') {
+        params.set(key, value);
       }
     });
 
-    window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
-    
-    return newFilters;
-  });
-  
-    setCurrentPage(1); // Crucial: Always go back to page 1
+    const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+    window.history.replaceState(null, '', newUrl);
   };
 
-  // handleReset
+ useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const newFilters = JSON.parse(JSON.stringify(INITIAL_FILTERS));
+
+  Object.keys(newFilters.location).forEach((key) => {
+    const val = params.get(key);
+    if (val) (newFilters.location as any)[key] = val;
+  });
+
+  Object.keys(newFilters.attributes).forEach((key) => {
+    const val = params.get(key);
+    if (val) newFilters.attributes[key] = val;
+  });
+
+  setFilters(newFilters);
+}, []); 
+
   const handleReset = () => {
     setFilters(INITIAL_FILTERS);
     setCurrentPage(1);
@@ -412,7 +467,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
   };
 
   // ---  PAGINATION LOGIC ---
-  //totalPages must be calculated from the FILTERED list, not the initial list.
+  //totalPages = FILTERED list, ! initial list.
   const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE);
 
   const visibleEvents = useMemo(() => {
@@ -422,99 +477,165 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
 
   const canGoBack = currentPage > 1;
   const canGoForward = currentPage < totalPages;
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isvisible, setIsVisible] = useState(false);
+
+  const expandFilters = () => {
+
+    setIsExpanded(prev => !prev);
+    setIsVisible(prev => !prev);
+  }
+
   
   // ------------- CLIENT RETURN/TSX
 
   return (
-    <div className="events-page-wrapper">
-      <section className="filter-bar">
-        <span>Filter your Skate Events</span>
+    <div className="events-wrapper">
+        <h5 id='filter-title'>Filter your Skate Events:</h5>
+        
+
+      <section className="filter-bar" aria-labelledby='filter-title'>
+
       
-        <section className='filter-section'>
-          <div className='filter-group'>
-          <span>Choose Where:</span>
+        {/* <div className={`filter-section ${isExpanded ? 'expanded' : 'collapsed'}`}> */}
+        <div className="filter-section">
 
-          <label>A&#41; Search Town, Region, or Country</label>
-          <LocationSearch 
-            initialEvents={initialEvents} 
-            onFilterChange={handleFilterChange} 
-            value={filters.townCity}
-          />
-          <span>OR</span>
-          <label>B&#41; Choose in order: Continent, Country, Region, Town/City</label>
-          <select value={filters.continent} onChange={(e) => handleFilterChange('continent', e.target.value)}>
-            <option value="All">Any Continent</option>
-            {renderOptions(continentOptions, activeFilterValues.continent)}
-          </select>
+          <fieldset className='filter-field location-fields'>
+          <div className="divider"><span>A&#41; Search Town, Region or Country:</span></div>
+            <legend className='srOnly'>Location Filters </legend>
 
-          <select value={filters.country} onChange={(e) => handleFilterChange('country', e.target.value)}>
-            <option value="All">Any Country</option>
-            {renderOptions(availableCountries, activeFilterValues.countries)}
-          </select>
+            <LocationSearch 
+              locationFilters={filters.location} 
+              onLocationChange={(key, val) => handleFilterChange('location', key, val)}
+              initialEvents={initialEvents}
+            />
+            
+            <div className="divider"><span>OR B&#41; Filter locations:</span></div>
+
+            <div className='filter-group'>
+              <label htmlFor='continent-select' className='input-label'>Continent: </label>
+              <select value={filters.location.continent} onChange={(e) => handleFilterChange('location', 'continent', e.target.value)}
+                id='continent-select' aria-label='Select a continent' className='input-box'>
+                <option value="All">Any Continent</option>
+                {renderOptions(continentOptions, activeOptions.continents)}
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label htmlFor="country-select" className='input-label'>Country:</label>
+              <select value={filters.location.country} onChange={(e) => handleFilterChange('location', 'country', e.target.value)}
+                id='country-select' className='input-box'>
+                <option value="All">Any Country</option>
+                {availableCountries
+                  .filter(opt => activeOptions.countries.has(opt.value)) 
+                  .map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))
+                }
+              </select>
+            </div>
           
-          
-          <small className='caption'>Region/City will appear once 'Country' is selected</small>
-          <select value={filters.region} onChange={(e) => handleFilterChange('region', e.target.value)}>
-            <option value="All">Any {regionLabel}</option>
-            {dynamicRegions.map(reg => (
-              <option key={reg.value} value={reg.value}>{reg.label}</option>
-            ))}
-          </select>
+            <div className="filter-group">
+              <label htmlFor="region-select" className='input-label'>Region</label>
+              <select value={filters.location.region} onChange={(e) => handleFilterChange('location','region', e.target.value)}
+                id='region-select' className='input-box' aria-label=''>
+                <option value="All">Any {regionLabel}</option>
+                {dynamicRegions
+                  .filter(reg => activeOptions.regions.has(reg.value))
+                  .map(reg => (
+                    <option key={reg.value} value={reg.value}>{reg.label}</option>
+                  ))}
+              </select>
+            </div>
 
-          <select value={filters.townCity} onChange={(e) => handleFilterChange('townCity', e.target.value)}>
-            <option value="All">Any City</option>
-            {dynamicTowns.map(t => <option key={t} value={t}>{t}</option>)}
-          </select>
+          </fieldset>
+
+          <div className='filter-field attribute-fields'>
+            <p className='srOnly'>Attribute field</p>
+
+            <div className="filter-group">
+              <label htmlFor='month-select' className='input-label'>Choose When:</label>
+              <select value={filters.attributes.month} onChange={(e) => handleFilterChange('attributes', 'month', e.target.value)} 
+                id='month-select' className='input-box'>
+                <option value="All">Any Month</option>
+                {renderOptions(MONTH_ORDER, activeOptions.months)}
+              </select>
+            </div>
 
 
+            <div className="filter-group">
+
+              <label htmlFor="event-select" className='input-label'>Event Type:</label>
+              <select value={filters.attributes.eventType} onChange={(e) => handleFilterChange('attributes', 'eventType', e.target.value)}
+                id='event-select' className='input-box'>
+                <option value="All">Any Event Type</option>
+                {renderOptions(EVENT_TYPE, activeOptions.types)}
+              </select>
+            </div>
+
+            <div className="filter-group" >
+              <label htmlFor='discipline-select' className='input-label'>Skate Discipline:</label>
+              <select 
+                value={filters.attributes.skateDiscipline}
+                onChange={(e) => handleFilterChange('attributes', 'skateDiscipline', e.target.value)}
+                id='discipline-select'
+                className='input-box'
+                >
+                <option value="All">All Disciplines</option>
+                {renderOptions(SKATE_DISCIPLINES, activeOptions.disciplines)}
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label htmlFor='footwear-select' className='input-label'>Footwear:</label>
+              <select 
+                value={filters.attributes.footwear}
+                onChange={(e) => handleFilterChange('attributes', 'footWear', e.target.value)}
+                id='footwear-select'
+                className='input-box'
+                >
+                <option value="All">All Footwear</option>
+                {renderOptions(FOOTWEAR_CHOICE, activeOptions.footwear)}
+              </select>
+              </div>
+
+            <div className="filter-group">
+              <label htmlFor='skill-select' className='input-label'>Level:</label>
+              <select value={filters.attributes.skillLevel} onChange={(e) => handleFilterChange('attributes', 'skillLevel', e.target.value)}
+                id='skill-select' className='input-box'>
+                <option value="All">Any Level</option>
+                {renderOptions(SKILL_LEVEL, activeOptions.levels)}
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label htmlFor='age-select' className='input-label'>Age</label>
+              <select value={filters.attributes.minAge} onChange={(e) =>     handleFilterChange('attributes', 'minAge', e.target.value)} className='input-box' id='age-select'>
+                <option value="All">Any Age</option>
+                {serverOptions.minAge.map(age => (
+                  <option key={age} value={age}>{age}+</option>
+                ))}
+              </select>
+            </div>
+
+          </div>
         </div>
 
-        <div className='filter-group'>
+        <div className='button-div'>
+          <button id='clear-filters-button' className={` reset-button ${isvisible ? 'hidden' : 'visible'}`} onClick={handleReset}>
+            Clear All Filters
+          </button>
 
-          <span>Choose When:</span>
-          <select value={filters.month} onChange={(e) => handleFilterChange('month', e.target.value)}>
-            <option value="All">Any Month</option>
-            {renderOptions(MONTH_ORDER, activeFilterValues.months)}
-          </select>
-
-          <span>Choose What:</span>
-          <select value={filters.eventType} onChange={(e) => handleFilterChange('eventType', e.target.value)}>
-            <option value="All">Any Event Type</option>
-            {renderOptions(EVENT_TYPE, activeFilterValues.types)}
-          </select>
-
-          <select value={filters.skateDiscipline} onChange={(e) => handleFilterChange('skateDiscipline', e.target.value)}>
-            <option value="All">Any Skate Discipline</option>
-            {renderOptions(SKATE_DISCIPLINES, activeFilterValues.disciplines)}
-          </select>
-          <select 
-            value={filters.offSkates} 
-            onChange={(e) => handleFilterChange('offSkates', e.target.value)}
-          >
-            <option value="all"> 'On/Off Skates' </option>
-            <option value="skating">🛼 On-Skates Only</option>
-            <option value="off-skates">👟 Off-Skates / Socials</option>
-          </select>
-
-          <select value={filters.skillLevel} onChange={(e) => handleFilterChange('skillLevel', e.target.value)}>
-            <option value="All">Any Level</option>
-            {renderOptions(SKILL_LEVEL, activeFilterValues.levels)}
-          </select>
-
-          <select value={filters.minAge} onChange={(e) =>     handleFilterChange('minAge', e.target.value)}>
-            <option value="All">Any Age</option>
-            {serverOptions.minAge.map(age => (
-              <option key={age} value={age}>{age}</option>
-            ))}
-          </select>
-
-
-        </div>
-      </section>
-
-        <button className="reset-button" onClick={handleReset}>
-          Clear All Filters
-        </button>
+          <button 
+            className={`expand-filter-button ${isExpanded ? 'active' : ''}`} 
+            onClick={expandFilters}
+            aria-expanded={isExpanded}
+            aria-controls="filter-section reset-button"
+            >
+            {isExpanded ? 'Close Filters' : 'Show Filters'}
+          </button>
+          </div>
 
       </section>
       
@@ -522,11 +643,14 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         <p>
           Showing <strong className='highlight'>{filteredEvents.length}</strong> 
           {filteredEvents.length === 1 ? ' event' : ' events'}
-          {filters.townCity && ` in ${filters.townCity}`}
+          {filters.location.townCity && ` in ${filters.location.townCity}`}
         </p>
+        <div aria-live="polite" className="srOnly">
+          {filteredEvents.length} events found.
+        </div>
       </div>
 
-      <div className="event-grid">
+      <section className="event-grid">
         {visibleEvents && (<span className='scroll-hint'> ~ Scroll Start ~ </span>)}
         {visibleEvents.length > 0 ? (
           visibleEvents.map(event => (
@@ -545,9 +669,8 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         )}
         {visibleEvents && (<span className='scroll-hint'> * Scroll End * </span>)}
         
-      </div>
+      </section>
     
-      {/* Final Pagination (Only need one version) */}
       {totalPages > 1 && (
         <div className="pagination-controls">
           <button disabled={!canGoBack} onClick={() => setCurrentPage(p => p - 1)}>Prev</button>

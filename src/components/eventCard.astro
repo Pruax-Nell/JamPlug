@@ -2,15 +2,17 @@
 import '../styles/global.css';
 import '../styles/components.css'; 
 import { formatEventDate, formatTime } from '../function/dateHelper';
-import { formatLocationLabel } from '../function/stringHelper';
+import { formatLocation, hasRegionSelected } from '../data/globe-constants';
 
 
 import Image from 'astro/components/Image.astro';
 
 const { location, townCity } = Astro.props.event.data;
-const loc = formatLocationLabel(location);
+const loc = formatLocation(location, townCity);
+const showRegion = hasRegionSelected(location)
+
 const { title, url, description, poster, area, country, start, end, category, type, age } = Astro.props;
-const {frontmatter, data} = Astro.props;
+const { data } = Astro.props;
 const BASE_URL = import.meta.env.BASE_URL
 
 ---
@@ -38,11 +40,13 @@ const BASE_URL = import.meta.env.BASE_URL
 
             <div class="meta-wrapper">
                 <div class="location-wrapper">
-                    <p class="location">{townCity} - {loc.full}</p>
+                    <p class="location">{townCity} - {loc.countryLabel}</p>
+                    {showRegion && ( <span class="region">{loc.regionLabel}</span>)}
                 </div>
 
                 <div class="description-wrapper">
                     <span class="description">{description}</span>
+                    <small>Full Address: {loc.full}</small>
                 </div>
 
 

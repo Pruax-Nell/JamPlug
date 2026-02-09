@@ -120,73 +120,71 @@ topButton.addEventListener('click', scrollTop)
 
 // EVENT FORMS 
 
-        const selector = document.getElementById('event-type'); 
-        const placeholder = document.getElementById('placeholder-form');
+    const selector = document.getElementById('event-type'); 
+    const placeholder = document.getElementById('placeholder-form');
 
-        // References to the individual form containers
-        const skateFestival = document.getElementById('festival-form');
-        const skateNight = document.getElementById('night-form');
-        const skateSocial = document.getElementById('social-form');
-        const skateWorkshop = document.getElementById('workshop-form');
-        const skateWeekend = document.getElementById('weekend-form');
-        const skateGeneral = document.getElementById('general-form');
+    const skateFestival = document.getElementById('festival-form');
+    const skateNight = document.getElementById('night-form');
+    const skateSocial = document.getElementById('social-form');
+    const skateWorkshop = document.getElementById('workshop-form');
+    const skateWeekend = document.getElementById('weekend-form');
+    const skateGeneral = document.getElementById('general-form');
+    
+    // --- NEW MAPPING OBJECT SOLUTION ---
+    const formMap = {
+        'festival-form': skateFestival,
+        'night-form': skateNight,
+        'social-form': skateSocial,
+        'workshop-form': skateWorkshop,
+        'weekend-form': skateWeekend,
+        'general-form': skateGeneral,
+    };
+
+    const allForms = Object.values(formMap);
         
-        // --- NEW MAPPING OBJECT SOLUTION ---
-        // This object maps the dropdown's 'value' attribute directly to the HTML element.
-        const formMap = {
-            'festival-form': skateFestival,
-            'night-form': skateNight,
-            'social-form': skateSocial,
-            'workshop-form': skateWorkshop,
-            'weekend-form': skateWeekend,
-            'general-form': skateGeneral,
-        };
+    function toggleForms() {
+        
+        // value selected in the dropdown
+        const selectedType = selector.value;
+        
+        // 1. Hide the placeholder initially
+        placeholder.classList.add('hidden');
 
-        // We can get the array of all forms from the map's values for easy iteration
-        const allForms = Object.values(formMap);
-            
-        function toggleForms() {
-            // value selected in the dropdown
-            const selectedType = selector.value;
-            
-            // 1. Hide the placeholder initially
-            placeholder.classList.add('hidden');
-
-            // 2. Loop through all forms and hide them
-            allForms.forEach(form => {
-                if (form) { 
-                    form.classList.add('hidden');
-                }
-            });
-
-            // 3. Determine which form to show based on the selection
-            // We use the mapping object for O(1) direct lookup, eliminating the IF/ELSE chain.
-            let formToShow = formMap[selectedType];
-            
-            // Check if 'none' was selected (or an invalid type)
-            if (!formToShow) { 
-                placeholder.classList.remove('hidden');
-                return; // Exit the function
+        // 2. Loop through all forms and hide them
+        allForms.forEach(form => {
+            if (form) { 
+                form.classList.add('hidden');
             }
+        });
 
-            // 4. Show the selected form
-            if (formToShow) {
-                // First, reset opacity, then remove 'hidden'
-                formToShow.style.opacity = 0;
-                formToShow.classList.remove('hidden');
-                
-                setTimeout(() => {
-                    formToShow.style.opacity = 1;
-                }, 10); 
-            }
+        // 3. Determine which form to show based on the selection
+        // We use the mapping object for O(1) direct lookup, eliminating the IF/ELSE chain.
+        let formToShow = formMap[selectedType];
+        
+        // Check if 'none' was selected (or an invalid type)
+        if (!formToShow) { 
+            placeholder.classList.remove('hidden');
+            return; // Exit the function
         }
-        
-        // Event Listener: Call the function every time the dropdown selection changes
-        window.onload = () => {
-            if (selector) { 
-                selector.addEventListener('change', toggleForms);
-            }
-        };
+
+        // 4. Show the selected form
+        if (formToShow) {
+            // First, reset opacity, then remove 'hidden'
+            formToShow.style.opacity = 0;
+            formToShow.classList.remove('hidden');
+            
+            setTimeout(() => {
+                formToShow.style.opacity = 1;
+            }, 10); 
+        }
+    }
+    
+    // Event Listener: Call the function every time the dropdown selection changes
+    window.onload = () => {
+        if (selector) { 
+            selector.addEventListener('change', toggleForms);
+        }
+    };
 
 
 // DYNAMIC FORM Q - DJ

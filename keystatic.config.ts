@@ -1,6 +1,6 @@
 // keystatic.config.ts
 import { config, fields, collection } from '@keystatic/core';
-import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS } from './src/data/skate-constants'
+import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE } from './src/data/skate-constants'
 import { getRegionOptions, continentKeys, ALL_CONTINENT_VALUES, CONTINENT_DATA, ALL_COUNTRY_VALUES, US_STATE_OPTIONS, UK_NATION_OPTIONS, CANADA_PROVINCE_OPTIONS, AUS_REGION_OPTIONS, } from './src/data/globe-constants';
 import { GLOBE_CONTINENTS } from './src/data/geo/continents';
 import { slugify } from './src/function/stringHelper';
@@ -333,7 +333,11 @@ export default config({
         venueAddress: fields.text({ label: 'Address' }),
         mapCoordinates: fields.text({ label: 'Map Coordinates' }),
 
-        offSkates: fields.checkbox({ label: 'Non Skating Event?'}),
+        footwear: fields.select({ 
+          label: 'Non Skating Event?', 
+          options: FOOTWEAR_CHOICE, 
+          defaultValue: 'skates'}),
+          
         repetition: fields.text({ label: 'Repetition' }),
       // TEXT BODY
         content: fields.markdoc({

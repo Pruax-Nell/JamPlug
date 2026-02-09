@@ -1,4 +1,6 @@
 import { CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS, AUS_REGION_OPTIONS, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES } from '../data/globe-constants';
+import { locationSchema } from './configBlocks/zod-blocks';
+import {z} from 'zod';
 
 // literal types ... (alias)
   export type ContinentValue = (typeof ALL_CONTINENT_VALUES)[number];
@@ -9,28 +11,14 @@ import { CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS, AUS_REGIO
   export type USState = (typeof US_STATE_OPTIONS)[number]['value']; 
   export type CanadaProvince = (typeof CANADA_PROVINCE_OPTIONS)[number]['value'];
   export type AustraliaRegion = (typeof AUS_REGION_OPTIONS)[number]['value'];
-// ...
-
-export type EventLocation =
-  | { discriminant: 'united-kingdom'; value: UKNation }
-  | { discriminant: 'united-states-of-america'; value: USState }
-  | { discriminant: 'canada'; value: CanadaProvince }
-  | { discriminant: 'australia'; value: AustraliaRegion }
-  | { discriminant: string; value: null | undefined }; // Fallback
-
+  // ...
+  export type EventLocation = z.infer<typeof locationSchema>;
 
 // ------------ interfaces ... (shape)
 
 // UTILITIES
 
-export interface SearchableSelectProps {
-  label: string;
-  value: string;
-  options: { label: string; value: string }[];
-  onChange: (value: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-}
+
 
 export interface AstroImage {
   src: string;
@@ -44,14 +32,14 @@ export interface SelectOption {
   value: string;
 }
 
+
 // SPECIFICS
 export interface EventCardData {
   eventName: string;
-  continent: string;
-  location: EventLocation; // Our nested discriminated union
+  location: EventLocation;
   townCity: string;
   startDate: string | Date;
-  offSkates: boolean;
+  footwear: string;
   eventType: string;
   skateDiscipline?: string;
   minAge?: string; 
@@ -72,19 +60,20 @@ export interface BlogCardData {
   blogCategory: string;
   skateDiscipline?: string;
   coverImage?: string;
-
+  
 }
 
-  // This represents the "Cleaned" data sent to React
-  export interface SerializedEvent {
-    id: string;
-    slug: string;
-    data: EventCardData; // Nesting the interface we defined above
-  }
+// This represents the "Cleaned" data sent to React
+export interface SerializedEvent {
+  id: string;
+  slug: string;
+  data: EventCardData; 
+}
 
-  export interface SerializedBlog {
-    id: string;
-    slug: string;
-    data: BlogCardData; 
-  }
+export interface SerializedBlog {
+  id: string;
+  slug: string;
+  data: BlogCardData; 
+}
+
 

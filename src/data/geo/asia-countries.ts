@@ -41,7 +41,6 @@ export const RAW_ASIA_COUNTRIES =[
     "Timor-Leste",
     "Turkmenistan",
     "United Arab Emirates",
-    // (UAE)npx 
     "Uzbekistan",
     "Vietnam",
     "Yemen",

@@ -2,8 +2,7 @@ import React from 'react';
 import LocationShort from './locationShort.astro';
 import type { AstroImage, SerializedEvent, EventCardData } from '../function/types';
 import { formatEventDate, formatTime } from '../function/dateHelper';
-// import { formatLocationLabel } from '../function/stringHelper';
-import { formatLocation } from '../data/globe-constants';
+import { formatLocation, hasRegionSelected } from '../data/globe-constants';
 
 
 
@@ -24,19 +23,19 @@ export default function EventCard({
   eventType,
   isFeatured,
   eventStatus,
+  footwear,
 }: EventCardProps) {
 
   const imageSrc = typeof eventPoster === 'object' && eventPoster !== null 
   ? (eventPoster as unknown as AstroImage).src 
   : eventPoster;
-  
-// const dateDisplay = formatEventDate(startDate, endDate);
+
+const labels = formatLocation(location, townCity);
+const showRegion = hasRegionSelected(location);
+
 const cardClasses = isFeatured ? "event-card featured" : "event-card";
 const statusClass = eventStatus ? `status-${eventStatus}` : '';
-const labels = formatLocation(location);
-// const { data } = Astro.props;
 const dateRange = formatEventDate(startDate, endDate);
-// const startTime = formatTime(startTime);
 
   return (
     <a href={`/events/${id}`} className={`event-card-link ${statusClass}`}>
@@ -53,7 +52,6 @@ const dateRange = formatEventDate(startDate, endDate);
       </div> 
 
       <div className="card-body">
-        {/* {isFeatured && <span class="badge">Recommended</span>} */}
 
         <header className="card-header">
           <h3 className="event-title">{eventName}</h3>
@@ -62,11 +60,10 @@ const dateRange = formatEventDate(startDate, endDate);
         <div className="card-meta">
           <p className="meta-item location">
             <span>📍</span> 
-            {/* {townCity}, {labels.country} */}
-            <LocationShort 
-              location={location} 
-              townCity={townCity} 
-            />
+            {townCity && <span>{townCity}, </span>}
+            {showRegion && <span>{labels.regionLabel}, </span>}
+            <span className="country-label">{labels.countryLabel}</span>
+            
           </p>
           <p className="meta-item date">
             <span>📅</span> {dateRange}
@@ -75,6 +72,7 @@ const dateRange = formatEventDate(startDate, endDate);
             
           {skateDiscipline && ( <p className="meta-item discipline">{skateDiscipline}</p>)}
           {skillLevel && ( <p className="meta-item level">{skillLevel}</p>)}
+          {footwear === 'shoes' && ( <p className="meta-item footwear">{footwear}</p>)}
           
           </div>
           {eventStatus && (

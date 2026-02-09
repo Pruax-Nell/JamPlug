@@ -28,7 +28,6 @@ const clientUpcomingEvents = publishedEvents
       ? d.eventPoster.src 
       : d.eventPoster) || undefined;
 
-    // SERIALIZATION: The "Lean" object
     return {
       id: event.id,
 	  slug: event.id,
@@ -36,7 +35,6 @@ const clientUpcomingEvents = publishedEvents
         eventName: d.eventName,
         townCity: d.townCity,
         location: d.location, 
-        continent: d.continent,
         startDate: d.startDate.toISOString(),
         endDate: d.endDate?.toISOString() || null,
         skateDiscipline: d.skateDiscipline,
@@ -44,16 +42,14 @@ const clientUpcomingEvents = publishedEvents
         eventType: d.eventType,
         eventPoster: posterString,
         minAge: d.minAge,
-        offSkates: d.offSkates ?? false,
+        footwear: d.footwear ?? false,
         rink: d.rink || ""
       },
     };
   });
 
 const serverOptions = {
-  // We keep minAge because it's often a fixed list from the server
   minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b)),
-  // Note: townsByCountry and rinks are now handled inside the React component!
 };
 
 ---

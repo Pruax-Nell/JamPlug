@@ -23,5 +23,3 @@ export function formatLabel(str: string) {
     .replace(/\b\w/g, l => l.toUpperCase()); 
 }
 
-
-

@@ -1,15 +1,11 @@
 import { z, defineCollection } from "astro:content"; 
 import { glob } from "astro/loaders";
-import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA } from './data/skate-constants'
+import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA, FOOTWEAR_CHOICE } from './data/skate-constants'
 import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from './data/globe-constants'
 import { timeObject, personObject, locationSchema, businessObject } from "./function/configBlocks/zod-blocks";
 import { slugify } from "./function/stringHelper";
 
-
-
 // ------------- Collections ----------------- //
-
-
 //  BLOGS *** 
 const blog = defineCollection ({
     loader: glob({ pattern: '**/index.mdoc', base: "src/content/blog"}),
@@ -36,9 +32,9 @@ const blog = defineCollection ({
 
 //  EVENTS  *** 
 const events = defineCollection({
-    loader: glob({pattern: '**/index.mdoc', base: "src/content/events"}),
+    loader: glob({pattern: '**/index.mdoc', base: "./src/content/events"}),
     schema: ({ image }) =>  z.object ({
-// CMS admin items 
+    // CMS admin items 
         status: z.enum(getValues(POST_STATUS)).default('draft'),
         isFeatured: z.boolean().default(false),
         eventStatus: z.enum(getValues(EVENT_STATUS)).default('').catch(''),
@@ -49,27 +45,13 @@ const events = defineCollection({
     // filter options --
         startDate: z.coerce.date(), 
         endDate: z.coerce.date().optional(),
-        // location: z.object({
-        //     discriminant: z.enum(ALL_CONTINENT_VALUES as any),
-        //     value: z.object({
-        //         discriminant: z.enum(ALL_COUNTRY_VALUES as any),
-        //         value: z.union([
-        //             z.object({
-        //                 discriminant: z.enum(ALL_REGION_VALUES as any),
-        //                 value: z.any()
-        //             }),
-        //             z.null(),
-        //             z.undefined()
-        //         ]).optional()
-        //     })
-        // }),
         location: locationSchema,
         townCity: z.string(),
         eventType: z.enum( getValues(EVENT_TYPE)),
         skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)),
         skillLevel: z.enum( getValues(SKILL_LEVEL)).optional().or(z.literal('')), 
         minAge: z.string().optional(),
-        // Secondary key info
+    // Secondary key info
         maxAge: z.string().optional(),
         eventPoster: image().optional().nullable(),
         flyerImage1: image().optional(),
@@ -100,7 +82,7 @@ const events = defineCollection({
     venueAddress: z.string().optional(),
     mapCoordinates: z.string().optional(),
 
-    offSkates: z.boolean().optional().default(false),
+    footwear: z.enum( getValues(FOOTWEAR_CHOICE)).default('skates'),
     repetition: z.string().optional(),
 
     })

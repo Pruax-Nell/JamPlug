@@ -45,16 +45,10 @@ export const locationSchema = z.object({
   discriminant: z.enum(ALL_CONTINENT_VALUES as [string, ...string[]]),
   value: z.object({
     discriminant: z.enum(ALL_COUNTRY_VALUES as [string, ...string[]]),
-    value: z.union([
-      z.object({
-        discriminant: z.enum(ALL_REGION_VALUES as [string, ...string[]]),
-        value: z.any().optional()
-      }),
-      z.null(),
-      z.undefined()
-    ]).optional()
-  })
+    value: z.enum(ALL_REGION_VALUES as [string, ...string[]]).optional().nullable(),
+  }),
 });
+
 
 export type LocationData = z.infer<typeof locationSchema>;
 
@@ -68,7 +62,7 @@ export const server = {
     handler: async (input) => {
       const { discriminant: continent, value: countryObj } = input.location;
       const country = countryObj.discriminant;
-      const region = countryObj.value?.discriminant || null;
+      const region = countryObj.value || null;
 
       console.log(`Processing event: ${input.eventName}`);
       console.log(`Path: ${continent} > ${country} > ${region || 'No Region'}`);

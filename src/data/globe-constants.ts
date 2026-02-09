@@ -18,7 +18,7 @@ import { RAW_NORTH_AMERICAS, RAW_SOUTH_AMERICAS } from './geo/americas-countries
 import { slugify, formatLabel } from '../function/stringHelper';
 
 const COUNTRIES_WITH_REGIONS = ["United Kingdom", "United States of America", "Canada", "Australia"];
-
+ 
 // object / option builders KEYSTATIC&REACT
 export const US_STATE_OPTIONS: SelectOption[] = RAW_US_STATES
 .map(name => ({
@@ -90,18 +90,23 @@ const COUNTRY_MAP: Record<string, string> = {
   'united-kingdom': 'UK',
   'united-states-of-america': 'USA',
   'canada': 'Canada',
-  'australia': 'Australia'
+  'australia': 'Australia',
+  'united-arab-emirates': 'UAE',
+  'congo-democratic-republic-of-the': 'DRC'
 };
 
 // DISPLAYS - label || LOGIC - slug
-export function formatLocation(location: any, townCity?: string) {
+export function formatLocation(location: LocationData, townCity?: string) {
   if (!location) return { country: '', region: '', continent: '', full: townCity || '' };
 
+  const hasRegion = !!location.value?.value && location.value.value !== 'none';
+  const hasCountry = !!location.value?.discriminant && location.value.discriminant !== 'none';
   const continent = location.discriminant;
   const countrySlug = location.value?.discriminant || location.discriminant;
-  const regionSlug = location.value?.value?.discriminant;
+  const regionSlug = hasRegion ? location.value.value : undefined;
 
-  const countryLabel = COUNTRY_MAP[countrySlug] || formatLabel(countrySlug);
+  const countryLabel = hasCountry
+  ? (COUNTRY_MAP[countrySlug] || formatLabel(countrySlug!)) : '';
   const regionLabel = regionSlug ? formatLabel(regionSlug) : '';
 
   const parts = [townCity, regionLabel, countryLabel].filter(Boolean);
@@ -116,6 +121,14 @@ export function formatLocation(location: any, townCity?: string) {
   };
 }
 
+import type { LocationData } from "../function/configBlocks/zod-blocks";
+
+export function hasRegionSelected(location: LocationData): location is LocationData & { value: { value: string } } {
+  return (
+    !!location.value?.value && 
+    location.value.value !== 'none'
+  );
+}
 export interface SelectOption {
   label: string;
   value: string;
@@ -135,6 +148,7 @@ const REGION_LOOKUP: Record<string, SelectOption[]> = {
 export const getRegionOptions = (countryValue: string): SelectOption[] => {
   return REGION_LOOKUP[countryValue] || [];
 };
+
 
 export const OTHER_COUNTRIES = ALL_COUNTRY_VALUES.filter(
   val => !['united-kingdom', 'united-states-of-america', 'canada', 'australia'].includes(val)

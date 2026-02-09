@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro'; 
 import BlogCard from '../../components/blogCard.astro';
+import Button from '../../components/button.astro';
 import { SKATE_DISCIPLINES, BLOG_CATEGORY } from '../../data/skate-constants';
 import { getCollection } from 'astro:content';
 import type {Page, GetStaticPaths} from 'astro';
@@ -80,6 +81,11 @@ const metaDescription = `Browse our collection of ${displayDisc} articles in the
 ---
 
 <BaseLayout page_title={pageTitle} description={metaDescription}>
+<nav class="navigation-controls">
+  
+  <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+
+</nav>
 
   <section class="frame-fence">
       <hgroup class="header-group">

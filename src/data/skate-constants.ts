@@ -60,7 +60,7 @@ export const BLOG_CATEGORY = [
 ] as const;
 
 // ----------------------  EVENT logic
-export const FOOTWEAR_CHOICE = [
+export const FOOTWEAR_CHOICE = [ 
     {value:'skates', label: 'Skates'},
     {value:'Shoes', label: 'Shoes'},
 ] as const;
