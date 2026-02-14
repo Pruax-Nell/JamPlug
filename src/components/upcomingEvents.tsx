@@ -37,7 +37,7 @@ import '../styles/event.css'
 import EventCard from './eventcard';
 
 // REACT and CONSTANTS 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import type { SerializedEvent, EventCardData, EventLocation, SelectOption } from '../function/types';
 import { formatEventDate, } from '../function/dateHelper';
 import { formatLabel, capitalize, slugify } from '../function/stringHelper';
@@ -119,11 +119,28 @@ export const LocationSearch = ({ onLocationChange, locationFilters, initialEvent
   const [inputValue, setInputValue] = useState(locationFilters.townCity || '');
   const [isOpen, setIsOpen] = useState(false);
 
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   useEffect(() => {
       if (locationFilters.townCity === '' || locationFilters.townCity === 'All') {
         setInputValue('');
       } else {
-      // setInputValue(locationFilters.townCity);
         if (inputValue !== locationFilters.townCity) {
           setInputValue(locationFilters.townCity)
         }
@@ -176,7 +193,8 @@ export const LocationSearch = ({ onLocationChange, locationFilters, initialEvent
   };
 
   return (
-  <div className="filter-group location-search-wrapper" style={{ position: 'relative' }}>
+  <div className="filter-group location-search-wrapper" ref={wrapperRef} style={{ position: 'relative' }}>
+   
     <label htmlFor='location-search-input' className='input-label'> Search :</label>
 
     <input
@@ -187,7 +205,8 @@ export const LocationSearch = ({ onLocationChange, locationFilters, initialEvent
       placeholder="City, Region, or Country..."
       value={inputValue}
       onFocus={() => setIsOpen(true)}
-      onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+      // onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+
       onChange={(e) => {
         const val = e.target.value;
         setInputValue(val);
@@ -270,10 +289,23 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     }
   }, [filters.location.country, initialEvents]);
 
-  const availableCountries = useMemo(() => {
+  // const availableCountries = useMemo(() => {
     
-    if (filters.location.continent === 'All') return CONTINENT_DATA.flatMap(c => c.countries);
-    return CONTINENT_DATA.find(c => c.continent === filters.location.continent)?.countries || [];
+  //   if (filters.location.continent === 'All') return CONTINENT_DATA.flatMap(c => c.countries);
+  //   return CONTINENT_DATA.find(c => c.continent === filters.location.continent)?.countries || [];
+  // }, [filters.location.continent]);
+
+  const availableCountries = useMemo(() => {
+    if (filters.location.continent === 'All') {
+      return CONTINENT_DATA.flatMap(c => c.countries);
+    }
+
+    // Standardize both sides to slug format for the comparison
+    const foundContinent = CONTINENT_DATA.find(
+      c => slugify(c.continent) === slugify(filters.location.continent)
+    );
+
+    return foundContinent ? foundContinent.countries : [];
   }, [filters.location.continent]);
   
   // console.log('Available:', availableCountries)
@@ -299,36 +331,37 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     const filtered = initialEvents.filter((event) => {
       const d = event.data;
       const { location: loc, attributes: attr } = filters;
-
       const eventMonth = new Date(d.startDate).toLocaleString('en-GB', { month: 'long' }).toLowerCase();
 
+      const eventContSlug = slugify(d.location.discriminant);
+      const filterContSlug = slugify(loc.continent);
+
   // 1. Geography Check
-      const matchContinent = loc.continent === 'All' || d.location.discriminant === loc.continent;
+    const matchContinent = loc.continent === 'All' || eventContSlug === filterContSlug;
+    const matchCountry = loc.country === 'All' || d.location.value?.discriminant === loc.country;
+    const matchRegion = loc.region === 'All' || d.location.value?.value === loc.region;
 
-      const matchCountry = loc.country === 'All' || d.location.value?.discriminant === loc.country;
+      // const matchContinent = loc.continent === 'All' || d.location.discriminant === loc.continent;
 
-      const matchRegion = loc.region === 'All' || d.location.value?.value === loc.region;
+      // const matchCountry = loc.country === 'All' || d.location.value?.discriminant === loc.country;
+
+      // const matchRegion = loc.region === 'All' || d.location.value?.value === loc.region;
       
       const searchStr = loc.townCity.toLowerCase().trim();
       const matchTown = !searchStr || d.townCity.toLowerCase().includes(searchStr.split(',')[0]);
 
       const isLocationMatch = matchContinent && matchCountry && matchRegion && matchTown;
+      const countrySlug = d.location.value?.discriminant;
 
       // 2. Populate Dropdown Logic
       geography.continents.add(d.location.discriminant);
-      // if (matchContinent) geography.countries.add(d.location.value?.discriminant || '');
-      if (matchContinent && matchTown) { 
-        const countrySlug = d.location.value?.discriminant;
-        if (countrySlug) {
-          geography.countries.add(countrySlug)
-        }
+      if (matchContinent && matchTown && countrySlug) {
+        geography.countries.add(countrySlug);
       }
 
       if (matchContinent && matchCountry && matchTown) {
         const regionSlug = d.location.value?.value;
-        if (regionSlug) {
-          geography.regions.add(regionSlug);
-        }
+        if (regionSlug) geography.regions.add(regionSlug);
       }
 
       if (isLocationMatch) {
@@ -338,19 +371,6 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         attributes.months.add(eventMonth);
         attributes.footwear.add(d.footwear.toLowerCase());
         geography.ages.add(d.minAge ?? '');
-      }
-
-      // if (matchContinent && matchCountry) geography.regions.add(d.location.value?.value || '');
-      // if (matchContinent && matchCountry && matchRegion) geography.towns.add(d.townCity);
-      geography.ages.add(d.minAge ?? '');
-
-
-      if (isLocationMatch) {
-        attributes.types.add(d.eventType.toLowerCase());
-        attributes.disciplines.add(d.skateDiscipline?.toLowerCase() ?? '');
-        attributes.levels.add(d.skillLevel?.toLowerCase() ?? '');
-        attributes.months.add(eventMonth);
-        attributes.footwear.add(d.footwear.toLowerCase());
       }
 
       // 3. Final Boolean Check
@@ -498,8 +518,8 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
       <section className="filter-bar" aria-labelledby='filter-title'>
 
       
-        {/* <div className={`filter-section ${isExpanded ? 'expanded' : 'collapsed'}`}> */}
-        <div className="filter-section">
+        <div className={`filter-section ${isExpanded ? 'expanded' : 'collapsed'}`}>
+        {/* <div className="filter-section"> */}
 
           <fieldset className='filter-field location-fields'>
           <div className="divider"><span>A&#41; Search Town, Region or Country:</span></div>
@@ -591,7 +611,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
               <label htmlFor='footwear-select' className='input-label'>Footwear:</label>
               <select 
                 value={filters.attributes.footwear}
-                onChange={(e) => handleFilterChange('attributes', 'footWear', e.target.value)}
+                onChange={(e) => handleFilterChange('attributes', 'footwear', e.target.value)}
                 id='footwear-select'
                 className='input-box'
                 >

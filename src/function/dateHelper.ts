@@ -64,6 +64,45 @@ export const formatEventDate = (startStr: string | Date, endStr?: string | Date 
   }
 };
 
+export const formatFestivalDate = (startStr: string | Date, endStr?: string | Date | null) => {
+  try {
+    const start = new Date(startStr);
+    const end = endStr ? new Date(endStr) : null;
+
+    // Check if start date is actually valid
+    if (isNaN(start.getTime())) return 'Date TBC';
+
+    const fullDateOptions: Intl.DateTimeFormatOptions = { 
+      day: 'numeric', 
+      month: 'long',  
+      year: 'numeric' 
+    };
+
+    // 1. Single day or no end date
+    if (!end || start.toDateString() === end.toDateString()) {
+      return start.toLocaleDateString('en-GB', fullDateOptions);
+    }
+
+    // 2. Same month range: "20 – 22 Jan 2026"
+    if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+      const month = start.toLocaleDateString('en-GB', { month: 'long' });
+      return `${start.getDate()} – ${end.getDate()} ${month}`;
+    }
+
+    // 3. Different months, same year: "30 Jan – 2 Feb 2026"
+    if (start.getFullYear() === end.getFullYear()) {
+      const startPart = start.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+      const endPart = end.toLocaleDateString('en-GB', fullDateOptions);
+      return `${startPart} – ${endPart}`;
+    }
+
+    // 4. Different years
+    return `${start.toLocaleDateString('en-GB', fullDateOptions)} – ${end.toLocaleDateString('en-GB', fullDateOptions)}`;
+  } catch (e) {
+    return 'Date TBC';
+  }
+};
+
 export const getCalendarUrls = (eventData: any) => {
   try {
     // Ensure we are working with Date objects

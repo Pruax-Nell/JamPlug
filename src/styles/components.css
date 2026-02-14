@@ -62,18 +62,30 @@ button { cursor: pointer;}
   max-width: 100%;
 }
 
+.stealth-field {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .srOnly {
-    display: none;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    border-width: 0;
-    padding: 0;
-    margin: -1px;
+  display: none;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  border-width: 0;
+  padding: 0;
+  margin: -1px;
 
 }
 

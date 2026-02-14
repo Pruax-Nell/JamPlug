@@ -1,5 +1,4 @@
 ---
-// TODO - dynamic frontmatter application
 import {SITE_TITLE, SITE_DESCRIPTION} from "../data/skate-constants";
 import type { SerializedEvent } from "../function/types";
 
@@ -15,39 +14,68 @@ interface Props {
 const { 
   title, 
   description = SITE_DESCRIPTION,
-  image = "/content/rolling.png", // A fallback image in your public folder
-  SEO, Index,
+  image = "/content/rolling.png", 
+  SEO, 
+  Index,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const displayTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 ---
-<link rel="sitemap" href="/sitemap-index.xml">
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<link rel="icon" type="image/svg+xml" href="/admin/new-favicon.svg" />
+<link rel="canonical" href={canonicalURL} />
+
+<title>{displayTitle}</title>
+<meta name="title" content={displayTitle} />
+<meta name="description" content={description} />
+{SEO && <meta name="SEO" content={SEO} />}
+{Index && <meta name="robots" content={Index} />}
+
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- 
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={SITE_TITLE}
+	href={new URL('rss.xml', Astro.site)}
+/> -->
 
 <!-- Web analytics -->
 <!-- <script data-goatcounter="https://my-account.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
 
 <!-- Open Graph tags -->
-<link rel="icon" type="image/svg+xml" href="/new-favicon.svg" />
-<meta name="viewport" content="width=device-width" />
-<meta name="generator" content={Astro.generator} />
-<meta name="description" content= {description}>
-<meta name="SEO" content={SEO}>
-
-<title>{displayTitle}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
-<link rel="canonical" href={canonicalURL} />
-
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={displayTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
 
+<!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
+<meta property="twitter:title" content={displayTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={displayTitle} />
+<meta property="og:description" content={description} />
+<!-- <meta property="og:image" content={new URL(image.src, Astro.url)} /> -->
+
+<!-- Font preloads -->
+<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
+<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<link rel="preload" href="/fonts/RedRose-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin />
+<link rel="preload" href="/fonts/RedRose-VariableFont_wght.woff2" as="font" type="font/woff" crossorigin />
+<link rel="preload" href="/fonts/ShantellSans-VariableFont.ttf" as="font" type="font/ttf" crossorigin />
+<link rel="preload" href="/fonts/fonts/TitanOne-Regular.ttf" as="font" type="font/ttf" crossorigin />
+<link rel="preload" href="/fonts/fonts/TitanOne-Regular.woff2" as="font" type="font/woff2" crossorigin />

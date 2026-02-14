@@ -4,7 +4,7 @@ import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEV
 import { getRegionOptions, continentKeys, ALL_CONTINENT_VALUES, CONTINENT_DATA, ALL_COUNTRY_VALUES, US_STATE_OPTIONS, UK_NATION_OPTIONS, CANADA_PROVINCE_OPTIONS, AUS_REGION_OPTIONS, } from './src/data/globe-constants';
 import { GLOBE_CONTINENTS } from './src/data/geo/continents';
 import { slugify } from './src/function/stringHelper';
-import { locationBlock } from './src/function/configBlocks/key-block';
+import { locationBlock, mapCoords } from './src/function/configBlocks/key-block';
 
 
 
@@ -331,7 +331,7 @@ export default config({
         
         rink: fields.text({ label: 'Featured Rink' }),
         venueAddress: fields.text({ label: 'Address' }),
-        mapCoordinates: fields.text({ label: 'Map Coordinates' }),
+        mapCoordinates: mapCoords,
 
         footwear: fields.select({ 
           label: 'Non Skating Event?', 

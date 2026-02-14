@@ -51,5 +51,5 @@ export const RAW_EUROPE = [
     "Ukraine",
     "Vatican City",
     // "Wales"
-
+    
 ] as const;

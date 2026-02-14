@@ -13,7 +13,9 @@ const BASE_URL = import.meta.env.BASE_URL
 --- 
 
 
-<BaseLayout>
+<BaseLayout
+title="About Us"
+description="Behind the scenes at YJP">
 <nav class="navigation-controls">
     <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
 </nav>
@@ -47,7 +49,7 @@ const BASE_URL = import.meta.env.BASE_URL
         
         <div class="port founder-image">
             <Image src="/src/assets/Skater.Shynell.JPG" alt="Me" height={320} width={260}  />
-            <span>taken by Daniel Bridle</span>
+            <span>taken by <a href="https://danielbridlephoto.com/" class="community-credit">Daniel Bridle</a></span>
         </div>
         <div class="about-me">
             <p>If you give me a good floor, music and my skates, I'll be happy for quite a while. But if you throw in good people and positive energy, I'm set for the whole weekend.
@@ -59,9 +61,9 @@ const BASE_URL = import.meta.env.BASE_URL
             </p>
             <p>-CONNECTIONS & COMMUNITY-</p>
             <p>We're so close to having a GREAT skate scene, I just want to help us get there. </p>
+            <blockquote class="quote-one">Spread the joy, spread the skill, watch it all thrive. <span>~ SHA.NE.RU ~</span></blockquote>
         </div>
         <div class="quote">
-            <blockquote>Spread the joy, spread the skill, watch it all thrive. <span>~ SHA.NE.RU ~</span></blockquote>
             
         </div>
     </div>    
@@ -77,6 +79,8 @@ const BASE_URL = import.meta.env.BASE_URL
         <p><a href="">You - the average skater - signs up to the newsletter</a></p>
         <p>AND</p>
         <p><a href="">Everyone shares the site, ensures all skaters know of this and give feedback, cause remember, this is for all of us.</a></p>
+        
+        <span class="separation">...</span>
 
         <div class="direction-box">
             <p><a href="/submit-an-event">Submit an Event</a></p>
@@ -88,7 +92,7 @@ const BASE_URL = import.meta.env.BASE_URL
     
     
     
-    <!-- <span class="separation">...</span> -->
+    <span class="separation">...</span>
     <div class="about-support block">
         <!-- <h3 class="heading-small">How you can support</h3> -->
         <p>Engage and share.</p>
@@ -102,9 +106,9 @@ const BASE_URL = import.meta.env.BASE_URL
     <div class="block about-channels">
         <h4 class="heading-small">Our Official Channels</h4>
         <div class="channel-block">
-            <div class="channel-div"> <a href="" target="_blank"><span>Instagram</span> <p>yourjamplug.uk</p></a></div>
-            <div class="channel-div"> <a href="" target="_blank"><span>Tiktok</span> <p>Skaters.jam.plug</p></a></div>
-            <div class="channel-div"> <a href="" target="_blank"><span>Discord</span> <p>Roller Skater's Jam Plug</p></a></div>
+            <div class="channel-div insta"> <a href="https://www.instagram.com/yourjamplug.uk/" target="_blank"><span>Instagram</span> <p>yourjamplug.uk</p></a></div>
+            <div class="channel-div tiktok"> <a href="https://www.tiktok.com/@skaters.jam.plug" target="_blank"><span>TikTok</span> <p>Skaters.jam.plug</p></a></div>
+            <!-- <div class="channel-div discord"> <a href="" target="_blank"><span>Discord</span> <p>Roller Skater's Jam Plug</p></a></div> -->
         </div>
         
 
@@ -119,6 +123,14 @@ const BASE_URL = import.meta.env.BASE_URL
 </BaseLayout>
 
 <style>
+
+    .quote-one{
+        padding-block: 3rem;
+        font-family: var(--font-rose-body);
+        font-size: var(--fs-heading-small);
+        color: var(--ob-teal);
+        line-height: 1.8rem;
+    }
 
     .heading-full-width {
         width: 100%;
@@ -135,6 +147,7 @@ const BASE_URL = import.meta.env.BASE_URL
         width: 100%;
         font-size: var(--fs-p2);
         justify-self: center;
+        margin-bottom: .5rem;
     }
 
     .about-section {
@@ -202,16 +215,17 @@ const BASE_URL = import.meta.env.BASE_URL
     }
 
     .direction-box {
+        padding: 2rem 1rem;
         display: flex;
         flex-direction: row;
         gap: 40px;
-        height: 120px;
+        /* height: 120px; */
         align-items: center;
     }
 
     .direction-box p {
-        width: 15ch;
-        height: 40px;
+        max: 20ch;
+        /* height: 40px; */
         text-align: center;
         background-color: var(--main-orange);
         padding: 2ch 2.5ch;

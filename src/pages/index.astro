@@ -11,6 +11,9 @@ import "../styles/components.css";
 
 import { Image } from "astro:assets";
 import { getCollection, getEntries } from "astro:content";
+import { formatLabel } from "../function/stringHelper";
+import { formatLocation } from "../data/globe-constants";
+import { formatFestivalDate, formatEventDate, formatDate } from "../function/dateHelper";
 
 import Hero from '../components/hero.astro';
 import Img1 from "../content/images/use/image1.jpg"
@@ -33,7 +36,6 @@ const identity = {
 // GENERAL UTILITY
 const now = new Date();
 now.setHours(0, 0, 0, 0);
-
 
 // UPCOMING EVENTS
 const publishedEvents = await getCollection('events', ({ data }) => {
@@ -62,26 +64,27 @@ const upcomingEvents = (publishedEvents)
 .slice(0, 8);
 
 // FEATURED EVENTS
-const featuredEvents = (publishedEvents)
-.filter((event) => event.data.isFeatured === true)
-.map(event => ({
-	id: event.id,
-	title: event.data.eventName,
-	poster: event.data.eventPoster,
-	city: event.data.townCity,
-	country: event.data.location.discriminant,
-	description: event.data.description,
-	eventType: event.data.eventType,
-	featured: event.data.isFeatured,
-	timeframe: {
-		startDate: new Date(event.data.startDate),
-		endDate: event.data.endDate ? new Date(event.data.endDate) : null
-	}
-	 
-}))
-.sort(
-	(a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
-);
+const featuredEvents = publishedEvents
+  .filter((event) => event.data.isFeatured === true)
+  .map(event => {
+    const location = formatLocation(event.data.location, event.data.townCity);
+	const dates = formatEventDate(event.data.startDate, event.data.endDate);
+    
+    return {
+	
+      id: event.id,
+	  url: `/events/${event.id}/`,
+      title: event.data.eventName,
+      poster: event.data.eventPoster,
+      description: event.data.description,
+      eventType: event.data.eventType,
+      locationLabel: location.full, // "London, England, UK"
+      dateLabel: dates,
+	  startOrder: event.data.startDate,
+    };
+  })
+  .sort((a, b) => b.startOrder.valueOf() - a.startOrder.valueOf());
+
 	
 // BLOG COLLECTION
 const publishedBlogs = await getCollection('blog', ({ data }) => {
@@ -103,11 +106,10 @@ const recentBlogs = (publishedBlogs)
 .sort((a, b) => b.published.valueOf() - a.published.valueOf(), )
 .slice(0, 8);
 
-	
-
 ---
 	
-<BaseLayout>
+<BaseLayout
+title="Home Page">
 	<!------------------------------------------ HERO ---------------->
 	<section  id="hero-section" class="frame-fence">
 		<Hero />
@@ -132,8 +134,11 @@ const recentBlogs = (publishedBlogs)
 		<section id="feature-section"  class="frame-fence">
 			<h3 class="heading">Featured Events</h3>
 			<div class="carosel">
-		{featuredEvents.map((post) => (
-				<FeaturedCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}/>
+		{/* {featuredEvents.map((post) => (
+			<FeaturedCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}/>
+			))} */}
+			{featuredEvents.map(post => (
+			<FeaturedCard {...post} />
 			))}
 			</div>
 			<div class='big-space'></div>

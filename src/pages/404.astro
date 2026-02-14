@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/baseLayout.astro";
+import Button from "../components/button.astro";
 import { Image } from "astro:assets";
 import Error404 from "../assets/Custom404B.png";
 ---
@@ -10,15 +11,17 @@ import Error404 from "../assets/Custom404B.png";
         <div class="flex column content-Center" >
             <span class="srOnly"> The content you were looking for could not be found, please </span>
             <Image src={Error404} alt="404"  width={750}/>
-            
         </div>
+        
         <div>
-            <a href="/">Back to Home Page</a>
-            <button class="btn-secondary">Go Back</button>
+            <p>Find your way:</p>
             <div class="navigation-controls btn-primary">
-                <button onclick="history.back()" class="back-button">
+                <!-- <button onclick="history.back()" class="back-button">
                     ← Back to Events
-                </button>
+                </button> -->
+                <Button variant='primary' theme='pinkDark' size='md' class="back-button" onClick="history.back()" >Back to Previous Page</Button>
+                <Button variant='primary' theme='tealDark' size='md' href='/events' class="back-button" >To Events Page</Button>
+                <!-- <Button variant='primary' theme='yellowDark' size='md' href='/directory' class="back-button" >To Directory Page</Button> -->
             </div>
         </div>
     </section>
@@ -32,5 +35,19 @@ import Error404 from "../assets/Custom404B.png";
 
     #error {
         width: 100vw;
+    }
+
+    .navigation-controls {
+        display: flex;
+        justify-content: space-around;
+    }
+    .back-button{
+        text-wrap: balance;
+    }
+
+    @media (max-width:680px){
+        .navigation-controls{
+            flex-direction: column;
+        }
     }
 </style>

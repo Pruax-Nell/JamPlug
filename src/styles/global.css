@@ -72,7 +72,7 @@ html {
     
     --main-teal: #14c1a4;
     --second-teal: #27d9be;
-    --ow-teal: #79c7ba;
+    --ow-teal: #70c1b3;
     --ob-teal: #124941;
     --special-teal: #0b8774;
     --mid-teal: #178c7b;
@@ -143,6 +143,7 @@ html {
     
     --black: #302f2c;
     --grey: #4a4844;
+    --bg-dark: #bbbab9;
     
     --shadow-grey: #4a48446a;
     --shadow-grey-2: #4a4844a5;
@@ -156,6 +157,8 @@ html {
 
 .dark body, .dark #site-header{
     background-color: var(--dark-background);
+    background-color: var(--bg-dark);
+
     
 }
 
@@ -221,6 +224,7 @@ body *{
 .page-head {
     align-self: center;
 }
+
 /* title + subtitle duo */
 .header-group {
     display: flex;
@@ -241,6 +245,12 @@ body *{
     justify-content: flex-end;
     max-width: 95%;
     padding: 1rem;
+}
+
+.community-credit{
+    font-size: var(--fs-p1);
+    color: var(--ob-pink);
+    font-weight: 600;
 }
 
 

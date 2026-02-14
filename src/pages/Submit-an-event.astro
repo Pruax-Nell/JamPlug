@@ -19,7 +19,8 @@ import "../styles/submit.css";
 
 ---
 
-<BaseLayout> 
+<BaseLayout
+title="Submit your Roller Skate Event"> 
 <nav class="navigation-controls">
     <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
 </nav>
@@ -30,9 +31,25 @@ import "../styles/submit.css";
     </hgroup>
 </section>
 
+<section class="form-fence tally-form">
+    <div class="form-wrap">
+
+        <iframe 
+        data-tally-src="https://tally.so/embed/Mez74X?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&formEventsForwarding=1" 
+        loading="lazy" 
+        width="100%" 
+        height="600" 
+        frameborder="0" 
+        marginheight="0" 
+        marginwidth="0" 
+        title="Event Submission Form"
+        ></iframe>
+        
+    </div>
+</section>
+
 <!-- ||------------------------------------- FORM SECTION  -->
-<section class="form-fence form-directions">
-    <!-- ||------------------------- DIRECTIONS  -->
+<!-- <section class="form-fence form-directions">
     <div class="form-field" id="select-form">
         <label for="event-type">Select a Form:</label>
         <select name="event-type" id="event-type" class="mid-fit fitted">
@@ -46,10 +63,10 @@ import "../styles/submit.css";
         </select>
     </div>
         
-</section>
+</section> -->
 
 <!-- -||----------------------- FORM FIELD  -->
-<section class="form-fence">
+<!-- <section class="form-fence">
         <div id="placeholder-form" class="form-wrap"><div class=""><h3 class="srOnly">Placeholder</h3><p>Select an Event Type above to reveal the appropriate submission form.</p></div></div>
         <div id="general-form" class="hidden form-wrap"><FormOther /> </div>
         <div id="workshop-form" class="hidden form-wrap"> <FormWorkshop /> </div>
@@ -57,7 +74,7 @@ import "../styles/submit.css";
         <div id="social-form" class="hidden form-wrap"> <FormSocial /> </div>
         <div id="night-form" class="hidden form-wrap"> <FormNight /> </div>
         <div id="festival-form" class="hidden form-wrap"> <FormFestival /> </div>
-</section>
+</section> -->
 
 <section class="form-fence direct-other">
     <p>Other Options:</p>
@@ -68,4 +85,8 @@ import "../styles/submit.css";
     </div>
 </section>
 </BaseLayout>
+
+<script is:inline>
+  var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+</script>
 

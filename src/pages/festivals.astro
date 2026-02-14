@@ -3,30 +3,30 @@ import BaseLayout from "../layouts/baseLayout.astro";
 import BigList from "../components/big-list.astro";
 import CardHolder from "../components/card-holder.astro";
 
-import '../styles/components.css'
-import '../styles/global.css'
 import '../styles/event.css'
 import '../styles/home.css'
 
+import { formatEventDate, formatDate, formatFestivalDate } from '../function/dateHelper';
+import { formatLocation } from '../data/globe-constants';
+import { formatLabel, formatLocationString } from '../function/stringHelper';
+
 import { getCollection } from "astro:content";
+
+
 const bigEvents = await getCollection('events', ({ data }) => {
-    return data.status === 'published' && data.eventType === 'Festival';
+    return data.status === 'published' && data.eventType === 'festival';
 });
 
-const thirtyDaysAgo = new Date();
-thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
 const monthOrder = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 
-// const justAdded = (bigEvents)
-// .filter(
-//     event => {
-//         return event.data.published >= thirtyDaysAgo;
-//     }
-// )
+// GENERAL UTILITY
+const now = new Date();
+now.setHours(0, 0, 0, 0);
+
 
 const groupedEvents = bigEvents.reduce((acc: Record<string, any[]>, event) => {
     const month = event.data.startDate.toLocaleString(['en-GB', 'en-US'], { month: 'long' });
@@ -45,55 +45,42 @@ Object.values(groupedEvents).forEach(monthArray => {
 });
 
 
-// Helper function to calculate days left
-// function getDaysRemaining(targetDate) {
-//     const diffInMs = targetDate.getTime() - now.getTime();
-
-//     const days = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-    
-//     return days;
-// }
-
-// GENERAL UTILITY
-const now = new Date();
-now.setHours(0, 0, 0, 0);
 
 
 // UPCOMING EVENTS
-const publishedEvents = await getCollection('events', ({ data }) => {
-  return data.status === 'published';
-});
-
-const upcomingEvents = (publishedEvents)
+const upcomingEvents = (bigEvents)
 .map(event => ({
-	id: event.id,
+    id: event.id,
 	title: event.data.eventName,
 	poster: event.data.eventPoster,
 	city: event.data.townCity,
 	country: event.data.location.discriminant,
 	description: event.data.description,
 	eventType: event.data.eventType,
-	featured: event.data.isFeatured,
 	timeframe: {
-		startDate: new Date(event.data.startDate),
+        startDate: new Date(event.data.startDate),
 		endDate: event.data.endDate ? new Date(event.data.endDate) : null
 	}
 	
 }))
 .sort(
-	(a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
+    (a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
 )
 .slice(0, 8);
 
+// console.log(bigEvents);
+
 ---
 
-<BaseLayout>
+<BaseLayout
+title="Big Jam List"
+description="Find roller Skate festivals from around the world">
 <section class="frame-fence welcome">
     <hgroup>
         <h1>Big Jam List</h1>
         <p>Bigger that your local Skate night!</p>
     </hgroup>
-
+    
     <div class="jam-req">
         <p><span class="bold-point ">Q:</span> What is a Skate Festival?</p>
         <p><span class="bold-point ">A:</span> A Multi-night, schedule-packed, skate-escape! Worth waiting all year for~</p>
@@ -108,47 +95,46 @@ const upcomingEvents = (publishedEvents)
     </div>
     <div id="jam-list">
         {monthOrder.map((month) => {
-        const eventsInMonth = groupedEvents[month] || [];
+            const eventsInMonth = groupedEvents[month] || [];
+            
+            return (
+            <div class="month-block">
+                <h2 class="line-month">{month}</h2>
 
-        return (
-        <div class="month-block">
-            <h2>{month}</h2>
-
-            {eventsInMonth.length > 0 ? (
-            <ul>
-                {eventsInMonth.map((event) => (
-                <li class="jam-item"><a href={`/events/${event.id}/`}>
+                {eventsInMonth.length > 0 ? (
+                    <ul>
+                    {eventsInMonth.map((event) => {
+                        const loc = formatLocation(event.data.location, event.data.townCity);
+                        const dateRange = formatFestivalDate(event.data.startDate, event.data.endDate);
                         
-                    <div class="jam-content">
-                        <div class="jam-title">
-                            {event.data.published >= thirtyDaysAgo && (
-                                <span class="highlight-new ">NEW!</span>
-                            )}
-                                
-                            <div class="jam-bold">
-                                <p>{event.data.eventName} </p>
-                                <p>{event.data.description}</p>
+                    return (
+                        <li class="jam-item">
+                        <a href={`/events/${event.id}/`}>
+                            <div class="jam-content">
+                                <div class="jam-title">
+                                    <p class="line-title ">{event.data.eventName}</p>
+                                    <p class="line-subtitle line-small">{event.data.subheading}</p>
+                                    <p class="line-description line-small">{event.data.description}</p>
+                                </div>
+
+                                <div class="divider"></div>
+
+                                <div class="jam-info">
+                                    <p class="line-location line-small">{loc.full}</p>
+                                    <p class="line-date line-small">{dateRange}</p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="divider">  </div>
-
-                        <div class="jam-info">
-                            <p>{event.data.townCity} - {event.data.country}</p>
-
-                            <p>{event.data.startDate.toDateString()}</p>
-                        </div>
-                    </div>
-                </a></li>
-                ))}
+                        </a>
+                        </li>
+                    );
+                })}
             </ul>
             ) : (
             <p class="no-events">...</p>
             )}
         </div>
         );
-        })}
-        
+    })}
     </div>
 </section>
 <section class="frame-fence">
@@ -166,6 +152,7 @@ const upcomingEvents = (publishedEvents)
 				country={post.country}
 				timeframe={post.timeframe}
 				description={post.description}
+                eventType={post.eventType}
 				/>
 			))}
 
@@ -218,37 +205,31 @@ const upcomingEvents = (publishedEvents)
         max-width: 65ch;
         
     }
-
-    #jam-list {
-        background-color: var(--main-teal);
-        background-color: var(--shadow-orange-2);
-        border-radius: 28px;
-        padding: 3rem .8rem;
-    }
     
-    .middle{
-        justify-items: center;
-        align-content: center;
-        margin: .5rem;
-        height: 220px;
-        border-top: 13px double var(--ow-orange) ;
-        border-bottom: 13px double var(--ow-orange) ;
-    }
-
-
-   
-
     .jam-direct {
         display: flex;
         justify-content: center;
-        gap: 60px;
+        max-width: 100%;
+        gap: 1rem;
         align-content: center;
+        padding: .2rem;
+        margin-bottom: .5rem;
     }
 
     .jam-direct span {
         align-content: center;
     }
 
+    /* Festival block */
+
+    #jam-list {
+        background-color: var(--main-brown);
+        background-color: var(--shadow-orange-2);
+        border-radius: 28px;
+        padding: 3rem .8rem;
+    }
+
+    /* annual directions */
     .year-title {
         justify-self: center;
         font-size: var(--fs-title);
@@ -258,10 +239,13 @@ const upcomingEvents = (publishedEvents)
         letter-spacing: .3ch;
         padding: .6rem 1rem;
         background-color: var(--grey-teal);
+
+        transition: border 3s ease-in-out;
     }
 
     .jam-year-button:hover{
         /* background-color: var(--mid-teal); */
+        border: 3px solid var(--grey) ;
         cursor: default;
         
     }
@@ -276,72 +260,93 @@ const upcomingEvents = (publishedEvents)
         
     }
 
-    
-    .jam-bold{
-        font-size: var(--fs-p2);
-    }
-    
-    .highlight-new {
-        height: 40px;
-        width: 70px;
-        /* padding: 1ch; */
-        border-radius: 14px;
-        font-size: var(--fs-footer);
-
-        color: var(--text-white);
-        font-weight: 400;
-        background: linear-gradient(45deg, var(--grey-pink), var(--mid-purple));
-        text-align: center;
-        align-content: center;
-        justify-self: right;
-
-        animation: pulse 1.8s infinite;
-
-    }
-
-    @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
-
     .divider {
         align-content: center;
-        width: .2fr;
+        width: .2rem;
+    }
+
+  
+    .line-month{
+        color: var(--text-black);
+        padding: .3rem;
+        margin-bottom: .1rem;
     }
 
     .jam-item {
         display: flex;
         flex-direction: row;
-        width: 100%;
+        max-width: 100%;
+        margin-block: 1rem;
+        padding: .2rem;
+        border-radius: 8px;
+        border-top: 2px solid var(--main-pink);
+        background-color: var(--highlight);
+        
+        transition: box-shadow .3s ease, transform .1s ease-in-out;
     }
 
     .jam-item a {
-        width: 100%;
+       width: 100%;
+    }
+
+    .jam-item:hover{
+        border: 1.3px solid var(--second-purple);
+        box-shadow: 3px 2px 5px var(--main-orange), 5px 3px var(--ow-purple);
+        
+        transform: translateY(-2px);
     }
 
     .jam-content {
         display: grid;
         grid-template-columns: auto 10px auto;
-    }
-
-    .jam-content  * {
-        margin: .5rem;
+        margin: .8rem .4rem;
         padding: 0;
     }
 
     .jam-title  {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         height: max-content;
-        /* width: 2fr; */
+        max-width: 100%;
         justify-content:space-between;
+    }
+
+    
+    .line-title{
+        font-size: var(--fs-p2);
+        color: var(--text-black);
+        font-weight: 800;
+        padding-bottom: .3rem;
+    }
+    .line-subtitle{
+        color: var(--text-black);
+        font-size: var(--fs-p3);
+        padding-left: .2rem;
+        text-wrap: balance;
+        margin-bottom: .8rem;
+    }
+    
+    .line-description{
+        font-size: var(--fs-caption);
+        color: var(--text-black);
+        max-width: 45ch;
+        text-wrap: pretty;
+        padding-left: .2rem;
+    }
+
+    .line-date{
+        font-size: var(--fs-caption);
+    }
+
+   .line-location{
+        font-size: var(--fs-caption);
+        text-wrap: balance;
     }
 
     .jam-info {
         display: flex;
         flex-direction: column;
-        height: max-content;
+        max-height: 100%;
         width: 1fr;
     }
 
@@ -358,5 +363,31 @@ const upcomingEvents = (publishedEvents)
         padding-left: 0;
     }
 
+    @media (max-width: 680px){
+
+        .jam-item{
+            justify-content: center;
+        }
+
+        .jam-content {
+            display: flex;
+            flex-direction: column;
+            padding: .2rem;
+            gap: .8rem;
+
+        }
+
+        .line-small{
+            padding-left: 1rem;
+        }
+        .line-small-s{
+            /* padding-left: 1rem; */
+            text-align: right;
+        }
+        .jam-info{
+            /* padding-left: 1rem; */
+            text-align: right;
+        }
+    }
 
 </style> 

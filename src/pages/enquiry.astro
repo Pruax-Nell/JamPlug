@@ -18,7 +18,9 @@ import FormFestival from "../components/form/formfestival.astro"
 
 ---
 
-<BaseLayout> 
+<BaseLayout
+title="Contact Us"
+description="Send us a Message"> 
 <nav class="navigation-controls">
     <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
 </nav>
@@ -48,22 +50,22 @@ import FormFestival from "../components/form/formfestival.astro"
             >
                 <input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
                 <input type="hidden" name="form_category" value="General Enquiry" />
-                <div>
+                <div class="form-field">
                     <label for="1name" >First Name</label>
                     <input  type="text" id="1name" placeholder="First Name" name="" required>
                 </div>
 
-                <div>
+                <div class="form-field">
                     <label for="2name" >Surname</label>
                     <input  type="text" id="2name" placeholder="Surname" name="" >
                 </div>
 
-                <div>
+                <div class="form-field">
                     <label for="3email" >Email:</label>
                     <input  type="text" id="3email" placeholder="YourEmail@Address.co.uk" name="" >
                 </div>
 
-                <div>
+                <div class="form-field">
                     <label for="4message" >Your Message:</label>
                     <textarea id="4message" ></textarea>
                 </div>

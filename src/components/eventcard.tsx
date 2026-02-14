@@ -24,6 +24,7 @@ export default function EventCard({
   isFeatured,
   eventStatus,
   footwear,
+  minAge,
 }: EventCardProps) {
 
   const imageSrc = typeof eventPoster === 'object' && eventPoster !== null 
@@ -47,6 +48,9 @@ const dateRange = formatEventDate(startDate, endDate);
         ) : (
           <div className="placeholder-image">🛼</div>
         )}
+
+          
+          {minAge && <span className="age-tag">{minAge}+</span>}
           <span className="event-type-label">{eventType}</span>
         
       </div> 
@@ -54,7 +58,9 @@ const dateRange = formatEventDate(startDate, endDate);
       <div className="card-body">
 
         <header className="card-header">
-          <h3 className="event-title">{eventName}</h3>
+          <h3 className="event-title">{eventName}
+          </h3>
+          
         </header>
 
         <div className="card-meta">
@@ -72,7 +78,7 @@ const dateRange = formatEventDate(startDate, endDate);
             
           {skateDiscipline && ( <p className="meta-item discipline">{skateDiscipline}</p>)}
           {skillLevel && ( <p className="meta-item level">{skillLevel}</p>)}
-          {footwear === 'shoes' && ( <p className="meta-item footwear">{footwear}</p>)}
+           {/* <p className="meta-item level">{skillLevel}</p> */}
           
           </div>
           {eventStatus && (

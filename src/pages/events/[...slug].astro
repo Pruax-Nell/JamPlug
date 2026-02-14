@@ -38,16 +38,22 @@ const lineup = [
 const eventDateString = formatEventDate(data.startDate, data.endDate);
 const eventStartTime = formatTime(data.startTime);
 const eventEndTime = data.endTime ? formatTime(data.endTime) : null;
+const eventLocation = formatLocation(post.data.location);
+const eventLocString = 
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
 const ogImage = post.data.eventPoster ? post.data.eventPoster.src : '/default-og-image.jpg';
 const { googleUrl, icsDataUri } = getCalendarUrls(data);
-const locationString = formatLocation(post.data.location, post.data.townCity);
+// const locationString = formatLocation(post.data.location.discriminant, post.data.townCity);
+const locationString = [post.data.townCity, eventLocation.regionLabel]
+  .filter(Boolean)
+  .join(', ');
+
 ---
 
 <BaseLayout 
-  title={`${post.data.eventName} | Your Jam Plug UK`}
-  description={post.data.description}
+  title={post.data.eventName}
+  description={`Join us in ${post.data.townCity} for ${post.data.eventName}!`}
   image={ogImage} 
   image={post.data.eventPoster?.src} 
 >
@@ -65,7 +71,6 @@ const locationString = formatLocation(post.data.location, post.data.townCity);
       height={510} 
       class="cover-image"
       />
-      // TODO create alt event poster
     ) : (
       <div class="placeholder-poster ">🛼</div>
     )}
@@ -83,7 +88,7 @@ const locationString = formatLocation(post.data.location, post.data.townCity);
       {data.minAge && (
       <div class="age-tag">
         {data.minAge && (
-          <span >{data.minAge}</span>
+          <span >{data.minAge}+</span>
         )}
         {data.maxAge && (
           <span>{data.maxAge}</span>
@@ -99,12 +104,11 @@ const locationString = formatLocation(post.data.location, post.data.townCity);
 
       <p class="description-snippet">{data.description}</p>
 
-      <!-- <p> 📍{data.townCity}, {data.location.discriminant.toLocaleUpperCase()}</p> -->
-       <p>{locationString}</p>
+       <p>📍 {locationString}</p>
 
       <div class="rink-feat">
         {data.rink && (<span> {data.rink}</span>)}
-        ||
+        
         {data.venueAddress && (<span class="wrap-it"> {data.venueAddress}</span>)}
       </div>
 
@@ -112,7 +116,7 @@ const locationString = formatLocation(post.data.location, post.data.townCity);
         <span class="event-type-label">{data.eventType}</span>
         <span class="discipline">{data.skateDiscipline}</span>
         {data.skillLevel && (<span class="level"> {data.skillLevel} </span>) }
-        {data.offSkates===true && (<span class="boots"> Non-Skating </span>) }
+        {data.footwear && (<span class={`${data.footwear}-required`}> {data.footwear} </span>) }
       </div>
 
     </header>
@@ -126,7 +130,7 @@ const locationString = formatLocation(post.data.location, post.data.townCity);
     <div class="ticket-block">
     {data.organisers && ( 
       <p>Official page for
-      <Button  variant="outline" size="md" href={data.eventLink}> {data.eventName} </Button>
+      <Button  variant="outline" size="sm" href={data.eventLink}> {data.eventName} </Button>
       </p>)}
     
     {data.ticketLink && (
@@ -186,6 +190,17 @@ const locationString = formatLocation(post.data.location, post.data.townCity);
     </div>
     </div>
   </section>
+
+  <!-- future map section -->
+  <!-- <section>
+    
+{mapCoords && (
+  <div id="map" 
+    data-lat={mapCoords.latitudeCoord} 
+    data-lng={mapCoords.longitudecoord}
+   ></div>
+ )}
+  </section> -->
 
   {galleryImages.length > 0 && (
   <section class="event-gallery-section">
@@ -430,17 +445,30 @@ const locationString = formatLocation(post.data.location, post.data.townCity);
   letter-spacing: 0.035em;
 }
 
-.boots {
-  background-color: var(--mid-teal);
-  color: var(--main-light);
+.skates-required{
+  border: 3px solid var(--main-purple);
+  color: var(--text-black);
   padding: .3rem .6rem;
-  border-radius: 3px 8px 8px 8px;
-  
-  font-size: 0.875rem;
-  font-weight: 500;
+  border-radius: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.035em;
+  font-size: 0.775rem;
+  letter-spacing: 0.055em;
+  border-radius: 3px 8px 8px 8px;
+  font-weight: 800;
 }
+
+.shoes-required{
+  border: 3px solid var(--main-teal);
+  color: var(--text-white);
+  padding: .3rem .6rem;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-size: 0.775rem;
+  letter-spacing: 0.035em;
+  border-radius: 3px 8px 8px 8px;
+  font-weight: 800;
+}
+
 
 /* || ----------------------------------------- CONTENT SECTION */
 

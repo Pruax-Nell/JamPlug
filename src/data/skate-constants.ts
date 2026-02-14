@@ -59,10 +59,21 @@ export const BLOG_CATEGORY = [
     // all others / uncategorised
 ] as const;
 
+// ----------------------  WHEELS ALLOWED
+export const WHEEL_CHOICE = [ 
+    {value:'quad-skates', label: 'Quad Skates'},
+    {value:'inline-skates', label: 'Inline Skates'},
+    {value:'free-skates', label: 'Free Skates'},
+    {value:'boards', label: 'Boards'},
+    {value:'scooter', label: 'Scooter'},
+    {value:'bike', label: 'Bike'},
+] as const;
 // ----------------------  EVENT logic
 export const FOOTWEAR_CHOICE = [ 
     {value:'skates', label: 'Skates'},
     {value:'Shoes', label: 'Shoes'},
+    {value:'sync', label: 'Sync'},
+    {value:'sequence', label: 'sequence'},
 ] as const;
 
 export const SKATE_DISCIPLINES = [

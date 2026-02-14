@@ -1,26 +1,45 @@
 ---
 import Image from "astro/components/Image.astro";
-import { formatEventDate } from '../function/dateHelper';
+
+// interface Props {
+//   url: string;
+//   poster: any; 
+//   title: string;
+//   city: string;
+//   country: string;
+//   eventType: string;
+//   description: any;
+//   offskates?: string;
+
+//   timeframe: {
+//     startDate: Date | string;
+//     endDate?: Date | string | null;
+//   };
+// }
 
 interface Props {
   url: string;
-  poster: any; 
+  poster?: any;
   title: string;
-  city: string;
-  country: string;
+  locationLabel: string;
+  dateLabel: string;
   eventType: string;
-  description: any;
-  offskates?: string;
+  description?: string;
+  footwear?: string;
 
-  timeframe: {
-    startDate: Date | string;
-    endDate?: Date | string | null;
-  };
 }
  
-const { timeframe, title, url, poster, city, country, eventType, description } = Astro.props;
+const { 
+  url, 
+  poster, 
+  title, 
+  locationLabel, 
+  dateLabel, 
+  eventType, 
+  description 
+} = Astro.props;
+// const { timeframe, title, url, poster, city, country, eventType, description } = Astro.props;
 
-const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
 ---
 
 <div class=" feature-case">
@@ -39,8 +58,8 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
             <h5 class="ft-title">
                 <a href={url} class="main-link">{title}</a>
             </h5>
-            <span class="city-country">📍{city}, {country}</span>
-            <span class="event-date">{eventDateString}</span>
+            <span class="city-country">📍{locationLabel}</span>
+            <span class="event-date">{dateLabel}</span>
             <span class="event-type">{eventType}</span>
             <p>{description}</p>
             
@@ -50,8 +69,8 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
             <h5 class="ft-title">
                 <a href={url} class="main-link">{title}</a>
             </h5>
-            <span class="city-country">📍{city}, {country}</span>
-            <span class="event-date">{eventDateString}</span>
+            <span class="city-country">📍{locationLabel}</span>
+            <span class="event-date">{dateLabel}</span>
             <span class="event-type">{eventType}</span>
             <p>{description}</p>
             
@@ -160,6 +179,13 @@ const eventDateString = formatEventDate(timeframe.startDate, timeframe.endDate);
 
 .ft-title {
     text-transform: uppercase;
+}
+
+.main-link {
+    color: var(--text-white);
+    font-size: var(--fs-heading-xl);
+    text-wrap: balance;
+
 }
 
 .main-link::after {

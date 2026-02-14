@@ -8,7 +8,9 @@ import "../styles/submit.css";
 
 ---
 
-<BaseLayout> 
+<BaseLayout
+title="Submit Your Skate Business to Our Directory"> 
+
 <nav class="navigation-controls">
     <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
 </nav>
@@ -23,7 +25,10 @@ import "../styles/submit.css";
     <!-- ||------------------------------------- FORM SECTION  -->
     <section class="form-fence">
         <div class="form-wrap">
-            <FormBusiness/>
+            <!-- <FormBusiness/> -->
+
+            <iframe data-tally-src="https://tally.so/embed/682Prk?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&formEventsForwarding=1" loading="lazy" width="100%" height="100" frameborder="0" marginheight="0" marginwidth="0" title="Business Submission Form"></iframe>
+
         </div>
     </section>
 
@@ -39,3 +44,7 @@ import "../styles/submit.css";
     </section>
         
 </BaseLayout>
+
+<script is:inline>
+    var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+</script>

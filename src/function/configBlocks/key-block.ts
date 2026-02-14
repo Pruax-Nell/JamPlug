@@ -6,6 +6,23 @@ import {
 
 import { slugify } from '../stringHelper';
 
+export const mapCoords = fields.object(
+  {
+    latitudeCoord: fields.number({ 
+      label: 'Latitude', 
+      validation: { min: -90, max: 90 } 
+    }),
+    longitudecoord: fields.number({ 
+      label: 'Longitude', 
+      validation: { min: -180, max: 180 } 
+    }),
+  },
+  {
+    label: 'Map Coordinates',
+    description: 'Right-click on Google Maps to get these values',
+  }
+);
+
 export const locationBlock = fields.conditional(
   fields.select({
     label: 'Continent',

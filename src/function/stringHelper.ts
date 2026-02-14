@@ -23,3 +23,26 @@ export function formatLabel(str: string) {
     .replace(/\b\w/g, l => l.toUpperCase()); 
 }
 
+// for maps 
+export function formatLocationString(
+  coords: { latitudeCoord: number; longitudecoord: number } | null | undefined,
+  precision: number = 2
+): string {
+  // 1. Safety Check: If coordinates are missing, return a fallback
+  if (!coords || coords.latitudeCoord === undefined || coords.longitudecoord === undefined) {
+    return "Location pending";
+  }
+
+  // 2. Formatting: Use toFixed to control decimal places
+  const lat = coords.latitudeCoord.toFixed(precision);
+  const lng = coords.longitudecoord.toFixed(precision);
+
+  return `${lat}, ${lng}`;
+}
+
+// {mapCoords && (
+//   <div id="map" 
+//     data-lat={mapCoords.latitudeCoord} 
+//     data-lng={mapCoords.longitudecoord}
+//   ></div>
+// )}

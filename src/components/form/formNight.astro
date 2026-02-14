@@ -22,8 +22,16 @@ method="POST"
 enctype="multipart/form-data"
 >
 <input type="hidden" name="form_category" value="Skate Night" />
-<input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
-
+<div class="stealth-field" aria-hidden="true">
+    <label for="organization">Organization</label>
+    <input 
+        type="text" 
+        id="organization" 
+        name="organization" 
+        tabindex="-1" 
+        autocomplete="off" 
+    />
+</div>
 
 <section class="form-section" id={`${form}-base-section`} >
 

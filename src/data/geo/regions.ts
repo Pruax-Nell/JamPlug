@@ -51,12 +51,14 @@ export const RAW_US_STATES = [
     "Wyoming"
 ] as const;
 
+
 export const RAW_UK_REGIONS = [
     "England",
     "Northern Ireland",
     "Scotland",
     "Wales",
 ] as const;
+
 
 export const RAW_CANADA_PROVINCE = [
     "Alberta",
@@ -70,6 +72,7 @@ export const RAW_CANADA_PROVINCE = [
     "Quebec",
     "Saskatchewan",
 ] as const;
+
 
 export const RAW_AUS_REGIONS = [
     "New South Wales",

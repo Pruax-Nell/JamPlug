@@ -2,32 +2,37 @@
 import '../styles/global.css'
 import '../styles/components.css'
 
-import { getCollection } from "astro:content";
+const { 
+    url, 
+    eventName, 
+    subheading,
+    description, 
+    location, 
+    dates, 
+    age, 
+    eventType, 
+    category,
+    discipline, 
+} = Astro.props;
 
-const bigEvents = await getCollection('events', ({ data }) => {
-    return data.status === 'published',
-     data.eventType === 'Festival';
-});
 
-const now = new Date();
-const thirtyDaysAgo = new Date();
-thirtyDaysAgo.setDate(now.getDate() - 30);
-
-const { eventName, url, description, area, country,  category, age } = Astro.props;
 ---
 
-<a href={url} >
+<span id=`${eventName}-describe` class="srOnly">{description}</span>
+
+<a href={url} aria-label=`${eventName}, happening ${dates}` aria-labelledby=`${eventName}-describe`>
+<div>
+    <div class="title-line">
+        <p>{eventName}</p>
+        <p>{subheading}</p>
+    </div>
     <div>
+        { age && <span class="age-tag">{age}</span>}
         <div>
-            <p>{eventName}</p>
-        </div>
-        <div>
-            <span>{description}</span>
-            { age && <span class="age-tag">{age}</span>}
-        </div>
-        <div>
-            <span>{area}, {country}</span>
+            <span>{dates}</span>
+            <span>{location}</span>
             <span>{category}</span>
         </div>
     </div>
+</div>
 </a>
