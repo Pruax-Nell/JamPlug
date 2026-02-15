@@ -1,18 +1,18 @@
 ---
-import '../styles/event.css'
-import '../styles/home.css'
+import '../../styles/event.css'
+import '../../styles/home.css'
 
-import BaseLayout from "../layouts/baseLayout.astro";
-import BigList from "../components/big-list.astro";
-import CardHolder from "../components/card-holder.astro";
-import {CURRENT_YEAR, getYearRange } from "../data/site-config";
+import BaseLayout from "../../layouts/baseLayout.astro";
+import BigList from "../../components/big-list.astro";
+import CardHolder from "../../components/card-holder.astro";
+import {CURRENT_YEAR, getYearRange } from "../../data/site-config";
 
 const { prevYear, currentYear, nextYear } = getYearRange();
 
 
-import { formatEventDate, formatDate, formatFestivalDate } from '../function/dateHelper';
-import { formatLocation } from '../data/globe-constants';
-import { formatLabel, formatLocationString } from '../function/stringHelper';
+import { formatEventDate, formatDate, formatFestivalDate } from '../../function/dateHelper';
+import { formatLocation } from '../../data/globe-constants';
+import { formatLabel, formatLocationString } from '../../function/stringHelper';
 
 import { getCollection } from "astro:content";
 
@@ -21,7 +21,7 @@ const targetYear = 2026;
 const bigEvents = await getCollection('events', ({ data }) => {
     return data.status === 'published' && 
            data.eventType === 'festival' &&
-           data.startDate.getFullYear() === currentYear; 
+           data.startDate.getFullYear() === prevYear; 
 });
 
 
@@ -86,21 +86,19 @@ title="Big Jam List"
 description="Find roller Skate festivals from around the world">
 <section class="frame-fence welcome">
     <hgroup>
-        <h1>Big Jam List</h1>
-        <p>Bigger that your local Skate night!</p>
+        <h1>Past Jam List</h1>
+        <p>You're looking at skate festivals from </p>
+        <span class="stand-out">Last Year!</span>
+        <p>Use the button below to view this year's list</p>
     </hgroup>
-    
-    <div class="jam-req">
-        <p><span class="bold-point ">Q:</span> What is a Skate Festival?</p>
-        <p><span class="bold-point ">A:</span> A Multi-night, schedule-packed, skate-escape! Worth waiting all year for~</p>
-        <p class="note">How we catagorise events: <a href="/ourProcess/#YJP=FAQ"> Check our F.A.Q here</a></p>
-    </div>
+
+</section>
 </section>
 <section class="frame-fence">
     <div class="jam-direct"> 
-        <span><a class="jam-year-button-down jam-year-button" href="/festivalPages/pastFestivals"> {prevYear} </a></span>
-        <h2 class="year-title">{currentYear}</h2>
-        <span><a class="jam-year-button-up jam-year-button" href="/festivalPages/futureFestivals"> {nextYear} </a></span>
+        <!-- <span><a class="jam-year-button-down jam-year-button"> {prevYear} </a></span> -->
+        <h2 class="year-title">{prevYear}</h2>
+        <span><a class="jam-year-button-up jam-year-button" href="/festivals"> {currentYear} </a></span>
     </div>
     <div id="jam-list">
         {monthOrder.map((month) => {
@@ -184,25 +182,32 @@ description="Find roller Skate festivals from around the world">
     .welcome {
         justify-items: center;
         min-height: 10rem;
-        background-color: var(--shadow-purple);
+        /* background-color: var(--shadow-orange); */
         border-radius: 0 0 22px 22px;
         padding: .5rem;
         gap: 2rem;
     }
 
+    .welcome hgroup{
+        text-align: center;
+    }
+    
     @media (max-width: 620px){
         .welcome {
             padding-top: 3rem;
         }
     }
 
-    .bold-point{
-        background-color: var(--second-teal);
-        border-radius: 8px;
-        padding: .1rem .3rem;
+    .stand-out{
         font-size: var(--fs-p1);
+        color: var(--text-black);
+        color: var(--main-brown);
         font-weight: 800;
+        padding: .3rem .5rem;
+        border-radius: 5px;
+        line-height: 2.5;
     }
+
 
     
     .jam-req {
@@ -232,8 +237,8 @@ description="Find roller Skate festivals from around the world">
     /* Festival block */
 
     #jam-list {
-        background-color: var(--main-brown);
         background-color: var(--shadow-orange-2);
+        background-color: var(--shadow-teal-3);
         border-radius: 28px;
         padding: 3rem .8rem;
     }
@@ -247,14 +252,15 @@ description="Find roller Skate festivals from around the world">
     .jam-year-button{
         letter-spacing: .3ch;
         padding: .6rem 1rem;
-        background-color: var(--ow-teal);
+        background-color: var(--ow-orange);
 
         transition: border 3s ease-in-out;
     }
 
     .jam-year-button:hover{
         /* background-color: var(--mid-teal); */
-        border: 3px solid var(--ob-teal) ;
+        border: 3px solid var(--grey) ;
+        /* cursor: default; */
         
     }
     .jam-year-button-up {

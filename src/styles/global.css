@@ -120,6 +120,7 @@ html {
     --clear-brown: #efe1e1;
     
     --main-bg-light: #fff9ed;
+    --main-bg-second: #d4d0c7;
     --main-light: #fff9ed;
 
     --text-white: #ebe9e5;
@@ -143,6 +144,7 @@ html {
     
     --black: #302f2c;
     --grey: #4a4844;
+    --light-grey: #93969d;
     --bg-dark: #bbbab9;
     
     --shadow-grey: #4a48446a;
@@ -158,6 +160,7 @@ html {
 .dark body, .dark #site-header{
     background-color: var(--dark-background);
     background-color: var(--bg-dark);
+    background-color: var(--main-bg-second);
 
     
 }
@@ -186,8 +189,9 @@ body {
     overflow-x: hidden;
     
 }
+
 body[data-theme= 'dark'] {
-    background-color: var(--main-bg-dark);
+    background-color: var(--main-bg-second);
     font: var(--main-light);
     margin: 0;
     

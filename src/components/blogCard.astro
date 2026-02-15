@@ -21,8 +21,6 @@ const {
 } = Astro.props
   
 const dateDisplay = formatEventDate(published);
-// const postUrl = `/blog/${id}/`;
-// const cleanSlug = id.replace('/index', '');
 const cleanSlug = id.includes('/') ? id.split('/')[0] : id;
 const postUrl = `/blog/post/${cleanSlug}/`;
 
@@ -35,7 +33,7 @@ const postUrl = `/blog/post/${cleanSlug}/`;
       <Image src={coverImage} alt={title} height={300} width={300} class="cover-image" />
     ) : (
       <div class='image-replacement'> 
-        <span class="blog-label ">SKATE</span>
+        {/* <span class="blog-label ">SKATE</span> */}
         <span class="blog-label date">{dateDisplay}</span>
       </div>
     )}

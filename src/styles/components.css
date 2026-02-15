@@ -153,19 +153,20 @@ padding-block: .5rem;
   flex-direction: column;
   align-items: center;
   
-  padding: .2rem;
+  padding: .1rem;
   border-radius: 10px;
   border: 1px dotted var(--grey);
   background-color: var(--shadow-light-2);
+  opacity: .6;
   
-  transition: bottom 0.35s cubic-bezier(0.485, -0.050, 0.285, 1.505);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #tool-kit:hover {
   background-color: var(--shadow-grey);
   box-shadow: var(--shadow-light-2);
+  opacity: 1;
   
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
     
 }
 
@@ -192,9 +193,6 @@ padding-block: .5rem;
   text-align: center;
 }
 
-/* ------------------TO PAGE TOP------------------ */
-
-
 .upArrow:hover, #themeToggle:hover{
   scale: 1.2;
 }
@@ -204,6 +202,7 @@ padding-block: .5rem;
   background: none;
   border: 0;
   width: 100%;
+  opacity: 1;
 }
 
 

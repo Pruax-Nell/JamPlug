@@ -124,7 +124,7 @@ title="Home Page">
 		</div>
 		
 		<div class="nav-button center-flex">
-			<Button href="/about" variant="secondary" theme="brownDark" size="lg" class=""> Read about Us </Button>
+			<Button href="/about" variant="primary" theme="brownDark" size="lg" class=""> Read about Us </Button>
 		</div>
 	</div>
 		
@@ -165,7 +165,7 @@ title="Home Page">
 				<p class="direct-sub">Find rinks, skate shops and community groups who hold lessons or events</p>
 			</div>
 			<div class="nav-button center-flex">
-				<Button href="/directory" variant="secondary" theme="brownDark" size="lg"> Browse the UK Directory </Button>
+				<Button href="/directory" variant="primary" theme="brownDark" size="lg"> Browse the UK Directory </Button>
 			</div>
 		</div>
 	
@@ -174,7 +174,7 @@ title="Home Page">
 	<section id="upcoming-events" class="frame-fence side-by-side" >
 		<div class="side-a">
 			<h3>Upcoming Events</h3>
-			<div><Button href="/events" variant="secondary" theme="pinkDark" size="lg"> See All Events </Button></div>
+			<div><Button href="/events" variant="secondary" theme="brown" size="lg"> See All Events </Button></div>
 			<p>Find your next skate event.</p>
 		</div>
 		<div class=" event-previews side-b">
@@ -214,7 +214,7 @@ title="Home Page">
 		<div class="side-a">
 			<h3>Skate News</h3>
 			<span>Our latest blog posts on all things SKATE!</span>
-			<div><Button href="/blog" variant="secondary" theme="pinkDark" size="lg"> See All Blog Posts </Button></div>
+			<div><Button href="/blog" variant="secondary" theme="brown" size="lg"> See All Blog Posts </Button></div>
 		</div>
 		<div class="side-b">
 			{recentBlogs.length > 0 ? (
@@ -222,7 +222,7 @@ title="Home Page">
 			{recentBlogs.map((post) =>
 				( <CardHolder variant="blog" 
 				title={post.title} 
-				url={`/blog/${post.id}/`} 
+				url={`/blog/post/${post.id}/`} 
 				subtitle={post.subtitle}  
 				description={post.description} 
 				category={post.category} discipline={post.discipline}
