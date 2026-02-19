@@ -1,7 +1,7 @@
 ---
 import React from 'react';
 import type { AstroImage, SerializedBlog, BlogCardData } from '../function/types';
-import Image from 'astro/components/Image.astro';
+import { Image } from "astro:assets";
 import { formatEventDate } from '../function/dateHelper';
 
 type BlogCardProps = SerializedBlog['data'] & {

@@ -19,10 +19,19 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   output: "static",
+  build: {
+    format: 'directory' 
+  },
   prefetch: true,
   site: 'https://yourjamplug.uk',
+  base: '/dev',
   trailingSlash: 'ignore',
-  integrations: [mdx(), react(), markdoc(), keystatic(), sitemap()],
+  integrations: [
+    mdx(), 
+    react(), 
+    markdoc(), 
+    // keystatic(), 
+    sitemap()],
 
   vite: {
     plugins: [tailwindcss()],
@@ -34,7 +43,4 @@ export default defineConfig({
     }
   },
 
-  adapter: node({
-    mode: 'standalone'
-  })
 });
