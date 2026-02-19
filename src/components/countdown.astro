@@ -1,0 +1,71 @@
+---
+interface Props {
+  targetDate: Date;
+  message?: string;
+}
+
+const { targetDate, message = "Time remaining:" } = Astro.props;
+---
+
+<div class="countdown-container" data-deadline={targetDate.getTime()}>
+  <p>{message}</p>
+  <div class="timer">
+    <span class="days">00</span>d : 
+    <span class="hours">00</span>h : 
+    <span class="minutes">00</span>m : 
+    <span class="seconds">00</span>s
+  </div>
+</div>
+
+<script>
+  // This code runs in the browser
+  const countdowns = document.querySelectorAll('.countdown-container');
+
+  countdowns.forEach((container) => {
+    const deadline = parseInt(container.getAttribute('data-deadline') || '0');
+    const daysEl = container.querySelector('.days');
+    const hoursEl = container.querySelector('.hours');
+    const minutesEl = container.querySelector('.minutes');
+    const secondsEl = container.querySelector('.seconds');
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = deadline - now;
+
+      if (distance < 0) {
+        container.innerHTML = "<p>The event has started! 🛼</p>";
+        return;
+      }
+
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (daysEl) daysEl.textContent = d.toString().padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = h.toString().padStart(2, '0');
+      if (minutesEl) minutesEl.textContent = m.toString().padStart(2, '0');
+      if (secondsEl) secondsEl.textContent = s.toString().padStart(2, '0');
+    }
+
+    // Update every second
+    setInterval(updateTimer, 1000);
+    updateTimer(); // Run once immediately to avoid 00:00 flicker
+  });
+</script>
+
+<style>
+  .countdown-container {
+    background: #1a1a1a;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .timer {
+    font-family: monospace;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent, #ffcc00);
+  }
+</style>

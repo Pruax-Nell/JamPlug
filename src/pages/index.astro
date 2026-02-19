@@ -9,6 +9,7 @@ import CardHolder from "../components/card-holder.astro";
 import "../styles/home.css";
 import "../styles/components.css";
 
+
 import { Image } from "astro:assets";
 import { getCollection, getEntries } from "astro:content";
 import { formatLabel } from "../function/stringHelper";
@@ -26,6 +27,9 @@ import Img7 from "../content/images/use/image7.jpg"
 import Img8 from "../content/images/use/image8.jpg"
 import Img9 from "../content/images/use/image9.jpg"
 import Img10 from "../content/images/use/image10.jpg"
+
+import { CURRENT_YEAR, SHOW_JAN_BANNER, SHOW_MAY_BANNER, SHOW_NOV_BANNER, SHOW_SEPT_BANNER } from "../data/site-config";
+import NoticeBanner from "../components/noticeBanner.astro";
 
 const identity = {
 	branding: "your jam plug uk",
@@ -110,6 +114,21 @@ const recentBlogs = (publishedBlogs)
 	
 <BaseLayout
 title="Home Page">
+
+<!-- {SHOW_JAN_BANNER && (
+  <NoticeBanner 
+    message={`Happy New Year! Check out the fresh ${CURRENT_YEAR} Jam List.`} 
+  />
+)} -->
+
+<!-- {SHOW_NOV_BANNER && (
+  <NoticeBanner 
+	id="jan-jam-2026" 
+	targetDate={new Date('2026-01-01')} 
+	message="The Big Jam begins..." 
+	/>
+)} -->
+
 	<!------------------------------------------ HERO ---------------->
 	<section  id="hero-section" class="frame-fence">
 		<Hero />

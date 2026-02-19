@@ -1,0 +1,124 @@
+---
+interface Props {
+  id: string; 
+  type?: 'info' | 'warning' | 'celebration' | 'countdown';
+  targetDate: Date;
+  message: string;
+}
+
+const { id, targetDate, message, type = "info" } = Astro.props;
+---
+
+<div class="banner-wrapper hidden" data-banner-id={id} data-deadline={targetDate.getTime()}>
+  <div class="notice-banner">
+    <div class="banner-content">
+      <p class="message-text">{message}</p>
+      <div class="timer-display">
+        <span class="countdown-text"></span>
+      </div>
+      <button class="close-btn" aria-label="Close banner">×</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+const setWithExpiry = (key: string, value: string, ttl: number) => {
+    const item = { value, expiry: new Date().getTime() + ttl };
+    localStorage.setItem(key, JSON.stringify(item));
+  };
+
+  const getWithExpiry = (key: string) => {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) return null;
+    const item = JSON.parse(itemStr);
+    if (new Date().getTime() > item.expiry) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return item.value;
+  };
+
+  const banners = document.querySelectorAll<HTMLElement>('.banner-wrapper');
+
+  banners.forEach((banner) => {
+    const id = banner.getAttribute('data-banner-id')!;
+    const deadline = parseInt(banner.getAttribute('data-deadline') || '0');
+    
+    const timerText = banner.querySelector('.countdown-text') as HTMLElement;
+    const closeBtn = banner.querySelector('.close-btn') as HTMLButtonElement;
+
+    // Check expiration (if it returns null, the "closed" status has expired)
+    if (getWithExpiry(`banner-closed-${id}`)) {
+      banner.remove();
+      return;
+    }
+    banner.classList.remove('hidden');
+
+    closeBtn.onclick = () => {
+      banner.style.opacity = '0';
+      setTimeout(() => {
+        banner.remove();
+        // Set to expire in 24 hours
+        setWithExpiry(`banner-closed-${id}`, 'true', 86400000);
+      }, 300);
+    };
+
+    function update() {
+      const diff = deadline - new Date().getTime();
+
+      if (diff <= 0) {
+        timerText.innerHTML = '<span class="pulse-today">TODAY</span>';
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      timerText.textContent = `${d}d ${h}h ${m}m ${s}s`;
+    }
+
+    setInterval(update, 1000);
+    update();
+  });
+</script>
+
+<style>
+  .hidden { display: none; }
+  .fade-out { opacity: 0; transition: opacity 0.3s ease; }
+  
+  .notice-banner {
+    background: #ffcc00; /* Skate-gold */
+    padding: 0.75rem 1rem;
+    position: relative;
+    border-radius: 4px;
+  }
+
+  .pulse-today {
+    font-weight: 800;
+    color: #000;
+    display: inline-block;
+    animation: light-pulse 1.5s infinite ease-in-out;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  }
+
+  @keyframes light-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 15px #fff; }
+    100% { transform: scale(1); opacity: 0.8; }
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+</style>
