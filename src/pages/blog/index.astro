@@ -78,6 +78,8 @@ const displayCat = category === 'all' ? 'All Categories' : capitalize(category);
 
 const pageTitle = `${displayDisc} - ${displayCat} ${page.currentPage > 1 ? `(Page ${page.currentPage})` : ''} | YJP Blog`;
 const metaDescription = `Browse our collection of ${displayDisc} articles in the ${displayCat} category. Stay updated with the latest in the skating world!`;
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout page_title={pageTitle} description={metaDescription}>

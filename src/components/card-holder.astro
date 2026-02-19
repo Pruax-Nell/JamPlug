@@ -46,6 +46,8 @@ const midDesc = description?.split(' ').slice(0, 20).join(' ') + '...';
 const eventDateString = (variant === 'event' && timeframe) 
   ? formatEventDate(timeframe.startDate, timeframe.endDate) 
   : null;
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <div class={`sample-case variant-${variant}`}>

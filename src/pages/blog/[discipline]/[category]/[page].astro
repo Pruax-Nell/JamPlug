@@ -110,6 +110,8 @@ const metaDescription = `Browse our collection of ${displayDisc} articles in the
 let socialImage = "/content/blog-general.jpg";
 if (discipline === 'dance') socialImage = "/images/dance-skating-hero.jpg";
 if (discipline === 'street') socialImage = "/images/street-skating-hero.jpg";
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout page_title={pageTitle} description={metaDescription} image={socialImage}>

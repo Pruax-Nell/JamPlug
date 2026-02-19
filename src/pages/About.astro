@@ -8,7 +8,7 @@ import "../styles/global.css" ;
 import { Image } from "astro:assets";
 const YJP1 = "/src/assets/branding/long-logo-orange-lug-2000x550px.svg"
 
-const BASE_URL = import.meta.env.BASE_URL
+const base = import.meta.env.BASE_URL;
 //  color test in spare directory 
 --- 
 
@@ -36,7 +36,7 @@ description="Behind the scenes at YJP">
         </p>
         <p class="mission-statement">Hey, Skater~ Welcome to YJP.</p>
         
-        <p class="mission-statement">Originally launched in 2023, Your Jam Plug UK was built with the aim of providing smooth paths to connect the scattered, and sometimes isolated, roller skaters across the UK (... soon expanding to the rest of Europe) with the hopes of establishing a togetherness that protects and grows our sports.</p>
+        <p class="mission-statement">Originally launched in 2023, Your Jam Plug UK was built with the aim of providing smooth paths to connect the scattered, and sometimes isolated, roller skaters across the UK (... soon expanding to the rest of Europe, maybe the world?) with the hopes of establishing a togetherness that protects and grows our sports.</p>
 
         <p class="mission-statement">When things are curated for you, the experience is better. That's why we're becoming the central hub for skaters that answers all your questions, points you in the right direction, and gives you insight you didn't know you needed.</p>
 
@@ -49,18 +49,18 @@ description="Behind the scenes at YJP">
         
         <div class="port founder-image">
             <Image src="/src/assets/Skater.Shynell.JPG" alt="Me" height={320} width={260}  />
-            <span>taken by <a href="https://danielbridlephoto.com/" class="community-credit">Daniel Bridle</a></span>
+            <span>Captured by <a href="https://danielbridlephoto.com/" class="community-credit">Daniel Bridle</a></span>
         </div>
         <div class="about-me">
-            <p>If you give me a good floor, music and my skates, I'll be happy for quite a while. But if you throw in good people and positive energy, I'm set for the whole weekend.
+            <p>If you give me a good floor, music and my skates, I'll be happy for quite a while. But if you throw in good people and positive energy, I'm set for the whole week.
             </p>
 
-            <p>I'm a London skater and I've paid plenty of wood, gravel and concrete tax... there was even a time I fell into the bushes, but we move~ </p>
+            <p>I'm a London skater and I've paid plenty of wood, gravel and concrete tax- most iconic moment was stacking it on Tower Bridge... </p>
 
-            <p> No one asked me to build this, I just heard the peoples frustrations (along with my own) and thought of a solution. 
+            <p> No one asked me to build this, I just heard the peoples frustrations (along with my own) and thought of a potential solution. 
             </p>
             <p>-CONNECTIONS & COMMUNITY-</p>
-            <p>We're so close to having a GREAT skate scene, I just want to help us get there. </p>
+            <p>We're so close to having a GREAT skate scene, I just want to help us get there.</p>
             <blockquote class="quote-one">Spread the joy, spread the skill, watch it all thrive. <span>~ SHA.NE.RU ~</span></blockquote>
         </div>
         <div class="quote">
@@ -74,11 +74,11 @@ description="Behind the scenes at YJP">
         
         <p>When I say "we", I mean me and YOU! this site works off collaborations, connections and community.</p>
 
-        <p><a href="">You - the event organiser, business owner or skate professional - submit your details using <a href="">the forms</a> <span>(btw it's free)</span></a></p>
+        <p>You - the event organiser, business owner or skate professional - submit your details using <a href="/submit-an-event">the forms</a><span>(btw it's free)</span></p>
         <p>OR</p>
-        <p><a href="">You - the average skater - signs up to the newsletter</a></p>
+        <p>You - the average skater - signs up to the newsletter</p>
         <p>AND</p>
-        <p><a href="">Everyone shares the site, ensures all skaters know of this and give feedback, cause remember, this is for all of us.</a></p>
+        <p>Everyone shares the site, ensures all skaters know of this and give feedback, cause remember, this is for all of us.</p>
         
         <span class="separation">...</span>
 
@@ -199,7 +199,11 @@ description="Behind the scenes at YJP">
     }
 
     .about-mission {
+        display: flex;
+        flex-direction: column;
         padding: .2rem;
+        gap: 1rem;
+        align-items: flex-end;
     }
 
     .about-mission .mission-title {
@@ -209,8 +213,7 @@ description="Behind the scenes at YJP">
     }
     .about-mission .mission-statement {
         text-align: right;
-        justify-self: end;
-        width: 55ch;
+        width: 50ch;
         padding-right: 1rem;
     }
 

@@ -28,6 +28,7 @@ const galleryList = [
 ].filter((item): item is NonNullable<typeof item> => !!item);
 
 const { Content } = await render(post);
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>

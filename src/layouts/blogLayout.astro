@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 const { frontmatter } = Astro.props;
 const { title, published, coverImage, description, tags, gallery } = frontmatter;
 
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout >

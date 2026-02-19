@@ -80,6 +80,18 @@ footer {
 
 }
 
+
+.legal-info{
+    margin: 2rem 1rem;
+}
+
+.legal-link {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+}
+
 /* large screen layout - rows */
 @media (min-width: 752px) { 
 
@@ -89,6 +101,9 @@ footer {
         
     }
  
+    .legal-info{
+        grid-column: 1 / -1;
+    }
 
 }
 
@@ -121,6 +136,10 @@ footer {
     text-align: left;
     justify-items: left;
 }
+
+
+
+
 /* max-width: 100% and flex-basis: 300px */
 /* flex children: min-width: 0 */
 

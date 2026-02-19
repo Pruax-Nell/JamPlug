@@ -28,6 +28,7 @@ const displayDate = new Date(data.startDate).toLocaleDateString('en-GB', {
   weekday: 'short', day: 'numeric', month: 'long'
 });
 
+const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout page_title={data.eventName} >
   <div class="">

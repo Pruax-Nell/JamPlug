@@ -21,6 +21,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const displayTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const base = import.meta.env.BASE_URL;
 ---
 
 <!-- Global Metadata -->
@@ -28,7 +29,7 @@ const displayTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-<link rel="icon" type="image/svg+xml" href="/admin/new-favicon.svg" />
+<link rel="icon" type="image/svg+xml" href={`${base}/admin/new-favicon.svg`} />
 <link rel="canonical" href={canonicalURL} />
 
 <title>{displayTitle}</title>

@@ -24,6 +24,7 @@ const dateDisplay = formatEventDate(published);
 const cleanSlug = id.includes('/') ? id.split('/')[0] : id;
 const postUrl = `/blog/post/${cleanSlug}/`;
 
+const base = import.meta.env.BASE_URL;
 ---
 
 <article class={`blog-card ${blogCategory}`}>

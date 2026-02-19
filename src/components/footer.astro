@@ -3,7 +3,7 @@ import Socials from "../components/socials.astro" ;
 import "../styles/footer.css";
 import { Image } from "astro:assets";
 
-const BASE_URL = import.meta.env.BASE_URL
+const base = import.meta.env.BASE_URL;
 
 ---
 
@@ -35,6 +35,18 @@ const BASE_URL = import.meta.env.BASE_URL
         </div>
     </section>
     <section id="endFooter" class="grid simple-links">
+        <div class="legal-info">
+            <a href="" class="legal-link">
+                <p>© 2023 The Jam Plug</p>
+                <Image 
+                src={`${base}/images/trade-as-1.svg`} 
+                alt="Business ownership disclosure" 
+                width={400} height={60}
+                class="trade-as"
+                />
+            </a>
+        </div>
+
         <!-- <div>
             <span>Site Map</span>
             <ul id="footer-nav-list">

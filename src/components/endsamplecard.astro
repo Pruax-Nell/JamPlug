@@ -3,6 +3,7 @@ import "../styles/components.css" ;
 
 
 const { title, url, description } = Astro.props;
+const base = import.meta.env.BASE_URL;
 --- 
 
 <a href={url} class="sample-case end-card">

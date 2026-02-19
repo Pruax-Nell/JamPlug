@@ -110,6 +110,7 @@ const recentBlogs = (publishedBlogs)
 .sort((a, b) => b.published.valueOf() - a.published.valueOf(), )
 .slice(0, 8);
 
+const base = import.meta.env.BASE_URL;
 ---
 	
 <BaseLayout
