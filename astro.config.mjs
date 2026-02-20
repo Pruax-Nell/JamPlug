@@ -24,7 +24,7 @@ export default defineConfig({
   },
   prefetch: true,
   site: 'https://yourjamplug.uk',
-  base: '/',
+  base: '/dev',
   trailingSlash: 'ignore',
   integrations: [
     mdx(), 

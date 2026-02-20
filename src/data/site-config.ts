@@ -12,6 +12,9 @@ export const OFFICIAL_LINKS = {
   donate: 'https://buymeacoffee.com/yourjamplug',
   helloMail: 'mailto:hello@yourjamplug.uk',
   shaneruMail: 'mailto:shaneru@yourjamplug.uk',
+  emailHello: 'hello@yourjamplug.uk',
+  emailShaneru: 'shaneru@yourjamplug.uk',
+  emailSupport: 'support@yourjamplug.uk'
   // discord: '',
 };
 
