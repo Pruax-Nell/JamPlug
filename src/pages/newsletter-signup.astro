@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro"
+import Button from "../components/button.astro";
+ 
+import "../styles/global.css";
+import "../styles/submit.css";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+title="Newsletter Sign up"> 
+
+<nav class="navigation-controls">
+    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+</nav>
+
+    <section class="form-fence">
+        <hgroup class="submission-title">
+            <h1>Sign up to community News</h1>
+            <p>use the form below to get your details listed in the global roller skate directory</p>
+        </hgroup>
+    </section>
+        
+    <!-- ||------------------------------------- FORM SECTION  -->
+    <section class="form-fence">
+        <div class="form-wrap">
+
+            ...
+
+        </div>
+    </section>
+
+
+
+    <section class="form-fence direct-other">
+        <p>Other Options:</p>
+        <div class="direction-box">
+            <p class="direction-item"><a href="/submit-an-event">Submit an Event</a></p>
+            <p class="direction-item"><a href="/enquiry">General Enquiry</a></p>
+            <p class="direction-item"><a href="/submit-a-business">Submit a Business</a></p>
+        </div>
+    </section>
+        
+</BaseLayout>
+
+<script is:inline>
+    var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+</script>

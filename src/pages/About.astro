@@ -6,6 +6,9 @@ import "../styles/event.css" ;
 import "../styles/global.css" ;
 
 import { Image } from "astro:assets";
+
+import { OFFICIAL_LINKS } from "../data/site-config";
+
 const YJP1 = "/src/assets/branding/long-logo-orange-lug-2000x550px.svg"
 
 const base = import.meta.env.BASE_URL;
@@ -32,35 +35,47 @@ description="Behind the scenes at YJP">
     <span class="separation">...</span>
     <div class="about-mission block">
         <h2 class="heading-full-width mission-title">Run by skaters, for skaters.</h2>
-        <p class="mission-statement">If you're reading this, you probably -like me- find yourself looking at smooth floors and thinking: "Oooh this would be nice to skate on"...  
-        </p>
-        <p class="mission-statement">Hey, Skater~ Welcome to YJP.</p>
+        <p class="mission-statement">Welcome to YJP! Originally launched in 2023, 'Your Jam Plug UK' has several goals:</p>
         
-        <p class="mission-statement">Originally launched in 2023, Your Jam Plug UK was built with the aim of providing smooth paths to connect the scattered, and sometimes isolated, roller skaters across the UK (... soon expanding to the rest of Europe, maybe the world?) with the hopes of establishing a togetherness that protects and grows our sports.</p>
+        <p class="mission-statement">1. Connecting the scattered, and sometimes isolated, roller skaters across the UK (... maybe the world?)</p>
 
-        <p class="mission-statement">When things are curated for you, the experience is better. That's why we're becoming the central hub for skaters that answers all your questions, points you in the right direction, and gives you insight you didn't know you needed.</p>
+        <p class="mission-statement">By acting as a central point of curated information, even the newest or smallest skate space can reach the right audience, and skaters can easily find the what's happening local to them.</p>
 
-        <p class="promise-statement">P.s. The long term goal is what every skater dreams about... Stay tuned x </p>
+        <p class="mission-statement">2. The issue of "novelty". Many skate events focus on recreational public sessions where chaos ends up being king.</p>
+
+        <p class="mission-statement">We're for the passionate skaters.Aiming to showcase only passion-led skate events, groups and businesses.</p>
+
+        <p class="mission-statement">3. Growth. There is so much potential for our sport and all the disciplines under it, but the issue is often due to the lack of connection and the erratic flow of money. </p>
+
+        <p class="mission-statement">Every pound spent with a skater-led business is a direct reinvestment into the culture. To do that, we're building a directory of skate businesses and services, eventually this will create a cycle of money that returns, ensuring that wealth cycles back to support the people who actually build the scene.</p>
+
+        <p class="promise-statement">Everything we do is for the skaters x </p>
     </div>    
+
     <span class="separation">...</span>
     
     <div class="about-founder block">
         <h2 class="heading-full-width founder-title">The Founder</h2>
         
         <div class="port founder-image">
-            <Image src="/src/assets/Skater.Shynell.JPG" alt="Me" height={320} width={260}  />
+            <a href={OFFICIAL_LINKS.shaneru} target="_blank">
+                <Image src="/src/assets/Skater.Shynell.JPG" alt="Me" height={320} width={260}  />
+            </a>
             <span>Captured by <a href="https://danielbridlephoto.com/" class="community-credit">Daniel Bridle</a></span>
         </div>
         <div class="about-me">
-            <p>If you give me a good floor, music and my skates, I'll be happy for quite a while. But if you throw in good people and positive energy, I'm set for the whole week.
-            </p>
+            <p>Call me Shaneru!</p>
 
             <p>I'm a London skater and I've paid plenty of wood, gravel and concrete tax- most iconic moment was stacking it on Tower Bridge... </p>
 
-            <p> No one asked me to build this, I just heard the peoples frustrations (along with my own) and thought of a potential solution. 
-            </p>
-            <p>-CONNECTIONS & COMMUNITY-</p>
+            <p> No one asked me to build this, I just heard the peoples frustrations (along with my own) and thought of a potential solution. And honestly... I just want more places to skate.</p>
+
+            <p>My Credentials?... Passion.</p>
+
+            <p class="highlight-2">-CONNECTIONS & COMMUNITY-</p>
+
             <p>We're so close to having a GREAT skate scene, I just want to help us get there.</p>
+
             <blockquote class="quote-one">Spread the joy, spread the skill, watch it all thrive. <span>~ SHA.NE.RU ~</span></blockquote>
         </div>
         <div class="quote">
@@ -72,15 +87,24 @@ description="Behind the scenes at YJP">
     <div class="about-process">
         <h2 class="heading-full-width full-span block">How it works</h2>
         
-        <p>When I say "we", I mean me and YOU! this site works off collaborations, connections and community.</p>
+        <p>When I say "we", I mean YOU and I. This site lives off of collaborations, connections and community.</p>
 
-        <p>You - the event organiser, business owner or skate professional - submit your details using <a href="/submit-an-event">the forms</a><span>(btw it's free)</span></p>
-        <p>OR</p>
-        <p>You - the average skater - signs up to the newsletter</p>
-        <p>AND</p>
-        <p>Everyone shares the site, ensures all skaters know of this and give feedback, cause remember, this is for all of us.</p>
+        <p class="heading-small highlight-3">Here's how you can help:</p>
+
+        <p>The skater - signs up to<a href="/newsletter-signup" class="inline-link"> the newsletter</a>.</p>
+
+        <p>The Organiser - <a href="/submit-an-event" class="inline-link"> submit their events</a> to be listed on our calendar.</p>
+
+        <p>The Owner -<a href="/submit-a-business" class="inline-link"> submit their business</a> to be added to the directory.</p>
+
+        <p>Everyone -
+            <a href="#official-channels" class="inline-link">
+            Share the site and our socials,</a> ensure all skaters know and give feedback, cause remember, this is for all of us.
+        </p>
+
+        <p>For more details on how we work, <a href="/ourProcess" class="inline-link">head to the F.A.Q page.</a></p>
         
-        <span class="separation">...</span>
+        <!-- <span class="separation">...</span> -->
 
         <div class="direction-box">
             <p><a href="/submit-an-event">Submit an Event</a></p>
@@ -88,31 +112,28 @@ description="Behind the scenes at YJP">
             <p><a href="/enquiry">Join the Newsletter</a></p>
         </div>
         
+        <p>Other ways to support:</p>
+    
+        <p> At the moment I'm a one-woman-band BUT the aim is to grow!</p>
+    
+        <p>So far, everything is out of my own pocket, abilities and time, so if people want to contribute, let me know!</p>
+        
+        <p><a href="/enquiry" class="inline-link">Drop me a message.</a></p>
+        <p><a href="" class="inline-link">Donate directly</a> to the project.</p>
     </div>
     
-    
-    
-    <span class="separation">...</span>
-    <div class="about-support block">
-        <!-- <h3 class="heading-small">How you can support</h3> -->
-        <p>Engage and share.</p>
-
-        <p>As I said before, this site stays alive with the support of the community. At the moment I'm a one-woman-band BUT the aim is to grow!</p>
-
-        <p>So far, everything is out of my own pocket, abilities and time, so if skater's want to contribute, let me know!</p>
-        
-        <p>With enough interest and community collaboration, we should be able to move the sport forward.</p>
-    </div>    
     <div class="block about-channels">
-        <h4 class="heading-small">Our Official Channels</h4>
+        <h4 id="official-channels" class="heading-small">Our Official Channels</h4>
         <div class="channel-block">
-            <div class="channel-div insta"> <a href="https://www.instagram.com/yourjamplug.uk/" target="_blank"><span>Instagram</span> <p>yourjamplug.uk</p></a></div>
-            <div class="channel-div tiktok"> <a href="https://www.tiktok.com/@skaters.jam.plug" target="_blank"><span>TikTok</span> <p>Skaters.jam.plug</p></a></div>
-            <!-- <div class="channel-div discord"> <a href="" target="_blank"><span>Discord</span> <p>Roller Skater's Jam Plug</p></a></div> -->
+            <div class="channel-div insta"> <a href={OFFICIAL_LINKS.instagram} target="_blank"><span>Instagram</span> <p>yourjamplug.uk</p></a></div>
+            <div class="channel-div tiktok"> <a href={OFFICIAL_LINKS.tiktok} target="_blank"><span>TikTok</span> <p>Skaters.jam.plug</p></a></div>
+            <!-- <div class="channel-div discord"> <a href={OFFICIAL_LINKS.discord} target="_blank"><span>Discord</span> <p>Roller Skater's Jam Plug</p></a></div> -->
         </div>
         
 
     </div>
+    <span class="separation">...</span>
+
     <div class="about-process-graphic block">
         <div class="heading-full-width port process-graphic"></div>
     </div>
@@ -147,7 +168,21 @@ description="Behind the scenes at YJP">
         width: 100%;
         font-size: var(--fs-p2);
         justify-self: center;
-        margin-bottom: .5rem;
+        margin-block: .5rem;
+        font-weight: 800;
+    }
+
+    .inline-link{
+        /* color: var(--ob-brown); */
+        background-color: var(--shadow-pink);
+        background-color: var(--shadow-purple);
+        padding-inline: .1rem;
+        border-radius: 4px;
+    }
+    
+    .inline-link:hover{
+        background-color: var(--shadow-purple);
+        background-color: var(--shadow-pink);
     }
 
     .about-section {
@@ -235,14 +270,13 @@ description="Behind the scenes at YJP">
         border-radius: 8px;
         justify-self: center;
 
-        transition: all .4s ease-in-out;
+        transition: background-color .4s ease-in-out, color .3s ease-in-out, color .1s ease;
     }
 
     .direction-box p:hover {
-        scale: 1.1;
+        scale: 1.05;
         cursor: pointer;
         background-color: var(--ow-orange);
-        border: 3px solid var(--main-orange);
         color: var(--text-white);
     }
 
@@ -306,6 +340,11 @@ description="Behind the scenes at YJP">
         grid-row: 2 /4;
         grid-column: 2 / 5;
 
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
         text-wrap: balance;
 
     }
@@ -317,6 +356,9 @@ description="Behind the scenes at YJP">
     }
 
     .about-process {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
         text-align: center;
         justify-items: center;
         align-self: center;
@@ -373,11 +415,15 @@ description="Behind the scenes at YJP">
         padding: 1.5rem  .5rem ;
         text-align: center;
 
-        transition: all .4s ease-in-out;
+        transition: 
+        border .2s ease-in-out,
+        background-color .2s ease-in-out
+        ;
     }
 
     .channel-div:hover {
-        scale: 1.1;
+        scale: 1.05;
+        border: none;
         cursor: pointer;
         background-color: var(--ow-yellow);
     }

@@ -215,6 +215,12 @@ small {
 .highlight {
     color: var(--second-pink)
 }
+.highlight-2 {
+    color: var(--special-teal)
+}
+.highlight-3 {
+    color: var(--mid-purple)
+}
 
 .left-lean {
     width: inherit;

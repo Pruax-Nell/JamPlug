@@ -5,17 +5,15 @@ export const SITE_DESCRIPTION = 'For Roller Skaters who want to skate';
 export const HOMEPAGE_FEATURE_LIMIT = 8;
 export const EVENTS_PER_PAGE = 20;
 
-export const SUPPORT_LINKS = {
-  donate: 'https://ko-fi.com/your-skate-page',
-  patreon: 'https://patreon.com/your-skate-page',
+export const OFFICIAL_LINKS = {
+  shaneru: 'https://instagram.com/sha.ne.ru',
+  instagram: 'https://www.instagram.com/yourjamplug.uk/',
+  tiktok: 'https://www.tiktok.com/@skaters.jam.plug',
+  donate: 'https://buymeacoffee.com/yourjamplug',
+  helloMail: 'mailto:hello@yourjamplug.uk',
+  shaneruMail: 'mailto:shaneru@yourjamplug.uk',
+  // discord: '',
 };
-
-
-// export const COMPANY_EMAIL = ;
-// export const OFFICIAL_LINKS = [
-    
-
-// ];
 
 const now = new Date();
 

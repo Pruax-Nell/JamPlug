@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro";
+import Button from "../components/button.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+ 
+<BaseLayout
+title="Legal Information">
+
+<nav class="navigation-controls">
+    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+</nav>
+
+<section class="frame-fence">
+    <h1 class="legal-heading"> Legal Information</h1>
+    <p>'Your Jam Plug UK' </p>
+    <div>
+        <span class="bold-point">Registered Address:</span>
+        <p>Office TBC</p>
+    </div>
+    <div>
+        <span class="bold-point">Contact Details:</span>
+        <p>E-mail Address:</p>
+        <p>shaneru@yourjamplug.uk</p>
+
+    </div>
+    <div>
+        <span class="bold-point">Company number:</span>
+        <p>TBD</p>
+    </div>
+
+    
+</section>
+
+</BaseLayout>
+
+<style>
+    .legal-heading{
+        font-size: var(--fs-heading-xl);
+    }
+
+    .bold-point{
+        font-weight: 800;
+        font-size: 1.3rem;
+    }
+
+
+</style>

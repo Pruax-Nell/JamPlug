@@ -1,23 +1,267 @@
 ---
 import BaseLayout from "../layouts/baseLayout.astro";
 import Button from "../components/button.astro";
+import { OFFICIAL_LINKS } from "../data/site-config";
+
+
 
 const base = import.meta.env.BASE_URL;
----
+--- 
 <BaseLayout
 title="The Way we Work">
 <nav class="navigation-controls">
     <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
 </nav>
-    <section class="frame-fence">
+<section> 
+    <hgroup>
+        <h1>How it all works</h1>
+        <p>As of current, You send me the information, I'll review it, and if it makes the cut, it gets listed.</p>
+    </hgroup>
+</section>
 
-        <div class="primary-container">
-            <h1>how it all works</h1>
-            
-        </div>
-        <div id="YJP-FAQ" class="primary-container">
+<section class="frame-fence">
+        <div id="YJP-FAQ" >
             <h2>F.A.Q</h2>
+
+            <ul class="faq-list">
+                <h3>General:</h3>
+                <li>
+                    <p class="question-line">Who owns YJP?</p>
+                    <p class="answer-line">Me! a.k.a Shaneru, if you've not met me, you can <a href={OFFICIAL_LINKS.shaneru}>find my socials here.</a></p>
+                    <p>Also, you can <a href="/about">read a tiny bit more about me here</a>, but if you have any more questions just contact us. </p>
+                </li>
+                <li>
+                    <p class="question-line">How do you pronounce "shaneru"?</p>
+                    <p class="answer-line">Okay Joey, it's "sha-neh-roo". Then put it all together.</p>
+                </li>
+                <li>
+                    <p class="question-line">Is Your Jam Plug only for Quad Skaters?</p>
+                    <p class="answer-line">We specialise in quad skating, but not limited to it. We hope everyone can find this site useful in some way! </p>
+                </li>
+                <li>
+                    <p class="question-line">How can I support the site?</p>
+                    <p class="answer-line">I'm glad you asked! 1st way would be to share our site and socials when and whereever you can! The more event organisers and businesses that connect with us, the better we get. The 2nd way is financial support. To keep this website online <a href={OFFICIAL_LINKS.donate}>use our 'Buy us a Coffee' link</a>, you can donate any amount to us. The money will go to the monthly cost of hosting the website online. </p>
+                </li>
+                <li>
+                    <p class="question-line">What will you do with the money donated?</p>
+                    <p class="answer-line">I'll give you an example of the cost breakdown to run this site:</p>
+                    <p>- Domain fee</p>
+                    <p>- Web host</p>
+                    <p>- Admin tools</p>
+                    <p>- Hired Support</p>
+                    <p>These three add up to a couple hundred already, shocking i know!</p>
+                    <!-- <p>But I'll soon write <a href="">a transparency recipt and link it here!</a> I'll post an announcement once it's up.</p> -->
+                    <p>But, these costs are reoccuring and so there'll never be too much donated, any excess recieved will just roll over into next month's exspenses.</p>
+                    <p>And if we've recieved a REALLY GENEROUS donation, we'll look for good ways to invest it into the community.</p>
+                </li>
+                <li>
+                    <p class="question-line">I found a mistake on the site, What can I do?</p>
+                    <p class="answer-line">Please do inform me! I wrote most of this site between midnight and 5am and VS Code does not always notice spelling mistakes, so I'd appreciate it! </p>
+                    <a href="/enquiry">Please send a message here with a link to the error page.</a>
+                </li>
+                <li>
+                    <p class="question-line">I've found a fake version of your site, what should be done?</p>
+                    <p class="answer-line">If you are unsure about a websites validity, please check our <a href="/about">About page's Official Channels section</a> aside from this website, any other site, page or channel claiming to be us is incorrect. please copy and send a link to us at <a href={OFFICIAL_LINKS.helloMail}> hello@yourjamplug.uk</a> so we can investigate, Thank you. </p>
+                </li>
+                <!-- <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li> -->
+            </ul>
+            <ul class="faq-list">
+                <h3>Submissions:</h3>
+                <li>
+                    <p class="question-line">What can be submitted?</p>
+                    <p class="answer-line">Roller Skate Events and businesses. we have two separate forms. </p>
+                    <p> For Roller Skate Events - <a href="/submit-an-event"> Please Use this form </a> </p>
+                    <p> For Roller Skate Businesses and Organisations - <a href="/submit-a-business"> Please Use this form </a> </p>
+                </li>
+                 <li>
+                    <p class="question-line">How much does it cost to list an event or business?</p>
+                    <p class="answer-line">Currently, listing on The Jam Plug is completely free. We want to support the growth of the skating scene by making information as accessible as possible. We aim to find funding through other means.</p>
+                </li>
+                <li>
+                    <p class="question-line">The submission form is not working!</p>
+                    <p class="answer-line">Sorry for the inconvenience. Instead <a href="/enquiry"> please contact us here reporting the issue</a>, we'll send you an alternative form</p>
+                </li>
+                <!-- <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li> -->
+            </ul>
+
+            <ul class="faq-list">
+                <h3>Events:</h3>
+             
+                <li>
+                    <p class="question-line">What kind of Events can I submit?</p>
+                    <p class="answer-line">We welcome all roller skate events, just choose the most appropriate category in the submission. However, at this time, regular nights i.e. weekly skate sessions will not be listed on the events page. Instead we suggest submitting to the directory as a skate group/organisation.</p>
+                </li>
+               
+                <li>
+                    <p class="question-line">How long will it take for my event to go live?</p>
+                    <p class="answer-line">Once submitted, our team reviews the details to ensure they meet our community standards. Typically, your event will appear on the site within 7 working days. so be sure to.</p>
+                </li>
+                <li>
+                    <p class="question-line">Can we submit events outside of the UK/Europe? </p>
+                    <p class="answer-line">Yes! Please do. While our primary focus is the UK and Europe, we are a global community. We accept submissions from anywhere in the world to help traveling skaters find their flow all over.</p>
+                </li>
+                <li>
+                    <p class="question-line">I'm not the organiser, can I still submit an event?</p>
+                    <p class="answer-line">we love that you want support an event! It is preferred to have the organiser or team member fill the submission form to get the most details, so please forward our site to them. Or <a href="/enquiry">send us an email</a> and we will reach out to them. Thank you!</p>
+                </li>
+                <li>
+                    <p class="question-line">Can I update my event submission?</p>
+                    <p class="answer-line"> yes, please use our <a href="/enquiry"> general enquiry form</a> or <a href={OFFICIAL_LINKS.helloMail}>email us</a>.</p>
+                </li>
+                <!-- <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li> -->
+            </ul>
+            <ul class="faq-list">
+                <h3>Directory</h3>
+                <li>
+                    <p class="question-line">What businesses can I submit to the directory?</p>
+                    <p class="answer-line">Anything Skate related! </p>
+                    <p>- Rink / Venues that allow skating.</p>
+                    <p>- Community groups/ organisations/ sporting teams.</p>
+                    <p>- Educators. Instructors, skate schools, and workshop providers</p>
+                    <p>- Retail / Shop that specialises and/or stocks roller skate gear.</p>
+                    <p>- Service providers. Skate building, custom products, photographers, etc</p>
+                    <p>- Manufacturers of skate gear and sports apparel.</p>
+                    <p>If you think your business suits our goals but are unsure what category, still use the submission form and select 'other' as the category. </p>
+                    <p>We will assess all submissions to make sure they're well suited and properly categorised.</p>
+
+                </li>
+                <li>
+                    <p class="question-line">How are businesses chosen for the Directory?</p>
+                    <p class="answer-line">Currently, we're only showing our UK and Ireland Directory, but soon I'll be launching the global directory. Businesses are added once I come to know of them, best way is to <a href="/submit-a-business" class="line-link">use the business submission form.</a></p>
+                </li>
+                <li>
+                    <p class="question-line">I'm not a skater myself, but I run a business that benefits skaters. Can I submit to the directory?</p>
+                    <p class="answer-line">Yes. Any business that supports the skate industry is welcome. But please note, we'll assess your business to make sure it suits our mission statement.</p>
+                </li>
+                <li>
+                    <p class="question-line">Can I get my business removed / edited?</p>
+                    <p class="answer-line">Yes, just send a message <a href="/enquiry">using the enquiry form with a reason and proof that you're the owner.</a></p>
+                </li>
+                <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li>
+            </ul>
+
+            <!-- <ul class="faq-list">
+                <h3>Submissions:</h3>
+                <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li>
+                <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li>
+                <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li>
+                <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li>
+                <li>
+                    <p class="question-line"></p>
+                    <p class="answer-line"></p>
+                </li>
+            </ul> -->
             
         </div>
     </section>
+
+<section class="reach-us"> 
+    <p> if you need to get in contact with us, please use one of the following options: </p>
+    <div class="enquire-button"> 
+        <a href={OFFICIAL_LINKS.helloMail} > hello@yourjamplug.uk </a>
+    </div>
+    <div class="enquire-button"> 
+        <a href="/enquiry" >Our enquiry form</a>
+    </div>
+</section>
 </BaseLayout>
+
+<style>
+
+hgroup{
+    margin-bottom: 3rem;
+}
+
+.faq-list{
+    margin-block: 2rem;
+}
+ 
+li a {
+    background-color: var(--clear-teal);
+    padding-inline: .5rem;
+    border-radius: 4px;
+    color: var(--text-black);
+}
+
+li a:hover {
+    color: var(--special-teal);
+}
+li span {
+    font-weight: normal;
+    background-color: var(--highlight)
+ }
+
+.question-line{
+    font-size: var(--fs-p1);
+    font-weight: 800;
+    color: var(--ob-orange);
+    padding-bottom: .2rem;
+    
+}
+
+.answer-line{
+    font-weight: 400;
+    color: ;
+    
+}
+
+li p:not(.question-line){
+    max-width: 45ch;
+    font-size: var(--fs-p3);
+    font-weight: normal;
+}
+
+ ul li {
+    padding: 1rem;
+ }
+
+
+.reach-us{
+    justify-items: center;
+}
+.enquire-button{
+    margin-block: .3rem;
+    padding: 1rem;
+    width: 25ch;
+    border: 2px solid var(--shadow-yellow);
+    background-color: var(--ow-yellow);
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 550;
+    font-family: var(--font-rose-body);
+    transform: 
+    background-color .2 ease-in-out
+    ;
+}
+
+.enquire-button:hover{
+    background-color: var(--ow-orange);
+    cursor: pointer;
+
+}
+
+</style>

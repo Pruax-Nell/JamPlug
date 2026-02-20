@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro";
+import Button from "../components/button.astro";
+import { OFFICIAL_LINKS } from "../data/site-config";
+
+
+
+const base = import.meta.env.BASE_URL;
+--- 
+<BaseLayout
+title="Site Disclaimers">
+    <hgroup>
+        <h2>Our Disclaimers:</h2>
+        <p>Please read this page and our <a href="/ourProcess"> F.A.Q </a>, and If you still have any questions or concerns, please <a href="/enquiry"> contact us here</a>.</p>
+    </hgroup>
+    <div class="claim-bits">
+        <p><span class="num-bit">1.</span>Your Jam Plug only provides listings for informational purposes only. The information is provided through submission, and While we aim for accurcay, listing details are subject to change without notice. We strongly recommend using the links on event and business listings to find the organisers or event's original post to verify details vefore attending.</p>
+        <p><span class="num-bit">2.</span> Your Jam Plug is not responsible for any injury, loss, or damage incurred while participating in events or visiting businesses listed on this website. Skating is an at-will physical activity; participants assume all associated risks. </p>
+        <p><span class="num-bit">3.</span> Inclusion in our Business Directory or Events Page does not constitute an official endorsement or recommendation by The Jam Plug. Users are encouraged to exercise their own judgment when engaging with third-party services. </p>
+        <p><span class="num-bit">4.</span> We retain the right to remove and refuse listings at our descretion. If we choose not to list your event, you are free to contact us, but we also retain the right to not provide an answer. </p>
+        <p><span class="num-bit">5.</span> This website contains links to external sites that are not operated by us. We have no control over, and assume no responsibility for; the content, privacy policies, or practices of any third-part sites or services. We strive to keep our links correct and up to date within our abilities.</p>
+    </div>
+
+</BaseLayout>
+
+<style>
+
+    hgroup{
+        margin-bottom: 3rem;
+    }
+    
+    .claim-bits{
+        font-size: var(--fs-caption);
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    .num-bit{
+        font-weight: 800;
+
+    }
+
+
+</style>
