@@ -12,20 +12,22 @@ title="Legal Information">
     <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
 </nav>
 
-<section class="frame-fence">
-    <h1 class="legal-heading"> Legal Information</h1>
-    <p>'Your Jam Plug UK' </p>
-    <div>
+<section class="frame-fence legal-block">
+    <hgroup>
+        <h1 class="legal-heading"> Legal Information</h1>
+        <p>'Your Jam Plug UK' </p>
+    </hgroup>
+    <div class="block-slot">
         <span class="bold-point">Registered Address:</span>
         <p>Office TBC</p>
     </div>
-    <div>
+    <div class="block-slot">
         <span class="bold-point">Contact Details:</span>
         <p>E-mail Address:</p>
         <p>shaneru@yourjamplug.uk</p>
 
     </div>
-    <div>
+    <div class="block-slot">
         <span class="bold-point">Company number:</span>
         <p>TBD</p>
     </div>
@@ -36,13 +38,35 @@ title="Legal Information">
 </BaseLayout>
 
 <style>
-    .legal-heading{
-        font-size: var(--fs-heading-xl);
+    .legal-block{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        
+    }
+    
+    hgroup{
+        display: flex;
+        flex-direction: column;
+        gap: .2rem;
+
+
     }
 
+    .block-slot{
+        padding-left: 2rem;
+        font-size: var(--fs-p2);
+        
+    }
+    
+    .legal-heading{
+        font-size: var(--fs-heading-large);
+    }
+    
     .bold-point{
         font-weight: 800;
         font-size: 1.3rem;
+        font-size: var(--fs-p1);
     }
 
 

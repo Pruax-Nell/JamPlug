@@ -107,6 +107,13 @@
     
 }
 
+@media (max-width: 720px ){
+    #our-mission .nav-button{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 #learn-to-skate .direction-box {
     border-radius: 14px;
     /* border: 10px dashed var(--ob-purple); */

@@ -24,13 +24,13 @@ export default defineConfig({
   },
   prefetch: true,
   site: 'https://yourjamplug.uk',
-  base: '/dev',
+  base: '/',
   trailingSlash: 'ignore',
   integrations: [
     mdx(), 
     react(), 
     markdoc(), 
-    // keystatic(), 
+    keystatic(), 
     sitemap()],
 
   vite: {

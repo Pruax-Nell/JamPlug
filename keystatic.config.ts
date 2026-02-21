@@ -47,7 +47,7 @@ export default config({
           defaultValue: 'news',
         }),
         skateDiscipline: fields.select({
-          label: 'Blog Category',
+          label: 'Skate Discipline',
           options:[
             { label: '-- Not Specified --', value: '' }, 
             ...SKATE_DISCIPLINES 
@@ -328,7 +328,9 @@ export default config({
             itemLabel: (props) => props.fields.name.value || 'DJ',
           }
         ),
-        
+        // TODO future - add rinkReference for business related. make optional! keep old 'rink'
+        // then add conditional logic and fallback if rink = ' ' : rinkReference etc
+        // or use node to automate cleanup
         rink: fields.text({ label: 'Featured Rink' }),
         venueAddress: fields.text({ label: 'Address' }),
         mapCoordinates: mapCoords,

@@ -35,21 +35,42 @@ export function validateEmail(input, customMsg = "Please enter a valid email add
 
 // || Nav Menu open/close button
 
-const primaryNav = document.querySelector('#expanded-navigation');
-const navToggle = document.querySelector('.nav-toggle');
+// const primaryNav = document.querySelector('#expanded-navigation');
+// const navToggle = document.querySelector('.nav-toggle');
 
-navToggle.addEventListener('click', () => {
-    const visibility = primaryNav.getAttribute('data-visible');
-        if (visibility === 'false') {
-            primaryNav.setAttribute('data-visible', 'true');
-            navToggle.setAttribute('aria-expanded', 'true');
-        } else if (visibility === 'true') {
-            primaryNav.setAttribute('data-visible', 'false');
-            navToggle.setAttribute('aria-expanded', 'false');
-        }
+// navToggle.addEventListener('click', () => {
+//     const visibility = primaryNav.getAttribute('data-visible');
+//         if (visibility === 'false') {
+//             primaryNav.setAttribute('data-visible', 'true');
+//             navToggle.setAttribute('aria-expanded', 'true');
+//         } else if (visibility === 'true') {
+//             primaryNav.setAttribute('data-visible', 'false');
+//             navToggle.setAttribute('aria-expanded', 'false');
+//         }
 
-    console.log(visibility);
-}); 
+//     console.log(visibility);
+// }); 
+
+document.addEventListener('astro:page-load', () => {
+    const primaryNav = document.querySelector('#expanded-navigation');
+    const navToggle = document.querySelector('.nav-toggle');
+
+    if (primaryNav && navToggle) {
+        navToggle.addEventListener('click', () => {
+            const visibility = primaryNav.getAttribute('data-visible');
+            
+            if (visibility === 'false') {
+                primaryNav.setAttribute('data-visible', 'true');
+                navToggle.setAttribute('aria-expanded', 'true');
+            } else {
+                primaryNav.setAttribute('data-visible', 'false');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+            
+            console.log("Nav visibility:", visibility);
+        });
+    }
+});
 
 // ------------------------------------------------ TOOL KIT
 // || SCROLL TO TOP  

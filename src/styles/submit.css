@@ -181,7 +181,7 @@ input[data=required] {
 /* PAGE TOP TITLE GROUP  */
 .form-title-group {
     margin-left: 3rem;
-    padding-block: 2rem;
+    padding-block: 1rem;
     font-size: var(--fs-p1);
     justify-items: center;
 }
