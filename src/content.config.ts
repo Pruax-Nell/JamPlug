@@ -7,6 +7,26 @@ import { slugify } from "./function/stringHelper";
 
 // ------------- Collections ----------------- //
 //  BLOGS *** 
+const posts = defineCollection({
+  type: 'content', 
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    subtitle: z.string().optional(),
+    status: z.enum(getValues(POST_STATUS)).default('draft'),
+    published: z.string().or(z.date()),
+    isFeatured: z.boolean().default(false),
+    updated: z.string().or(z.date()).optional(), 
+    description: z.string(),
+    blogCategory: z.enum( getValues(BLOG_CATEGORY)),
+    // skateDiscipline: z.string().optional().default(''),
+    skateDiscipline: z.union([
+    z.enum(getValues(SKATE_DISCIPLINES)),
+    z.literal('') 
+    ]).optional(),
+    coverImage: image().optional(), 
+  }),
+});
+//  BLOGS OLD *** 
 const blog = defineCollection ({
     loader: glob({ pattern: '**/index.mdoc', base: "src/content/blog"}),
     schema: ({ image }) => z.object({
@@ -19,7 +39,12 @@ const blog = defineCollection ({
         description: z.string(),
         
         blogCategory: z.enum( getValues(BLOG_CATEGORY)),
-        skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)).optional(),
+        // skateDiscipline: z.enum( getValues(SKATE_DISCIPLINES)).optional().nullable(),
+        skateDiscipline: z.preprocess(
+            (val) => (val === "" ? undefined : val), 
+            z.enum(getValues(SKATE_DISCIPLINES))
+        )
+        .optional(),
         
         coverImage: image().optional(),
         gallery1: image().optional(),
@@ -89,47 +114,4 @@ const events = defineCollection({
 });
 
 
-// ORGANISERS ***
-
-// const organisers = defineCollection({
-//     loader: glob({pattern: "**/[^_]*.{md,mdx,mdoc, }", base: "./src/content/organisers"}),
-//     schema: ({ image }: { image: any }) => z.object({
-//         name: z.string(),
-//         portfolio: z.string().url(),
-//         socials: z.array(z.object({
-//             platform: z.enum(['instagram', 'facebook', 'x', 'tiktok', 'website', 'other platform']),
-//             url: z.string().url(),
-//             })).optional(),
-//         about: z.string().optional(),
-//         brand: image().optional(),
-//         insert1: image().optional(),
-//         insert2: image().optional(),
-//         insert3: image().optional(),
-//     }),
-// });
-
-
-// SKATE SPOTS FOR REFERENCE AND REVIEWS 
-// const spots = defineCollection ({
-//     loader: glob({ pattern: "**/[^_]*.{md,mdx,mdoc}", base: "./src/content/spots"}),
-//     schema: ({ image }: { image: any }) => z.object({ 
-//         name: z.string(),
-//         cover: image().optional(),
-//         status: z.enum(['draft', 'published']).default('draft'),
-
-//     })
-
-// })
-
-
-
-
-// const posts = defineCollection({
-//   type: 'content', 
-//   schema: z.object({
-//     title: z.string(),
-//     date: z.string().optional(), 
-//   }),
-// });
-
-export const collections = {blog, events};
+export const collections = {posts, blog, events};

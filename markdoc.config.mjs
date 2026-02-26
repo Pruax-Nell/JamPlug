@@ -3,12 +3,27 @@ import { defineMarkdocConfig, nodes, component } from '@astrojs/markdoc/config';
 
 export default defineMarkdocConfig({
   nodes: {
-    // This tells Astro: "Whenever you see an image in a .mdoc file, 
-    // don't use the standard <img> tag. Use my special Astro component instead."
     image: {
-      render: component('./src/components/markdocImage.astro'),
+      render: component('./src/components/aImage.astro'),
       attributes: {
-        ...nodes.image.attributes, // Keep the standard src and alt attributes
+        // ...nodes.image.attributes,
+        src: { type: String, required: true },
+        alt: { type: String },
+        title: { type: String }, 
+      },
+    },
+  },
+  tags: {
+    CustomImage: {
+      render: component('./src/components/mdoc/customImage.astro'),
+      attributes: {
+        src: { type: String, required: true },
+        alt: { type: String },
+        caption: { type: String },
+        width: { type: Number },
+        ratio: { type: String },
+        position: { type: String },
+        edge: { type: String },
       },
     },
   },

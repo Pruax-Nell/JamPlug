@@ -14,16 +14,34 @@ export function formatTime(timeObj: any) {
   }
 }
 
-export function formatDate(date: Date): string {
+// export function formatDate(date: Date): string {
+//   const options: Intl.DateTimeFormatOptions = {
+//     year: 'numeric',
+//     month: 'long',
+//     day: 'numeric',
+//   };
+
+//   return new Date(date).toLocaleDateString(undefined, options);
+// }
+// src/function/dateHelper.ts
+
+export function formatDate(date: Date | string | null | undefined): string {
+  if (!date) return '';
+
+  const d = new Date(date);
+
+  if (isNaN(d.getTime())) {
+    return '';
+  }
+
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   };
 
-  return new Date(date).toLocaleDateString(undefined, options);
+  return d.toLocaleDateString(undefined, options);
 }
-
 
 export const formatEventDate = (startStr: string | Date, endStr?: string | Date | null) => {
   try {

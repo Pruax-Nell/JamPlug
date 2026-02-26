@@ -1,0 +1,25 @@
+---
+// src/pages/businesses/[slug].astro
+import { getCollection } from 'astro:content';
+
+const { business } = Astro.props; // The current store being viewed
+
+// Find all rinks where the 'attachedStore' field matches this business's slug
+// const allRinks = await getCollection('rinks');
+// const connectedRinks = allRinks.filter(rink => 
+//   rink.data.attachedStore === business.slug
+// );
+---
+
+<!-- <h1>{business.data.name}</h1>
+
+{connectedRinks.length > 0 && (
+  <div>
+    <h2>Our Rink Locations:</h2>
+    <ul>
+      {connectedRinks.map(rink => (
+        <li><a href={`/rinks/${rink.slug}`}>{rink.data.name}</a></li>
+      ))}
+    </ul>
+  </div>
+)} -->

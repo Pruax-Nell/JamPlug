@@ -1,0 +1,199 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    src?: any;
+    alt?: string;
+    caption?: string;
+    width?: number;
+    height?: number;
+    ratio?: 'tall' | 'wide' | 'ultraWide' | 'square';
+    position?: 'left' | 'center' | 'right';
+    edge?: 'orange' | 'pink' | 'teal' | 'purple' | 'yellow' | 'brown' | 'white' | 'black';
+    class?: string;
+}
+
+const { 
+    src, 
+    alt, 
+    caption,
+    width = 1200,
+    ratio = 'square',
+    position = 'center',
+    edge = 'black',
+    class: className,
+} = Astro.props;
+
+
+const objPosition = {
+    left: 'obj-left',
+    center: 'obj-center',
+    right: 'obj-right',
+};
+
+const frameRatio = {
+    tall: 'portrait-frame',
+    wide: 'landscape-frame',
+    ultraWide: 'ultrawide-frame',
+    square: 'square-frame',
+};
+
+const frameEdge = {
+  orange: 'orange',
+  pink: 'pink',
+  teal: 'teal',
+  purple: 'purple',
+  yellow: 'yellow',
+  brown: 'brown',
+  white: 'white',
+  black: 'black',
+
+};
+
+---
+
+<figure class:list={[
+    'image-container', 
+    objPosition[position],
+    className
+]}>
+    <div class:list={[
+    'image-wrapper', 
+    frameRatio[ratio], 
+    frameEdge[edge],
+    className
+    ]} >
+        <Image 
+            src={src} 
+            alt={alt || ""} 
+            width={width} 
+            
+        />  
+    </div>
+
+    {caption && <figcaption class="image-caption">{caption}</figcaption>}
+</figure>
+
+<style>
+
+    .image-container {
+      margin: 0 0 2.5rem 0;
+      width: 100%;
+    }
+
+    .image-container::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+  .image-wrapper {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+    border-top: 3px solid var(--shadow-grey);
+    border-bottom: 3px solid var(--shadow-grey);
+    margin: .3rem;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-caption {
+    margin-top: 0.2rem;
+    /* font-size: 0.875rem; */
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+    color: var(--text-black); 
+    font-style: italic;
+    opacity: 0.8;
+    text-align: center; 
+  }
+  /* --------------- FRAME ---------------- */
+  
+.portrait-frame{aspect-ratio: 4 / 5;}
+.landscape-frame{aspect-ratio: 16 / 9;}
+.square-frame{aspect-ratio: 1 / 1;}
+.ultrawide-frame{aspect-ratio: 21 / 9;}
+
+
+.obj-center{
+    margin-inline: auto;
+}
+
+@media (min-width: 721px) {
+    .obj-left{
+        float: left;
+        max-width: 40%;
+        
+    }
+    .obj-right{
+        float: right;
+        max-width: 40%;
+        
+    }
+}
+
+.obj-left .image-caption { text-align: left; }
+.obj-right .image-caption { text-align: right; }
+
+@media (max-width: 720px) {
+    .obj-left. obj-right {
+        float: none;
+        margin-inline: auto;
+        max-width: 100%;
+    }
+
+}
+
+
+
+/* --------------- THEME COLOUR ---------------- */
+
+.orange{
+    box-shadow: 
+        8px 8px 0px var(--main-orange), 
+        16px 16px 0px var(--shadow-yellow);
+}
+.pink{
+  box-shadow: 
+  -10px -10px 30px -5px var(--main-pink),
+  10px 10px 30px -5px var(--main-purple);
+}
+.teal{
+  box-shadow: 
+  -10px -10px 30px -5px var(--second-teal),
+  10px 10px 30px -5px var(--main-purple);
+}
+.purple{
+    box-shadow: 
+        -10px -10px 30px -5px var(--main-purple), 
+        10px 10px 30px -5px var(--ow-purple);
+}
+.yellow{
+    box-shadow: 
+        5px 5px 0px var(--main-yellow),
+        -5px -5px 0px var(--main-dark);
+}
+.brown{
+  box-shadow: 
+  -10px -10px 30px -5px var(--second-brown),
+  10px 10px 30px -5px var(--main-purple);
+}
+.white{
+  box-shadow: 
+  -10px -10px 30px -5px var(--main-light),
+  10px 10px 30px -5px var(--main-purple);
+}
+.black{
+  box-shadow: 
+  -10px -10px 30px -5px var(--main-dark),
+  10px 10px 30px -5px var(--main-purple);
+}
+    
+</style>

@@ -244,9 +244,11 @@ title="Home Page">
 				( <CardHolder variant="blog" 
 				title={post.title} 
 				url={`/blog/post/${post.id}/`} 
+				poster={post.poster}
 				subtitle={post.subtitle}  
 				description={post.description} 
-				category={post.category} discipline={post.discipline}
+				category={post.category} 
+				discipline={post.discipline}
 				/>
 			))}
 				<CardHolder 

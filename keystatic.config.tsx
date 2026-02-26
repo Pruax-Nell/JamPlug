@@ -1,41 +1,100 @@
 // keystatic.config.ts
-import { config, fields, collection } from '@keystatic/core';
+import React from 'react';
+import { config, fields, collection, component} from '@keystatic/core';
+import { ImagePreview } from '@components/previewImage';
 import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE } from './src/data/skate-constants'
-import { getRegionOptions, continentKeys, ALL_CONTINENT_VALUES, CONTINENT_DATA, ALL_COUNTRY_VALUES, US_STATE_OPTIONS, UK_NATION_OPTIONS, CANADA_PROVINCE_OPTIONS, AUS_REGION_OPTIONS, } from './src/data/globe-constants';
-import { GLOBE_CONTINENTS } from './src/data/geo/continents';
+
 import { slugify } from './src/function/stringHelper';
 import { locationBlock, mapCoords } from './src/function/configBlocks/key-block';
 
+// in future, a complete rebuild would be more efficient 
 
 
 export default config({
   storage: {
     kind: 'local',
-    // type: 'local',
   },
   collections: {
     
-    // ---------------------------------------------------------- BLOG
-    blog: collection({
-      label: 'blog',
+    posts: collection({
+      label: 'Blog Post',
       slugField: 'title',
-      path: 'src/content/blog/*/',
+      path: 'src/content/posts/*',
       entryLayout: 'content',
       format: { contentField: 'content'},
       schema: {
-      // CMS ADMIN FIELDS 
-        status: fields.select({
-          label: 'Status', 
-          options: POST_STATUS,
-          defaultValue: 'draft',
+        title: fields.slug({ name: { label: 'Title'} }),
+        author: fields.relationship({
+          label: 'Author',
+          collection: 'authors',
+          validation: { isRequired: true },
         }),
-        published: fields.date({ 
-          label: 'Published Date', 
-          defaultValue: new Date().toISOString().split('T')[0], 
-          validation: { isRequired: true }
-          // TODO if this fails, remove defaultValue or fix somehow
+        isFeatured: fields.checkbox({ label: 'Featured Post', defaultValue: false }),
+        updated: fields.date({ label: 'Last Updated' }),
+        content: fields.markdoc ({ 
+          label: 'Content',
+          options: {
+            image: {
+              directory: 'src/content/images/posts',
+              publicPath: '../images/posts/'
+            }
+          },
+          components: {
+            CustomImage: component({
+              label: 'Styled Image',
+              schema: {
+                src: fields.image({ 
+                  label: 'Image', 
+                  directory: 'src/content/images/posts/', 
+                  publicPath: '../images/posts/' 
+                }),
+                alt: fields.text({ label: 'Alt Text' }),
+                width: fields.integer({ label: 'Width (Optional)', defaultValue: 1200 }),
+                caption: fields.text({ label: 'Caption', multiline: true }),
+                position: fields.select({
+                  label: 'Position',
+                  options: [
+                    { label: 'Center (Standard)', value: 'center' },
+                    { label: 'Left (Wrapped)', value: 'left' },
+                    { label: 'Right (Wrapped)', value: 'right' },
+                  ],
+                  defaultValue: 'center',
+                }),
+                ratio: fields.select({
+                  label: 'Frame Ratio',
+                  options: [
+                    { label: 'Tall', value: 'tall' },
+                    { label: 'Wide', value: 'wide' },
+                    { label: 'Ultra Wide', value: 'ultraWide' },
+                    { label: 'Square', value: 'square' },
+                  ],
+                  defaultValue: 'square',
+                }),
+                edge: fields.select({
+                  label: 'shadow colour',
+                  options: [
+                    { label: 'Pink', value: 'pink' },
+                    { label: 'Teal', value: 'teal' },
+                    { label: 'Purple ', value: 'purple' },
+                    { label: 'Orange', value: 'orange' },
+                    { label: 'Brown', value: 'brown' },
+                    { label: 'Yellow', value: 'yellow' },
+                    { label: 'White', value: 'white' },
+                    { label: 'Black', value: 'black' },
+                  
+                  ],
+                  defaultValue: 'black',
+                }),
+              },
+            preview: (props) => props.fields.src.value ? (
+              <p> image ID: {props.fields.src.value.filename}</p> ) : (
+                <p> Please provide an Image src </p>
+            ),
+                
+            }) as any,
+          }, 
+          
         }),
-        title: fields.slug({ name: { label: 'Title' } }),
         subtitle: fields.text({ label: 'Sub-Title', description: 'e.g.tag lines or under/second title (hint:...after the colon)'}),
         description: fields.text({
           label: 'Description',
@@ -57,49 +116,24 @@ export default config({
         coverImage: fields.image({
           label: 'Cover Image',
           // directory: 'src/content/blog',
-          directory: 'src/content/images/blog',
-          publicPath: '../../images/blog/',
+          directory: 'src/content/images/posts/',
+          publicPath: '../images/posts/',
           transformFilename: (name) => `CoverImage-${name.replaceAll(/\s+/g, '-')}`
         }),
-        gallery1: fields.image({
-          label: 'Gallery Image 1',
-          // directory: 'src/content/blog',
-          directory: 'src/content/images/blog',
-          publicPath: '../../images/blog/',
-          transformFilename: (name) => `image-1-${name.replaceAll(/\s+/g, '-')}`
+         // CMS ADMIN FIELDS 
+        status: fields.select({
+          label: 'Status', 
+          options: POST_STATUS,
+          defaultValue: 'draft',
         }),
-        gallery2: fields.image({
-          label: 'Gallery Image 2',
-          // directory: 'src/content/blog',
-          directory: 'src/content/images/blog',
-          publicPath: '../../images/blog/',
-          transformFilename: (name) => `image-2-${name.replaceAll(/\s+/g, '-')}`
+        published: fields.date({ 
+          label: 'Published Date', 
+          defaultValue: new Date().toISOString().split('T')[0], 
+          validation: { isRequired: true }
         }),
-        gallery3: fields.image({
-          label: 'Gallery Image 3',
-          // directory: 'src/content/blog',
-          directory: 'src/content/images/blog',
-          publicPath: '../../images/blog/',
-          transformFilename: (name) => `image-3-${name.replaceAll(/\s+/g, '-')}`
-        }),
-        gallery4: fields.image({
-          label: 'Gallery Image 4',
-          // directory: 'src/content/blog',
-          directory: 'src/content/images/blog',
-          publicPath: '../../images/blog/',
-          transformFilename: (name) => `image-4-${name.replaceAll(/\s+/g, '-')}`
-        }),
-
-        content: fields.markdoc({
-          label: 'Content',
-          options: {
-            image: {
-          }},
-        }),
-      },
-
+      }
     }),
-
+    
     // ------------------------------------------------------- EVENTS
     events: collection ({
       label: 'Events',
@@ -351,8 +385,123 @@ export default config({
         }),
       }
     }),
+
+    // -------------------------------------------- AUTHORS --------------|
+    authors: collection({
+      label: 'Authors',
+      slugField: 'name',
+      path: 'src/content/authors/*',
+      format: { data: 'json' },
+      schema: {
+        name: fields.slug({ name: { label: 'Full Name' } }),
+        role: fields.text({ label: 'Role (e.g. Founder, Photographer)', defaultValue: 'Contributor' }),
+        avatar: fields.image({
+          label: 'Avatar',
+          directory: 'src/assets/authors',
+          publicPath: '@/assets/authors/',
+        }),
+        bio: fields.text({ label: 'Short Bio', multiline: true }),
+        socials: fields.array(
+          fields.object({
+            platform: fields.select({
+              label: 'Platform',
+              options: [
+                { label: 'Socials', value: 'socials' },
+                { label: 'Other', value: 'other' },
+                { label: 'Website', value: 'website' },
+              ],
+              defaultValue: 'socials',
+            }),
+            url: fields.url({ label: 'Profile URL' }),
+          }),
+          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
+        ),
+      },
+    }),
+
+    // -------------------------------------------- RINKS --------------|
+    rinks: collection({
+      label: 'Skate Rinks',
+      slugField: 'name',
+      path: 'src/content/business/rinks/*',
+      format: { data: 'json' },
+      schema: {
+        name: fields.slug({ name: { label: 'Full Name' } }),
+        bio: fields.text({ label: 'Short Bio', multiline: true }),
+        logo: fields.image({ 
+          label: 'Rink Logo',
+          directory: 'src/content/rinks/',
+          publicPath: '../'
+        }),
+        location: locationBlock,
+        founder: fields.text({ label: 'Founder'}),
+        owner: fields.text({ label: 'Current Owner'}),
+        socials: fields.array(
+          fields.object({
+            platform: fields.select({
+              label: 'Platform',
+              options: [
+                { label: 'Socials', value: 'socials' },
+                { label: 'Other', value: 'other' },
+                { label: 'Website', value: 'website' },
+              ],
+              defaultValue: 'socials',
+            }),
+            url: fields.url({ label: 'Profile URL' }),
+          }),
+          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
+        ),
+      }
+
+    }),
+    
+    // -------------------------------------------- Brands --------------|
+    brands: collection({
+      label: 'Skate Brands',
+      slugField: 'name',
+      path: 'src/content/business/brands/*',
+      format: { data: 'json' },
+      schema: {
+        name: fields.slug({ name: { label: 'Full Name' } }),
+        bio: fields.text({ label: 'Short Bio', multiline: true }),
+        logo: fields.image({ 
+          label: 'Rink Logo',
+          directory: 'src/content/brands/',
+          publicPath: '../'
+        }),
+        location: locationBlock,
+        founder: fields.text({ label: 'Founder'}),
+        owner: fields.text({ label: 'Current Owner'}),
+        socials: fields.array(
+          fields.object({
+            platform: fields.select({
+              label: 'Platform',
+              options: [
+                { label: 'Socials', value: 'socials' },
+                { label: 'Other', value: 'other' },
+                { label: 'Website', value: 'website' },
+              ],
+              defaultValue: 'socials',
+            }),
+            url: fields.url({ label: 'Profile URL' }),
+          }),
+          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
+        ),
+      }
+
+    }),
+    
+    // -------------------------------------------- BUSINESS --------------|
+    
+
+
+
+    // -------------------------------------------- AUTHORS --------------|
   }
 });
+
+// https://jankraus.net/2025/02/25/a-simple-guide-to-using-astro-with-keystatic/
+
 
 // Data Type	|
 // Keystatic Field (keystatic.config.ts)	--- Astro Zod Type (src/content/config.ts)

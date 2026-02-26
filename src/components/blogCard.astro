@@ -21,7 +21,9 @@ const {
 } = Astro.props
   
 const dateDisplay = formatEventDate(published);
-const cleanSlug = id.includes('/') ? id.split('/')[0] : id;
+const cleanSlug = id.replace(/\.[^/.]+$/, "");
+// const cleanSlug = id.includes('/') ? id.split('/')[0] : id;
+// const cleanSlug = title.includes('/') ? title.split('/')[0] : title;
 const postUrl = `/blog/post/${cleanSlug}/`;
 
 const base = import.meta.env.BASE_URL;
@@ -52,6 +54,11 @@ const base = import.meta.env.BASE_URL;
       <div class="meta-row">
         <span class="meta-item cate">{blogCategory}</span>
         {skateDiscipline && ( <span class="meta-item disc">{skateDiscipline}</span>)}
+        {skateDiscipline && (
+          <span class="meta-item disc">
+            {skateDiscipline.replace('-', ' ')}
+          </span>
+        )}
       </div>
     </div>
   </div>

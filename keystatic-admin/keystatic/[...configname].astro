@@ -1,0 +1,12 @@
+---
+import { Keystatic } from '@keystatic/astro/ui';
+
+// This stops the 'getStaticPaths' error
+export const prerender = false; 
+
+// If we are building for production, tell Astro this page doesn't exist
+if (import.meta.env.PROD) {
+  return new Response(null, { status: 404 });
+}
+---
+<Keystatic client:only="react" />

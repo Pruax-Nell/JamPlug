@@ -17,6 +17,7 @@ import node from '@astrojs/node';
 
 import sitemap from '@astrojs/sitemap';
 
+
 export default defineConfig({
   output: "static",
   build: {
@@ -30,13 +31,14 @@ export default defineConfig({
     mdx(), 
     react(), 
     markdoc(), 
-    keystatic(), 
+    // edit out keystatic on build for now... 
+    keystatic(),
     sitemap()],
 
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      include: ['lodash/debounce', '@keystatic/core > lodash/debounce'],
+      include: ['direction', 'lodash/debounce', '@keystatic/core > lodash/debounce'],
     },
     ssr: {
       noExternal: ['@keystatic/core', 'lodash']

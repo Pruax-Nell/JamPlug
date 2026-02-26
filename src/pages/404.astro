@@ -17,22 +17,14 @@ const base = import.meta.env.BASE_URL;
         <div>
             <p>Find your way:</p>
             <div class="navigation-controls btn-primary">
-                <!-- <button onclick="history.back()" class="back-button">
-                    ← Back to Events
-                </button> -->
                 <Button variant='primary' theme='pinkDark' size='md' class="back-button" onClick="history.back()" >Back to Previous Page</Button>
                 <Button variant='primary' theme='tealDark' size='md' href='/events' class="back-button" >To Events Page</Button>
-                <!-- <Button variant='primary' theme='yellowDark' size='md' href='/directory' class="back-button" >To Directory Page</Button> -->
             </div>
         </div>
     </section>
 </BaseLayout>
 
 <style>
-    Image {
-        width: 100vw;
-        /* height: ; */
-    }
 
     #error {
         width: 100vw;
@@ -42,6 +34,7 @@ const base = import.meta.env.BASE_URL;
         display: flex;
         justify-content: space-around;
     }
+
     .back-button{
         text-wrap: balance;
     }
@@ -51,4 +44,5 @@ const base = import.meta.env.BASE_URL;
             flex-direction: column;
         }
     }
+
 </style>

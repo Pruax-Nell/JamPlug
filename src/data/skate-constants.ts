@@ -24,6 +24,7 @@ export const SOCIAL_MEDIA = [
 export const POST_STATUS = [
   {value:'draft', label: 'Draft'},
   {value:'published', label: 'Published'},
+  {value:'archived', label: 'Archived'},
 ] as const;
 
 //  ---------------------- MONTH ORDER
@@ -41,6 +42,41 @@ export const MONTH_ORDER = [
     { value: 'november', label: 'November' },
     { value: 'december', label: 'December' },
 ] as const;
+
+//  ----------------------  BUSINESS CATEGORY
+export const BUSINESS_CATEGORY = [
+    {value: 'rink', label: 'Rink'},
+    {value: 'retail', label: 'Retail'},
+    {value: 'manufacturing', label: 'Manufacturing'},
+    {value: 'education', label: 'Education'},
+    {value: 'community', label: 'Community'},
+    {value: 'services', label: 'Services'},
+    {value: 'other', label: 'Other'},
+] as const;
+
+//  ----------------------  COMMUNITY HUB
+export const COMMUNITY_CAT = [
+    {value: 'education', label: 'Education'},
+    {value: 'community', label: 'Community'},
+    {value: 'other', label: 'Other'},
+] as const;
+
+//  ----------------------  INDUSTRY HUB
+export const INDUSTRY_CAT = [
+    {value: 'retail', label: 'Retail'},
+    {value: 'manufacturing', label: 'Manufacturing'},
+    {value: 'services', label: 'Services'},
+    {value: 'other', label: 'Other'},
+] as const;
+//  ----------------------  VENUE TYPE
+export const SKATE_VENUE = [
+    {value: 'rink', label: 'Full Rink'},
+    {value: 'studio', label: 'Skate Studio'},
+    {value: 'pop-up', label: 'Pop-up Space'},
+    {value: 'multi', label: 'Multi-use Space'},
+    {value: 'outdoor', label: 'Outdoor Court'},
+] as const;
+
 
 //  ----------------------  BLOG-logic
 export const BLOG_CATEGORY = [

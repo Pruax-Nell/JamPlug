@@ -1,11 +1,17 @@
 ---
+// theme?: 'orangeLight' | 'tealLight' | 'purpleLight' | 'pinkLight' | 'brownLight' | 'whiteLight' | 'blackLight' | 'yellowLight' | 'orangeDark' | 'tealDark' | 'purpleDark' | 'pinkDark' | 'brownDark' | 'whiteDark' | 'blackDark' | 'yellowDark' | 'orange' | 'pink' | 'teal' | 'purple' | 'yellow' | 'brown' | 'white' | 'black';
+
+type Color = 'orange' | 'pink' | 'teal' | 'purple' | 'yellow' | 'brown' | 'white' | 'black';
+type Suffix = 'Light' | 'Dark';
+
+
 interface Props {
   href?: string;          
-  theme?: 'orangeLight' | 'tealLight' | 'purpleLight' | 'pinkLight' | 'brownLight' | 'whiteLight' | 'blackLight' | 'yellowLight' | 'orangeDark' | 'tealDark' | 'purpleDark' | 'pinkDark' | 'brownDark' | 'whiteDark' | 'blackDark' | 'yellowDark' | 'orange' | 'pink' | 'teal' | 'purple' | 'yellow' | 'brown' | 'white' | 'black';
+  theme?: Color | `${Color}${Suffix}`;
   variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' ;
   size?: 'xs' | 'sm' | 'md' | 'lg';
-  class?: string;          // Allows for extra utility classes (like mt-4)
-  [x: string]: any;        // Collects all other attributes (target, id, rel, etc.)
+  class?: string;          
+  [x: string]: any;        
 }
 
 const { 
