@@ -48,3 +48,9 @@ export const SHOW_MAY_BANNER = now >= mayStart && now <= mayEnd;
 export const SHOW_SEPT_BANNER = now >= septStart && now <= septEnd;
 export const SHOW_NOV_BANNER = now >= novStart && now <= novEnd;
 
+// const galleryList = [
+//   post.data.gallery1, 
+//   post.data.gallery2, 
+//   post.data.gallery3, 
+//   post.data.gallery4
+// ].filter((item): item is NonNullable<typeof item> => !!item);

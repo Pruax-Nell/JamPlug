@@ -4,24 +4,15 @@ import Button from '../../../components/button.astro';
 import CustomImage from '../../../components/mdoc/customImage.astro';
 import { getCollection, render, getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import type { SerializedAuthor } from '../../../function/types';
 import { Image } from 'astro:assets';
 
 import { formatDate } from '../../../function/dateHelper';
 
-// const galleryList = [
-//   post.data.gallery1, 
-//   post.data.gallery2, 
-//   post.data.gallery3, 
-//   post.data.gallery4
-// ].filter((item): item is NonNullable<typeof item> => !!item);
-  
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
-
   return posts
-    .filter((post) => {
-      return post.data.status === 'published';
-    })
+    .filter((post) => post.data.status === 'published')
     .map((post: CollectionEntry<'posts'>) => ({
       params: { slug: post.slug }, 
       props: { post },
@@ -33,22 +24,18 @@ interface Props {
 }
 
 const { post } = Astro.props;
-
-const components = {
-  CustomImage,
-};
-
-const lastEditDate = post.data.updated ? formatDate(post.data.updated) : null;
+const components = { CustomImage };
 
 const authorId = typeof post.data.author.profile === 'object' 
   ? post.data.author.profile.id 
   : post.data.author.profile;
 
-const authorEntry = authorId ? await getEntry('authors', authorId) : null;
+const rawAuthorEntry = authorId ? await getEntry('authors', authorId) : null;
+
+const authorEntry = rawAuthorEntry as SerializedAuthor | null;
 const alias = authorEntry?.data?.alias || "Contributor";
 
-// const headshot = authorEntry?.data?.headshot;
-
+const lastEditDate = post.data.updated ? formatDate(post.data.updated) : null;
 const { Content } = await render(post);
 const base = import.meta.env.BASE_URL;
 ---
@@ -72,26 +59,23 @@ const base = import.meta.env.BASE_URL;
         day: 'numeric'
       })}
     </time>
-    
     <p class="lead-text desc">{post.data.description}</p>
-
-
   </header>
-
+{console.log('Processing Image for post:', post.slug, 'Data:', post.data.coverImage)}
   
-  {post.data.coverImage && (
+  {post.data.coverImage?.src && (
     <figure class="cover-image-container">
       <Image 
-        src={post.data.coverImage.src}
-        alt={post.data.coverImage.alt || post.data.title} 
+        src={post.data.coverImage?.src}
+        alt={post.data.coverImage?.alt || post.data.title} 
         width={800} 
         class="cover-image"
         loading="eager"
       />
       
-      {post.data.coverImage.caption && (
+      {post.data.coverImage?.caption && (
         <figcaption class="cover-caption">
-          {post.data.coverImage.caption}
+          {post.data.coverImage?.caption}
         </figcaption>
       )}
     </figure>
@@ -99,7 +83,7 @@ const base = import.meta.env.BASE_URL;
    <!-- <a href={`/authors/${post.data.author.profile}`}>
    </a>  -->
 
-  <div class="content-body">
+  <section class="content-body">
     {post.data.author.isAnonymous ? (
       <div class="anon-profile">
         <span class="anon-icon">👤</span>
@@ -111,10 +95,11 @@ const base = import.meta.env.BASE_URL;
       </div>
     )}
   
-  {post.data.updated && (<p class="updated-label">Last Updated: {lastEditDate}</p>)}
-    <!-- <Content /> -->
-    <Content components={components} />
-  </div>
+    {post.data.updated && (<p class="updated-label">Last Updated: {lastEditDate}</p>)}
+    <div class="main-content">
+      <Content components={components} />
+    </div>
+  </section>
 
   <!-- {galleryList.length > 0 && (
     <section class="gallery-grid">

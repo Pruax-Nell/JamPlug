@@ -45,14 +45,14 @@ import { formatLocation } from '../data/globe-constants';
 
 //  DATA 
 import { MONTH_ORDER, EVENT_TYPE, SKATE_DISCIPLINES, SKILL_LEVEL, EVENTS_PER_PAGE, FOOTWEAR_CHOICE  } from '../data/skate-constants';
+
+import type { Footwear, SkateDisciplines, SkillLevel, EventStatus, EventType, MonthOrder, PostStatus } from '../data/skate-constants';
 import {getRegionOptions, ALL_CONTINENT_VALUES, CONTINENT_DATA } from '../data/globe-constants'
 
 const continentOptions = ALL_CONTINENT_VALUES.map(c => ({
   label: formatLabel(c),
   value: c
 }));
-
-
 
 // ------------- TYPES AND INTERFACE
 
@@ -119,7 +119,7 @@ export const LocationSearch = ({ onLocationChange, locationFilters, initialEvent
   const [inputValue, setInputValue] = useState(locationFilters.townCity || '');
   const [isOpen, setIsOpen] = useState(false);
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -331,7 +331,10 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     const filtered = initialEvents.filter((event) => {
       const d = event.data;
       const { location: loc, attributes: attr } = filters;
-      const eventMonth = new Date(d.startDate).toLocaleString('en-GB', { month: 'long' }).toLowerCase();
+      // const eventMonth = new Date(d.startDate).toLocaleString('en-GB', { month: 'long' }).toLowerCase();
+      const eventMonth = d.startDate 
+      ? new Date(d.startDate).toLocaleString('en-GB', { month: 'long' }).toLowerCase() 
+      : 'unknown';
 
       const eventContSlug = slugify(d.location.discriminant);
       const filterContSlug = slugify(loc.continent);

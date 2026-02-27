@@ -2,7 +2,7 @@
 import React from 'react';
 import { config, fields, collection, component} from '@keystatic/core';
 import { ImagePreview } from '@components/previewImage';
-import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE } from './src/data/skate-constants'
+import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE } from './src/data/skate-constants';
 
 import { slugify } from './src/function/stringHelper';
 import { locationBlock, mapCoords } from './src/function/configBlocks/key-block';
@@ -480,8 +480,8 @@ export default config({
         headshot: fields.object({
           src: fields.image({
             label: 'Headshot Image',
-            directory: 'src/content/authors/', 
-            publicPath: './', 
+            directory: 'src/content/images/authors', 
+            publicPath: '../../images/authors/', 
           }),
           alt: fields.text({
             label: 'Alt Text for Image',
@@ -495,8 +495,8 @@ export default config({
         skateImage: fields.object({
           src: fields.image({
             label: 'Skate/Personality Image',
-            directory: 'src/content/authors/',
-            publicPath: './',
+            directory: 'src/content/images/authors',
+            publicPath: '../../images/authors/',
           }),
           alt: fields.text({ 
             label: 'Alt Text (Describe the photo for screen readers)',

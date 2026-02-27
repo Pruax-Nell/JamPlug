@@ -162,6 +162,10 @@ export type ContinentValue = (typeof ALL_CONTINENT_VALUES)[number];
 export type CountryValue = (typeof ALL_COUNTRY_VALUES)[number];
 export type RegionValue = (typeof ALL_REGION_VALUES)[number];
 
+export type UKNation = (typeof UK_NATION_OPTIONS)[number]['value'];
+export type USState = (typeof US_STATE_OPTIONS)[number]['value']; 
+export type CanadaProvince = (typeof CANADA_PROVINCE_OPTIONS)[number]['value'];
+export type AustraliaRegion = (typeof AUS_REGION_OPTIONS)[number]['value'];
 
 
 

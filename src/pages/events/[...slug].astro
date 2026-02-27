@@ -8,6 +8,7 @@ import { Image } from 'astro:assets';
 import Button from '../../components/button.astro';
 import { formatEventDate, formatTime, getCalendarUrls } from '../../function/dateHelper';
 import { formatLocation } from '../../data/globe-constants';
+import eventPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg' // when events don't have a poster
 
 export async function getStaticPaths() {
   const posts = await getCollection('events');
@@ -26,7 +27,7 @@ interface Props {
 const { post } = Astro.props; 
 const { data } = post;
 const { Content } = await render(post);
-const galleryImages = [data.flyerImage1, data.flyerImage2, data.flyerImage3, data.flyerImage4, data.flyerImage5].filter(Boolean);
+const galleryImages = [data.flyerImage1?.src, data.flyerImage2?.src, data.flyerImage3?.src, data.flyerImage4?.src, data.flyerImage5?.src].filter(Boolean);
 
 // HELPERS----
 const lineup = [
@@ -39,25 +40,23 @@ const eventDateString = formatEventDate(data.startDate, data.endDate);
 const eventStartTime = formatTime(data.startTime);
 const eventEndTime = data.endTime ? formatTime(data.endTime) : null;
 const eventLocation = formatLocation(post.data.location);
-const eventLocString = 
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
-const ogImage = post.data.eventPoster ? post.data.eventPoster.src : '/default-og-image.jpg';
+
+const ogImage = post.data.eventPoster?.src;
+
 const { googleUrl, icsDataUri } = getCalendarUrls(data);
-// const locationString = formatLocation(post.data.location.discriminant, post.data.townCity);
 const locationString = [post.data.townCity, eventLocation.regionLabel]
   .filter(Boolean)
   .join(', ');
 
 const base = import.meta.env.BASE_URL;
-
 ---
 
 <BaseLayout 
   title={post.data.eventName}
   description={`Join us in ${post.data.townCity} for ${post.data.eventName}!`}
   image={ogImage} 
-  image={post.data.eventPoster?.src} 
 >
 
 <article class="event-focus frame-fence">
@@ -67,14 +66,23 @@ const base = import.meta.env.BASE_URL;
     <div class=" poster-frame">
     {data.eventPoster ? (
       <Image 
-      src={data.eventPoster} 
+      src={data.eventPoster.src} 
       alt={`Event Poster TBD ${data.eventName}`} 
       width={350} 
       height={510} 
       class="cover-image"
       />
     ) : (
-      <div class="placeholder-poster ">🛼</div>
+      <div class="poster-frame">
+        <Image 
+        src={eventPlaceholder.src} 
+        alt={`Event Poster TBD ${data.eventName}`} 
+        width={350} 
+        height={510} 
+        class="cover-image"
+        />
+
+      </div>
     )}
     </div>
       
@@ -135,9 +143,23 @@ const base = import.meta.env.BASE_URL;
       <Button  variant="primary" size="sm" href={data.eventLink} aria-label="Official Event Page (external)"> {data.eventName} </Button>
       </p>)}
     
-    {data.ticketLink && (
-      <Button href={data.ticketLink} variant='outline' theme='black' size='sm' aria-label="External Ticket Page"> Buy tickets here</Button>
-    )}
+    <div class="ticket-actions">
+      {data.ticketLink?.map((ticket) => (
+        ticket.directLink && (
+          <div class="ticket-wrapper">
+            <Button 
+              href={ticket.directLink} 
+              variant='outline' 
+              theme='black' 
+              size='sm'
+            >
+              {ticket.name}
+            </Button>
+            {ticket.disclaimer && <p class="disclaimer-text">{ticket.disclaimer}</p>}
+          </div>
+        )
+      ))}
+    </div>
     </div>
 
   </section>

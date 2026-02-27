@@ -27,9 +27,13 @@ export default function EventCard({
   minAge,
 }: EventCardProps) {
 
-  const imageSrc = typeof eventPoster === 'object' && eventPoster !== null 
+  // const imageSrc = typeof eventPoster === 'object' && eventPoster !== null 
+  // ? (eventPoster as unknown as AstroImage).src 
+  // : eventPoster;
+
+  const imageSrc = (typeof eventPoster === 'object' && eventPoster !== null 
   ? (eventPoster as unknown as AstroImage).src 
-  : eventPoster;
+  : eventPoster) ?? undefined;
 
 const labels = formatLocation(location, townCity);
 const showRegion = hasRegionSelected(location);

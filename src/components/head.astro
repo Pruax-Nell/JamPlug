@@ -5,7 +5,7 @@ import type { SerializedEvent } from "../function/types";
 interface Props {
 	title?: string;
 	description?: string;
-	image?: string;
+	image?: any;
 	Index?: string;
 	SEO?: string;
 	frontmatter?: SerializedEvent['data'];
@@ -14,17 +14,23 @@ interface Props {
 const { 
   title, 
   description = SITE_DESCRIPTION,
-  image = "src/assets/YJP/bloat-vertical-black.svg", 
+  image, 
   SEO, 
   Index,
 } = Astro.props;
 
 import NavIcon from '@admin/new-favicon.svg';
+
 import ogBackup from '@admin/open-graph-backup.jpg'
+const finalOgImage = typeof image === 'string' 
+  ? image 
+  : image?.src || ogBackup.src;
+
+  
 
 const ogImageSrc = image || ogBackup.src;
 
-const canonicalImageURL = new URL(ogImageSrc, Astro.url);
+const socialImageURL = new URL(finalOgImage, Astro.site);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const displayTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 
@@ -39,7 +45,6 @@ const base = import.meta.env.BASE_URL;
 
 <link rel="icon" type="image/svg+xml" href={NavIcon.src} />
 <link rel="canonical" href={canonicalURL} />
-<!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> -->
 
 <title>{displayTitle}</title>
 <meta name="title" content={displayTitle} />
@@ -57,27 +62,20 @@ const base = import.meta.env.BASE_URL;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={displayTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={canonicalImageURL} />
+<meta property="og:image" content={socialImageURL} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={displayTitle} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={canonicalImageURL} />
-
-<!-- Open Graph / Facebook -->
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={displayTitle} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={canonicalImageURL} />
+<meta property="twitter:image" content={socialImageURL} />
 
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/RedRose-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin />
 <link rel="preload" href="/fonts/RedRose-VariableFont_wght.woff2" as="font" type="font/woff" crossorigin />
 <link rel="preload" href="/fonts/fonts/TitanOne-Regular.ttf" as="font" type="font/ttf" crossorigin />
 <link rel="preload" href="/fonts/fonts/TitanOne-Regular.woff2" as="font" type="font/woff2" crossorigin />
-
 
 <!-- favicon stuff -->
  <link rel="icon" type="image/png" href="/https://www.yourjamplug.uk/admin/favicon-96x96.png" sizes="96x96" />

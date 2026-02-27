@@ -2,7 +2,11 @@
 import "../styles/event.css"; 
 import Button from "../components/button.astro";
 import BaseLayout from "../layouts/baseLayout.astro";
+import type { BlogCategory, SkateDisciplines, SkillLevel, EventType, PostStatus, socialMedia, EventStatus, Footwear, MonthOrder, } from '../data/skate-constants';
 // import { SerializedEvent } from "../types";
+
+import EventsOG from '../../public/admin/events-og-image.jpg'
+import PosterPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg'
 
 import { getCollection, type CollectionEntry } from "astro:content";
 import UpcomingEvents from '../components/upcomingEvents'; 
@@ -23,10 +27,15 @@ const clientUpcomingEvents = publishedEvents
     const d = event.data;
     if (d.minAge) ages.add(d.minAge);
 
-    // Normalize the poster URL
-    const posterString = (d.eventPoster && typeof d.eventPoster === 'object' 
-      ? d.eventPoster.src 
-      : d.eventPoster) || undefined;
+	// const posterString = (d.eventPoster && typeof d.eventPoster === 'object' 
+	// ? d.eventPoster.src 
+	// : d.eventPoster) || PosterPlaceholder.src;
+
+	const posterObject = d.eventPoster ? {
+      src: typeof d.eventPoster.src === 'object' ? d.eventPoster.src.src : d.eventPoster.src,
+      alt: d.eventPoster.alt || d.eventName, 
+      caption: d.eventPoster.caption || ""
+    } : null;
 
     return {
       id: event.id,
@@ -37,19 +46,19 @@ const clientUpcomingEvents = publishedEvents
         location: d.location, 
         startDate: d.startDate.toISOString(),
         endDate: d.endDate?.toISOString() || null,
-        skateDiscipline: d.skateDiscipline,
-        skillLevel: d.skillLevel,
-        eventType: d.eventType,
-        eventPoster: posterString,
+        skateDiscipline: d.skateDiscipline as SkateDisciplines,
+        skillLevel: d.skillLevel as SkillLevel,
+        eventType: d.eventType as EventType,
+        eventPoster: posterObject,
         minAge: d.minAge,
-        footwear: d.footwear ?? false,
+        footwear: d.footwear as Footwear,
         rink: d.rink || ""
       },
     };
   });
 
-const serverOptions = {
-  minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b)),
+	const serverOptions = {
+	minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b)),
 };
 
 const base = import.meta.env.BASE_URL;
@@ -57,7 +66,7 @@ const base = import.meta.env.BASE_URL;
 <BaseLayout 
   title="International Roller Skate Events"
   description="Find your local Skate Events, from workshops to festivals."
-
+  image={EventsOG}
 >
 <!-- ||-----------------------------------------------INTRO SECTION -->
 

@@ -46,7 +46,7 @@ export const MONTH_ORDER = [
 ] as const;
 
 //  ----------------------  BUSINESS CATEGORY
-export const BUSINESS_CATEGORY = [
+export const BUSINESS_CATEGORY = [ //
     {value: 'rink', label: 'Rink'},
     {value: 'retail', label: 'Retail'},
     {value: 'manufacturing', label: 'Manufacturing'},
@@ -57,14 +57,14 @@ export const BUSINESS_CATEGORY = [
 ] as const;
 
 //  ----------------------  COMMUNITY HUB
-export const COMMUNITY_CAT = [
+export const COMMUNITY_CAT = [ //
     {value: 'education', label: 'Education'},
     {value: 'community', label: 'Community'},
     {value: 'other', label: 'Other'},
 ] as const;
 
 //  ----------------------  INDUSTRY HUB
-export const INDUSTRY_CAT = [
+export const INDUSTRY_CAT = [ //
     {value: 'retail', label: 'Retail'},
     {value: 'manufacturing', label: 'Manufacturing'},
     {value: 'services', label: 'Services'},
@@ -72,7 +72,7 @@ export const INDUSTRY_CAT = [
 ] as const;
 
 //  ----------------------  VENUE TYPE
-export const SKATE_VENUE = [
+export const SKATE_VENUE = [ //
     {value: 'rink', label: 'Full Rink'},
     {value: 'studio', label: 'Skate Studio'},
     {value: 'pop-up', label: 'Pop-up Space'},
@@ -99,7 +99,7 @@ export const BLOG_CATEGORY = [
 ] as const;
 
 // ----------------------  WHEELS ALLOWED
-export const WHEEL_CHOICE = [ 
+export const WHEEL_CHOICE = [  //
     {value:'quad-skates', label: 'Quad Skates'},
     {value:'inline-skates', label: 'Inline Skates'},
     {value:'free-skates', label: 'Free Skates'},
@@ -110,7 +110,7 @@ export const WHEEL_CHOICE = [
 // ----------------------  EVENT logic
 export const FOOTWEAR_CHOICE = [ 
     {value:'skates', label: 'Skates'},
-    {value:'Shoes', label: 'Shoes'},
+    {value:'shoes', label: 'Shoes'},
     {value:'sync', label: 'Sync'},
     {value:'sequence', label: 'sequence'},
 ] as const;
@@ -149,25 +149,23 @@ export const SKILL_LEVEL =  [
     {value: 'advanced', label: 'Advanced (Professional)'},
 ] as const;
 
-export const OCCURANCE_REP =  [
+
+export const OCCURANCE_REP =  [ //
     {value: 'annual', label: 'Annual'},
     {value: 'seasonal', label: 'Seasonal'},
     {value: 'special', label: 'Speacial Occurance'},
     {value: 'other', label: 'Other'},
 ] as const;
 
-// export type CountryValue = (typeof GROUPED_COUNTRIES)[number]['value'];
+// EVENT & BLOG DATA
 export type BlogCategory = (typeof BLOG_CATEGORY)[number]['value'];
+// export type CountryValue = (typeof GROUPED_COUNTRIES)[number]['value'];
 export type SkateDisciplines = (typeof SKATE_DISCIPLINES)[number]['value'];
-export type MonthOrder = (typeof MONTH_ORDER)[number]['value'];
 export type SkillLevel = (typeof SKILL_LEVEL)[number]['value'];
 export type EventType = (typeof EVENT_TYPE)[number]['value'];
 export type PostStatus = (typeof POST_STATUS)[number]['value'];
 export type socialMedia = (typeof SOCIAL_MEDIA)[number]['value'];
-// export type ParticipationLevel = (typeof PARTICIPATION_LEVEL)[number]['value'];
+export type EventStatus = (typeof EVENT_STATUS)[number]['value'];
+export type Footwear = (typeof FOOTWEAR_CHOICE)[number]['value'];
+export type MonthOrder = (typeof MONTH_ORDER)[number]['value'];
 
-// export const PARTICIPATION_LEVEL = [
-//     {value: 'novice', label: 'Novice'},
-//     {value: 'amateur', label: 'Amateur'},
-//     {value: 'professional', label: 'Professional'},
-// ] as const;
