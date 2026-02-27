@@ -1,0 +1,21 @@
+{
+  "name": "YourJamPLug",
+  "short_name": "YourJamPlug",
+  "icons": [
+    {
+      "src": "/https://www.yourjamplug.uk/admin/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/https://www.yourjamplug.uk/admin/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#fff9ed",
+  "background_color": "#fff9ed",
+  "display": "standalone"
+}

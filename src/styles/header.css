@@ -100,13 +100,13 @@ li a {
     right: 2rem;
     
     aspect-ratio: 1;
-    background: url(/src/assets/branding/menu.icon.1.svg);
+    background: url(/src/assets/YJP/menu.icon.1.svg);
     background-repeat: no-repeat;
     border: none;
 }
 
 #nav-menu-toggle[aria-expanded='true'] {
-    background: url(/src/assets/branding/crossClose1.svg);
+    background: url(/src/assets/YJP/crossClose1.svg);
     z-index: 99999;
 }
 
@@ -150,6 +150,7 @@ li a {
 #full-nav{
     display: grid;
     margin-left: 30px;
+    margin-bottom: 3rem;
     gap: 3px;
     height: 100%;
     justify-items: space-around;

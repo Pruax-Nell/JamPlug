@@ -213,10 +213,12 @@ small {
 
 
 .highlight {
-    color: var(--second-pink)
+    color: var(--mid-pink);
 }
 .highlight-2 {
-    color: var(--special-teal)
+    color: var(--ob-teal);
+    /* border: 2px dashed var(--shadow-teal-2); */
+    text-align: center;
 }
 .highlight-3 {
     color: var(--mid-purple)

@@ -4,10 +4,10 @@ import "../styles/components.css";
 
 import { Image } from "astro:assets";
 
-import lightSwitch from "../assets/branding/sun-theme-brown.svg";
-import darkSwitch from "../assets/branding/moon-theme-brown.svg";
+import lightSwitch from "../assets/YJP/sun-theme-brown.svg";
+import darkSwitch from "../assets/YJP/moon-theme-brown.svg";
 
-import upArrow from "/src/assets/branding/arrowTop-brown.svg"
+import upArrow from "/src/assets/YJP/arrowTop-brown.svg"
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -25,7 +25,7 @@ const base = import.meta.env.BASE_URL;
     </div>
      
     <div class="kit-box">
-        <button id="toTop" type="button" name="To Top" title="Go to top" onclick="scrollTop()" class="button">
+        <button aria-label="Go to page top" id="toTop" type="button" name="To Top" title="Go to top" onclick="scrollTop()" class="button">
             <span class="srOnly">To page top</span>
             <Image src={upArrow} alt="up" class="upArrow" width={30} height={30}>
         </button>

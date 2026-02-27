@@ -17,7 +17,7 @@ const { fieldName = "link" } = Astro.props;
       <!-- DYNAMIC INPUTS -->
       <div class="field-pair">
         <select name={`${fieldName}[0][platform]`} class="form-input" required>
-          <option value="">-- Platform --</option>
+          <option value=" ">-- Platform --</option>
           {SOCIAL_MEDIA.map((item) => (
             <option value={item.value}>{item.label}</option>
           ))}
@@ -69,7 +69,7 @@ const { fieldName = "link" } = Astro.props;
         row.innerHTML = `
           <div class="field-pair">
             <select name="${fieldName}[${nextIndex}][platform]" class="form-input" required>
-              <option value="">-- Platform --</option>
+              <option value=" ">-- Platform --</option>
               ${optionsHTML}
             </select>
             <input 

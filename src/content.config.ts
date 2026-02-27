@@ -111,7 +111,30 @@ const events = defineCollection({
     repetition: z.string().optional(),
 
     })
+
+
 });
 
 
-export const collections = {posts, blog, events};
+const authors = defineCollection({
+  type: 'data', 
+  schema: ({ image }) => z.object({
+    legalName: z.string(),
+    alias: z.string().optional(),
+    anonymity: z.boolean().nullable(),
+    role: z.string().default('Contributor'),
+    headshot: image().optional(),
+    skateImage: image().optional(),
+    bio: z.string().optional(),
+    socials: z.array(
+      z.object({
+        platform: z.enum(getValues(SOCIAL_MEDIA)),
+        url: z.string().url(),
+      })
+    ).optional(),
+  }),
+});
+
+
+
+export const collections = {posts, blog, events, authors};

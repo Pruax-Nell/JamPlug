@@ -1,4 +1,5 @@
 /* SECTION WRAP - BASELAYOUT*/ 
+
 #mainFooter {
     background-color: var(--main-brown);
     color: var(--main-light);
@@ -11,7 +12,39 @@
     font-family: 'red rose';
     letter-spacing: var(--letter-space-rose);
     line-height: 2.4ch;
+    
+}
 
+footer {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 621px) {
+    #upperFoot, #lowerFoot, #endFooter {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    #upperFoot {
+        justify-content: space-around;
+    }
+}
+
+@media (max-width: 620px) {
+    #upperFoot, #lowerFoot, #endFooter {
+        flex-direction: column;
+        
+    }
+}
+
+#lowerFoot {
+    gap: 2rem;
+}
+
+.low-block{
+    min-width: 30ch;
 }
 
 /* COMPONENT - FOOTER */
@@ -60,14 +93,18 @@
     margin-inline: .1rem;
 }
 
+.donate-block{
+    align-items: center;
+}
+
 /* lower divs */
-.toe {
+/* .toe {
     gap: clamp(1.1rem, .5rem, 5rem);
     margin-block: .5rem;
     margin-inline: 1rem;
     justify-items: center;
 
-}
+} */
 
 .toe p {
     line-height: 2.1;
@@ -75,11 +112,7 @@
 }
 
 
-footer {
-    display: grid;
-    grid-template-rows: auto auto auto;
 
-}
 
 
 .legal-info{
@@ -90,61 +123,26 @@ footer {
 }
 
 .legal-info p {
-    width: 400px;
+    max-width: 400px;
 }
 
 .legal-link {
     display: flex;
     flex-direction: column;
 
-    align-items: flex-end;
+    /* align-items: flex-end; */
     justify-self: end;
 }
 
-/* large screen layout - rows */
-@media (min-width: 752px) { 
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr );
-        
-    }
- 
-    .legal-info{
-        grid-column: 1 / -1;
-    }
-    
-}
-
-
-/* small screen layout - column */
 @media (max-width: 751px) {
     
-    footer {
-        grid-template-rows: auto 1fr auto;
-    }
-    
-    #upperFoot {
-        height: min-content;
-    }
-    
-    #lowerFoot {
-        display: grid;
-        grid-template-rows:  repeat(auto)3;
-        margin-top: 1em;
-    }
-    
-    .row1 {grid-row-start: 1;}
-    
-    .row2 {grid-row-start: 2;}
-    
-    .row3 { grid-row-start: 3;}
+
     .legal-info{
         max-width: 100%;
     }
     
     .legal-link{
-        width: 100%;
+        max-width: 100%;
         align-items: center;
     }
 }

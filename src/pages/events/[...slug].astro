@@ -132,11 +132,11 @@ const base = import.meta.env.BASE_URL;
     <div class="ticket-block">
     {data.organisers && ( 
       <p>Official page for
-      <Button  variant="outline" size="sm" href={data.eventLink}> {data.eventName} </Button>
+      <Button  variant="primary" size="sm" href={data.eventLink} aria-label="Official Event Page (external)"> {data.eventName} </Button>
       </p>)}
     
     {data.ticketLink && (
-      <Button href={data.ticketLink} variant='outline' size='sm' > Buy tickets here</Button>
+      <Button href={data.ticketLink} variant='outline' theme='black' size='sm' aria-label="External Ticket Page"> Buy tickets here</Button>
     )}
     </div>
 
@@ -177,7 +177,7 @@ const base = import.meta.env.BASE_URL;
       <p>Add this event to your personal calendar.</p>
       
       <div class="calendar-buttons">
-        <a href={googleUrl} target="_blank" class="calendar-download-btn">
+        <a href={googleUrl} target="_blank" class="calendar-download-btn" aria-label="add to Google Calendar">
           Add to Google Calendar
         </a>
         
@@ -185,7 +185,7 @@ const base = import.meta.env.BASE_URL;
         <a 
         href={icsDataUri} 
         download={`${data.eventName.replace(/\s+/g, '_')}.ics`} 
-        class="calendar-download-btn"
+        class="calendar-download-btn" aria-label="Add to calendar"
         >
             Add to Calendar <span class="calendar-note">(Apple/Outlook/Mobile)</span>
         </a>

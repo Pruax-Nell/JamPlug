@@ -7,9 +7,9 @@ import "../styles/global.css" ;
 
 import { Image } from "astro:assets";
 
-import { OFFICIAL_LINKS } from "../data/site-config";
+import logo from "../assets/YJP/long-logo-orange.svg" 
 
-import YJP1 from "../assets/branding/long-logo-orange-lug-2000x550px.svg"
+import { OFFICIAL_LINKS } from "../data/site-config";
 
 const base = import.meta.env.BASE_URL;
 //  color test in spare directory 
@@ -20,13 +20,14 @@ const base = import.meta.env.BASE_URL;
 title="About Us"
 description="Behind the scenes at YJP">
 <nav class="navigation-controls">
-    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'" aria-label="Go Back to previous page"> ← Previous Page </Button>
 </nav>
 
-<section class="frame-fence about-section">
+<section class="frame-fence about-section" role="main">
     <div class="about-head">  
         <h1 class="about-title full-span">About the brand </h1>
-        <span class="full-span"><img src={YJP1} alt="Your Jam Plug UK" class="about-brand-logo">
+        <span class="full-span">
+            <Image src={logo} alt="Your Jam Plug UK" width={320} height={200} class="about-brand-logo" >
         </span>
     </div>
     <div class="about-welcome block">
@@ -58,10 +59,10 @@ description="Behind the scenes at YJP">
         <h2 class="heading-full-width founder-title">The Founder</h2>
         
         <div class="port founder-image">
-            <a href={OFFICIAL_LINKS.shaneru} target="_blank">
-                <Image src="/src/assets/Skater.Shynell.JPG" alt="Me" height={320} width={260}  />
+            <a href={OFFICIAL_LINKS.shaneru} target="_blank" aria-label="Portrait of Shaneru">
+                <Image src="/src/assets/Skater.Shynell.JPG" alt="Me aka Shaneru, spinning on skates" height={320} width={260}  />
             </a>
-            <span>Captured by <a href="https://danielbridlephoto.com/" class="community-credit">Daniel Bridle</a></span>
+            <span>Captured by <a href="https://danielbridlephoto.com/" class="community-credit" aria-label="To photographer's site, Daniel Bridle (external)" target="_blank">Daniel Bridle</a></span>
         </div>
         <div class="about-me">
             <p>Call me Shaneru!</p>
@@ -91,25 +92,25 @@ description="Behind the scenes at YJP">
 
         <p class="heading-small highlight-3">Here's how you can help:</p>
 
-        <p>The skater - signs up to<a href="/newsletter-signup" class="inline-link"> the newsletter</a>.</p>
+        <p>The skater - signs up to<a href="/newsletter-signup" class="inline-link" aria-label="To Newsletter signup form"> the newsletter</a>.</p>
 
-        <p>The Organiser - <a href="/submit-an-event" class="inline-link"> submit their events</a> to be listed on our calendar.</p>
+        <p>The Organiser - <a href="/submit-an-event" class="inline-link" aria-label="To Event Form"> submit their events</a> to be listed on our calendar.</p>
 
-        <p>The Owner -<a href="/submit-a-business" class="inline-link"> submit their business</a> to be added to the directory.</p>
+        <p>The Owner -<a href="/submit-a-business" class="inline-link" aria-label="To business form"> submit their business</a> to be added to the directory.</p>
 
         <p>Everyone -
-            <a href="#official-channels" class="inline-link">
+            <a href="#official-channels" class="inline-link" aria-label="To Official Socials section">
             Share the site and our socials,</a> ensure all skaters know and give feedback, cause remember, this is for all of us.
         </p>
 
-        <p>For more details on how we work, <a href="/ourProcess" class="inline-link">head to the F.A.Q page.</a></p>
+        <p>For more details on how we work, <a href="/ourProcess" class="inline-link" aria-label="To F.A.Q page">head to the F.A.Q page.</a></p>
         
         <!-- <span class="separation">...</span> -->
 
         <div class="direction-box">
-            <p><a href="/submit-an-event">Submit an Event</a></p>
-            <p><a href="/submit-a-business">Submit a Group/Business</a></p>
-            <p><a href="/enquiry">Join the Newsletter</a></p>
+            <p><a href="/submit-an-event" aria-label="To Event Form">Submit an Event</a></p>
+            <p><a href="/submit-a-business" aria-label="To Business Form">Submit a Group/Business</a></p>
+            <p><a href="/enquiry" aria-label="To Newsletter Form">Join the Newsletter</a></p>
         </div>
         
         <p>Other ways to support:</p>
@@ -118,17 +119,18 @@ description="Behind the scenes at YJP">
     
         <p>So far, everything is out of my own pocket, abilities and time, so if people want to contribute, let me know!</p>
         
-        <p><a href="/enquiry" class="inline-link">Drop me a message.</a></p>
-        <p><a href="" class="inline-link">Donate directly</a> to the project.</p>
+        <p><a href="/enquiry" class="inline-link" aria-label="To Enquiry Form">Drop me a message.</a></p>
+        <p><a href={OFFICIAL_LINKS.donate} class="inline-link" aria-label="To Donation Page (external)" target="_blank">Donate directly</a> to the project.</p>
     </div>
     
     <div class="block about-channels">
-        <h4 id="official-channels" class="heading-small">Our Official Channels</h4>
+        <h3 id="official-channels" class="heading-small">Our Official Channels</h3>
         <div class="channel-block">
-            <div class="channel-div insta"> <a href={OFFICIAL_LINKS.instagram} target="_blank"><span>Instagram</span> <p>yourjamplug.uk</p></a></div>
-            <div class="channel-div tiktok"> <a href={OFFICIAL_LINKS.tiktok} target="_blank"><span>TikTok</span> <p>Skaters.jam.plug</p></a></div>
-            <!-- <div class="channel-div discord"> <a href={OFFICIAL_LINKS.discord} target="_blank"><span>Discord</span> <p>Roller Skater's Jam Plug</p></a></div> -->
+            <div class="channel-div insta"> <a href={OFFICIAL_LINKS.instagram} target="_blank" aria-label="To our Instagram account"><span>Instagram</span> <p>yourjamplug.uk</p></a></div>
+            <div class="channel-div tiktok"> <a href={OFFICIAL_LINKS.tiktok} target="_blank" aria-label="To our TikTok account"><span>TikTok</span> <p>your.jam.plug</p></a></div>
+            <!-- <div class="channel-div discord"> <a href={OFFICIAL_LINKS.discord} target="_blank" aria-label="To our Discord Channel"><span>Discord</span> <p>Roller Skater's Jam Plug</p></a></div> -->
         </div>
+        <!-- yourjamplug.skateglobal -->
         
 
     </div>
@@ -173,11 +175,14 @@ description="Behind the scenes at YJP">
     }
 
     .inline-link{
-        /* color: var(--ob-brown); */
-        background-color: var(--shadow-pink);
-        background-color: var(--shadow-purple);
+        color: var(--ob-brown);
+        font-weight: 700;
+        /* background-color: var(--shadow-pink); */
+        border-inline: 3px solid var(--mid-orange);
+        
         padding-inline: .1rem;
         border-radius: 4px;
+        text-transform: uppercase;
     }
     
     .inline-link:hover{
@@ -188,7 +193,6 @@ description="Behind the scenes at YJP">
     .about-section {
         display: flex;
         flex-direction: column;
-        margin-top: 4rem;
 
     }
 
@@ -362,7 +366,7 @@ description="Behind the scenes at YJP">
         text-align: center;
         justify-items: center;
         align-self: center;
-        width: 80ch;
+        max-width: 80ch;
     }
     
     .about-process-graphic {

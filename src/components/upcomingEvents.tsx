@@ -643,7 +643,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         </div>
 
         <div className='button-div'>
-          <button id='clear-filters-button' className={` reset-button ${isvisible ? 'hidden' : 'visible'}`} onClick={handleReset}>
+          <button id='clear-filters-button' className={` reset-button ${isvisible ? 'hidden' : 'visible'}`} onClick={handleReset} aria-label='Clear All Filters'>
             Clear All Filters
           </button>
 
@@ -652,6 +652,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
             onClick={expandFilters}
             aria-expanded={isExpanded}
             aria-controls="filter-section reset-button"
+            aria-label='Open Filters Doc'
             >
             {isExpanded ? 'Close Filters' : 'Show Filters'}
           </button>
@@ -693,9 +694,9 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     
       {totalPages > 1 && (
         <div className="pagination-controls">
-          <button disabled={!canGoBack} onClick={() => setCurrentPage(p => p - 1)}>Prev</button>
+          <button disabled={!canGoBack} onClick={() => setCurrentPage(p => p - 1)} aria-label="Previous Page">Prev</button>
           <span>Page {currentPage} of {totalPages}</span>
-          <button disabled={!canGoForward} onClick={() => setCurrentPage(p => p + 1)}>Next</button>
+          <button disabled={!canGoForward} onClick={() => setCurrentPage(p => p + 1)} aria-label="Next Page">Next</button>
         </div>
       )}
     </div>

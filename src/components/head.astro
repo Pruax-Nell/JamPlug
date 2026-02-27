@@ -14,14 +14,17 @@ interface Props {
 const { 
   title, 
   description = SITE_DESCRIPTION,
-  image = "src/assets/branding/bloat-vertical-black.svg", 
+  image = "src/assets/YJP/bloat-vertical-black.svg", 
   SEO, 
   Index,
 } = Astro.props;
 
-import NavIcon from 'public/admin/new-favicon.svg';
+import NavIcon from '@admin/new-favicon.svg';
+import ogBackup from '@admin/open-graph-backup.jpg'
 
+const ogImageSrc = image || ogBackup.src;
 
+const canonicalImageURL = new URL(ogImageSrc, Astro.url);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const displayTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 
@@ -32,10 +35,11 @@ const base = import.meta.env.BASE_URL;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#fff9ed" />
 
-<!-- <link rel="icon" type="image/svg+xml" href={`${base === '/' ? '' : base}/admin/new-favicon.svg`} /> -->
-<link rel="icon" type="image/svg+xml" href={NavIcon} />
+<link rel="icon" type="image/svg+xml" href={NavIcon.src} />
 <link rel="canonical" href={canonicalURL} />
+<!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> -->
 
 <title>{displayTitle}</title>
 <meta name="title" content={displayTitle} />
@@ -45,14 +49,6 @@ const base = import.meta.env.BASE_URL;
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 
-<!-- 
-<link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site)}
-/> -->
-
 <!-- Web analytics -->
 <!-- <script data-goatcounter="https://my-account.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
 
@@ -61,27 +57,32 @@ const base = import.meta.env.BASE_URL;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={displayTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={canonicalImageURL} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={displayTitle} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:image" content={canonicalImageURL} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={displayTitle} />
 <meta property="og:description" content={description} />
-<!-- <meta property="og:image" content={new URL(image.src, Astro.url)} /> -->
+<meta property="og:image" content={canonicalImageURL} />
 
 <!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
 <link rel="preload" href="/fonts/RedRose-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin />
 <link rel="preload" href="/fonts/RedRose-VariableFont_wght.woff2" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/ShantellSans-VariableFont.ttf" as="font" type="font/ttf" crossorigin />
 <link rel="preload" href="/fonts/fonts/TitanOne-Regular.ttf" as="font" type="font/ttf" crossorigin />
 <link rel="preload" href="/fonts/fonts/TitanOne-Regular.woff2" as="font" type="font/woff2" crossorigin />
+
+
+<!-- favicon stuff -->
+ <link rel="icon" type="image/png" href="/https://www.yourjamplug.uk/admin/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/https://www.yourjamplug.uk/admin/favicon.svg" />
+<link rel="shortcut icon" href="/https://www.yourjamplug.uk/admin/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/https://www.yourjamplug.uk/admin/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="YourJamPlug" />
+<link rel="manifest" href="/https://www.yourjamplug.uk/admin/site.webmanifest" />

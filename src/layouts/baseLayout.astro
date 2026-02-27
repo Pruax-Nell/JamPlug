@@ -17,7 +17,7 @@ import Toolkit from "../components/toolkit.astro";
 import FullNav from "../components/fullNav.astro";
 import PageFooter from "../components/footer.astro";
 
-import HeadLogo from "../assets/branding/Shine-orange-lug-2.svg"
+import HeadLogo from "../assets/YJP/Shine-orange-lug-2.svg"
  
 
 const { page_title, Index, description, SEO, image = "/content/rolling.png" } = Astro.props;
@@ -56,7 +56,7 @@ const base = import.meta.env.BASE_URL;
 	<section id="main-container">
 		<Toolkit/>
 
-		<section id="mainHeader"> 
+		<section id="mainHeader" role="banner"> 
 			
 			<header id="site-header">
 				<!-- A -->
@@ -72,18 +72,18 @@ const base = import.meta.env.BASE_URL;
 			</header>
 		</section>
 
-		<section id="mainBody">
+		<section id="mainBody" role="main">
 			
 			<!-- || Content slot -->
 			<slot />
 			<nav class="navigation-controls">
   
-			<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
+			<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'" aria-label="To Previous Page"> ← Previous Page </Button>
 
 			</nav>
 		</section>
 
-		<section id="mainFooter">
+		<section id="mainFooter" role="contentinfo">
 			<PageFooter />
 		</section>
 	</section>

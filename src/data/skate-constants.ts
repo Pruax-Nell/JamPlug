@@ -2,6 +2,7 @@ import { slugify } from "../function/stringHelper";
 
 export const SITE_TITLE  = "Your Jam Plug UK | Europe's Skate Event Directory";
 export const SITE_DESCRIPTION = 'For Roller Skaters who want to skate';
+const NEW_BRAND = ' Your Jam Plug | Skate Global'
 
 export const HOMEPAGE_FEATURE_LIMIT = 8;
 export const EVENTS_PER_PAGE = 20;
@@ -12,14 +13,15 @@ export const EVENT_STATUS = [
   { label: 'Sold Out', value: 'sold-out' },
   { label: 'Rescheduled', value: 'rescheduled' },
   { label: '-', value: '' },
-
 ] as const;
+
 // ----------------------  MEDIA LIST
 export const SOCIAL_MEDIA = [
   { label: 'Socials', value: 'socials' },
   { label: 'Other', value: 'other' },
   { label: 'Website', value: 'website' },
 ] as const;
+
 // ---------------------- CMS HELPERS
 export const POST_STATUS = [
   {value:'draft', label: 'Draft'},
@@ -68,6 +70,7 @@ export const INDUSTRY_CAT = [
     {value: 'services', label: 'Services'},
     {value: 'other', label: 'Other'},
 ] as const;
+
 //  ----------------------  VENUE TYPE
 export const SKATE_VENUE = [
     {value: 'rink', label: 'Full Rink'},

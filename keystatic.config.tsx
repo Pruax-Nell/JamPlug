@@ -2,12 +2,14 @@
 import React from 'react';
 import { config, fields, collection, component} from '@keystatic/core';
 import { ImagePreview } from '@components/previewImage';
-import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE } from './src/data/skate-constants'
+import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE } from './src/data/skate-constants'
 
 import { slugify } from './src/function/stringHelper';
 import { locationBlock, mapCoords } from './src/function/configBlocks/key-block';
 
 // in future, a complete rebuild would be more efficient 
+// singleton for long list data i.e. tags
+// collection for per-page data
 
 
 export default config({
@@ -389,27 +391,38 @@ export default config({
     // -------------------------------------------- AUTHORS --------------|
     authors: collection({
       label: 'Authors',
-      slugField: 'name',
-      path: 'src/content/authors/*',
+      slugField: 'alias',
+      path: 'src/content/authors/*/',
       format: { data: 'json' },
       schema: {
-        name: fields.slug({ name: { label: 'Full Name' } }),
+        name: fields.text({ label: 'Full Name'  }),
+        alias: fields.slug({ 
+          name: { 
+            label: 'Author Alias',
+            description: 'Public Name' 
+          } 
+        }),
+        anonymity: fields.checkbox({ 
+          label: 'Publish Anonymously ?', 
+          description: 'Neither name, nor alias will be published'
+        }),
         role: fields.text({ label: 'Role (e.g. Founder, Photographer)', defaultValue: 'Contributor' }),
-        avatar: fields.image({
-          label: 'Avatar',
-          directory: 'src/assets/authors',
-          publicPath: '@/assets/authors/',
+        headshot: fields.image({
+          label: 'Headshot Image',
+          directory: 'src/content/authors/', 
+          publicPath: './', 
+        }),
+        skateImage: fields.image({
+          label: 'Skate/Personality Image',
+          directory: 'src/content/authors/',
+          publicPath: './',
         }),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
         socials: fields.array(
           fields.object({
             platform: fields.select({
               label: 'Platform',
-              options: [
-                { label: 'Socials', value: 'socials' },
-                { label: 'Other', value: 'other' },
-                { label: 'Website', value: 'website' },
-              ],
+              options: SOCIAL_MEDIA,
               defaultValue: 'socials',
             }),
             url: fields.url({ label: 'Profile URL' }),
@@ -426,7 +439,12 @@ export default config({
       path: 'src/content/business/rinks/*',
       format: { data: 'json' },
       schema: {
-        name: fields.slug({ name: { label: 'Full Name' } }),
+        name: fields.slug({ name: { label: 'Rink Name' } }),
+        venue: fields.select ({
+          label: 'Venue Type',
+          options: SKATE_VENUE,
+          defaultValue: 'rink',
+        }),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
         logo: fields.image({ 
           label: 'Rink Logo',
@@ -440,11 +458,7 @@ export default config({
           fields.object({
             platform: fields.select({
               label: 'Platform',
-              options: [
-                { label: 'Socials', value: 'socials' },
-                { label: 'Other', value: 'other' },
-                { label: 'Website', value: 'website' },
-              ],
+              options: SOCIAL_MEDIA,
               defaultValue: 'socials',
             }),
             url: fields.url({ label: 'Profile URL' }),
@@ -455,18 +469,18 @@ export default config({
 
     }),
     
-    // -------------------------------------------- Brands --------------|
-    brands: collection({
-      label: 'Skate Brands',
+    // -------------------------------------------- COMMUNITY --------------|
+    community: collection({
+      label: 'Community and Groups',
       slugField: 'name',
-      path: 'src/content/business/brands/*',
+      path: 'src/content/business/community/*',
       format: { data: 'json' },
       schema: {
-        name: fields.slug({ name: { label: 'Full Name' } }),
+        name: fields.slug({ name: { label: 'Group Name' } }),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
         logo: fields.image({ 
-          label: 'Rink Logo',
-          directory: 'src/content/brands/',
+          label: 'Group Logo',
+          directory: 'src/content/community/',
           publicPath: '../'
         }),
         location: locationBlock,
@@ -476,11 +490,7 @@ export default config({
           fields.object({
             platform: fields.select({
               label: 'Platform',
-              options: [
-                { label: 'Socials', value: 'socials' },
-                { label: 'Other', value: 'other' },
-                { label: 'Website', value: 'website' },
-              ],
+              options: SOCIAL_MEDIA,
               defaultValue: 'socials',
             }),
             url: fields.url({ label: 'Profile URL' }),
@@ -491,12 +501,42 @@ export default config({
 
     }),
     
-    // -------------------------------------------- BUSINESS --------------|
+    // -------------------------------------------- INDUSTRY --------------|
+    industry: collection({
+      label: 'Industry Business',
+      slugField: 'name',
+      path: 'src/content/business/industry/*',
+      format: { data: 'json' },
+      schema: {
+        name: fields.slug({ name: { label: 'Business/Brand Name' } }),
+        bio: fields.text({ label: 'Short Bio', multiline: true }),
+        logo: fields.image({ 
+          label: 'Group Logo',
+          directory: 'src/content/industry/',
+          publicPath: '../'
+        }),
+        location: locationBlock,
+        founder: fields.text({ label: 'Founder'}),
+        owner: fields.text({ label: 'Current Owner'}),
+        socials: fields.array(
+          fields.object({
+            platform: fields.select({
+              label: 'Platform',
+              options: SOCIAL_MEDIA,
+              defaultValue: 'socials',
+            }),
+            url: fields.url({ label: 'Profile URL' }),
+          }),
+          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
+        ),
+      }
+
+    }),
     
 
 
 
-    // -------------------------------------------- AUTHORS --------------|
+    // -------------------------------------------- blank --------------|
   }
 });
 

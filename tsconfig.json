@@ -13,8 +13,9 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
-      "@branding/*": ["src/assets/branding/*"],
+      "@branding/*": ["src/assets/YJP/*"],
       "@styles/*": ["src/styles/*"],
+      "@admin/*": ["public/admin/*"],
       
     }
   }

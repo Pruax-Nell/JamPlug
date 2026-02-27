@@ -55,7 +55,7 @@ const base = import.meta.env.BASE_URL;
     {variant === "event" && (
     <div class={`post-card card-${variant}`}>
         {poster ? (
-            <Image src={poster} alt="" width={400} height={500} class="poster-block" />
+            <Image src={poster} alt={title} width={400} height={500} class="poster-block" />
         ) : (
             <div class="placeholder poster-block" aria-hidden="true">🛼</div>
         )}
@@ -80,7 +80,7 @@ const base = import.meta.env.BASE_URL;
     {variant === "blog" && (
     <div class={`post-card card-${variant}`}>
 
-        {poster ? ( <Image src={poster} alt="" width={300} height={400} class="poster-block" />
+        {poster ? ( <Image src={poster} alt={title} width={300} height={400} class="poster-block" />
         
         <div class={`content-block ${variant}-content`}>
             <p class="card-heading">
