@@ -40,15 +40,14 @@ const components = {
 
 const lastEditDate = post.data.updated ? formatDate(post.data.updated) : null;
 
-// const authorSlug = post.data.author.profile;
 const authorId = typeof post.data.author.profile === 'object' 
   ? post.data.author.profile.id 
   : post.data.author.profile;
 
-const authorEntry = await getEntry('authors', authorId);
-
+const authorEntry = authorId ? await getEntry('authors', authorId) : null;
 const alias = authorEntry?.data?.alias || "Contributor";
 
+// const headshot = authorEntry?.data?.headshot;
 
 const { Content } = await render(post);
 const base = import.meta.env.BASE_URL;
@@ -80,14 +79,23 @@ const base = import.meta.env.BASE_URL;
   </header>
 
   
-{post.data.coverImage && (  <Image 
-    src={post.data.coverImage.src} 
-    alt={post.data.title} 
-    width={300} 
-    // height={250} 
-    class="cover-image"
-    loading="eager"
-  />)}
+  {post.data.coverImage && (
+    <figure class="cover-image-container">
+      <Image 
+        src={post.data.coverImage.src}
+        alt={post.data.coverImage.alt || post.data.title} 
+        width={800} 
+        class="cover-image"
+        loading="eager"
+      />
+      
+      {post.data.coverImage.caption && (
+        <figcaption class="cover-caption">
+          {post.data.coverImage.caption}
+        </figcaption>
+      )}
+    </figure>
+  )}
    <!-- <a href={`/authors/${post.data.author.profile}`}>
    </a>  -->
 
@@ -98,13 +106,12 @@ const base = import.meta.env.BASE_URL;
         <p>Posted by <strong>A Jam Plug Contributor</strong></p>
       </div>
     ) : (
-      
-      <div>
-        <p>Written by: <strong>{alias}</strong> </p>
+      <div class="author-info">
+        <p>Written by: <strong>{alias}</strong></p>
       </div>
     )}
-    
-    {post.data.updated && (<p>Last Updated{lastEditDate} </p>)}
+  
+  {post.data.updated && (<p class="updated-label">Last Updated: {lastEditDate}</p>)}
     <!-- <Content /> -->
     <Content components={components} />
   </div>

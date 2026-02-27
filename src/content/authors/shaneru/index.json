@@ -3,12 +3,12 @@
   "alias": "Shaneru",
   "role": "Founder",
   "headshot": {
-    "src": "./shaneru/headshot.JPG",
+    "src": "../shaneru/headshot.JPG",
     "alt": " Photo of Shaneru skating",
     "caption": "Photographer: Daniel Bridle"
   },
   "skateImage": {
-    "src": "./shaneru/skateImage.jpg",
+    "src": "../shaneru/skateImage.jpg",
     "alt": " Close up of Shaneru",
     "caption": " Photographer: Daniel Bridle"
   },
