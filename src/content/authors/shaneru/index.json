@@ -1,0 +1,22 @@
+{
+  "legalName": "Shaneru Vaux",
+  "alias": "Shaneru",
+  "role": "Founder",
+  "headshot": {
+    "src": "./shaneru/headshot.JPG",
+    "alt": " Photo of Shaneru skating",
+    "caption": "Photographer: Daniel Bridle"
+  },
+  "skateImage": {
+    "src": "./shaneru/skateImage.jpg",
+    "alt": " Close up of Shaneru",
+    "caption": " Photographer: Daniel Bridle"
+  },
+  "bio": "Founder of Your Jam Plug. \n\"Made skating my personality way too soon\"",
+  "socials": [
+    {
+      "platform": "socials",
+      "url": "https://www.instagram.com/sha.ne.ru"
+    }
+  ]
+}

@@ -26,13 +26,64 @@ export default config({
       format: { contentField: 'content'},
       schema: {
         title: fields.slug({ name: { label: 'Title'} }),
-        author: fields.relationship({
-          label: 'Author',
-          collection: 'authors',
-          validation: { isRequired: true },
+        author: fields.object({
+          profile: fields.relationship({
+            label: 'Author Profile',
+            collection: 'authors',
+          }),
+          isAnonymous: fields.checkbox({
+            label: 'Post Anonymously',
+            description: 'If checked, the author name and photo will be hidden from the public post.',
+            defaultValue: false,
+          }),
+        }),
+        subtitle: fields.text({ label: 'Sub-Title', description: 'e.g.tag lines or under/second title (hint:...after the colon)'}),
+        // CMS ADMIN FIELDS 
+        status: fields.select({
+          label: 'Status', 
+          options: POST_STATUS,
+          defaultValue: 'draft',
+        }),
+        published: fields.date({ 
+          label: 'Published Date', 
+          defaultValue: new Date().toISOString().split('T')[0], 
+          validation: { isRequired: true }
         }),
         isFeatured: fields.checkbox({ label: 'Featured Post', defaultValue: false }),
         updated: fields.date({ label: 'Last Updated' }),
+        description: fields.text({
+          label: 'Description',
+          multiline: true,
+        }),
+         blogCategory: fields.select({
+          label: 'Blog Category',
+          options: BLOG_CATEGORY,
+          defaultValue: 'news',
+        }),
+        skateDiscipline: fields.select({
+          label: 'Skate Discipline',
+          options:[
+            { label: '-- Not Specified --', value: '' }, 
+            ...SKATE_DISCIPLINES 
+          ],
+          defaultValue: '',
+        }),
+         coverImage: fields.object({
+          src: fields.image({
+            label: 'Cover Image',
+            directory: 'src/content/images/posts/',
+            publicPath: '../images/posts/',
+            transformFilename: (name) => `CoverImage-${name.replaceAll(/\s+/g, '-')}`
+          }),
+          alt: fields.text({
+            label: 'Alt Text',
+            description: 'Cover Image Description'
+          }),
+          caption: fields.text({
+            label: 'Image Caption',
+            description: 'Image Description',
+          }),
+        }),
         content: fields.markdoc ({ 
           label: 'Content',
           options: {
@@ -97,42 +148,6 @@ export default config({
           }, 
           
         }),
-        subtitle: fields.text({ label: 'Sub-Title', description: 'e.g.tag lines or under/second title (hint:...after the colon)'}),
-        description: fields.text({
-          label: 'Description',
-          multiline: true,
-        }),
-        blogCategory: fields.select({
-          label: 'Blog Category',
-          options: BLOG_CATEGORY,
-          defaultValue: 'news',
-        }),
-        skateDiscipline: fields.select({
-          label: 'Skate Discipline',
-          options:[
-            { label: '-- Not Specified --', value: '' }, 
-            ...SKATE_DISCIPLINES 
-          ],
-          defaultValue: '',
-        }),
-        coverImage: fields.image({
-          label: 'Cover Image',
-          // directory: 'src/content/blog',
-          directory: 'src/content/images/posts/',
-          publicPath: '../images/posts/',
-          transformFilename: (name) => `CoverImage-${name.replaceAll(/\s+/g, '-')}`
-        }),
-         // CMS ADMIN FIELDS 
-        status: fields.select({
-          label: 'Status', 
-          options: POST_STATUS,
-          defaultValue: 'draft',
-        }),
-        published: fields.date({ 
-          label: 'Published Date', 
-          defaultValue: new Date().toISOString().split('T')[0], 
-          validation: { isRequired: true }
-        }),
       }
     }),
     
@@ -193,41 +208,101 @@ export default config({
         }),
         minAge: fields.text({ label: 'Minimum Age' }),
         maxAge: fields.text({ label: 'Maximum Age' }),
-        eventPoster: fields.image({
-          label: 'Event Poster',
-          directory: 'src/content/images/events',
-          publicPath: '../../images/events/',
-          transformFilename: (name) => `CoverImage-${name.replaceAll(/\s+/g, '-')}`
+        eventPoster: fields.object({
+          src: fields.image({
+            label: 'Event Poster',
+            directory: 'src/content/images/events',
+            publicPath: '../../images/events/',
+            transformFilename: (name) => `CoverImage-${name.replaceAll(/\s+/g, '-')}`
+          }),
+          alt: fields.text({
+            label: 'Alt Text',
+            description: 'For accessibility',
+          }),
+          caption: fields.text({
+            label: 'Image Caption',
+            description: 'e.g. by photographer A, at Rink...'
+          }),
         }),
-        flyerImage1: fields.image({
-          label: 'Flyer 1',
-          directory: 'src/content/images/events',
-          publicPath: '../../images/events/',
-          transformFilename: (name) => `flyer-1-${name.replaceAll(/\s+/g, '-')}`
+        flyerImage1: fields.object({
+          src: fields.image({
+            label: 'Flyer 1',
+            directory: 'src/content/images/events',
+            publicPath: '../../images/events/',
+            transformFilename: (name) => `flyer-1-${name.replaceAll(/\s+/g, '-')}`
+          }),
+          alt: fields.text({
+            label: 'Alt Text',
+            description: 'For accessibility',
+          }),
+          caption: fields.text({
+            label: 'Image Caption',
+            description: 'e.g. by photographer A, at Rink...'
+          }),
         }),
-        flyerImage2: fields.image({
-          label: 'Flyer 2',
-          directory: 'src/content/images/events',
-          publicPath: '../../images/events/',
-          transformFilename: (name) => `flyer-2-${name.replaceAll(/\s+/g, '-')}`
+        flyerImage2: fields.object({
+          src: fields.image({
+            label: 'Flyer 2',
+            directory: 'src/content/images/events',
+            publicPath: '../../images/events/',
+            transformFilename: (name) => `flyer-2-${name.replaceAll(/\s+/g, '-')}`
+          }),
+          alt: fields.text({
+            label: 'Alt Text',
+            description: 'For accessibility',
+          }),
+          caption: fields.text({
+            label: 'Image Caption',
+            description: 'e.g. by photographer A, at Rink...'
+          }),
         }),
-        flyerImage3: fields.image({
-          label: 'Flyer 3',
-          directory: 'src/content/images/events',
-          publicPath: '../../images/events/',
-          transformFilename: (name) => `flyer-3-${name.replaceAll(/\s+/g, '-')}`
+        flyerImage3: fields.object({
+          src: fields.image({
+            label: 'Flyer 3',
+            directory: 'src/content/images/events',
+            publicPath: '../../images/events/',
+            transformFilename: (name) => `flyer-3-${name.replaceAll(/\s+/g, '-')}`
+          }),
+          alt: fields.text({
+            label: 'Alt Text',
+            description: 'For accessibility',
+          }),
+          caption: fields.text({
+            label: 'Image Caption',
+            description: 'e.g. by photographer A, at Rink...'
+          }),
         }),
-        flyerImage4: fields.image({
-          label: 'Flyer 4',
-          directory: 'src/content/images/events',
-          publicPath: '../../images/events/',
-          transformFilename: (name) => `flyer-4-${name.replaceAll(/\s+/g, '-')}`
+        flyerImage4: fields.object({
+          src: fields.image({
+            label: 'Flyer 4',
+            directory: 'src/content/images/events',
+            publicPath: '../../images/events/',
+            transformFilename: (name) => `flyer-4-${name.replaceAll(/\s+/g, '-')}`
+          }),
+          alt: fields.text({
+            label: 'Alt Text',
+            description: 'For accessibility',
+          }),
+          caption: fields.text({
+            label: 'Image Caption',
+            description: 'e.g. by photographer A, at Rink...'
+          }),
         }),
-        flyerImage5: fields.image({
-          label: 'Flyer 5',
-          directory: 'src/content/images/events',
-          publicPath: '../../images/events/',
-          transformFilename: (name) => `flyer-5-${name.replaceAll(/\s+/g, '-')}`
+        flyerImage5: fields.object({
+          src: fields.image({
+            label: 'Flyer 5',
+            directory: 'src/content/images/events',
+            publicPath: '../../images/events/',
+            transformFilename: (name) => `flyer-5-${name.replaceAll(/\s+/g, '-')}`
+          }),
+          alt: fields.text({
+            label: 'Alt Text',
+            description: 'For accessibility',
+          }),
+          caption: fields.text({
+            label: 'Image Caption',
+            description: 'e.g. by photographer A, at Rink...'
+          }),
         }),
 
         startTime: fields.object({
@@ -262,11 +337,11 @@ export default config({
         }),
     // Bonus info - option to add multiple lines ideal
         eventLink: fields.url({ label: 'Event Link', }),
-        ticketLink: fields.url({ label: 'Ticket Link' }),
-        tickets: fields.array(
+        ticketLink: fields.array(
           fields.object({
             name: fields.text({ label: 'Tickets'}),
-            directLink: fields.url({ label: 'URL', validation: { isRequired: false } })
+            directLink: fields.url({ label: 'URL', validation: { isRequired: false } }),
+            disclaimer: fields.text({ label: 'Disclaimer'}),
           }),
           {
             label: 'Ticket Links'
@@ -376,7 +451,6 @@ export default config({
           options: FOOTWEAR_CHOICE, 
           defaultValue: 'skates'}),
           
-        repetition: fields.text({ label: 'Repetition' }),
       // TEXT BODY
         content: fields.markdoc({
           label: 'Content',
@@ -395,27 +469,43 @@ export default config({
       path: 'src/content/authors/*/',
       format: { data: 'json' },
       schema: {
-        name: fields.text({ label: 'Full Name'  }),
+        legalName: fields.text({ label: 'Full Name'  }),
         alias: fields.slug({ 
           name: { 
             label: 'Author Alias',
             description: 'Public Name' 
           } 
         }),
-        anonymity: fields.checkbox({ 
-          label: 'Publish Anonymously ?', 
-          description: 'Neither name, nor alias will be published'
-        }),
         role: fields.text({ label: 'Role (e.g. Founder, Photographer)', defaultValue: 'Contributor' }),
-        headshot: fields.image({
-          label: 'Headshot Image',
-          directory: 'src/content/authors/', 
-          publicPath: './', 
+        headshot: fields.object({
+          src: fields.image({
+            label: 'Headshot Image',
+            directory: 'src/content/authors/', 
+            publicPath: './', 
+          }),
+          alt: fields.text({
+            label: 'Alt Text for Image',
+            description: 'Describe the image for accessibility'
+          }),
+          caption: fields.text({
+            label: 'Caption (Displayed on site)',
+            description: 'e.g., Photo by @skateshooter_uk'
+          }),
         }),
-        skateImage: fields.image({
-          label: 'Skate/Personality Image',
-          directory: 'src/content/authors/',
-          publicPath: './',
+        skateImage: fields.object({
+          src: fields.image({
+            label: 'Skate/Personality Image',
+            directory: 'src/content/authors/',
+            publicPath: './',
+          }),
+          alt: fields.text({ 
+            label: 'Alt Text (Describe the photo for screen readers)',
+            description: 'e.g performing a kickflip at Southbank'
+          }),
+          caption: fields.text({
+            label: 'Caption (Displayed on site)',
+            description: 'e.g., Photo by @skateshooter_uk'
+          }),
         }),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
         socials: fields.array(
