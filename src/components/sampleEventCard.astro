@@ -1,17 +1,15 @@
 ---
-// import Image from "astro/components/Image.astro";
 import { Image } from "astro:assets";
 import { formatEventDate } from '../function/dateHelper';
 
 interface Props {
   url: string;
-  poster: any; // Using 'any' for the Astro image object
+  poster: any; 
   title: string;
   city: string;
   country: string;
   eventType: string;
   description: any;
-  // We only take the two dates we need for the helper, not the whole event object
   timeframe: {
     startDate: Date | string;
     endDate?: Date | string | null;

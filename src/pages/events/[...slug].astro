@@ -8,7 +8,7 @@ import { Image } from 'astro:assets';
 import Button from '../../components/button.astro';
 import { formatEventDate, formatTime, getCalendarUrls } from '../../function/dateHelper';
 import { formatLocation } from '../../data/globe-constants';
-import eventPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg' // when events don't have a poster
+import eventPlaceholder from '../../assets/placeholder/placeholder-eventPoster.jpg' 
 
 export async function getStaticPaths() {
   const posts = await getCollection('events');

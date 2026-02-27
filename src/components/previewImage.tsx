@@ -6,7 +6,7 @@ type ImageSchema = {
     src: any;
     alt: any;
     edge: any;
-};
+}; 
 
 export const ImagePreview = (props: any) => {
 // If ObjectFieldProps still shows a red line, use this "Manual Type"

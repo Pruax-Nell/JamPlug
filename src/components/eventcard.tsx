@@ -4,7 +4,7 @@ import type { AstroImage, SerializedEvent, EventCardData } from '../function/typ
 import { formatEventDate, formatTime } from '../function/dateHelper';
 import { formatLocation, hasRegionSelected } from '../data/globe-constants';
 
-
+// card holder for upcomingEvents.tsx
 
 type EventCardProps = SerializedEvent['data'] & {
   id: string;
@@ -90,7 +90,7 @@ const dateRange = formatEventDate(startDate, endDate);
            {eventStatus.replace('-', ' ')}
         </div>
       )}
-        </div>
+        </div> 
 
       </div> 
 

@@ -6,7 +6,6 @@ import { timeObject, personObject, locationSchema, businessObject,mapCoords } fr
 import { slugify } from "./function/stringHelper";
 
 // ------------- Collections ----------------- //
-//  BLOGS *** 
 const posts = defineCollection({
   type: 'content', 
   schema: ({ image }) => z.object({

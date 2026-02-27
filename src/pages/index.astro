@@ -9,7 +9,6 @@ import CardHolder from "../components/card-holder.astro";
 import "../styles/home.css";
 import "../styles/components.css";
 
-
 import { Image } from "astro:assets";
 import { getCollection, getEntries } from "astro:content";
 import { formatLabel } from "../function/stringHelper";
@@ -73,13 +72,14 @@ const featuredEvents = publishedEvents
   .map(event => {
     const location = formatLocation(event.data.location, event.data.townCity);
 	const dates = formatEventDate(event.data.startDate, event.data.endDate);
+	const poster = event.data.eventPoster;
     
     return {
 	
       id: event.id,
 	  url: `/events/${event.id}/`,
       title: event.data.eventName,
-      poster: event.data.eventPoster,
+      poster: poster ? poster.src : null,
       description: event.data.description,
       eventType: event.data.eventType,
       locationLabel: location.full, // "London, England, UK"
@@ -91,7 +91,7 @@ const featuredEvents = publishedEvents
 
 	
 // BLOG COLLECTION
-const publishedBlogs = await getCollection('blog', ({ data }) => {
+const publishedBlogs = await getCollection('posts', ({ data }) => {
   return data.status === 'published';
 });
 
@@ -107,8 +107,10 @@ const recentBlogs = (publishedBlogs)
 	discipline: event.data.skateDiscipline,
 	
 }))
-.sort((a, b) => b.published.valueOf() - a.published.valueOf(), )
-.slice(0, 8);
+.sort((a, b) => {
+    return new Date(b.published).getTime() - new Date(a.published).getTime();
+  })
+  .slice(0, 8);
 
 const base = import.meta.env.BASE_URL;
 ---

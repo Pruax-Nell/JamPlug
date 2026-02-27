@@ -7,8 +7,6 @@ interface Props {
 
 const { location, townCity } = Astro.props;
 
-// Level 2: Country (not displayed, but used to find the region)
-// Level 3: Region (discriminant: uk-england, us-new-york, etc.)
 const continentSlug = location?.discriminant;
 const countrySlug = location?.value?.discriminant;
 const regionSlug = location?.value?.value?.discriminant;
