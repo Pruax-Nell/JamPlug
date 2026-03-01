@@ -5,30 +5,19 @@ import BaseLayout from "../layouts/baseLayout.astro";
 import FeaturedCard from '../components/featuredCard.astro';
 import Button from '../components/button.astro';
 import CardHolder from "../components/card-holder.astro";
+import Hero from '../components/hero.astro';
+import NoticeBanner from "../components/noticeBanner.astro";
 
 import "../styles/home.css";
 import "../styles/components.css";
 
 import { Image } from "astro:assets";
-import { getCollection, getEntries } from "astro:content";
-import { formatLabel } from "../function/stringHelper";
-import { formatLocation } from "../data/globe-constants";
-import { formatFestivalDate, formatEventDate, formatDate } from "../function/dateHelper";
-
-import Hero from '../components/hero.astro';
-import Img1 from "../content/images/use/image1.jpg"
-import Img2 from "../content/images/use/image2.jpg"
-import Img3 from "../content/images/use/image3.jpg"
-import Img4 from "../content/images/use/image4.jpg"
-import Img5 from "../content/images/use/image5.jpg"
-import Img6 from "../content/images/use/image6.jpg"
-import Img7 from "../content/images/use/image7.jpg"
-import Img8 from "../content/images/use/image8.jpg"
-import Img9 from "../content/images/use/image9.jpg"
-import Img10 from "../content/images/use/image10.jpg"
+import { getCollection, getEntries } from "astro:content"; 
 
 import { CURRENT_YEAR, SHOW_JAN_BANNER, SHOW_MAY_BANNER, SHOW_NOV_BANNER, SHOW_SEPT_BANNER } from "../data/site-config";
-import NoticeBanner from "../components/noticeBanner.astro";
+
+import { mapEventToCard, mapToFeaturedCard, mapEventFull } from '../function/mapEvents';
+import {  mapBlogToCard, mapBlogFull } from '../function/mapPosts';
 
 const identity = {
 	branding: "your jam plug uk",
@@ -45,48 +34,17 @@ const publishedEvents = await getCollection('events', ({ data }) => {
   return data.status === 'published';
 });
 
-const upcomingEvents = (publishedEvents)
-.map(event => ({
-	id: event.id,
-	title: event.data.eventName,
-	poster: event.data.eventPoster,
-	city: event.data.townCity,
-	country: event.data.location.discriminant,
-	description: event.data.description,
-	eventType: event.data.eventType,
-	featured: event.data.isFeatured,
-	timeframe: {
-		startDate: new Date(event.data.startDate),
-		endDate: event.data.endDate ? new Date(event.data.endDate) : null
-	}
-	
-}))
-.sort(
-	(a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
-)
-.slice(0, 8);
+const upcomingEvents = publishedEvents
+  .filter((event) => new Date(event.data.startDate) >= now) 
+  .sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf()) 
+  .slice(0, 8) 
+  .map(mapEventToCard); 
+
 
 // FEATURED EVENTS
 const featuredEvents = publishedEvents
   .filter((event) => event.data.isFeatured === true)
-  .map(event => {
-    const location = formatLocation(event.data.location, event.data.townCity);
-	const dates = formatEventDate(event.data.startDate, event.data.endDate);
-	const poster = event.data.eventPoster;
-    
-    return {
-	
-      id: event.id,
-	  url: `/events/${event.id}/`,
-      title: event.data.eventName,
-      poster: poster ? poster.src : null,
-      description: event.data.description,
-      eventType: event.data.eventType,
-      locationLabel: location.full, // "London, England, UK"
-      dateLabel: dates,
-	  startOrder: event.data.startDate,
-    };
-  })
+  .map(mapToFeaturedCard)
   .sort((a, b) => b.startOrder.valueOf() - a.startOrder.valueOf());
 
 	
@@ -96,21 +54,11 @@ const publishedBlogs = await getCollection('posts', ({ data }) => {
 });
 
 const recentBlogs = (publishedBlogs)
-.map(event => ({
-	id: event.id,
-	title: event.data.title,
-	subtitle: event.data.subtitle,
-	published: event.data.published,
-	poster: event.data.coverImage,
-	description: event.data.description,
-	category: event.data.blogCategory,
-	discipline: event.data.skateDiscipline,
-	
-}))
-.sort((a, b) => {
-    return new Date(b.published).getTime() - new Date(a.published).getTime();
-  })
-  .slice(0, 8);
+	.map(mapBlogToCard)
+	.sort((a, b) => {
+		return new Date(b.published).getTime() - new Date(a.published).getTime();
+	})
+	.slice(0, 8);
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -157,12 +105,9 @@ title="Home Page">
 		<section id="feature-section"  class="frame-fence">
 			<h3 class="heading">Featured Events</h3>
 			<div class="carosel">
-		{/* {featuredEvents.map((post) => (
-			<FeaturedCard timeframe={post.timeframe} title={post.title} url={`/events/${post.id}/`} poster={post.poster} description={post.description} city={post.city} country={post.country} eventType={post.eventType}/>
-			))} */}
-			{featuredEvents.map(post => (
-			<FeaturedCard {...post} />
-			))}
+				{featuredEvents.map(post => (
+				<FeaturedCard {...post} />
+				))}
 			</div>
 			<div class='big-space'></div>
 		</section>
@@ -206,15 +151,7 @@ title="Home Page">
 				<div class="carosel" role="list" aria-label="Upcoming Events">
 			{upcomingEvents.map((post) => (
 				<CardHolder 
-				variant="event"
-				title={post.title}
-				url={`/events/${post.id}/`}
-				poster={post.poster}
-				city={post.city}
-				country={post.country}
-				timeframe={post.timeframe}
-				description={post.description}
-				eventType={post.eventType}
+					{...post}
 				/>
 			))}
 
@@ -243,14 +180,8 @@ title="Home Page">
 			{recentBlogs.length > 0 ? (
 				<div class="carosel" role="list" aria-label="Recent Blog Posts"> 
 			{recentBlogs.map((post) =>
-				( <CardHolder variant="blog" 
-				title={post.title} 
-				url={`/blog/post/${post.id}/`} 
-				poster={post.poster}
-				subtitle={post.subtitle}  
-				description={post.description} 
-				category={post.category} 
-				discipline={post.discipline}
+				( <CardHolder  
+					{...post}
 				/>
 			))}
 				<CardHolder 

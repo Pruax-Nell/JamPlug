@@ -4,6 +4,7 @@ import "../styles/components.css" ;
 import type { CollectionEntry } from "astro:content";
 
 type BlogData = CollectionEntry<'posts'>['data'];
+
 interface Props {
   data: Pick<BlogData, 'title' | 'description' | 'coverImage' | 'subtitle' | 'blogCategory' | 'skateDiscipline' >;
   id: string;

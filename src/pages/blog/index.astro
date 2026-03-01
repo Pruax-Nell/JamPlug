@@ -2,16 +2,16 @@
 import BaseLayout from '../../layouts/baseLayout.astro'; 
 import BlogCard from '../../components/blogCard.astro';
 import Button from '../../components/button.astro';
+
 import { SKATE_DISCIPLINES, BLOG_CATEGORY } from '../../data/skate-constants';
+import type { SkateDisciplines, BlogCategory, } from '../../data/skate-constants';
 import { getCollection } from 'astro:content';
 import type {Page, GetStaticPaths} from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
 
-// const blogCategoryValues = BLOG_CATEGORY.map(cat => cat.value);
-// const skateDisciplineValues = SKATE_DISCIPLINES.map(dis => dis.value);
-
 const allPosts = await getCollection('posts');
+
 const publishedPosts = allPosts
   .filter(p => p.data.status === 'published')
   .sort((a, b) => {
@@ -20,12 +20,13 @@ const publishedPosts = allPosts
     return dateB - dateA;
   });
 
-// 2. Set constants for the "All/All" state
+
+// 2. Set  "All/All" state
 const discipline = 'all';
 const category = 'all';
 const pageSize = 8;
 
-// 3. Manually create the 'page' object for the first 8 posts
+// 3. create 'page' object
 const page = {
   data: publishedPosts.slice(0, pageSize),
   currentPage: 1,
@@ -36,7 +37,7 @@ const page = {
   }
 };
 
-// 4. Helpers (Keep these the same so your HTML works)
+// 4. Helpers
 const getPageUrl = (num: number) => {
   if (num === 1) return '/blog/';
   return `/blog/${num}/`;
@@ -49,7 +50,7 @@ const getFilterUrl = (newDisc?: string, newCat?: string) => {
   return `/blog/${d}/${c}/1/`;
 };
 
-// 5. Pagination logic (Keep these for your rangeWithDots loop)
+// 5. Pagination 
 const totalPages = page.lastPage;
 const current = page.currentPage;
 const delta = 1;

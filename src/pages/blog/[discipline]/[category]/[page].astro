@@ -2,6 +2,7 @@
 import BaseLayout from '../../../../layouts/baseLayout.astro'; 
 import BlogCard from '../../../../components/blogCard.astro';
 import Button from '../../../../components/button.astro';
+
 import { SKATE_DISCIPLINES, BLOG_CATEGORY } from '../../../../data/skate-constants';
 import { getCollection } from 'astro:content';
 import type {Page, GetStaticPaths} from 'astro';
@@ -11,9 +12,9 @@ import type { CollectionEntry } from 'astro:content';
 
 // const blogCategoryValues = BLOG_CATEGORY.map(cat => cat.value);
 // const skateDisciplineValues = SKATE_DISCIPLINES.map(dis => dis.value);
-
+ 
 export const getStaticPaths = (async ({ paginate }) => {
-  const allPosts = await getCollection('blog');
+  const allPosts = await getCollection('posts');
   const publishedPosts = allPosts
     .filter(p => p.data.status === 'published')
     .sort((a, b) => {
@@ -47,7 +48,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 
 interface Props {
-  page: Page<CollectionEntry<'blog'>>;
+  page: Page<CollectionEntry<'posts'>>;
 }
 
 const { page } = Astro.props;
@@ -63,7 +64,6 @@ const getFilterUrl = (newDisc?: string, newCat?: string) => {
   
   if (d === 'all' && c === 'all') return '/blog/';
   
-  // This matches the new [discipline]/[category]/[page] structure
   return `/blog/${d}/${c}/1/`;
 };
 
@@ -98,7 +98,6 @@ for (let i of range) {
     l = i;
 }
 
-// const pageTitle = "Roll/Skate/Blog";
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const displayDisc = discipline === 'all' ? 'All Disciplines' : capitalize(discipline);
@@ -107,14 +106,16 @@ const displayCat = category === 'all' ? 'All Categories' : capitalize(category);
 const pageTitle = `${displayDisc} - ${displayCat} ${page.currentPage > 1 ? `(Page ${page.currentPage})` : ''} | YJP Blog`;
 const metaDescription = `Browse our collection of ${displayDisc} articles in the ${displayCat} category. Stay updated with the latest in the skating world!`;
 
-let socialImage = "/content/blog-general.jpg";
-if (discipline === 'dance') socialImage = "/images/dance-skating-hero.jpg";
-if (discipline === 'street') socialImage = "/images/street-skating-hero.jpg";
+// let socialImage = "/content/blog-general.jpg";
+// if (discipline === 'dance') socialImage = "/images/dance-skating-hero.jpg";
+// if (discipline === 'street') socialImage = "/images/street-skating-hero.jpg";
+
+//TODO: create more placeholders for blog OG image
 
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout page_title={pageTitle} description={metaDescription} image={socialImage}>
+<BaseLayout page_title={pageTitle} description={metaDescription} >
 <nav class="navigation-controls">
   
   <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'"> ← Previous Page </Button>
@@ -164,7 +165,7 @@ const base = import.meta.env.BASE_URL;
 
   <section class="blog-list frame-fence">
       {page.data.length > 0 ? (
-      page.data.map((blog: CollectionEntry<'blog'>) => (
+      page.data.map((blog: CollectionEntry<'posts'>) => (
         
           <BlogCard 
           id={blog.id} 

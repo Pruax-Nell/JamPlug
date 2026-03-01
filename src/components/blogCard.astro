@@ -1,13 +1,19 @@
 ---
 // blog index card holders
 import React from 'react';
-import type { AstroImage, SerializedBlog, BlogCardData } from '../function/types';
 import { Image } from "astro:assets";
+
+import type { AstroImage, SerializedBlog, BlogCardData } from '../function/types';
 import { formatEventDate } from '../function/dateHelper';
+
+import BlogPlaceholder from '../assets/placeholder/placeholder-blogPoster.jpg';
 
 type BlogCardProps = SerializedBlog['data'] & {
   id: string;
 }; 
+
+// const posterSrc = coverImage?.src || BlogPlaceholder;
+// const posterAlt = coverImage?.alt || "Image Placeholder";
 
 const {
   id,

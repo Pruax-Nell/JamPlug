@@ -4,45 +4,141 @@
 import { Image } from "astro:assets";
 import { formatEventDate } from '../function/dateHelper';
 
-interface Props {
-  variant: "event" | "blog" | "placeholder";
+// interface Props {
+//     // admin
+//   variant: "event" | "blog" | "placeholder";
+//   id: any;
+//   url: string;
+//   status: string; // .... published/draft etc 
+//     // universal
+//   title: string;
+//   heading?: string;
+//   description?: string;
+//     // Event Specific
+//   poster?: any;
+//   altPoster: string;
+//   caption: string;
+
+//   locationLabel: string;
+//   eventType?: string;
+//   featured?: boolean;
+//   dateLabel: string;
+//   startOrder: Date | string;
+//   timeframe?: {
+//     startDate: Date | string;
+//     endDate?: Date | string | null;
+//   };
+//   // Blog Specific
+//   subtitle?: string;
+//   category?: string;
+//   discipline?: string;
+//   published: Date | string;
+// }
+ 
+// 1. Define the shared props that EVERY variant needs
+
+interface BaseProps {
   url: string;
   title: string;
-  heading?: string;
   description?: string;
-  // Event Specific
-  poster?: any;
-  city?: string;
-  country?: string;
-  eventType?: string;
-  timeframe?: {
-    startDate: Date | string;
-    endDate?: Date | string | null;
-  };
-  // Blog Specific
-  subtitle?: string;
-  category?: string;
-  discipline?: string;
 }
- 
+
+interface EventProps extends BaseProps {
+    variant: "event";
+    id: any;
+
+    subtitle?: string;
+    status?: string;
+    locationLabel: string;
+    dateLabel: string;
+    eventType?: string;
+    featured?: boolean;
+    category?: string;
+    discipline?: string;
+    
+    timeframe?: {
+        startDate: Date | string;
+        endDate?: Date | string | null;
+    };
+    poster?: {
+        src: any;
+        alt: string;
+        caption: string;
+    }
+}
+
+interface BlogProps extends BaseProps {
+    variant: "blog";
+    id: any;
+
+    published: Date | string;
+    subtitle?: string;
+    status?: string;
+    category?: string;
+    discipline?: string;
+    poster?: {
+        src: any;
+        alt: string;
+        caption: string;
+    }
+    // not needed
+    locationLabel?: undefined;
+    eventType?: undefined;
+    timeframe?: undefined;
+}
+
+interface PlaceholderProps extends BaseProps {
+  variant: "placeholder";
+
+  // not needed
+  poster?: undefined;
+  locationLabel?: undefined;
+  eventType?: undefined;
+  timeframe?: undefined;
+  subtitle?: undefined;
+  category?: undefined;
+  discipline?: undefined;
+}
+
+// 5. Export the Union
+type Props = EventProps | BlogProps | PlaceholderProps;
+
+// const { 
+//   variant, 
+//   url, 
+//   title, 
+//   subtitle,
+//   heading,
+//   description, 
+//   poster, 
+//   altPoster,
+//   caption,
+//   locationLabel, 
+//   eventType, 
+//   timeframe, 
+//   category,
+//   discipline, 
+// } = Astro.props;
+
 const { 
   variant, 
   url, 
   title, 
+  description,
+  poster,
+  locationLabel,
+  eventType,
+  timeframe,
   subtitle,
-  heading,
-  description, 
-  poster, 
-  city, 
-  country, 
-  eventType, 
-  timeframe, 
   category,
   discipline, 
-} = Astro.props;
+} = Astro.props as Props;
 
 const shortDesc = description?.split(' ').slice(0, 12).join(' ') + '...';
 const midDesc = description?.split(' ').slice(0, 20).join(' ') + '...';
+
+const trim = (str: string | undefined, words: number) => 
+  str ? str.split(' ').slice(0, words).join(' ') + '...' : '';
 
 // Logic for event dates
 const eventDateString = (variant === 'event' && timeframe) 
@@ -57,7 +153,7 @@ const base = import.meta.env.BASE_URL;
     {variant === "event" && (
     <div class={`post-card card-${variant}`}>
         {poster ? (
-            <Image src={poster} alt={title} width={400} height={500} class="poster-block" />
+            <Image src={poster.src} alt={poster.alt} width={400} height={500} class="poster-block" />
         ) : (
             <div class="placeholder poster-block" aria-hidden="true">🛼</div>
         )}
@@ -67,7 +163,7 @@ const base = import.meta.env.BASE_URL;
                 <a href={url} class="stretched-link">{title}</a>
             </p>
 
-            <span class="info i-1">📍 {city}, {country}</span>
+            <span class="info i-1">📍 {locationLabel}</span>
             <span class="info i-2">{eventDateString}</span>
 
 
@@ -79,10 +175,12 @@ const base = import.meta.env.BASE_URL;
     </div>
     )}
 
+<!-- <p class="desc">{trim(data.description, 12)}</p> -->
+
     {variant === "blog" && (
     <div class={`post-card card-${variant}`}>
 
-        {poster ? ( <Image src={poster} alt={title} width={300} height={400} class="poster-block" />
+        {poster ? ( <Image src={poster.src} alt={poster.alt} width={300} height={400} class="poster-block" />
         
         <div class={`content-block ${variant}-content`}>
             <p class="card-heading">
@@ -113,7 +211,7 @@ const base = import.meta.env.BASE_URL;
     {variant === "placeholder" && (
         <div class={`${variant}-content`}>
             <p class="card-heading">
-                <a href={url} class="stretched-link">{heading || title}</a>
+                <a href={url} class="stretched-link">{title}</a>
             </p>
             <span>{description}</span>
             <span class="arrow" aria-hidden="true">→</span>

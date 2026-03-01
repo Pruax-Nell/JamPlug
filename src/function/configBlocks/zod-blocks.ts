@@ -1,11 +1,19 @@
 
 import { z } from "astro:content";  
+
 import { glob } from "astro/loaders";
 import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA } from '../../data/skate-constants'
 import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from '../../data/globe-constants'
 import { defineAction } from 'astro:actions';
 
 // zod templates
+export const imageObject = (image: any) =>
+  z.object({
+    src: image(),
+    alt: z.string(),
+    caption: z.string().optional(),
+}).optional().nullable();
+
 export const timeObject = z.object({
     hour: z.string(),
     minute: z.string(),

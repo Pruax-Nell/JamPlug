@@ -5,7 +5,7 @@ import { ImagePreview } from '@components/previewImage';
 import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE } from './src/data/skate-constants';
 
 import { slugify } from './src/function/stringHelper';
-import { locationBlock, mapCoords } from './src/function/configBlocks/key-block';
+import { locationBlock, mapCoords, imageField, PersonListField, socials } from './src/function/configBlocks/key-block';
 
 // in future, a complete rebuild would be more efficient 
 // singleton for long list data i.e. tags
@@ -68,22 +68,7 @@ export default config({
           ],
           defaultValue: '',
         }),
-         coverImage: fields.object({
-          src: fields.image({
-            label: 'Cover Image',
-            directory: 'src/content/images/posts/',
-            publicPath: '../images/posts/',
-            transformFilename: (name) => `CoverImage-${name.replaceAll(/\s+/g, '-')}`
-          }),
-          alt: fields.text({
-            label: 'Alt Text',
-            description: 'Cover Image Description'
-          }),
-          caption: fields.text({
-            label: 'Image Caption',
-            description: 'Image Description',
-          }),
-        }),
+         coverImage: imageField('Main Poster', 'events', 'poster'),
         content: fields.markdoc ({ 
           label: 'Content',
           options: {
@@ -92,60 +77,60 @@ export default config({
               publicPath: '../images/posts/'
             }
           },
-          components: {
-            CustomImage: component({
-              label: 'Styled Image',
-              schema: {
-                src: fields.image({ 
-                  label: 'Image', 
-                  directory: 'src/content/images/posts/', 
-                  publicPath: '../images/posts/' 
-                }),
-                alt: fields.text({ label: 'Alt Text' }),
-                width: fields.integer({ label: 'Width (Optional)', defaultValue: 1200 }),
-                caption: fields.text({ label: 'Caption', multiline: true }),
-                position: fields.select({
-                  label: 'Position',
-                  options: [
-                    { label: 'Center (Standard)', value: 'center' },
-                    { label: 'Left (Wrapped)', value: 'left' },
-                    { label: 'Right (Wrapped)', value: 'right' },
-                  ],
-                  defaultValue: 'center',
-                }),
-                ratio: fields.select({
-                  label: 'Frame Ratio',
-                  options: [
-                    { label: 'Tall', value: 'tall' },
-                    { label: 'Wide', value: 'wide' },
-                    { label: 'Ultra Wide', value: 'ultraWide' },
-                    { label: 'Square', value: 'square' },
-                  ],
-                  defaultValue: 'square',
-                }),
-                edge: fields.select({
-                  label: 'shadow colour',
-                  options: [
-                    { label: 'Pink', value: 'pink' },
-                    { label: 'Teal', value: 'teal' },
-                    { label: 'Purple ', value: 'purple' },
-                    { label: 'Orange', value: 'orange' },
-                    { label: 'Brown', value: 'brown' },
-                    { label: 'Yellow', value: 'yellow' },
-                    { label: 'White', value: 'white' },
-                    { label: 'Black', value: 'black' },
+          // components: {
+          //   CustomImage: component({
+          //     label: 'Styled Image',
+          //     schema: {
+          //       src: fields.image({ 
+          //         label: 'Image', 
+          //         directory: 'src/content/images/posts/', 
+          //         publicPath: '../images/posts/' 
+          //       }),
+          //       alt: fields.text({ label: 'Alt Text' }),
+          //       width: fields.integer({ label: 'Width (Optional)', defaultValue: 1200 }),
+          //       caption: fields.text({ label: 'Caption', multiline: true }),
+          //       position: fields.select({
+          //         label: 'Position',
+          //         options: [
+          //           { label: 'Center (Standard)', value: 'center' },
+          //           { label: 'Left (Wrapped)', value: 'left' },
+          //           { label: 'Right (Wrapped)', value: 'right' },
+          //         ],
+          //         defaultValue: 'center',
+          //       }),
+          //       ratio: fields.select({
+          //         label: 'Frame Ratio',
+          //         options: [
+          //           { label: 'Tall', value: 'tall' },
+          //           { label: 'Wide', value: 'wide' },
+          //           { label: 'Ultra Wide', value: 'ultraWide' },
+          //           { label: 'Square', value: 'square' },
+          //         ],
+          //         defaultValue: 'square',
+          //       }),
+          //       edge: fields.select({
+          //         label: 'shadow colour',
+          //         options: [
+          //           { label: 'Pink', value: 'pink' },
+          //           { label: 'Teal', value: 'teal' },
+          //           { label: 'Purple ', value: 'purple' },
+          //           { label: 'Orange', value: 'orange' },
+          //           { label: 'Brown', value: 'brown' },
+          //           { label: 'Yellow', value: 'yellow' },
+          //           { label: 'White', value: 'white' },
+          //           { label: 'Black', value: 'black' },
                   
-                  ],
-                  defaultValue: 'black',
-                }),
-              },
-            preview: (props) => props.fields.src.value ? (
-              <p> image ID: {props.fields.src.value.filename}</p> ) : (
-                <p> Please provide an Image src </p>
-            ),
+          //         ],
+          //         defaultValue: 'black',
+          //       }),
+          //     },
+          //   preview: (props) => props.fields.src.value ? (
+          //     <p> image ID: {props.fields.src.value.filename}</p> ) : (
+          //       <p> Please provide an Image src </p>
+          //   ),
                 
-            }) as any,
-          }, 
+          //   }) as any,
+          // }, 
           
         }),
       }
@@ -208,102 +193,12 @@ export default config({
         }),
         minAge: fields.text({ label: 'Minimum Age' }),
         maxAge: fields.text({ label: 'Maximum Age' }),
-        eventPoster: fields.object({
-          src: fields.image({
-            label: 'Event Poster',
-            directory: 'src/content/images/events',
-            publicPath: '../../images/events/',
-            transformFilename: (name) => `CoverImage-${name.replaceAll(/\s+/g, '-')}`
-          }),
-          alt: fields.text({
-            label: 'Alt Text',
-            description: 'For accessibility',
-          }),
-          caption: fields.text({
-            label: 'Image Caption',
-            description: 'e.g. by photographer A, at Rink...'
-          }),
-        }),
-        flyerImage1: fields.object({
-          src: fields.image({
-            label: 'Flyer 1',
-            directory: 'src/content/images/events',
-            publicPath: '../../images/events/',
-            transformFilename: (name) => `flyer-1-${name.replaceAll(/\s+/g, '-')}`
-          }),
-          alt: fields.text({
-            label: 'Alt Text',
-            description: 'For accessibility',
-          }),
-          caption: fields.text({
-            label: 'Image Caption',
-            description: 'e.g. by photographer A, at Rink...'
-          }),
-        }),
-        flyerImage2: fields.object({
-          src: fields.image({
-            label: 'Flyer 2',
-            directory: 'src/content/images/events',
-            publicPath: '../../images/events/',
-            transformFilename: (name) => `flyer-2-${name.replaceAll(/\s+/g, '-')}`
-          }),
-          alt: fields.text({
-            label: 'Alt Text',
-            description: 'For accessibility',
-          }),
-          caption: fields.text({
-            label: 'Image Caption',
-            description: 'e.g. by photographer A, at Rink...'
-          }),
-        }),
-        flyerImage3: fields.object({
-          src: fields.image({
-            label: 'Flyer 3',
-            directory: 'src/content/images/events',
-            publicPath: '../../images/events/',
-            transformFilename: (name) => `flyer-3-${name.replaceAll(/\s+/g, '-')}`
-          }),
-          alt: fields.text({
-            label: 'Alt Text',
-            description: 'For accessibility',
-          }),
-          caption: fields.text({
-            label: 'Image Caption',
-            description: 'e.g. by photographer A, at Rink...'
-          }),
-        }),
-        flyerImage4: fields.object({
-          src: fields.image({
-            label: 'Flyer 4',
-            directory: 'src/content/images/events',
-            publicPath: '../../images/events/',
-            transformFilename: (name) => `flyer-4-${name.replaceAll(/\s+/g, '-')}`
-          }),
-          alt: fields.text({
-            label: 'Alt Text',
-            description: 'For accessibility',
-          }),
-          caption: fields.text({
-            label: 'Image Caption',
-            description: 'e.g. by photographer A, at Rink...'
-          }),
-        }),
-        flyerImage5: fields.object({
-          src: fields.image({
-            label: 'Flyer 5',
-            directory: 'src/content/images/events',
-            publicPath: '../../images/events/',
-            transformFilename: (name) => `flyer-5-${name.replaceAll(/\s+/g, '-')}`
-          }),
-          alt: fields.text({
-            label: 'Alt Text',
-            description: 'For accessibility',
-          }),
-          caption: fields.text({
-            label: 'Image Caption',
-            description: 'e.g. by photographer A, at Rink...'
-          }),
-        }),
+        eventPoster: imageField('Poster', 'events', 'poster'),
+        flyerImage1: imageField('Poster', 'events', 'poster'),
+        flyerImage2: imageField('Poster', 'events', 'poster'),
+        flyerImage3: imageField('Poster', 'events', 'poster'),
+        flyerImage4: imageField('Poster', 'events', 'poster'),
+        flyerImage5: imageField('Poster', 'events', 'poster'),
 
         startTime: fields.object({
           hour: fields.select({
@@ -339,7 +234,7 @@ export default config({
         eventLink: fields.url({ label: 'Event Link', }),
         ticketLink: fields.array(
           fields.object({
-            name: fields.text({ label: 'Tickets'}),
+            platform: fields.text({ label: 'Ticket Platform'}),
             directLink: fields.url({ label: 'URL', validation: { isRequired: false } }),
             disclaimer: fields.text({ label: 'Disclaimer'}),
           }),
@@ -347,98 +242,10 @@ export default config({
             label: 'Ticket Links'
           }
         ),
-        organisers: fields.array(
-          fields.object({
-            name: fields.text({label: 'Org Name'}),
-            socialLinks: fields.array(
-            fields.object({
-              platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-              url: fields.url({ label: 'URL', validation: { isRequired: false } }),
-            }),
-            {
-              label: 'Social Links',
-              itemLabel: (props) => props.fields.platform.value || 'New Link',
-            }
-          ),
-          }),
-          {
-            label: 'Organiser',
-            itemLabel: (props) => props.fields.name.value || 'Organiser',
-          }
-        ),
-        hosts: fields.array(
-          fields.object({
-            name: fields.text({label: 'Host Name'}),
-            socialLinks: fields.array(
-            fields.object({
-              platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-              url: fields.url({ label: 'URL', validation: { isRequired: false } }),
-            }),
-            {
-              label: 'Social Links',
-              itemLabel: (props) => props.fields.platform.value || 'New Link',
-            }
-          ),
-          }),
-          {
-            label: 'Host',
-            itemLabel: (props) => props.fields.name.value || 'Host',
-          }
-        ),
-        coaches: fields.array(
-          fields.object({
-            name: fields.text({label: 'Coach Name'}),
-            socialLinks: fields.array(
-            fields.object({
-              platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-              url: fields.url({ label: 'URL', validation: { isRequired: false } }),
-            }),
-            {
-              label: 'Social Links',
-              itemLabel: (props) => props.fields.platform.value || 'New Link',
-            }
-          ),
-          }),
-          {
-            label: 'Coach',
-            itemLabel: (props) => props.fields.name.value || 'Coach',
-          }
-        ),
-        djs: fields.array(
-          fields.object({
-            name: fields.text({label: 'DJ Name'}),
-            socialLinks: fields.array(
-            fields.object({
-              platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-              url: fields.url({ label: 'URL', validation: { isRequired: false } }),
-            }),
-            {
-              label: 'Social Links',
-              itemLabel: (props) => props.fields.platform.value || 'New Link',
-            }
-          ),
-          }),
-          {
-            label: 'DJs',
-            itemLabel: (props) => props.fields.name.value || 'DJ',
-          }
-        ),
+      organisers: PersonListField('Organiser', SOCIAL_MEDIA),
+      djs: PersonListField('DJ', SOCIAL_MEDIA),
+      coaches: PersonListField('Coach', SOCIAL_MEDIA),
+      hosts: PersonListField('Host', SOCIAL_MEDIA),
         // TODO future - add rinkReference for business related. make optional! keep old 'rink'
         // then add conditional logic and fallback if rink = ' ' : rinkReference etc
         // or use node to automate cleanup
@@ -477,48 +284,10 @@ export default config({
           } 
         }),
         role: fields.text({ label: 'Role (e.g. Founder, Photographer)', defaultValue: 'Contributor' }),
-        headshot: fields.object({
-          src: fields.image({
-            label: 'Headshot Image',
-            directory: 'src/content/images/authors', 
-            publicPath: '../../images/authors/', 
-          }),
-          alt: fields.text({
-            label: 'Alt Text for Image',
-            description: 'Describe the image for accessibility'
-          }),
-          caption: fields.text({
-            label: 'Caption (Displayed on site)',
-            description: 'e.g., Photo by @skateshooter_uk'
-          }),
-        }),
-        skateImage: fields.object({
-          src: fields.image({
-            label: 'Skate/Personality Image',
-            directory: 'src/content/images/authors',
-            publicPath: '../../images/authors/',
-          }),
-          alt: fields.text({ 
-            label: 'Alt Text (Describe the photo for screen readers)',
-            description: 'e.g performing a kickflip at Southbank'
-          }),
-          caption: fields.text({
-            label: 'Caption (Displayed on site)',
-            description: 'e.g., Photo by @skateshooter_uk'
-          }),
-        }),
+        headshot: imageField('Poster', 'events', 'poster'),
+        skateImage: imageField('Poster', 'events', 'poster'),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
-        socials: fields.array(
-          fields.object({
-            platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-            url: fields.url({ label: 'Profile URL' }),
-          }),
-          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
-        ),
+        socials: socials(SOCIAL_MEDIA),
       },
     }),
 
@@ -544,17 +313,7 @@ export default config({
         location: locationBlock,
         founder: fields.text({ label: 'Founder'}),
         owner: fields.text({ label: 'Current Owner'}),
-        socials: fields.array(
-          fields.object({
-            platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-            url: fields.url({ label: 'Profile URL' }),
-          }),
-          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
-        ),
+        socials: socials(SOCIAL_MEDIA),
       }
 
     }),
@@ -576,17 +335,7 @@ export default config({
         location: locationBlock,
         founder: fields.text({ label: 'Founder'}),
         owner: fields.text({ label: 'Current Owner'}),
-        socials: fields.array(
-          fields.object({
-            platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-            url: fields.url({ label: 'Profile URL' }),
-          }),
-          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
-        ),
+        socials: socials(SOCIAL_MEDIA),
       }
 
     }),
@@ -608,17 +357,7 @@ export default config({
         location: locationBlock,
         founder: fields.text({ label: 'Founder'}),
         owner: fields.text({ label: 'Current Owner'}),
-        socials: fields.array(
-          fields.object({
-            platform: fields.select({
-              label: 'Platform',
-              options: SOCIAL_MEDIA,
-              defaultValue: 'socials',
-            }),
-            url: fields.url({ label: 'Profile URL' }),
-          }),
-          { label: 'Social Links', itemLabel: props => props.fields.platform.value }
-        ),
+        socials: socials(SOCIAL_MEDIA),
       }
 
     }),

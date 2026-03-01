@@ -14,9 +14,12 @@ import { formatEventDate, formatDate, formatFestivalDate } from '../../function/
 import { formatLocation } from '../../data/globe-constants';
 import { formatLabel, formatLocationString } from '../../function/stringHelper';
 
+import { mapEventToCard, mapToFeaturedCard, mapEventFull } from '../../function/mapEvents';
+import {  mapBlogToCard, mapBlogFull } from '../../function/mapPosts';
+
 import { getCollection } from "astro:content";
 
-const targetYear = 2026;
+const targetYear = 2026; 
 
 const bigEvents = await getCollection('events', ({ data }) => {
     return data.status === 'published' && 
@@ -57,23 +60,9 @@ const publishedEvents = await getCollection('events', ({ data }) => {
 });
 
 const upcomingEvents = (publishedEvents)
-.map(event => ({
-	id: event.id,
-	title: event.data.eventName,
-	poster: event.data.eventPoster,
-	city: event.data.townCity,
-	country: event.data.location.discriminant,
-	description: event.data.description,
-	eventType: event.data.eventType,
-	featured: event.data.isFeatured,
-	timeframe: {
-		startDate: new Date(event.data.startDate),
-		endDate: event.data.endDate ? new Date(event.data.endDate) : null
-	}
-	
-}))
+.map(mapEventToCard)
 .sort(
-	(a, b) => b.timeframe.startDate.valueOf() - a.timeframe.startDate.valueOf(),
+	(a, b) => b.startDate.valueOf() - a.startDate.valueOf(),
 )
 .slice(0, 8);
 
@@ -151,15 +140,7 @@ description="Find roller Skate festivals from around the world">
 				<div class="carosel" role="list" aria-label="Upcoming Events">
 			{upcomingEvents.map((post) => (
 				<CardHolder 
-				variant="event"
-				title={post.title}
-				url={`/events/${post.id}/`}
-				poster={post.poster}
-				city={post.city}
-				country={post.country}
-				timeframe={post.timeframe}
-				description={post.description}
-                eventType={post.eventType}
+                {...post}
 				/>
 			))}
 

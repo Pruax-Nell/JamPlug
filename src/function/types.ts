@@ -45,7 +45,6 @@ export interface SerializedAuthor {
   data: AuthorProfile;
 }
 
-
 export interface BlogCardData {
   title: string;
   subtitle?: string;
@@ -60,7 +59,19 @@ export interface BlogCardData {
   
 }
 
-// event data
+// event data //
+
+export interface SocialLink {
+  platform: string;
+  url: string;
+}
+
+export interface MappedPerson {
+  name: string;
+  role: string;
+  socials: SocialLink[]; 
+  alt: string;
+}
 
 export interface PersonObject {
   name: string;

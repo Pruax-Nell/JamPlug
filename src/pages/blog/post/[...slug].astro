@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/baseLayout.astro';
 import Button from '../../../components/button.astro';
 import CustomImage from '../../../components/mdoc/customImage.astro';
+
 import { getCollection, render, getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { SerializedAuthor } from '../../../function/types';
@@ -22,7 +23,7 @@ export async function getStaticPaths() {
 interface Props {
   post: CollectionEntry<'posts'>;
 }
-
+ 
 const { post } = Astro.props;
 const components = { CustomImage };
 

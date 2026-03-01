@@ -2,7 +2,7 @@ import { z, defineCollection, reference } from "astro:content";
 import { glob } from "astro/loaders";
 import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA, FOOTWEAR_CHOICE } from './data/skate-constants'
 import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from './data/globe-constants'
-import { timeObject, personObject, locationSchema, businessObject,mapCoords } from "./function/configBlocks/zod-blocks";
+import { timeObject, personObject, locationSchema, businessObject, mapCoords, imageObject } from "./function/configBlocks/zod-blocks";
 import { slugify } from "./function/stringHelper";
 
 // ------------- Collections ----------------- //
@@ -25,11 +25,7 @@ const posts = defineCollection({
     z.enum(getValues(SKATE_DISCIPLINES)),
     z.literal('') 
     ]).optional(),
-    coverImage:  z.object({
-        src: image(),
-        alt: z.string(),
-        caption: z.string(),
-    }).optional().nullable(), 
+    coverImage: imageObject(image), 
   }),
 });
 
@@ -56,36 +52,12 @@ const events = defineCollection({
         minAge: z.string().optional(),
     // Secondary key info
         maxAge: z.string().optional(),
-        eventPoster: z.object({
-            src: image(),
-            alt: z.string(),
-            caption: z.string(),
-        }).optional().nullable(),
-        flyerImage1: z.object({
-            src: image(),
-            alt: z.string(),
-            caption: z.string(),
-        }).optional().nullable(),
-        flyerImage2: z.object({
-            src: image(),
-            alt: z.string(),
-            caption: z.string(),
-        }).optional().nullable(),
-        flyerImage3: z.object({
-            src: image(),
-            alt: z.string(),
-            caption: z.string(),
-        }).optional().nullable(),
-        flyerImage4: z.object({
-            src: image(),
-            alt: z.string(),
-            caption: z.string(),
-        }).optional().nullable(),
-        flyerImage5: z.object({
-            src: image(),
-            alt: z.string(),
-            caption: z.string(),
-        }).optional().nullable(),
+        eventPoster: imageObject(image),
+        flyerImage1: imageObject(image),
+        flyerImage2: imageObject(image),
+        flyerImage3: imageObject(image),
+        flyerImage4: imageObject(image),
+        flyerImage5: imageObject(image),
 
         startTime: timeObject.optional(), 
         endTime: timeObject.optional(), 
@@ -94,7 +66,7 @@ const events = defineCollection({
         eventLink: z.string().url().optional().or(z.literal('')),
         ticketLink: z.array(
             z.object({
-                name: z.string(),
+                platform: z.string(),
                 directLink: z.string().url().optional().nullable().or(z.literal('')),
                 disclaimer: z.string().optional(),
             })
@@ -122,16 +94,8 @@ const authors = defineCollection({
     legalName: z.string(),
     alias: z.string().optional(),
     role: z.string().default('Contributor'),
-    headshot: z.object({
-        src: image(),
-        alt: z.string(),
-        caption: z.string(),
-    }).optional().nullable(),
-    skateImage: z.object({
-        src: image(),
-        alt: z.string(),
-        caption: z.string(),
-    }).optional().nullable(),
+    headshot: imageObject(image),
+    skateImage: imageObject(image),
     bio: z.string().optional(),
     socials: z.array(
       z.object({

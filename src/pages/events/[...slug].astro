@@ -1,16 +1,22 @@
 --- 
-import BaseLayout from '../../layouts/baseLayout.astro';
 import '../../styles/components.css'
-import LocationDisplay from '../../components/locationDisplay.astro'
+import BaseLayout from '../../layouts/baseLayout.astro';
 
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+
+import LocationDisplay from '../../components/locationDisplay.astro'
 import Button from '../../components/button.astro';
+
 import { formatEventDate, formatTime, getCalendarUrls } from '../../function/dateHelper';
 import { formatLocation } from '../../data/globe-constants';
-import eventPlaceholder from '../../assets/placeholder/placeholder-eventPoster.jpg' 
+
+import { mapEventToCard, mapToFeaturedCard, mapEventFull } from '../../function/mapEvents';
+import {  mapBlogToCard, mapBlogFull } from '../../function/mapPosts';
+
 
 export async function getStaticPaths() {
+
   const posts = await getCollection('events');
   return posts.map((post: CollectionEntry<'events'>) => ({
     params: { slug: post.id }, 
@@ -20,42 +26,35 @@ export async function getStaticPaths() {
 
 interface Props {
   post: CollectionEntry<'events'>;
-  // event: any; 
-  // children?: any; 
 }
 
 const { post } = Astro.props; 
-const { data } = post;
 const { Content } = await render(post);
-const galleryImages = [data.flyerImage1?.src, data.flyerImage2?.src, data.flyerImage3?.src, data.flyerImage4?.src, data.flyerImage5?.src].filter(Boolean);
+
+const event = mapEventFull(post);
+const { googleUrl, icsDataUri } = getCalendarUrls(post.data);
 
 // HELPERS----
 const lineup = [
-  { title: "Organisers", people: data.organisers },
-  { title: "DJs", people: data.djs },
-  { title: "Coaches", people: data.coaches },
-  { title: "Hosts", people: data.hosts }
+  { role: "Organisers", people: event.organisers },
+  { role: "DJs", people: event.djs },
+  { role: "Coaches", people: event.coaches },
+  { role: "Hosts", people: event.hosts }
 ];
-const eventDateString = formatEventDate(data.startDate, data.endDate);
-const eventStartTime = formatTime(data.startTime);
-const eventEndTime = data.endTime ? formatTime(data.endTime) : null;
-const eventLocation = formatLocation(post.data.location);
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
 
+// const locationString = [post.data.townCity, eventLocation.regionLabel]
+//   .filter(Boolean)
+//   .join(', ');
+
 const ogImage = post.data.eventPoster?.src;
-
-const { googleUrl, icsDataUri } = getCalendarUrls(data);
-const locationString = [post.data.townCity, eventLocation.regionLabel]
-  .filter(Boolean)
-  .join(', ');
-
 const base = import.meta.env.BASE_URL;
----
+--- 
 
 <BaseLayout 
-  title={post.data.eventName}
-  description={`Join us in ${post.data.townCity} for ${post.data.eventName}!`}
+  title={event.title}
+  description={`Join us in ${event.townCity} for ${event.title}!`}
   image={ogImage} 
 >
 
@@ -64,69 +63,62 @@ const base = import.meta.env.BASE_URL;
   <section class="event-summary-section">
 
     <div class=" poster-frame">
-    {data.eventPoster ? (
+    {event.poster ? (
       <Image 
-      src={data.eventPoster.src} 
-      alt={`Event Poster TBD ${data.eventName}`} 
+      src={event.poster.src} 
+      alt={event.poster.alt} 
       width={350} 
       height={510} 
       class="cover-image"
       />
     ) : (
       <div class="poster-frame">
-        <Image 
-        src={eventPlaceholder.src} 
-        alt={`Event Poster TBD ${data.eventName}`} 
-        width={350} 
-        height={510} 
-        class="cover-image"
-        />
-
+        {/* fill div background with bg image overlay title */}
       </div>
     )}
     </div>
       
     <header class="event-summary">
       <hgroup class="event-header-info">
-        <h4 class="event-title">{data.eventName.toLocaleUpperCase()}</h4>
+        <h4 class="event-title">{event.title.toLocaleUpperCase()}</h4>
         <div class="sub-heading">
-          {data.subheading && (
-            <span>{data.subheading}</span>
+          {event.subtitle && (
+            <span>{event.subtitle}</span>
           )}
       </hgroup>
       
-      {data.minAge && (
+      {event.minAge && (
       <div class="age-tag">
-        {data.minAge && (
-          <span >{data.minAge}+</span>
+        {event.minAge && (
+          <span >{event.minAge}+</span>
         )}
-        {data.maxAge && (
-          <span>{data.maxAge}</span>
+        {event.maxAge && (
+          <span>{event.maxAge}</span>
         )}
       </div>
       )}
 
       <p class="time-location">
-        <strong class="strong-date">{eventDateString}</strong> 
-        • {eventStartTime} 
-        {eventEndTime && ` - ${eventEndTime}`}
+        <strong class="strong-date">{event.dateLabel}</strong> 
+        • {event.startTime} 
+        {event.endTime && ` - ${event.endTime}`}
       </p>
 
-      <p class="description-snippet">{data.description}</p>
+      <p class="description-snippet">{event.description}</p>
 
-       <p>📍 {locationString}</p>
+       <p>📍 {event.locationLabel}</p>
 
       <div class="rink-feat">
-        {data.rink && (<span> {data.rink}</span>)}
+        {event.rink && (<span> {event.rink}</span>)}
         
-        {data.venueAddress && (<span class="wrap-it"> {data.venueAddress}</span>)}
+        {event.venueAddress && (<span class="wrap-it"> {event.venueAddress}</span>)}
       </div>
 
       <div class="tags"> 
-        <span class="event-type-label">{data.eventType}</span>
-        <span class="discipline">{data.skateDiscipline}</span>
-        {data.skillLevel && (<span class="level"> {data.skillLevel} </span>) }
-        {data.footwear && (<span class={`${data.footwear}-required`}> {data.footwear} </span>) }
+        <span class="event-type-label">{event.eventType}</span>
+        <span class="discipline">{event.skateDiscipline}</span>
+        {event.skillLevel && (<span class="level"> {event.skillLevel} </span>) }
+        {event.footwear && (<span class={`${event.footwear}-required`}> {event.footwear} </span>) }
       </div>
 
     </header>
@@ -138,22 +130,22 @@ const base = import.meta.env.BASE_URL;
     </div>
 
     <div class="ticket-block">
-    {data.organisers && ( 
+    {event.organisers && ( 
       <p>Official page for
-      <Button  variant="primary" size="sm" href={data.eventLink} aria-label="Official Event Page (external)"> {data.eventName} </Button>
+      <Button  variant="primary" size="sm" href={event.eventLink} aria-label="Official Event Page (external)"> {event.title} </Button>
       </p>)}
     
     <div class="ticket-actions">
-      {data.ticketLink?.map((ticket) => (
-        ticket.directLink && (
+      {event.tickets?.map((ticket) => (
+        ticket.url && (
           <div class="ticket-wrapper">
             <Button 
-              href={ticket.directLink} 
+              href={ticket.url} 
               variant='outline' 
               theme='black' 
               size='sm'
             >
-              {ticket.name}
+              {ticket.platform}
             </Button>
             {ticket.disclaimer && <p class="disclaimer-text">{ticket.disclaimer}</p>}
           </div>
@@ -169,20 +161,20 @@ const base = import.meta.env.BASE_URL;
 
     {lineup.map((group) => (
       group.people && group.people.length > 0 && (
-      <div class={`group-${group.title.toLowerCase()} line-group`}>
-        <h4>{group.title}</h4>
+      <div class={`group-${group.role.toLowerCase()} line-group`}>
+        <h4>{group.role}</h4>
         
         <ul class="people-list">
           {group.people.map((person) => (
             <li class="person-item">
-              <strong class="name-item">{person.name}</strong>
+              <strong class="name-item">{person?.name}</strong>
 
-              {person.socialLinks && person.socialLinks.length > 0 && (
+              {person?.socials && person.socials.length > 0 && (
                 <ul class="social-links">
-                  {person.socialLinks.map((link) => (
+                  {person.socials.map((link) => (
                     <li class="list-point">{link.platform}:
                       <a href={link.url} target="_blank" rel="noopener" >
-                        {link.url?.slice(8, 35)}...Click Here
+                        {link.displayText} Tickets
                       </a>
                     </li>
                   ))}
@@ -206,7 +198,7 @@ const base = import.meta.env.BASE_URL;
         
         <a 
         href={icsDataUri} 
-        download={`${data.eventName.replace(/\s+/g, '_')}.ics`} 
+        download={`${event.title.replace(/\s+/g, '_')}.ics`} 
         class="calendar-download-btn" aria-label="Add to calendar"
         >
             Add to Calendar <span class="calendar-note">(Apple/Outlook/Mobile)</span>
@@ -226,15 +218,15 @@ const base = import.meta.env.BASE_URL;
  )}
   </section> -->
 
-  {galleryImages.length > 0 && (
+  {event.gallery.length > 0 && (
   <section class="event-gallery-section">
     <p class="self-center header-group">~ Scroll the gallery ~</p>
     <div class="gallery-grid">
-      {galleryImages.map((img, index) => (
+      {event.gallery.map((img, index) => (
         <div class="gallery-item">
           <Image 
-            src={img!} 
-            alt={`${data.eventName} gallery image ${index + 1}`} 
+            src={img.src} 
+            alt={`${img.alt || event.title} gallery image ${index + 1}`} 
             width={200} 
             height={350}
             class="event-image"

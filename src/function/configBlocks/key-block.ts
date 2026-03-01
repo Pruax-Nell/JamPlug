@@ -6,6 +6,99 @@ import {
 
 import { slugify } from '../stringHelper';
 
+const pathRegistry: Record<string, string> = {
+  events: '../../images/events/',
+  posts: '../images/posts/',
+  business: '../../images/business/',
+  author: '../../images/author/',
+  default: '../images/'
+};
+
+/**
+ * @param label - The label for the image field (e.g., 'Flyer 1')
+ * @param path - The specific directory path (e.g., 'events' or 'posts')
+ * @param prefix - A prefix for the filename (e.g., 'flyer-1')
+ */
+
+export const imageField = (label: string, path: string, prefix: string) => {
+  return fields.object({
+    src: fields.image({
+      label: label,
+      directory: `src/content/images/${path}/`,
+      publicPath: `../images/${path}/*`,
+      transformFilename: (name) => `${prefix}-${name.replaceAll(/\s+/g, '-')}`
+    }),
+    alt: fields.text({
+      label: 'Alt Text',
+      description: 'Essential for accessibility',
+    }),
+    caption: fields.text({
+      label: 'Image Caption',
+      description: 'e.g. by photographer A, at Rink...',
+    }),
+  });
+};
+
+export const socials = (
+  socialOptions: readonly { readonly label: string; readonly value: string; }[]) => {
+  return fields.array(
+      fields.object({
+        platform: fields.select({
+          label: 'Platform',
+          options: socialOptions,
+          defaultValue: 'socials',
+        }),
+        url: fields.url({ label: 'URL', validation: { isRequired: false } }),
+      }),
+      {
+        label: 'Social Links',
+        itemLabel: (props) => {
+          const platformValue = props.fields.platform.value;
+          const option = socialOptions.find(opt => opt.value === platformValue);
+          return option ? option.label : 'New Link';
+        }
+      }
+    )
+  };
+  
+
+/**
+ * A reusable person list field for Keystatic
+ * @param role - The role title (e.g., 'Coach', 'DJ')
+ * @param socialOptions - Your SOCIAL_MEDIA options array
+ */
+export const PersonListField = (
+  role: string, 
+  socialOptions: readonly { readonly label: string; readonly value: string; }[]) => {
+  return fields.array(
+    fields.object({
+      name: fields.text({ label: `${role} Name` }),
+      socialLinks: fields.array(
+        fields.object({
+          platform: fields.select({
+            label: 'Platform',
+            options: socialOptions,
+            defaultValue: 'socials',
+          }),
+          url: fields.url({ label: 'URL', validation: { isRequired: false } }),
+        }),
+        {
+          label: 'Social Links',
+          itemLabel: (props) => {
+            const platformValue = props.fields.platform.value;
+            const option = socialOptions.find(opt => opt.value === platformValue);
+            return option ? option.label : 'New Link';
+          }
+        }
+      ),
+    }),
+    {
+      label: `${role}s`,
+      itemLabel: (props) => props.fields.name.value || `New ${role}`,
+    }
+  );
+};
+
 export const mapCoords = fields.object(
   {
     latitudeCoord: fields.number({ 
