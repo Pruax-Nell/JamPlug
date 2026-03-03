@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/baseLayout.astro";
 import Button from "../components/button.astro";
-
+import { OFFICIAL_LINKS } from "src/data/site-config";
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -44,7 +44,7 @@ title="Our Privacy Policy">
             
             <span>
                 Email
-                shynell.devaux@gmail.com
+                {OFFICIAL_LINKS.emailShaneru}
             </span>
         </p>
     </div>

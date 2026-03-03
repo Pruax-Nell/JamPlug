@@ -16,7 +16,9 @@ const posts = defineCollection({
     }),
     subtitle: z.string().optional(),
     status: z.enum(getValues(POST_STATUS)).default('draft'),
+    
     published: z.string().or(z.date()),
+    isAnonymous: z.boolean().default(false),
     isFeatured: z.boolean().default(false),
     updated: z.string().or(z.date()).optional(), 
     description: z.string(),

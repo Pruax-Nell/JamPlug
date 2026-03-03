@@ -9,6 +9,7 @@ import type { SerializedAuthor } from '../../../function/types';
 import { Image } from 'astro:assets';
 
 import { formatDate } from '../../../function/dateHelper';
+import { mapBlogFull } from 'src/function/mapPosts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -23,20 +24,22 @@ export async function getStaticPaths() {
 interface Props {
   post: CollectionEntry<'posts'>;
 }
- 
+
 const { post } = Astro.props;
 const components = { CustomImage };
 
+// grab author data
 const authorId = typeof post.data.author.profile === 'object' 
   ? post.data.author.profile.id 
   : post.data.author.profile;
-
+  
 const rawAuthorEntry = authorId ? await getEntry('authors', authorId) : null;
-
 const authorEntry = rawAuthorEntry as SerializedAuthor | null;
 const alias = authorEntry?.data?.alias || "Contributor";
-
 const lastEditDate = post.data.updated ? formatDate(post.data.updated) : null;
+
+
+const blog = mapBlogFull(post);
 const { Content } = await render(post);
 const base = import.meta.env.BASE_URL;
 ---
@@ -63,8 +66,8 @@ const base = import.meta.env.BASE_URL;
     <p class="lead-text desc">{post.data.description}</p>
   </header>
 {console.log('Processing Image for post:', post.slug, 'Data:', post.data.coverImage)}
-  
-  {post.data.coverImage?.src && (
+  <!-- {!poster.isPlaceholder ? ( -->
+  {!blog.poster.isPlaceholder && (
     <figure class="cover-image-container">
       <Image 
         src={post.data.coverImage?.src}

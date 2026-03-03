@@ -11,8 +11,6 @@ export const OFFICIAL_LINKS = {
   instagram: 'https://www.instagram.com/yourjamplug.uk/',
   tiktok: 'https://www.tiktok.com/@your.jam.plug',
   donate: 'https://buymeacoffee.com/yourjamplug',
-  helloMail: 'mailto:hello@yourjamplug.uk',
-  shaneruMail: 'mailto:shaneru@yourjamplug.uk',
   emailHello: 'hello@yourjamplug.uk',
   emailShaneru: 'shaneru@yourjamplug.uk',
   emailSupport: 'support@yourjamplug.uk'

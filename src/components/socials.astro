@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { OFFICIAL_LINKS } from "src/data/site-config";
 // Import the images directly
 import emailIcon from "../assets/email.png";
 import instaIcon from "../assets/instagram.png";
@@ -8,13 +9,13 @@ import tiktokIcon from "../assets/tik-tok.png";
 const base = import.meta.env.BASE_URL;
 ---
  
-<a href="mailto:skater@yourjamplug.com"  class="socialRound">
+<a href={`mailto:${OFFICIAL_LINKS.emailHello}`}  class="socialRound">
     <Image src={emailIcon} alt="Email" width={25} height={25} class="social-bagde" />
 </a>
-<a href="https://www.instagram.com/yourjamplug.uk" target="_blank" class="socialRound">
+<a href={OFFICIAL_LINKS.instagram} target="_blank" class="socialRound">
     <Image src={instaIcon} alt="Instagram" width={25} height={25} class="social-bagde" />
 </a>
-<a href="https://www.tiktok.com/@skaters.jam.plug" target="_blank" class="socialRound">
+<a href={OFFICIAL_LINKS.tiktok} target="_blank" class="socialRound">
     <Image src={tiktokIcon} alt="TikTok" width={25} height={25} class="social-bagde" />
     
 </a>
