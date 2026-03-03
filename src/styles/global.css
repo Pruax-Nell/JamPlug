@@ -138,7 +138,7 @@ html {
     --blur-light:#ffffff2e;
     
     --main-bg-dark: #312e29; 
-    --dark-background: #c5b79c; 
+    --dark-background: #c1b9a9; 
     --main-dark: #262421; 
     --text-black: #262421;
     
@@ -160,8 +160,6 @@ html {
 
 .dark body, .dark #site-header{
     background-color: var(--dark-background);
-    background-color: var(--bg-dark);
-    background-color: var(--main-bg-second);
 
     
 }

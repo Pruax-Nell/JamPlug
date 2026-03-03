@@ -30,6 +30,8 @@ export const mapBlogFull = (post: CollectionEntry<'posts'>) => ({
         src: getImageSource(post.data.coverImage, BlogPlaceholder),
         alt: post.data.coverImage?.alt || post.data.title,
         caption: post.data.coverImage?.caption || '@YourJamPlug',
+        isPlaceholder: !post.data.coverImage?.src,
+
     },
 });
 
@@ -48,6 +50,7 @@ export const mapBlogToCard = (post: CollectionEntry<'posts'>) => ({
         src: getImageSource(post.data.coverImage, BlogPlaceholder),
         alt: post.data.coverImage?.alt || post.data.title,
         caption: post.data.coverImage?.caption || '@YourJamPlug',
+        isPlaceholder: !post.data.coverImage?.src,
     },
     category: post.data.blogCategory,
     discipline: post.data.skateDiscipline,

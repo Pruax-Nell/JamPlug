@@ -47,7 +47,7 @@ interface BlogProps extends BaseProps {
     status?: string;
     category?: string;
     discipline?: string;
-    poster?: PosterData;
+    poster: PosterData;
 
     // not needed
     locationLabel?: undefined;
@@ -130,11 +130,12 @@ const base = import.meta.env.BASE_URL;
     {variant === "blog" && (
     <div class={`post-card card-${variant}`}>
 
-        {poster ? ( 
+        {!poster.isPlaceholder ? ( 
             <> 
             <Image 
-                src={poster.src} alt={poster.alt || title} 
-                width={300} 
+                src={poster.src} 
+                alt={poster.alt || title} 
+                width={350} 
                 height={400} 
                 class="poster-block" 
             />
@@ -146,8 +147,8 @@ const base = import.meta.env.BASE_URL;
                 {subtitle && <span>{subtitle}</span>}
                 <p class="desc">{midDesc}</p>
                 <div class="meta-tags">
-                    <span class="meta-item cat">{category}</span>
-                    <span class="meta-item dis">{discipline}</span>
+                    {category && <span class="meta-item cat">{category}</span>}
+                    {discipline && <span class="meta-item dis">{discipline}</span >}
                 </div>
             </div> 
             </>
@@ -160,8 +161,8 @@ const base = import.meta.env.BASE_URL;
                 {subtitle && <span>{subtitle}</span>}
                 <p class="desc">{midDesc}</p>
                 <div class="meta-tags">
-                    <span class="meta-item cat">{category}</span>
-                    <span class="meta-item dis">{discipline}</span >
+                    {category && <span class="meta-item cat">{category}</span>}
+                    {discipline && <span class="meta-item dis">{discipline}</span >}
                 </div>
             </div>
         )}

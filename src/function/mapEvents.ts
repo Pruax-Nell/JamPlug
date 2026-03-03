@@ -145,7 +145,7 @@ export const mapToFeaturedCard = (event: any) => {
         description: event.data.description,
         poster: {
           src: getImageSource(event.data.eventPoster, EventPlaceholder),
-          alt: event.data.eventposter.alt,
+          alt: event.data.eventPoster.alt,
           caption: event.data.eventPoster?.caption || '',
           isPlaceholder: !event.data.eventPoster?.src,
         },

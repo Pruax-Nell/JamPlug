@@ -52,7 +52,7 @@ const featuredEvents = publishedEvents
 const publishedBlogs = await getCollection('posts', ({ data }) => {
   return data.status === 'published';
 });
-
+ 
 const recentBlogs = (publishedBlogs)
 	.map(mapBlogToCard)
 	.sort((a, b) => {
