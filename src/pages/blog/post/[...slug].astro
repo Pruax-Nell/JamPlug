@@ -52,7 +52,8 @@ const base = import.meta.env.BASE_URL;
 
 </nav>
 <article class="blog-container">
-  <header>
+
+  <header class="page-head-block">
     <h1 class="post-header">{post.data.title}</h1>
     <p class="sub-heading">{post.data.subtitle}</p>
     <time datetime={new Date(post.data.published).toISOString()} class="pub-date">
@@ -65,17 +66,20 @@ const base = import.meta.env.BASE_URL;
     </time>
     <p class="lead-text desc">{post.data.description}</p>
   </header>
+
 {console.log('Processing Image for post:', post.slug, 'Data:', post.data.coverImage)}
-  <!-- {!poster.isPlaceholder ? ( -->
   {!blog.poster.isPlaceholder && (
     <figure class="cover-image-container">
-      <Image 
-        src={post.data.coverImage?.src}
-        alt={post.data.coverImage?.alt || post.data.title} 
-        width={800} 
-        class="cover-image"
-        loading="eager" 
-      />
+
+      <div class="image-block">
+        <Image 
+          src={post.data.coverImage?.src}
+          alt={post.data.coverImage?.alt || post.data.title} 
+          width={1000} 
+          class="cover-image"
+          loading="eager" 
+        />
+      </div>
       
       {post.data.coverImage?.caption && (
         <figcaption class="cover-caption">
@@ -150,12 +154,46 @@ const base = import.meta.env.BASE_URL;
     font-size: var(--fs-footer);
     letter-spacing: .18ch;
   }
-  .cover-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin: 2rem 0;
+
+  /* ------------------------------------------ HGROUP ---------- */
+.page-head-block{
+
+
+}
+
+
+
+
+  /* ------------------------------------------ IMAGE ---------- */
+  .cover-image-container{
+
   }
+  
+  .image-block{
+    display: flex;
+    flex-direction: column;
+
+    aspect-ratio: auto;
+    height: 30rem;
+    overflow: hidden;
+
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .cover-image {
+      /* width: 100%; */
+      width: auto;
+      height: 100%;
+      border-radius: 8px;
+      margin: 2rem 0;
+      justify-self: center;
+
+      object-fit: cover;
+  }
+
+  /* ------------------------------------- CONTENT ------------- */
   .content-body {
     line-height: 1.8;
     font-size: 1.1rem;

@@ -15,10 +15,12 @@
     
 }
 
+
 footer {
     display: flex;
     flex-direction: column;
 }
+
 
 @media (min-width: 751px) {
     #upperFoot, #lowerFoot, #endFooter {
@@ -34,15 +36,14 @@ footer {
     .low-block{
         justify-content: center;
         align-content: center;
-        
     }
 }
 
 @media (max-width: 750px) {
     #upperFoot, #lowerFoot, #endFooter {
         flex-direction: column;
-        
     }
+
 }
 
 #lowerFoot {
