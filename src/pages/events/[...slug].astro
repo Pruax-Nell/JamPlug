@@ -44,10 +44,6 @@ const lineup = [
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
 
-// const locationString = [post.data.townCity, eventLocation.regionLabel]
-//   .filter(Boolean)
-//   .join(', ');
-
 const ogImage = post.data.eventPoster?.src;
 const base = import.meta.env.BASE_URL;
 --- 
@@ -63,19 +59,13 @@ const base = import.meta.env.BASE_URL;
   <section class="event-summary-section">
 
     <div class=" poster-frame">
-    {event.poster ? (
-      <Image 
-      src={event.poster.src} 
+     <Image 
+      src={event.poster} 
       alt={event.poster.alt} 
       width={350} 
       height={510} 
       class="cover-image"
       />
-    ) : (
-      <div class="poster-frame">
-        {/* fill div background with bg image overlay title */}
-      </div>
-    )}
     </div>
       
     <header class="event-summary">
@@ -132,7 +122,7 @@ const base = import.meta.env.BASE_URL;
     <div class="ticket-block">
     {event.organisers && ( 
       <p>Official page for
-      <Button  variant="primary" size="sm" href={event.eventLink} aria-label="Official Event Page (external)"> {event.title} </Button>
+      <Button  variant="primary" size="sm" href={event.eventLink} target="_blank" aria-label="Official Event Page (external)"> {event.title} </Button>
       </p>)}
     
     <div class="ticket-actions">

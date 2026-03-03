@@ -3,6 +3,8 @@ import type { CollectionEntry } from 'astro:content';
 
 import { formatLocation } from "../data/globe-constants";
 import { formatFestivalDate, formatEventDate, formatDate } from "./dateHelper";
+import { getImageSource } from '../function/sourceHelper';
+import type { KeystaticImage } from './types';
 
 import BlogPlaceholder from '../assets/placeholder/placeholder-blogPoster.jpg'
 
@@ -25,7 +27,7 @@ export const mapBlogFull = (post: CollectionEntry<'posts'>) => ({
     discipline: post.data.skateDiscipline,
     published: post.data.published,
     poster: {
-        src: post.data.coverImage?.src || BlogPlaceholder,
+        src: getImageSource(post.data.coverImage, BlogPlaceholder),
         alt: post.data.coverImage?.alt || post.data.title,
         caption: post.data.coverImage?.caption || '@YourJamPlug',
     },
@@ -43,7 +45,7 @@ export const mapBlogToCard = (post: CollectionEntry<'posts'>) => ({
     description: post.data.description,
 
     poster: {
-        src: post.data.coverImage?.src || BlogPlaceholder,
+        src: getImageSource(post.data.coverImage, BlogPlaceholder),
         alt: post.data.coverImage?.alt || post.data.title,
         caption: post.data.coverImage?.caption || '@YourJamPlug',
     },

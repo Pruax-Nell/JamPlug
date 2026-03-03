@@ -2,9 +2,12 @@
 import "../styles/event.css"; 
 import Button from "../components/button.astro";
 import BaseLayout from "../layouts/baseLayout.astro";
+import { Image } from "astro:assets";
+
 import type { BlogCategory, SkateDisciplines, SkillLevel, EventType, PostStatus, socialMedia, EventStatus, Footwear, MonthOrder, } from '../data/skate-constants';
 // import { SerializedEvent } from "../types";
 
+import HalfImage from '../assets/test1.jpg'
 import EventsOG from '../../public/admin/events-og-image.jpg'
 import PosterPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg';
 
@@ -100,14 +103,14 @@ const base = import.meta.env.BASE_URL;
 		initialEvents={clientUpcomingEvents}
 		serverOptions={serverOptions}
 	/>
-
+ 
 </section>
 <!-- ||------------------------------------------------50/50 SECTION -->
 
 <section class="frame-fence fifty-fifty-section">
 	<div class="half-box">
 		<div class="image">
-			<img src="/src/assets/test1.jpg" alt="Group photo at RDV Paris" id="half-img">
+			<Image src={HalfImage} alt="Group photo at RDV Paris" id="half-img" width={1200}>
 			
 		</div>
 		<div class="content-wrap">

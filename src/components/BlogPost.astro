@@ -9,7 +9,7 @@ interface Props {
   data: Pick<BlogData, 'title' | 'description' | 'coverImage' | 'subtitle' | 'blogCategory' | 'skateDiscipline' >;
   id: string;
 }
-
+ 
 const { data, id } = Astro.props;
 const postUrl = `/blog/${id}/`;
 
@@ -18,11 +18,12 @@ const base = import.meta.env.BASE_URL;
 
 <li class="to-post">
     <article class="cont-block">
+        <!-- swap for ? ... or div with background image for blog title -->
         {data.coverImage && (
           <a href={postUrl} class="cover-link" aria-hidden="true" tabindex="-1">
             <Image 
               src={data.coverImage.src}
-              alt={data.title}
+              alt={data.coverImage.alt || data.title}
               width={300}
               height={300}
               format="webp"

@@ -19,7 +19,7 @@ const base = import.meta.env.BASE_URL;
 <div class="event-item"><a class="list-link" href={url} title={title}>
 
         <div class="img-wrapper ">
-            <Image src={poster} alt={title} class="eventcard-poster" />
+            <Image src={poster.src} alt={poster.alt || title} class="eventcard-poster" />
         </div>
 
         <div class="content-wrapper">

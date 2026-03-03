@@ -2,6 +2,8 @@ import type { CollectionEntry } from 'astro:content';
 
 import { formatLocation } from "../data/globe-constants";
 import { formatFestivalDate, formatEventDate, formatDate, formatTime } from "./dateHelper";
+import { getImageSource } from '../function/sourceHelper';
+import type { KeystaticImage } from './types';
 
 import EventPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg'
 
@@ -19,12 +21,11 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
         event.data.flyerImage4,
         event.data.flyerImage5,
     ]
-    .filter(img => img && img.src) 
-    .filter((img): img is NonNullable<typeof img> => !!img && !!img.src)
+    .filter((img): img is KeystaticImage => !!img && !!img.src)
     .map(img => ({
-        src: img?.src,
-        alt: img?.alt || `Gallery image for ${event.data.eventName}`,
-        caption: img?.caption || `${event.data.eventName} poster Image`,
+        src: img.src, 
+        alt: img.alt || `Gallery image for ${event.data.eventName}`,
+        caption: img.caption || `${event.data.eventName} poster Image`,
     }));
 
     return{
@@ -65,9 +66,9 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
         
         eventLink: event.data.eventLink,
         tickets: (event.data.ticketLink || []).map(link => ({
-            platform: link.platform,
-            url: link.directLink || '#', 
-            disclaimer: link.disclaimer || "Your Jam Plug is not responsible for external site content",
+            platform: link?.platform,
+            url: link?.directLink || '#', 
+            disclaimer: link?.disclaimer || "Your Jam Plug is not responsible for external site content",
         })),
 
         // people
@@ -78,7 +79,8 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
 
         // Poster Gallery
         poster: {
-            src: event.data.eventPoster?.src || EventPlaceholder,
+            src: getImageSource(event.data.eventPoster, EventPlaceholder),
+            isPlaceholder: !event.data.eventPoster?.src,
             alt: event.data.eventPoster?.alt || event.data.eventName,
             caption: event.data.eventPoster?.caption || '@YourJamPlug'
         },
@@ -86,6 +88,17 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
 
     }
 };
+
+// Check if the src specifically exists
+//  poster: {
+
+// src: event.data.eventPoster?.src ? event.data.eventPoster.src : EventPlaceholder,
+
+// alt: event.data.eventPoster?.alt || event.data.eventName,
+
+// caption: event.data.eventPoster?.caption || '@YourJamPlug'
+
+// },
 
 // small cards | carosel use 
 export const mapEventToCard = (event: CollectionEntry<'events'>) => {
@@ -102,7 +115,8 @@ export const mapEventToCard = (event: CollectionEntry<'events'>) => {
         subtitle: event.data.subheading,
         description: event.data.description,
         poster: {
-            src: event.data.eventPoster?.src || EventPlaceholder,
+            src: getImageSource(event.data.eventPoster, EventPlaceholder),
+            isPlaceholder: !event.data.eventPoster?.src,
             alt: event.data.eventPoster?.alt || event.data.eventName,
             caption: event.data.eventPoster?.caption || '@YourJamPlug' ,
         },
@@ -129,7 +143,12 @@ export const mapToFeaturedCard = (event: any) => {
         locationLabel: location.full, // "London, England, UK"
         dateLabel: dates,
         description: event.data.description,
-        poster: event.data.eventPoster?.src,
+        poster: {
+          src: getImageSource(event.data.eventPoster, EventPlaceholder),
+          alt: event.data.eventposter.alt,
+          caption: event.data.eventPoster?.caption || '',
+          isPlaceholder: !event.data.eventPoster?.src,
+        },
         eventType: event.data.eventType,
         startOrder: event.data.startDate,
     };
@@ -150,7 +169,8 @@ const person = (person: any, role: string) => {
     primaryUrl: person.socialLinks?.[0]?.url || '#',
     
     photo: {
-        src: person.photo?.src || null,
+        src: person.photo || null,
+        // getImageSource()
         alt: person.name,
     }
   };

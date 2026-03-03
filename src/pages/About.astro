@@ -7,7 +7,8 @@ import "../styles/global.css" ;
 
 import { Image } from "astro:assets";
 
-import logo from "../assets/YJP/long-logo-orange.svg" 
+import logo from "../assets/YJP/long-logo-orange.svg"; 
+import Potrait from "../assets/skaterShaneru.jpg";
 
 import { OFFICIAL_LINKS } from "../data/site-config";
 
@@ -60,7 +61,7 @@ description="Behind the scenes at YJP">
         
         <div class="port founder-image">
             <a href={OFFICIAL_LINKS.shaneru} target="_blank" aria-label="Portrait of Shaneru">
-                <Image src="/src/assets/Skater.Shynell.JPG" alt="Me aka Shaneru, spinning on skates" height={320} width={260}  />
+                <Image src={Potrait} alt="Me aka Shaneru, spinning on skates" width={280}  />
             </a>
             <span>Captured by <a href="https://danielbridlephoto.com/" class="community-credit" aria-label="To photographer's site, Daniel Bridle (external)" target="_blank">Daniel Bridle</a></span>
         </div>

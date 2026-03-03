@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 interface Props {
     src?: any;
@@ -65,7 +66,7 @@ const frameEdge = {
     ]} >
         <Image 
             src={src} 
-            alt={alt || ""} 
+            alt={alt || "YJP Image"} 
             width={width} 
             
         />  

@@ -1,29 +1,24 @@
 import type { BlogCategory, SkateDisciplines, SkillLevel, EventType, PostStatus, socialMedia, EventStatus, Footwear, MonthOrder, } from '../data/skate-constants';
 import { locationSchema } from './configBlocks/zod-blocks';
 import {z} from 'zod';
+import type { ImageMetadata } from 'astro';
 
 export type EventLocation = z.infer<typeof locationSchema>;
 
 // ------------ interfaces ... (shape)
 
 // UTILITIES
-export interface AstroImage {
-  src: string;
-  width: number;
-  height: number;
-  format: string;
-}
-
-export interface KeystaticImage {
-  src: AstroImage | string; 
-  alt: string;
-  caption: string;
-}
-
 export interface SelectOption {
   label: string;
   value: string;
 }
+
+export interface KeystaticImage {
+  src: ImageMetadata; 
+  alt: string;
+  caption: string;
+}
+
 
 // TODO - create a BusinessProfile interface once collections are up
 export interface AuthorProfile {

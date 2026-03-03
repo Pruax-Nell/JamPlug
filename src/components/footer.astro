@@ -1,11 +1,13 @@
 ---
-import Socials from "../components/socials.astro" ;
 import "../styles/footer.css";
 import { Image } from "astro:assets";
+
+import Socials from "../components/socials.astro" ;
 import FootLogo from '/src/assets/YJP/alt-bloat-1.svg'
 import CoffeeButton from './ext/coffee-button.astro';
-import {OFFICIAL_LINKS} from '../data/site-config';
+import tradeFrame from '../assets/layout/trade-as-1.svg';
 
+import {OFFICIAL_LINKS} from '../data/site-config';
 
 const base = import.meta.env.BASE_URL;
 
@@ -49,7 +51,7 @@ const base = import.meta.env.BASE_URL;
             <a href="/legal" class="legal-link" aria-label="Legal Information">
                 <p>© 2023 The Jam Plug</p>
                 <Image 
-                src="/images/trade-as-1.svg "
+                src={tradeFrame}
                 alt="Business ownership disclosure" 
                 width={320} height={60}
                 class="trade-as"

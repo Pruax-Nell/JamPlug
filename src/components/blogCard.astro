@@ -12,8 +12,6 @@ type BlogCardProps = SerializedBlog['data'] & {
   id: string;
 }; 
 
-// const posterSrc = coverImage?.src || BlogPlaceholder;
-// const posterAlt = coverImage?.alt || "Image Placeholder";
 
 const {
   id,
@@ -26,7 +24,10 @@ const {
   published,
   
 } = Astro.props
-  
+
+const posterSrc = coverImage?.src || BlogPlaceholder;
+const posterAlt = coverImage?.alt || title;
+
 const dateDisplay = formatEventDate(published);
 const cleanSlug = id.replace(/\.[^/.]+$/, "");
 // const cleanSlug = id.includes('/') ? id.split('/')[0] : id;
@@ -40,10 +41,9 @@ const base = import.meta.env.BASE_URL;
   
   <div class="card-image">
     {coverImage ? (
-      <Image src={coverImage} alt={title} height={300} width={300} class="cover-image" />
+      <Image src={posterSrc} alt={posterAlt || title} height={300} width={300} class="cover-image" />
     ) : (
       <div class='image-replacement'> 
-        {/* <span class="blog-label ">SKATE</span> */}
         <span class="blog-label date">{dateDisplay}</span>
       </div>
     )}

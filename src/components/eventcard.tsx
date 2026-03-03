@@ -1,13 +1,16 @@
 import React from 'react';
+import type { ImageMetadata } from 'astro';
+import type { SerializedEvent, EventCardData, } from '../function/types';
 import LocationShort from './locationShort.astro';
-import type { AstroImage, SerializedEvent, EventCardData } from '../function/types';
 import { formatEventDate, formatTime } from '../function/dateHelper';
 import { formatLocation, hasRegionSelected } from '../data/globe-constants';
+
+import PosterPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg'
 
 // card holder for upcomingEvents.tsx
 
 type EventCardProps = SerializedEvent['data'] & {
-  id: string;
+  id: string; 
 };
 
 export default function EventCard({
@@ -27,33 +30,34 @@ export default function EventCard({
   minAge,
 }: EventCardProps) {
 
-  // const imageSrc = typeof eventPoster === 'object' && eventPoster !== null 
-  // ? (eventPoster as unknown as AstroImage).src 
-  // : eventPoster;
-
-  const imageSrc = (typeof eventPoster === 'object' && eventPoster !== null 
-  ? (eventPoster as unknown as AstroImage).src 
-  : eventPoster) ?? undefined;
+  // const imageSrc = (typeof eventPoster === 'object' && eventPoster !== null 
+  // ? (eventPoster as unknown as ImageMetadata).src 
+  // : eventPoster) ?? undefined;
+  
+const imageSrc = eventPoster 
+  ? (typeof eventPoster === 'object' 
+      ? (eventPoster as unknown as ImageMetadata).src 
+      : eventPoster)
+  : PosterPlaceholder.src;
 
 const labels = formatLocation(location, townCity);
 const showRegion = hasRegionSelected(location);
 
-const cardClasses = isFeatured ? "event-card featured" : "event-card";
+const cardClasses = isFeatured ? "event-card featured-event" : "event-card";
 const statusClass = eventStatus ? `status-${eventStatus}` : '';
 const dateRange = formatEventDate(startDate, endDate);
 
   return (
-    <a href={`/events/${id}`} className={`event-card-link ${statusClass}`}>
-    <article className="event-card">
+    <a href={`/events/${id}`} className={`event-card-link ${statusClass}`} aria-label={eventName}>
+    <article className={cardClasses}>
 
       <div className="card-image-container">
-        {eventPoster ? (
-          <img src={imageSrc} alt={eventName} className="event-image" />
-        ) : (
-          <div className="placeholder-image">🛼</div>
-        )}
-
-          
+        <img 
+          src={imageSrc} 
+          alt={eventName} 
+          className="event-image" 
+          loading="lazy" 
+        />
           {minAge && <span className="age-tag">{minAge}+</span>}
           <span className="event-type-label">{eventType}</span>
         

@@ -19,7 +19,7 @@ import { formatLabel, formatLocationString } from '../function/stringHelper';
 
 import { getCollection } from "astro:content";
 
-const targetYear = 2026;
+const targetYear = 2026; 
 
 const bigEvents = await getCollection('events', ({ data }) => {
     return data.status === 'published' && 

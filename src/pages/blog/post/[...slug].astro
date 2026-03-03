@@ -71,7 +71,7 @@ const base = import.meta.env.BASE_URL;
         alt={post.data.coverImage?.alt || post.data.title} 
         width={800} 
         class="cover-image"
-        loading="eager"
+        loading="eager" 
       />
       
       {post.data.coverImage?.caption && (
@@ -108,7 +108,7 @@ const base = import.meta.env.BASE_URL;
           <figure class="gallery-item">
             <Image 
               src={item} 
-              alt={post.data.title}
+              alt={item.alt || post.data.title}
               width={450} 
               format="avif"
               class="gallery-post"

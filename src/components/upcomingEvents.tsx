@@ -671,7 +671,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         </p>
         <div aria-live="polite" className="srOnly">
           {filteredEvents.length} events found.
-        </div>
+        </div> 
       </div>
 
       <section className="event-grid">

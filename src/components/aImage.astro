@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
-const { src, alt, title } = Astro.props;
+const { src, alt, caption } = Astro.props;
 ---
 <figure class="standard-image-container">
   <div class="standard-frame">
-    <Image src={src} alt={alt || ""} width={1000}  />
+    <Image src={src} alt={alt || "YJP Image"} width={1000}  />
   </div>
-  {alt && <figcaption>{title}{alt}</figcaption>}
+  {alt && <figcaption>{caption}{alt}</figcaption>}
 </figure>
 
 <style>

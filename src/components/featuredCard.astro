@@ -1,6 +1,7 @@
 ---
 // index feature card
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 interface Props {
     id: any;
@@ -21,10 +22,11 @@ interface Props {
         startDate: Date | string;
         endDate?: Date | string | null;
     };
-    poster?: {
-        src: any;
+    poster: {
+        src: ImageMetadata;
         alt: string;
         caption: string;
+        isPlaceholder: boolean;
     }
 }
 
@@ -46,30 +48,20 @@ const {
 
 const base = import.meta.env.BASE_URL;
 ---
+<!-- TODO change the CSS for missing featured posters -->
 
 <div class=" feature-case">
     <div class="feature-card">
-        {poster ? (
-            <Image 
-            class="feature-poster"
+     <div class="feature-case">
+    <div class="feature-card">
+        <Image 
+            class={poster.isPlaceholder ? "feature-poster-placeholder" : "feature-poster"}
             src={poster.src} 
             alt={poster.alt} 
             width={420} 
             height={500} 
-            />
-        ) : (
-            // <div class="placeholder feature-poster">🛼</div>
-            <div class="ft-content">
-            <h5 class="ft-title">
-                <a href={url} class="main-link">{title}</a>
-            </h5>
-            <span class="city-country">📍{locationLabel}</span>
-            <span class="event-date">{dateLabel}</span>
-            <span class="event-type">{eventType}</span>
-            <p>{description}</p>
-            
-        </div>
-        )}
+        />
+        
         <div class="feature-content">
             <hgroup>
                 <h5 class="ft-title">
@@ -81,8 +73,10 @@ const base = import.meta.env.BASE_URL;
             <span class="event-date">{dateLabel}</span>
             <span class="event-type">{eventType}</span>
             <p>{description}</p>
-            
         </div>
+    </div>
+    <h4 class="feature-title" aria-label="Event Title">{title}</h4>
+</div>
     </div>
     <h4 class="feature-title" aria-label="Event Title">{title}</h4>
 </div>

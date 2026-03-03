@@ -69,7 +69,7 @@ const events = defineCollection({
                 platform: z.string(),
                 directLink: z.string().url().optional().nullable().or(z.literal('')),
                 disclaimer: z.string().optional(),
-            })
+            }).optional().nullable()
         ).optional().nullable().default([]),
 
         organisers: z.array(personObject).optional().nullable().default([]),
