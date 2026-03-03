@@ -120,29 +120,38 @@ const base = import.meta.env.BASE_URL;
       <Content />
     </div>
 
+    <hr>
+
     <div class="ticket-block">
+      <hgroup>
+        <h3 >Official Links for {event.title}</h3>
+      </hgroup>
+
     {event.organisers && ( 
-      <p>Official page for
-      <Button  variant="primary" size="sm" href={event.eventLink} target="_blank" aria-label="Official Event Page (external)"> {event.title} </Button>
-      </p>)}
+      <div>
+        <p>Official Page:</p>
+      <Button  variant="primary" size="lg" theme='orangeDark' href={event.eventLink} target="_blank" aria-label="Official Event Page (external)"> {event.title} </Button>
+      </div>)}
     
-    <div class="ticket-actions">
-      {event.tickets?.map((ticket) => (
-        ticket.url && (
-          <div class="ticket-wrapper">
-            <Button 
-              href={ticket.url} 
-              variant='outline' 
-              theme='black' 
-              size='sm'
-            >
-              {ticket.platform}
-            </Button>
-            {ticket.disclaimer && <p class="disclaimer-text">{ticket.disclaimer}</p>}
-          </div>
-        )
-      ))}
-    </div>
+      <div class="ticket-list">
+        <h4>Ticket Links <span class="disclaimer-text">External Sites*</span></h4> 
+        
+        {event.tickets?.map((ticket) => (
+          ticket.url && (
+            <div class="ticket-wrapper">
+              <Button 
+                href={ticket.url} 
+                variant='outline' 
+                theme='brownLight' 
+                size='sm'
+                aria-label="Link to ticket platform"
+              >
+                Head to {ticket.platform} platform
+              </Button>
+            </div>
+          )
+        ))}
+      </div>
     </div>
 
   </section>
@@ -165,7 +174,7 @@ const base = import.meta.env.BASE_URL;
                   {person.socials.map((link) => (
                     <li class="list-point">{link.platform}:
                       <a href={link.url} target="_blank" rel="noopener" >
-                        {link.displayText} Tickets
+                        {link.displayText}
                       </a>
                     </li>
                   ))}
@@ -211,15 +220,15 @@ const base = import.meta.env.BASE_URL;
 
   {event.gallery.length > 0 && (
   <section class="event-gallery-section">
-    <p class="self-center header-group">~ Scroll the gallery ~</p>
+    <p class="self-center header-group">~ Event Gallery ~</p>
     <div class="gallery-grid">
       {event.gallery.map((img, index) => (
         <div class="gallery-item">
           <Image 
             src={img.src} 
             alt={`${img.alt || event.title} gallery image ${index + 1}`} 
-            width={200} 
-            height={350}
+            width={900} 
+            height={550}
             class="event-image"
             />
         </div>
@@ -290,7 +299,6 @@ const base = import.meta.env.BASE_URL;
 }
 
 
-
 .placeholder-poster{
   aspect-ratio: 4 / 5;
   width: 100%;
@@ -357,7 +365,7 @@ const base = import.meta.env.BASE_URL;
 }
 
 .event-header-info {
-  padding: 1rem .2rem;
+  padding: .2rem;
 }
 
 .event-header-info .sub-heading {
@@ -484,8 +492,20 @@ const base = import.meta.env.BASE_URL;
 
 }
 
-/* || ---------------------------------------- LINEUP Section --- */
+.ticket-list{
+  margin-top: 2rem;
+  padding-left: 1rem;
+}
 
+.disclaimer-text{
+  font-size: var(--fs-caption);
+  color: var(--grey);
+}
+
+/* || ---------------------------------------- LINEUP Section --- */
+hgroup{
+  margin-bottom: 1rem;
+}
 .event-lineup-section{
   max-width: 100%;
 }
@@ -662,7 +682,7 @@ const base = import.meta.env.BASE_URL;
   .gallery-grid::-webkit-scrollbar { display: none; }
 
   .gallery-item {
-    flex: 0 0 50%; 
+    flex: 0 0 40%; 
     scroll-snap-align: center;
   }
 

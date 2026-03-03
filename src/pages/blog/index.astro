@@ -358,17 +358,22 @@ const base = import.meta.env.BASE_URL;
 }
 
 .empty-state {
-  text-align: center;
-  padding: 5rem 2rem;
-  border: 2px dashed var(--main-pink);
-  border-radius: 12px;
-  margin-block: 2rem;
+    display: flex;
+    flex-direction: column;
+    
+    text-align: center;
+    justify-items: center;
+    padding: 5rem 2rem;
+    border: 2px dashed var(--main-pink);
+    border-radius: 12px;
+    margin-block: 2rem;
 }
 
 .empty-state h3 {
   color: var(--main-pink);
   font-size: var(--fs-heading-mid);
 }
+
 
 .back-link {
   display: inline-block;

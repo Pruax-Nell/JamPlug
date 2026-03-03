@@ -180,14 +180,24 @@ const mapPerson = (person: any, role: string): MappedPerson => {
   return {
     name: person.name || "TBA",
     role: role,
-    socials: (person.socialLinks || []).map((link: any): SocialLink => {
+    socials: (person.socialLinks || []).map((link: any, index: number): SocialLink => {
       const platform = link.platform || 'Social';
       const personName = person.name || 'Artist';
+      const isSocial = platform.toLowerCase() === 'socials';
+      const isWebsite = platform.toLowerCase() === 'website';
+      const isOther = platform.toLowerCase() === 'other';
+
+      let prefix = '•';
+      if (isSocial) prefix = '@';
+      if (isWebsite) prefix = 'WWW:';
+
+      const numbering = index > 0 ? ` ${index + 1}` : '';
+
       
       return {
         platform: platform,
         url: link.url || '#',
-        displayText: `${platform}: ${personName}` 
+        displayText: `[ ${prefix} ${personName}${numbering} ]`
       };
     })
     .filter((l: SocialLink) => l.url !== ''),
