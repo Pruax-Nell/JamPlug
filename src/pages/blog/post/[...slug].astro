@@ -35,13 +35,14 @@ const authorId = typeof post.data.author.profile === 'object'
   
 const rawAuthorEntry = authorId ? await getEntry('authors', authorId) : null;
 const authorEntry = rawAuthorEntry as SerializedAuthor | null;
-const alias = authorEntry?.data?.alias || "Contributor";
+const alias = authorEntry?.data?.alias || "A Jam Plug Contributor";
 const lastEditDate = post.data.updated ? formatDate(post.data.updated) : null;
 
 
 const blog = mapBlogFull(post);
 const { Content } = await render(post);
 const base = import.meta.env.BASE_URL;
+
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
@@ -88,12 +89,10 @@ const base = import.meta.env.BASE_URL;
       )}
     </figure>
   )}
-   <!-- <a href={`/authors/${post.data.author.profile}`}>
-   </a>  -->
-
-  <section class="content-body">
-    {post.data.author.isAnonymous ? (
-      <div class="anon-profile">
+   
+   <section class="author-section">
+     {post.data.author.isAnonymous ? (
+       <div class="anon-profile">
         <span class="anon-icon">👤</span>
         <p>Posted by <strong>A Jam Plug Contributor</strong></p>
       </div>
@@ -102,6 +101,12 @@ const base = import.meta.env.BASE_URL;
         <p>Written by: <strong>{alias}</strong></p>
       </div>
     )}
+
+  <!-- <a href={`/authors/${post.data.author.profile}`}></a>  -->
+   </section>
+
+  <section class="content-body">
+
   
     {post.data.updated && (<p class="updated-label">Last Updated: {lastEditDate}</p>)}
     <div class="main-content">
@@ -201,6 +206,23 @@ const base = import.meta.env.BASE_URL;
 
   .post-header, .sub-heading{
     text-transform: capitalize;
+  }
+
+  .main-content{
+    font-family: var(--font-body);
+    
+  }
+  .main-content :global(p){
+    line-height: 1.7;
+    font-family: var(--font-body);
+    
+  }
+  
+  .main-content article:where(p, ul, ol, h2, h3){
+    font-family: var(--font-body);
+    line-height: 1.7;
+    padding: .5rem;
+    
   }
 
   .gallery-grid {
