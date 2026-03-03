@@ -90,14 +90,14 @@ const base = import.meta.env.BASE_URL;
 
 </nav>
 
-  <section class="frame-fence">
+  <section class="">
       <hgroup class="header-group">
           <h1>YJP BLOG</h1>
           <p>All Things SKATE</p>
       </hgroup>
   </section>
   
-  <section class="frame-fence filter-bar">
+  <section class=" filter-bar">
     <div class="filter-group">
       <span class="filter-head">Discipline:</span>
       <nav class="filter-nav discipline">
@@ -130,7 +130,7 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <section class="blog-list frame-fence">
+  <section class="blog-list ">
       {page.data.length > 0 ? (
       page.data.map((blog: CollectionEntry<'posts'>) => (
         
@@ -189,8 +189,15 @@ const base = import.meta.env.BASE_URL;
 
 /* HEADER */
 
+.header-group{
+  padding-left: 3rem;
+}
+
 
 @media (max-width: 580px){
+  .header-group{
+    padding-left: 0;
+  }
   
   .page-title-group{
       text-align: right;

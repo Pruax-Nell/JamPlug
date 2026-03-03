@@ -22,7 +22,7 @@ footer {
 }
 
 
-@media (min-width: 751px) {
+@media (min-width: 951px) {
     #upperFoot, #lowerFoot, #endFooter {
         display: flex;
         flex-direction: row;
@@ -39,7 +39,7 @@ footer {
     }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 950px) {
     #upperFoot, #lowerFoot, #endFooter {
         flex-direction: column;
     }

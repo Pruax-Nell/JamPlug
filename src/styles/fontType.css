@@ -71,6 +71,11 @@
     --fs-footer: clamp(0.75rem, 0.1vw + 0.7rem, 0.85rem);
 }
 
+figcaption {
+    font-family: var(--font-body);
+
+}
+
 h1 {
     font-family: var(--font-titan-head);
     letter-spacing: var(--letter-space-titan);

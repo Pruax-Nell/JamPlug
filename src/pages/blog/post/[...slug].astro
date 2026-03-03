@@ -153,6 +153,23 @@ const base = import.meta.env.BASE_URL;
     gap: 2rem;
   }
 
+
+
+  /* ------------------------------------------ HGROUP ---------- */
+.page-head-block{
+  margin-bottom: 1rem;
+
+}
+
+ .post-header, .sub-heading{
+    text-transform: capitalize;
+    text-wrap: balance;
+    text-align: center;
+    justify-self: center;
+    margin-block: .5rem;
+
+  }
+
   .pub-date{
     text-align: right;
     justify-self: flex-end;
@@ -160,14 +177,17 @@ const base = import.meta.env.BASE_URL;
     letter-spacing: .18ch;
   }
 
-  /* ------------------------------------------ HGROUP ---------- */
-.page-head-block{
+  .desc {
+    padding-top: 1.5rem;
+    font-size: var(--fs-p3);
+    line-height: 1.5;
 
-
-}
-
-
-
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   /* ------------------------------------------ IMAGE ---------- */
   .cover-image-container{
@@ -179,7 +199,8 @@ const base = import.meta.env.BASE_URL;
     flex-direction: column;
 
     aspect-ratio: auto;
-    height: 30rem;
+    border-radius: 12px;
+    height: 25rem;
     overflow: hidden;
 
     justify-content: center;
@@ -198,31 +219,46 @@ const base = import.meta.env.BASE_URL;
       object-fit: cover;
   }
 
+  @media (max-width: 720px){
+    .image-block{
+      height: 15rem;
+    }
+
+
+  }
+
   /* ------------------------------------- CONTENT ------------- */
   .content-body {
     line-height: 1.8;
     font-size: 1.1rem;
   }
 
-  .post-header, .sub-heading{
-    text-transform: capitalize;
-  }
+ 
 
   .main-content{
     font-family: var(--font-body);
     
   }
   .main-content :global(p){
-    line-height: 1.7;
+    line-height: 2.5;
     font-family: var(--font-body);
+    font-size: var(--fs-p2);
+    margin-bottom: 1.2rem;
     
   }
-  
-  .main-content article:where(p, ul, ol, h2, h3){
-    font-family: var(--font-body);
-    line-height: 1.7;
-    padding: .5rem;
-    
+  .main-content :global(li){
+    font-size: var(--fs-p3);
+    padding-left: .2rem;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+  }
+  .main-content :global( h2, h3, h4, h5, h6){
+   padding-left: 3rem;
+   color: var(--ob-brown);
+  }
+
+  .main-content :global(h1){
+   
   }
 
   .gallery-grid {
@@ -256,17 +292,7 @@ const base = import.meta.env.BASE_URL;
 }
 
 
-.desc {
-  padding-top: 1.5rem;
-    font-size: var(--fs-p3);
-    line-height: 1.5;
 
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 footer {
     justify-self: center;
