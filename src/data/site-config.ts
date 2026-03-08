@@ -7,7 +7,8 @@ export const EVENTS_PER_PAGE = 20;
 
 export const OFFICIAL_LINKS = {
   username: 'Your Jam Plug',
-  shaneru: 'https://instagram.com/sha.ne.ru',
+  shaneru: 'https://instagram.com/shaneru.dou',
+  shaneru2: 'https://tiktok.com/shaneru.dou',
   instagram: 'https://www.instagram.com/yourjamplug.uk/',
   tiktok: 'https://www.tiktok.com/@your.jam.plug',
   donate: 'https://buymeacoffee.com/yourjamplug',
