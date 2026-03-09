@@ -77,7 +77,7 @@ document.addEventListener('astro:page-load', () => {
 
 let ToolKit = document.getElementById('tool-kit');
 let topButton = document.getElementById("toTop");
-let themeToggle = document.getElementById('themeToggle');
+// let themeToggle = document.getElementById('themeToggle');
 
 window.onscroll = function() {activeScroll()};
 
@@ -86,10 +86,10 @@ const isScrolled = document.body.scrollTop > 100 || document.documentElement.scr
 
     if (isScrolled) {
         topButton.style.opacity = '100%';
-        themeToggle.style.opactiy = '100%';
+        // themeToggle.style.opactiy = '100%';
     } else {
         topButton.style.opacity = '30%';
-        themeToggle.style.opactiy = '30%';
+        // themeToggle.style.opactiy = '30%';
         
     }
 }
@@ -103,34 +103,34 @@ function scrollTop() {
 topButton.addEventListener('click', scrollTop)
 
 // LIGHT/DARK THEME CHANGE
-  const theme = (() => {
-    const localStorageTheme = localStorage?.getItem("theme") ?? '';
-    if (['dark', 'light'].includes(localStorageTheme)) {
-      return localStorageTheme;
-    }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-      return 'light';
-  })();
+//   const theme = (() => {
+//     const localStorageTheme = localStorage?.getItem("theme") ?? '';
+//     if (['dark', 'light'].includes(localStorageTheme)) {
+//       return localStorageTheme;
+//     }
+//     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+//       return 'dark';
+//     }
+//       return 'light';
+//   })();
 
-  if (theme === 'light') {
-    document.documentElement.classList.remove('dark');
-  } else {
-    document.documentElement.classList.add('dark');
-  }
+//   if (theme === 'light') {
+//     document.documentElement.classList.remove('dark');
+//   } else {
+//     document.documentElement.classList.add('dark');
+//   }
 
-  window.localStorage.setItem('theme', theme); 
+//   window.localStorage.setItem('theme', theme); 
 
-  const handleToggleClick = () => {
-    const element = document.documentElement;
-    element.classList.toggle("dark");
+//   const handleToggleClick = () => {
+//     const element = document.documentElement;
+//     element.classList.toggle("dark");
 
-    const isDark = element.classList.contains("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }
+//     const isDark = element.classList.contains("dark");
+//     localStorage.setItem("theme", isDark ? "dark" : "light");
+//   }
 
-  document.getElementById("themeToggle")?.addEventListener("click", handleToggleClick);
+//   document.getElementById("themeToggle")?.addEventListener("click", handleToggleClick);
 
 
 
