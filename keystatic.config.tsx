@@ -193,12 +193,12 @@ export default config({
         }),
         minAge: fields.text({ label: 'Minimum Age' }),
         maxAge: fields.text({ label: 'Maximum Age' }),
-        eventPoster: imageField('Poster', 'events', 'poster'),
-        flyerImage1: imageField('Poster', 'events', 'poster'),
-        flyerImage2: imageField('Poster', 'events', 'poster'),
-        flyerImage3: imageField('Poster', 'events', 'poster'),
-        flyerImage4: imageField('Poster', 'events', 'poster'),
-        flyerImage5: imageField('Poster', 'events', 'poster'),
+        eventPoster: imageField('eventPoster', 'events', 'poster'),
+        flyerImage1: imageField('flyerImage1', 'events', 'poster'),
+        flyerImage2: imageField('flyerImage2', 'events', 'poster'),
+        flyerImage3: imageField('flyerImage3', 'events', 'poster'),
+        flyerImage4: imageField('flyerImage4', 'events', 'poster'),
+        flyerImage5: imageField('flyerImage5', 'events', 'poster'),
 
         startTime: fields.object({
           hour: fields.select({

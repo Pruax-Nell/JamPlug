@@ -58,8 +58,8 @@ export const locationSchema = z.object({
 });
 
 export const mapCoords = z.object ({
-  longitude: z.number(),
-  latitude: z.number(),
+  longitude: z.number().optional().nullable(),
+  latitude: z.number().optional().nullable(),
 }).optional().nullable();
 
 export type LocationData = z.infer<typeof locationSchema>;

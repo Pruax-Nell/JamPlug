@@ -81,7 +81,7 @@ const events = defineCollection({
         
         rink: z.string().optional(),
         venueAddress: z.string().optional(),
-        mapCoordinates: mapCoords,
+        mapCoordinates: mapCoords.optional().nullable(),
 
         footwear: z.enum( getValues(FOOTWEAR_CHOICE)).default('skates'),
 
