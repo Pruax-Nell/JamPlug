@@ -27,18 +27,9 @@ const clientUpcomingEvents = publishedEvents
   .filter((event) => event.data.startDate >= now)
   .sort((a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf())
   .map((event) => {
-    const d = event.data;
+	  const d = event.data;
+	  const isPlaceholder = !d.eventPoster;
     if (d.minAge) ages.add(d.minAge);
-
-	// const posterString = (d.eventPoster && typeof d.eventPoster === 'object' 
-	// ? d.eventPoster.src 
-	// : d.eventPoster) || PosterPlaceholder.src;
-
-	const posterObject = d.eventPoster ? {
-      src: typeof d.eventPoster.src === 'object' ? d.eventPoster.src.src : d.eventPoster.src,
-      alt: d.eventPoster.alt || d.eventName, 
-      caption: d.eventPoster.caption || ""
-    } : null;
  
     return {
       id: event.id,
@@ -52,7 +43,8 @@ const clientUpcomingEvents = publishedEvents
         skateDiscipline: d.skateDiscipline as SkateDisciplines,
         skillLevel: d.skillLevel as SkillLevel,
         eventType: d.eventType as EventType,
-        eventPoster: posterObject,
+        eventPoster: d.eventPoster,
+		isPlaceholder: isPlaceholder,
         minAge: d.minAge,
         footwear: d.footwear as Footwear,
         rink: d.rink || ""

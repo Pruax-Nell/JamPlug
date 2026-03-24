@@ -5,7 +5,7 @@ import { ImagePreview } from '@components/previewImage';
 import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE } from './src/data/skate-constants';
 
 import { slugify } from './src/function/stringHelper';
-import { locationBlock, mapCoords, imageField, PersonListField, socials } from './src/function/configBlocks/key-block';
+import { locationBlock, mapCoords, PersonListField, socials, createImageGroup } from './src/function/configBlocks/key-block';
 
 // in future, a complete rebuild would be more efficient 
 // singleton for long list data i.e. tags
@@ -68,7 +68,7 @@ export default config({
           ],
           defaultValue: '',
         }),
-         coverImage: imageField('Main Poster', 'events', 'poster'),
+         ...createImageGroup('Poster', 'posts', 'coverImage'),
         content: fields.markdoc ({ 
           label: 'Content',
           options: {
@@ -77,60 +77,6 @@ export default config({
               publicPath: '../images/posts/'
             }
           },
-          // components: {
-          //   CustomImage: component({
-          //     label: 'Styled Image',
-          //     schema: {
-          //       src: fields.image({ 
-          //         label: 'Image', 
-          //         directory: 'src/content/images/posts/', 
-          //         publicPath: '../images/posts/' 
-          //       }),
-          //       alt: fields.text({ label: 'Alt Text' }),
-          //       width: fields.integer({ label: 'Width (Optional)', defaultValue: 1200 }),
-          //       caption: fields.text({ label: 'Caption', multiline: true }),
-          //       position: fields.select({
-          //         label: 'Position',
-          //         options: [
-          //           { label: 'Center (Standard)', value: 'center' },
-          //           { label: 'Left (Wrapped)', value: 'left' },
-          //           { label: 'Right (Wrapped)', value: 'right' },
-          //         ],
-          //         defaultValue: 'center',
-          //       }),
-          //       ratio: fields.select({
-          //         label: 'Frame Ratio',
-          //         options: [
-          //           { label: 'Tall', value: 'tall' },
-          //           { label: 'Wide', value: 'wide' },
-          //           { label: 'Ultra Wide', value: 'ultraWide' },
-          //           { label: 'Square', value: 'square' },
-          //         ],
-          //         defaultValue: 'square',
-          //       }),
-          //       edge: fields.select({
-          //         label: 'shadow colour',
-          //         options: [
-          //           { label: 'Pink', value: 'pink' },
-          //           { label: 'Teal', value: 'teal' },
-          //           { label: 'Purple ', value: 'purple' },
-          //           { label: 'Orange', value: 'orange' },
-          //           { label: 'Brown', value: 'brown' },
-          //           { label: 'Yellow', value: 'yellow' },
-          //           { label: 'White', value: 'white' },
-          //           { label: 'Black', value: 'black' },
-                  
-          //         ],
-          //         defaultValue: 'black',
-          //       }),
-          //     },
-          //   preview: (props) => props.fields.src.value ? (
-          //     <p> image ID: {props.fields.src.value.filename}</p> ) : (
-          //       <p> Please provide an Image src </p>
-          //   ),
-                
-          //   }) as any,
-          // }, 
           
         }),
       }
@@ -193,13 +139,14 @@ export default config({
         }),
         minAge: fields.text({ label: 'Minimum Age' }),
         maxAge: fields.text({ label: 'Maximum Age' }),
-        eventPoster: imageField('eventPoster', 'events', 'poster'),
-        flyerImage1: imageField('flyerImage1', 'events', 'poster'),
-        flyerImage2: imageField('flyerImage2', 'events', 'poster'),
-        flyerImage3: imageField('flyerImage3', 'events', 'poster'),
-        flyerImage4: imageField('flyerImage4', 'events', 'poster'),
-        flyerImage5: imageField('flyerImage5', 'events', 'poster'),
+        ...createImageGroup('Poster', 'events', 'eventPoster'),
+        ...createImageGroup('Poster', 'events', 'flyerImage1'),
+        ...createImageGroup('Poster', 'events', 'flyerImage2'),
+        ...createImageGroup('Poster', 'events', 'flyerImage3'),
+        ...createImageGroup('Poster', 'events', 'flyerImage4'),
+        ...createImageGroup('Poster', 'events', 'flyerImage5'),
 
+        showStartTime: fields.checkbox({ label: 'Show Start time?', defaultValue: false }),
         startTime: fields.object({
           hour: fields.select({
             label: 'Hour',
@@ -215,6 +162,7 @@ export default config({
             defaultValue: '00',
           }),
         }),
+        showEndTime: fields.checkbox({ label: 'Show End time?', defaultValue: false }),
         endTime: fields.object({
           hour: fields.select({
             label: 'Hour',
@@ -246,6 +194,7 @@ export default config({
       djs: PersonListField('DJ', SOCIAL_MEDIA),
       coaches: PersonListField('Coach', SOCIAL_MEDIA),
       hosts: PersonListField('Host', SOCIAL_MEDIA),
+      partners: PersonListField('Partner', SOCIAL_MEDIA),
         // TODO future - add rinkReference for business related. make optional! keep old 'rink'
         // then add conditional logic and fallback if rink = ' ' : rinkReference etc
         // or use node to automate cleanup
@@ -284,8 +233,8 @@ export default config({
           } 
         }),
         role: fields.text({ label: 'Role (e.g. Founder, Photographer)', defaultValue: 'Contributor' }),
-        headshot: imageField('Poster', 'events', 'poster'),
-        skateImage: imageField('Poster', 'events', 'poster'),
+        ...createImageGroup('Poster', 'events', 'headshot'),
+        ...createImageGroup('Poster', 'events', 'skateImage'),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
         socials: socials(SOCIAL_MEDIA),
       },
@@ -305,6 +254,7 @@ export default config({
           defaultValue: 'rink',
         }),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
+        // change to imageGroup
         logo: fields.image({ 
           label: 'Rink Logo',
           directory: 'src/content/rinks/',
@@ -327,6 +277,7 @@ export default config({
       schema: {
         name: fields.slug({ name: { label: 'Group Name' } }),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
+        // change to imageGroup
         logo: fields.image({ 
           label: 'Group Logo',
           directory: 'src/content/community/',
@@ -349,6 +300,7 @@ export default config({
       schema: {
         name: fields.slug({ name: { label: 'Business/Brand Name' } }),
         bio: fields.text({ label: 'Short Bio', multiline: true }),
+        // change to imageGroup
         logo: fields.image({ 
           label: 'Group Logo',
           directory: 'src/content/industry/',

@@ -5,15 +5,8 @@ import { Image } from "astro:assets";
 import { formatEventDate } from '../function/dateHelper';
 import type { ImageMetadata } from "astro";
  
-interface PosterData {
-  src: ImageMetadata;
-  alt: string;
-  caption: string;
-  isPlaceholder: boolean;
-}
-
 interface BaseProps {
-  url: string;
+  url: string; 
   title: string;
   description?: string;
 }
@@ -35,20 +28,28 @@ interface EventProps extends BaseProps {
         startDate: Date | string;
         endDate?: Date | string | null;
     };
-    poster?: PosterData;
+    // poster?: PosterData;
+    poster: ImageMetadata;
+    alt?: string;
+    caption?: string;
+    isPlaceholder?: boolean;
 }
 
 interface BlogProps extends BaseProps {
     variant: "blog";
     id: any;
-
+    
     published: Date | string;
     subtitle?: string;
     status?: string;
     category?: string;
     discipline?: string;
-    poster: PosterData;
-
+    // poster: PosterData;
+    poster: ImageMetadata;
+    alt?: string;
+    caption?: string;
+    isPlaceholder?: boolean;
+    
     // not needed
     locationLabel?: undefined;
     eventType?: undefined;
@@ -56,16 +57,19 @@ interface BlogProps extends BaseProps {
 }
 
 interface PlaceholderProps extends BaseProps {
-  variant: "placeholder";
-
-  // not needed
-  poster?: undefined;
-  locationLabel?: undefined;
-  eventType?: undefined;
-  timeframe?: undefined;
-  subtitle?: undefined;
-  category?: undefined;
-  discipline?: undefined;
+    variant: "placeholder";
+    
+    // not needed
+    poster?: undefined;
+    alt?: undefined;
+    caption?: undefined;
+    locationLabel?: undefined;
+    eventType?: undefined;
+    timeframe?: undefined;
+    subtitle?: undefined;
+    category?: undefined;
+    discipline?: undefined;
+    isPlaceholder?: boolean;
 }
 
 type Props = EventProps | BlogProps | PlaceholderProps;
@@ -76,6 +80,8 @@ const {
   title, 
   description,
   poster,
+  alt,
+  isPlaceholder,
   locationLabel,
   eventType,
   timeframe,
@@ -97,15 +103,15 @@ const eventDateString = (variant === 'event' && timeframe)
 
 const base = import.meta.env.BASE_URL;
 ---
-
+<!-- removed the .src ! -->
 <div class={`sample-case variant-${variant}`}>
     
     {variant === "event" && (
     <div class={`post-card card-${variant}`}>
-        {poster ? (
-            <Image src={poster.src} alt={poster.alt || title} width={400} height={500} class="poster-block" />
+        {!isPlaceholder ? (
+            <Image src={poster} alt={alt || title} width={400} height={500} class="poster-block" />
         ) : (
-            <div class="placeholder poster-block" aria-hidden="true">🛼</div>
+            <div class="placeholder poster-block" aria-hidden="true"></div>
         )}
 
         <div class={`content-block ${variant}-content`}>
@@ -130,16 +136,16 @@ const base = import.meta.env.BASE_URL;
     {variant === "blog" && (
     <div class={`post-card card-${variant}`}>
 
-        {!poster.isPlaceholder ? ( 
+        {!isPlaceholder ? ( 
             <> 
             <Image 
-                src={poster.src} 
-                alt={poster.alt || title} 
+                src={poster} 
+                alt={alt || title} 
                 width={350} 
                 height={400} 
                 class="poster-block" 
             />
-        
+         
             <div class={`content-block ${variant}-content`}>
                 <p class="card-heading">
                     <a href={url} class="stretched-link">{title}</a>

@@ -14,30 +14,68 @@ const pathRegistry: Record<string, string> = {
   default: '../images/'
 };
 
+export const timeOptions = {
+  hour: fields.select({
+    label: 'Hour',
+    options: Array.from({ length: 24 }, (_, i) => ({
+      label: i.toString().padStart(2, '0'),
+      value: i.toString().padStart(2, '0'),
+    })),
+    defaultValue: '10',
+  }),
+  minute: fields.select({
+    label: 'Minute',
+    options: ['00', '15', '30', '45'].map(m => ({ label: m, value: m })),
+    defaultValue: '00',
+  }),
+};
+
+
 /**
  * @param label - The label for the image field (e.g., 'Flyer 1')
  * @param path - The specific directory path (e.g., 'events' or 'posts')
  * @param prefix - A prefix for the filename (e.g., 'flyer-1')
  */
 
-export const imageField = (label: string, path: string, prefix: string) => {
+export const imageField = (label: string, path: string, filename: string) => {
   return fields.object({
     src: fields.image({
       label: label,
-      directory: `src/content/images/${path}/`,
-      publicPath: `../images/${path}/*`,
-      transformFilename: (name) => `${prefix}-${name.replaceAll(/\s+/g, '-')}`
+      directory: `src/content/images/${path}`,
+      publicPath: `../../images/${path}/`,
     }),
+      
+    // required
     alt: fields.text({
       label: 'Alt Text',
       description: 'Essential for accessibility',
     }),
+    // optional
     caption: fields.text({
       label: 'Image Caption',
       description: 'e.g. by photographer A, at Rink...',
     }),
   });
 };
+// category = collection name/content folder
+
+export const createImageGroup = (label: string, category: string, filename: string) => {
+  return {
+    [filename]: fields.image({
+      label: `${label} Image`,
+      directory: `src/content/images/${category}`,
+      publicPath: `../../images/${category}/`,
+      transformFilename: () => filename,
+    }),
+    [`${filename}Alt`]: fields.text({
+      label: `${label} Alt Text`,
+    }),
+    [`${filename}Caption`]: fields.text({
+      label: `${label} Caption`,
+    }),
+  } as any; 
+};
+
 
 export const socials = (
   socialOptions: readonly { readonly label: string; readonly value: string; }[]) => {

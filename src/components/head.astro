@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { 
-  title, 
+  title,  
   description = SITE_DESCRIPTION,
   image, 
   SEO, 
@@ -20,15 +20,11 @@ const {
 } = Astro.props;
 
 import NavIcon from '@admin/new-favicon.svg';
-
 import ogBackup from '@admin/open-graph-backup.jpg'
+
 const finalOgImage = typeof image === 'string' 
   ? image 
   : image?.src || ogBackup.src;
-
-  
-
-const ogImageSrc = image || ogBackup.src;
 
 const socialImageURL = new URL(finalOgImage, Astro.site);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ImageMetadata } from 'astro';
+import Image from 'astro/components/Image.astro';
 import type { SerializedEvent, EventCardData, } from '../function/types';
-import LocationShort from './locationShort.astro';
 import { formatEventDate, formatTime } from '../function/dateHelper';
 import { formatLocation, hasRegionSelected } from '../data/globe-constants';
 
@@ -21,24 +21,17 @@ export default function EventCard({
   startDate,
   endDate,
   eventPoster,
+  eventPosterAlt,
   skateDiscipline,
   skillLevel,
-  eventType,
+  eventType, 
   isFeatured,
   eventStatus,
   footwear,
-  minAge,
+  minAge, 
 }: EventCardProps) {
 
-  // const imageSrc = (typeof eventPoster === 'object' && eventPoster !== null 
-  // ? (eventPoster as unknown as ImageMetadata).src 
-  // : eventPoster) ?? undefined;
-  
-const imageSrc = eventPoster 
-  ? (typeof eventPoster === 'object' 
-      ? (eventPoster as unknown as ImageMetadata).src 
-      : eventPoster)
-  : PosterPlaceholder.src;
+const mainImageSrc = eventPoster?.src ?? PosterPlaceholder.src;
 
 const labels = formatLocation(location, townCity);
 const showRegion = hasRegionSelected(location);
@@ -46,14 +39,14 @@ const showRegion = hasRegionSelected(location);
 const cardClasses = isFeatured ? "event-card featured-event" : "event-card";
 const statusClass = eventStatus ? `status-${eventStatus}` : '';
 const dateRange = formatEventDate(startDate, endDate);
-
+ 
   return (
     <a href={`/events/${id}`} className={`event-card-link ${statusClass}`} aria-label={eventName}>
     <article className={cardClasses}>
 
       <div className="card-image-container">
         <img 
-          src={imageSrc} 
+          src={mainImageSrc} 
           alt={eventName} 
           className="event-image" 
           loading="lazy" 
@@ -69,7 +62,7 @@ const dateRange = formatEventDate(startDate, endDate);
           <h3 className="event-title">{eventName}
           </h3>
           
-        </header>
+        </header> 
 
         <div className="card-meta">
           <p className="meta-item location">

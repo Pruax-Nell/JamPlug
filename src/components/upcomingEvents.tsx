@@ -502,7 +502,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
   const canGoForward = currentPage < totalPages;
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isvisible, setIsVisible] = useState(false);
+  const [isvisible, setIsVisible] = useState(false); 
 
   const expandFilters = () => {
 

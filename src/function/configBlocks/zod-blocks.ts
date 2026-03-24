@@ -14,6 +14,26 @@ export const imageObject = (image: any) =>
     caption: z.string().optional(),
 }).optional().nullable();
 
+// export const zodImageGroup = (filename: string, image: any) => ({
+//   [filename]: image().optional(), 
+//   [`${filename}Alt`]: z.string().optional(),
+//   [`${filename}Caption`]: z.string().optional(),
+// })as any;
+
+export const zodImageGroup = <T extends string>(filename: T, image: any) => {
+  return {
+    [filename]: image().optional(),
+    [`${filename}Alt`]: z.string().optional(),
+    [`${filename}Caption`]: z.string().optional(),
+  } as {
+    [K in T]: any; 
+  } & {
+    [K in `${T}Alt`]: z.ZodOptional<z.ZodString>;
+  } & {
+    [K in `${T}Caption`]: z.ZodOptional<z.ZodString>;
+  };
+};
+
 export const timeObject = z.object({
     hour: z.string(),
     minute: z.string(),

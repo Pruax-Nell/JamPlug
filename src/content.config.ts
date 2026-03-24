@@ -2,7 +2,7 @@ import { z, defineCollection, reference } from "astro:content";
 import { glob } from "astro/loaders";
 import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA, FOOTWEAR_CHOICE } from './data/skate-constants'
 import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from './data/globe-constants'
-import { timeObject, personObject, locationSchema, businessObject, mapCoords, imageObject } from "./function/configBlocks/zod-blocks";
+import { timeObject, personObject, locationSchema, businessObject, mapCoords, zodImageGroup } from "./function/configBlocks/zod-blocks";
 import { slugify } from "./function/stringHelper";
 
 // ------------- Collections ----------------- //
@@ -27,7 +27,7 @@ const posts = defineCollection({
     z.enum(getValues(SKATE_DISCIPLINES)),
     z.literal('') 
     ]).optional(),
-    coverImage: imageObject(image), 
+    ...zodImageGroup('coverImage', image),
   }),
 });
 
@@ -54,14 +54,16 @@ const events = defineCollection({
         minAge: z.string().optional(),
     // Secondary key info
         maxAge: z.string().optional(),
-        eventPoster: imageObject(image),
-        flyerImage1: imageObject(image),
-        flyerImage2: imageObject(image),
-        flyerImage3: imageObject(image),
-        flyerImage4: imageObject(image),
-        flyerImage5: imageObject(image),
+        ...zodImageGroup('eventPoster', image),
+        ...zodImageGroup('flyerImage1', image),
+        ...zodImageGroup('flyerImage2', image),
+        ...zodImageGroup('flyerImage3', image),
+        ...zodImageGroup('flyerImage4', image),
+        ...zodImageGroup('flyerImage5', image),
 
+        showStartTime: z.boolean(),
         startTime: timeObject.optional(), 
+        showEndTime: z.boolean(),
         endTime: timeObject.optional(), 
 
     // Bonus info - option to add multiple lines ideal
@@ -75,9 +77,10 @@ const events = defineCollection({
         ).optional().nullable().default([]),
 
         organisers: z.array(personObject).optional().nullable().default([]),
-        hosts: z.array(personObject).optional().nullable().default([]),
-        coaches: z.array(personObject).optional().nullable().default([]),
         djs: z.array(personObject).optional().nullable().default([]),
+        coaches: z.array(personObject).optional().nullable().default([]),
+        hosts: z.array(personObject).optional().nullable().default([]),
+        partners: z.array(personObject).optional().nullable().default([]),
         
         rink: z.string().optional(),
         venueAddress: z.string().optional(),
@@ -96,8 +99,8 @@ const authors = defineCollection({
     legalName: z.string(),
     alias: z.string().optional(),
     role: z.string().default('Contributor'),
-    headshot: imageObject(image),
-    skateImage: imageObject(image),
+    ...zodImageGroup('headshot', image),
+    ...zodImageGroup('skateImage', image),
     bio: z.string().optional(),
     socials: z.array(
       z.object({

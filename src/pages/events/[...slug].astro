@@ -32,14 +32,15 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 const event = mapEventFull(post);
-const { googleUrl, icsDataUri } = getCalendarUrls(post.data);
+const { googleUrl, icsDataUri} = getCalendarUrls(post.data);
 
 // HELPERS----
 const lineup = [
   { role: "Organisers", people: event.organisers },
   { role: "DJs", people: event.djs },
   { role: "Coaches", people: event.coaches },
-  { role: "Hosts", people: event.hosts }
+  { role: "Hosts", people: event.hosts },
+  { role: "Partners", people: event.partners }
 ];
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
@@ -55,14 +56,18 @@ const base = import.meta.env.BASE_URL;
   image={ogImage} 
 >
 
+<nav class="navigation-controls-top">
+<Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'" aria-label="To Previous Page"> ← Previous Page </Button>
+</nav>
+
 <article class="event-focus frame-fence">
 
   <section class="event-summary-section">
 
     <div class=" poster-frame">
      <Image 
-      src={event.poster.src} 
-      alt={event.poster.alt} 
+      src={event.poster} 
+      alt={event.alt} 
       width={350} 
       height={510} 
       class="cover-image"
@@ -91,7 +96,8 @@ const base = import.meta.env.BASE_URL;
 
       <p class="time-location">
         <strong class="strong-date">{event.dateLabel}</strong> 
-        • {event.startTime} 
+        {event.startTime} 
+        
         {event.endTime && ` - ${event.endTime}`}
       </p>
 
@@ -138,7 +144,7 @@ const base = import.meta.env.BASE_URL;
         
         {event.tickets?.map((ticket) => (
           ticket.url && (
-            <div class="ticket-wrapper">
+            <div class="ticket-wrapper"> 
               <Button 
                 href={ticket.url} 
                 variant='outline' 
@@ -253,6 +259,11 @@ const base = import.meta.env.BASE_URL;
 </script>
 
 <style>
+
+  .navigation-controls-top{
+    display: flex;
+    flex-direction: row-reverse;
+  }
 
   /* UTILS */
 

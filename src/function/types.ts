@@ -5,6 +5,8 @@ import type { ImageMetadata } from 'astro';
 
 export type EventLocation = z.infer<typeof locationSchema>;
 
+// (Keystatic -> Zod -> Mapper -> Component) 
+
 // ------------ interfaces ... (shape)
 
 // UTILITIES
@@ -15,7 +17,7 @@ export interface SelectOption {
 
 export interface KeystaticImage {
   src: ImageMetadata; 
-  alt: string;
+  alt: string; 
   caption: string;
 }
 
@@ -25,8 +27,12 @@ export interface AuthorProfile {
   legalName: string;
   alias: string; 
   role: string;
-  headshot?: KeystaticImage | null;
-  skateImage?: KeystaticImage | null;
+  headshot?: string;
+  headshotAlt?: string;
+  headshotCaption?: string;
+  skateImage?: ImageMetadata;
+  skateImageAlt?: string;
+  skateImageCaption?: string;
   bio: string;
   socials: {
     platform: socialMedia;
@@ -47,7 +53,10 @@ export interface BlogCardData {
   published: string;
   blogCategory: BlogCategory;
   skateDiscipline?: SkateDisciplines;
-  coverImage?: KeystaticImage | null;
+  coverImage?: ImageMetadata;
+  coverImageAlt?: string;
+  coverImageCaption?: string;
+  isPlaceholder: boolean;
   authorName: string; 
   authorId: string;
   slug: string;
@@ -103,14 +112,29 @@ export interface EventData {
   minAge?: string;
   maxAge?: string;
 
-  eventPoster?: KeystaticImage | null;
-  flyerImage1?: KeystaticImage | null;
-  flyerImage2?: KeystaticImage | null;
-  flyerImage3?: KeystaticImage | null;
-  flyerImage4?: KeystaticImage | null;
-  flyerImage5?: KeystaticImage | null;
+  isPlaceholder: boolean;
+  eventPoster?: ImageMetadata;
+  eventPosterAlt?: string;
+  eventPosterCaption?: string;
+  flyerImage1?: ImageMetadata;
+  flyerImage1Alt?: string;
+  flyerImage1Caption?: string;
+  flyerImage2?: ImageMetadata;
+  flyerImage2Alt?: string;
+  flyerImage2Caption?: string;
+  flyerImage3?: ImageMetadata;
+  flyerImage3Alt?: string;
+  flyerImage3Caption?: string;
+  flyerImage4?: ImageMetadata;
+  flyerImage4Alt?: string;
+  flyerImage4Caption?: string;
+  flyerImage5?: ImageMetadata;
+  flyerImage5Alt?: string;
+  flyerImage5Caption?: string;
 
+  showStartTime: boolean;
   startTime?: TimeObject;
+  showEndTime: boolean;
   endTime?: TimeObject;
   eventLink?: string;
   ticketLink?: {
@@ -121,9 +145,10 @@ export interface EventData {
 
   // People
   organisers?: PersonObject[];
-  hosts?: PersonObject[];
-  coaches?: PersonObject[];
   djs?: PersonObject[];
+  coaches?: PersonObject[];
+  hosts?: PersonObject[];
+  partners?: PersonObject[];
 
   // Venue
   rink?: string;
@@ -149,7 +174,10 @@ export interface EventCardData {
   minAge?: string; 
   skillLevel?: SkillLevel;
   description?: string;
-  eventPoster?: KeystaticImage | null;
+  eventPoster?: ImageMetadata;
+  eventPosterAlt?: string;
+  eventPosterCaption?: string;
+  isPlaceholder: boolean;
   rink?: string;
   isFeatured?: boolean;
   eventStatus?: EventStatus;

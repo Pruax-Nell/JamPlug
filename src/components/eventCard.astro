@@ -10,7 +10,7 @@ const { location, townCity } = Astro.props.event.data;
 const loc = formatLocation(location, townCity);
 const showRegion = hasRegionSelected(location)
 
-const { title, url, description, poster, area, country, start, end, category, type, age } = Astro.props;
+const { title, url, description, poster, alt, caption, area, country, start, end, category, type, age } = Astro.props;
 const { data } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -19,8 +19,9 @@ const base = import.meta.env.BASE_URL;
 <div class="event-item"><a class="list-link" href={url} title={title}>
 
         <div class="img-wrapper ">
-            <Image src={poster.src} alt={poster.alt || title} class="eventcard-poster" />
-        </div>
+            <!-- removed the .src ! -->
+            <Image src={poster} alt={alt || title} class="eventcard-poster" />
+        </div> 
 
         <div class="content-wrapper">
             <div class="title-wrap">

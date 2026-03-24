@@ -10,6 +10,7 @@ import { Image } from 'astro:assets';
 
 import { formatDate } from '../../../function/dateHelper';
 import { mapBlogFull } from 'src/function/mapPosts';
+// eventually add mapPerson/author
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -40,12 +41,13 @@ const lastEditDate = post.data.updated ? formatDate(post.data.updated) : null;
 
 
 const blog = mapBlogFull(post);
+// const person = mapPerson(post) ??? Check. 
 const { Content } = await render(post);
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL; 
 
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout title={blog.title} description={blog.description}>
 <nav class="navigation-controls">
   
   <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/blog'"> ← Previous Page </Button>
@@ -55,50 +57,50 @@ const base = import.meta.env.BASE_URL;
 <article class="blog-container">
 
   <header class="page-head-block">
-    <h1 class="post-header">{post.data.title}</h1>
-    <p class="sub-heading">{post.data.subtitle}</p>
-    <time datetime={new Date(post.data.published).toISOString()} class="pub-date">
-      {new Date(post.data.published).toLocaleDateString(undefined, {
+    <h1 class="post-header">{blog.title}</h1>
+    <p class="sub-heading">{blog.subtitle}</p>
+    <time datetime={new Date(blog.published).toISOString()} class="pub-date">
+      {new Date(blog.published).toLocaleDateString(undefined, {
         weekday: 'long', 
         year: 'numeric', 
         month: 'long', 
         day: 'numeric'
       })}
     </time>
-    <p class="lead-text desc">{post.data.description}</p>
+    <p class="lead-text desc">{blog.description}</p>
   </header>
 
-{console.log('Processing Image for post:', post.slug, 'Data:', post.data.coverImage)}
-  {!blog.poster.isPlaceholder && (
+{console.log('Processing Image for post:', post.slug, 'Data:', blog.poster)}
+  {!blog.isPlaceholder && (
     <figure class="cover-image-container">
 
       <div class="image-block">
         <Image 
-          src={post.data.coverImage?.src}
-          alt={post.data.coverImage?.alt || post.data.title} 
+          src={blog.poster}
+          alt={blog.alt || blog.title} 
           width={1000} 
           class="cover-image"
           loading="eager" 
         />
       </div>
       
-      {post.data.coverImage?.caption && (
+      {blog.caption && (
         <figcaption class="cover-caption">
-          {post.data.coverImage?.caption}
+          {blog.caption}
         </figcaption>
       )}
     </figure>
   )}
    
    <section class="author-section">
-     {post.data.author.isAnonymous ? (
+     {blog.anonymous ? (
        <div class="anon-profile">
         <span class="anon-icon">👤</span>
         <p>Posted by <strong>A Jam Plug Contributor</strong></p>
       </div>
     ) : (
       <div class="author-info">
-        <p>Written by: <strong>{alias}</strong></p>
+        <p>Written by: <strong>{blog.authorID}</strong></p>
       </div>
     )}
 
@@ -108,7 +110,7 @@ const base = import.meta.env.BASE_URL;
   <section class="content-body">
 
   
-    {post.data.updated && (<p class="updated-label">Last Updated: {lastEditDate}</p>)}
+    {blog.updated && (<p class="updated-label">Last Updated: {lastEditDate}</p>)}
     <div class="main-content">
       <Content components={components} />
     </div>
@@ -130,10 +132,10 @@ const base = import.meta.env.BASE_URL;
     </section>
   )} -->
 
-  {post.data.skateDiscipline && post.data.blogCategory && ( 
+  {blog.discipline && blog.category && ( 
       <footer class="post-footer">
-          <span class="meta-item dis">{post.data.skateDiscipline}</span>
-          <span class="meta-item cat">{post.data.blogCategory}</span>
+          <span class="meta-item dis">{blog.discipline}</span>
+          <span class="meta-item cat">{blog.category}</span>
       </footer>
   )}
 

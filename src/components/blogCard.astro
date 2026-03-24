@@ -9,8 +9,8 @@ import { formatEventDate } from '../function/dateHelper';
 type BlogCardProps = SerializedBlog['data'] & {
   id: string;
 }; 
-
-
+ 
+ 
 const {
   id,
   title,
@@ -18,13 +18,15 @@ const {
   description,
   skateDiscipline,
   coverImage,
+  coverImageAlt,
+  coverImageCaption,
   blogCategory,
   published,
   
 } = Astro.props
 
-const posterSrc = coverImage?.src;
-const posterAlt = coverImage?.alt || title;
+const posterSrc = coverImage;
+const posterAlt = coverImageAlt || title;
 
 const dateDisplay = formatEventDate(published);
 const cleanSlug = id.replace(/\.[^/.]+$/, "");

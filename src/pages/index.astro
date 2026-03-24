@@ -16,8 +16,8 @@ import { getCollection, getEntries } from "astro:content";
 
 import { CURRENT_YEAR, SHOW_JAN_BANNER, SHOW_MAY_BANNER, SHOW_NOV_BANNER, SHOW_SEPT_BANNER } from "../data/site-config";
 
-import { mapEventToCard, mapToFeaturedCard, mapEventFull } from '../function/mapEvents';
-import {  mapBlogToCard, mapBlogFull } from '../function/mapPosts';
+import { mapEventToCard, mapToFeaturedCard } from '../function/mapEvents';
+import { mapBlogToCard } from '../function/mapPosts';
 
 const identity = {
 	branding: "your jam plug uk",
@@ -144,7 +144,7 @@ title="Home Page">
 			<h3>Upcoming Events</h3>
 			<div><Button href="/events" variant="secondary" theme="brown" size="lg"> See All Events </Button></div>
 			<p>Find your next skate event.</p>
-		</div>
+		</div> 
 		<div class=" event-previews side-b">
 
 			{upcomingEvents.length > 0 ? (
@@ -162,7 +162,7 @@ title="Home Page">
 				description="Browse All Events"
 			/>
 			</div> ) 
-			: 
+			:  
 			// OR show none returned
 			(<div class="none-returned"><p>No events to show yet</p> <p>Come back Tomorrow</p> </div>)}
 			

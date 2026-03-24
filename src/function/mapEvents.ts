@@ -9,24 +9,37 @@ import EventPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg'
 
 // FULL event props
 export const mapEventFull = (event: CollectionEntry<'events'>) => {
+    const realPoster = !!event.data.eventPoster;
     const location = formatLocation(event.data.location, event.data.townCity);
     const dates = formatEventDate(event.data.startDate, event.data.endDate);
-    const startTime = formatTime(event.data.startTime);
-    const endTime = formatTime(event.data.endTime);
-    const mapCoordinates = event.data.mapCoordinates?.longitude && event.data.mapCoordinates.latitude;
-    const galleryImages = [
-        event.data.flyerImage1,
-        event.data.flyerImage2,
-        event.data.flyerImage3,
-        event.data.flyerImage4,
-        event.data.flyerImage5,
-    ]
-    .filter((img): img is KeystaticImage => !!img && !!img.src)
-    .map(img => ({
-        src: img.src, 
-        alt: img.alt || `Gallery image for ${event.data.eventName}`,
-        caption: img.caption || `${event.data.eventName} poster Image`,
-    }));
+    // const startTime = formatTime(event.data.startTime);
+    const startTime = event.data.showStartTime ? formatTime(event.data.startTime) : null;
+    const endTime = event.data.showEndTime ? formatTime(event.data.endTime) : null;
+    const hasStart = !!startTime;
+    const hasEnd = !!endTime;
+
+    // const mapCoordinates = event.data.mapCoordinates?.longitude && event.data.mapCoordinates.latitude;
+    const mapCoordinates = (event.data.mapCoordinates?.longitude && event.data.mapCoordinates?.latitude) 
+        ? event.data.mapCoordinates 
+        : null;
+
+    const flyerKeys = ['flyerImage1', 'flyerImage2', 'flyerImage3', 'flyerImage4', 'flyerImage5'] as const;
+    const galleryImages = flyerKeys
+        .map(key => {
+            const src = event.data[key];
+            const alt = event.data[`${key}Alt` as keyof typeof event.data];
+            const caption = event.data[`${key}Caption` as keyof typeof event.data];
+
+            // Only return the object if the source image actually exists
+            if (!src) return null;
+
+            return {
+                src,
+                alt: alt || `Gallery image for ${event.data.eventName}`,
+                caption: caption || `${event.data.eventName} poster Image`,
+            };
+        })
+        .filter((img): img is NonNullable<typeof img> => !!img);
 
     return{
 
@@ -51,6 +64,8 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
         endDate: event.data.endDate,
         startTime: startTime,
         endTime: endTime,
+        // showStart: event.data.showStartTime,
+        // showEnd: event.data.showEndTime,
         
         eventType: event.data.eventType,
         skateDiscipline: event.data.skateDiscipline,
@@ -76,34 +91,23 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
         hosts: (event.data.hosts || []).map(p => mapPerson(p, 'Host')).filter(Boolean),
         coaches: (event.data.coaches || []).map(p => mapPerson(p, 'Coach')).filter(Boolean),
         djs: (event.data.djs || []).map(p => mapPerson(p, 'DJ')).filter(Boolean),
+        partners: (event.data.partners || []).map(p => mapPerson(p, 'Partner')).filter(Boolean),
 
         // Poster Gallery
-        poster: {
-            src: getImageSource(event.data.eventPoster, EventPlaceholder),
-            isPlaceholder: !event.data.eventPoster?.src,
-            alt: event.data.eventPoster?.alt || event.data.eventName,
-            caption: event.data.eventPoster?.caption || '@YourJamPlug'
-        },
+        poster: event.data.eventPoster,
+        alt: event.data.eventPosterAlt || event.data.eventName,
+        caption: event.data.eventPosterCaption || '@YourJamPlug',
+        isPlaceholder: !realPoster,
         gallery: galleryImages,
 
     }
-};
-
-// Check if the src specifically exists
-//  poster: {
-
-// src: event.data.eventPoster?.src ? event.data.eventPoster.src : EventPlaceholder,
-
-// alt: event.data.eventPoster?.alt || event.data.eventName,
-
-// caption: event.data.eventPoster?.caption || '@YourJamPlug'
-
-// },
+}; 
 
 // small cards | carosel use 
 export const mapEventToCard = (event: CollectionEntry<'events'>) => {
     const location = formatLocation(event.data.location, event.data.townCity);
     const dates = formatEventDate(event.data.startDate, event.data.endDate);
+    const realPoster = !!event.data.eventPoster;
 
     return{
         variant: "event" as const,
@@ -114,12 +118,10 @@ export const mapEventToCard = (event: CollectionEntry<'events'>) => {
         title: event.data.eventName,
         subtitle: event.data.subheading,
         description: event.data.description,
-        poster: {
-            src: getImageSource(event.data.eventPoster, EventPlaceholder),
-            isPlaceholder: !event.data.eventPoster?.src,
-            alt: event.data.eventPoster?.alt || event.data.eventName,
-            caption: event.data.eventPoster?.caption || '@YourJamPlug' ,
-        },
+        poster: (event.data.eventPoster ?? EventPlaceholder),
+        isPlaceholder: !realPoster,
+        alt: event.data.eventPosterAlt || event.data.eventName,
+        caption: event.data.eventPosterCaption || '@YourJamPlug',
         locationLabel: location.full, // "London, England, UK"
         eventType: event.data.eventType,
         featured: event.data.isFeatured,
@@ -127,12 +129,13 @@ export const mapEventToCard = (event: CollectionEntry<'events'>) => {
         startDate: event.data.startDate,
         endDate: event.data.endDate
     }
-};
+}; 
 
 export const mapToFeaturedCard = (event: any) => {
     const location = formatLocation(event.data.location, event.data.townCity);
     const dates = formatEventDate(event.data.startDate, event.data.endDate);
-
+    const realPoster = !!event.data.eventPoster;
+    
     return {
         variant: "event" as const,
 
@@ -143,12 +146,10 @@ export const mapToFeaturedCard = (event: any) => {
         locationLabel: location.full, // "London, England, UK"
         dateLabel: dates,
         description: event.data.description,
-        poster: {
-          src: getImageSource(event.data.eventPoster, EventPlaceholder),
-          alt: event.data.eventPoster.alt,
-          caption: event.data.eventPoster?.caption || '',
-          isPlaceholder: !event.data.eventPoster?.src,
-        },
+        poster: event.data.eventPoster,
+        isPlaceholder: !realPoster,
+        alt: event.data.eventPosterAlt || event.data.eventName,
+        caption: event.data.eventPosterCaption || '@YourJamPlug',
         eventType: event.data.eventType,
         startOrder: event.data.startDate,
     };
@@ -168,11 +169,9 @@ const person = (person: any, role: string) => {
     
     primaryUrl: person.socialLinks?.[0]?.url || '#',
     
-    photo: {
-        src: person.photo || null,
-        // getImageSource()
-        alt: person.name,
-    }
+    photo: person.photo || null,
+    alt: person.name,
+  
   };
 };
 
