@@ -1,5 +1,5 @@
 ---
-import {SITE_TITLE, SITE_DESCRIPTION} from "../data/site-config";
+import {SITE_TITLE, SHORT_TITLE, SITE_DESCRIPTION} from "../data/site-config";
 import type { SerializedEvent } from "../function/types";
 
 interface Props {
@@ -28,7 +28,7 @@ const finalOgImage = typeof image === 'string'
 
 const socialImageURL = new URL(finalOgImage, Astro.site);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const displayTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const displayTitle = title ? `${title} | ${SHORT_TITLE}` : SITE_TITLE;
 
 const base = import.meta.env.BASE_URL;
 ---

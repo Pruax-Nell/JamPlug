@@ -1,5 +1,6 @@
 
 export const SITE_TITLE  = "Your Jam Plug UK | Global Skate Events & Directory";
+export const SHORT_TITLE = "Your Jam Plug | Skate Global";
 export const SITE_DESCRIPTION = 'For Roller Skaters who want to skate';
 
 export const HOMEPAGE_FEATURE_LIMIT = 8;

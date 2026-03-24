@@ -3,7 +3,7 @@ import "../styles/global.css";
 import "../styles/components.css";
 import "../styles/header.css"
 import "../styles/footer.css";
-import {SITE_TITLE, SITE_DESCRIPTION} from "../data/skate-constants";
+import {SITE_TITLE, SITE_DESCRIPTION, } from "../data/skate-constants";
 
 import { Image } from "astro:assets";
 
@@ -20,7 +20,14 @@ import PageFooter from "../components/footer.astro";
 import HeadLogo from "../assets/YJP/Shine-orange-lug-2.svg"
  
 
-const { page_title, Index, description, SEO, image = "/content/rolling.png" } = Astro.props;
+const { 
+	page_title, 
+	Index, 
+	description, 
+	SEO, 
+	image, 
+} = Astro.props;
+
 
 const socialImageURL = new URL(image, Astro.url.origin);
 const base = import.meta.env.BASE_URL;
@@ -29,7 +36,13 @@ const base = import.meta.env.BASE_URL;
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<Head />
+		<Head 
+          title={page_title} 
+          description={description} 
+          image={image} 
+          Index={Index} 
+          SEO={SEO} 
+        />
 		<ClientRouter />
 		<script is:inline>
 			const theme = (() => {
