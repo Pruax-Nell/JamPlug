@@ -100,6 +100,7 @@ export const BLOG_CATEGORY = [
 
 // ----------------------  WHEELS ALLOWED
 export const WHEEL_CHOICE = [  //
+    {value:'all-skates', label: 'Skates'},
     {value:'quad-skates', label: 'Quad Skates'},
     {value:'inline-skates', label: 'Inline Skates'},
     {value:'free-skates', label: 'Free Skates'},

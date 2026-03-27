@@ -1,6 +1,6 @@
 import { z, defineCollection, reference } from "astro:content"; 
 import { glob } from "astro/loaders";
-import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA, FOOTWEAR_CHOICE } from './data/skate-constants'
+import { EVENT_STATUS, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, SOCIAL_MEDIA, FOOTWEAR_CHOICE, WHEEL_CHOICE } from './data/skate-constants'
 import { getValues, OTHER_COUNTRIES, ALL_CONTINENT_VALUES, ALL_COUNTRY_VALUES, ALL_REGION_VALUES, AUS_REGION_OPTIONS, CANADA_PROVINCE_OPTIONS, UK_NATION_OPTIONS, US_STATE_OPTIONS } from './data/globe-constants'
 import { timeObject, personObject, locationSchema, businessObject, mapCoords, zodImageGroup } from "./function/configBlocks/zod-blocks";
 import { slugify } from "./function/stringHelper";
@@ -46,6 +46,7 @@ const events = defineCollection({
     // filter options --
         startDate: z.coerce.date(), 
         endDate: z.coerce.date().optional(),
+        // throw in a TBD boolean that hides the days until unchecked...soulskate
         location: locationSchema,
         townCity: z.string(),
         eventType: z.enum( getValues(EVENT_TYPE)),
@@ -87,6 +88,7 @@ const events = defineCollection({
         mapCoordinates: mapCoords.optional().nullable(),
 
         footwear: z.enum( getValues(FOOTWEAR_CHOICE)).default('skates'),
+        wheels: z.enum( getValues(WHEEL_CHOICE)).optional().nullable(),
 
     })
 

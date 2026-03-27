@@ -2,7 +2,7 @@
 import React from 'react';
 import { config, fields, collection, component} from '@keystatic/core';
 import { ImagePreview } from '@components/previewImage';
-import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE } from './src/data/skate-constants';
+import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE, WHEEL_CHOICE } from './src/data/skate-constants';
 
 import { slugify } from './src/function/stringHelper';
 import { locationBlock, mapCoords, PersonListField, socials, createImageGroup } from './src/function/configBlocks/key-block';
@@ -206,6 +206,11 @@ export default config({
           label: 'Non Skating Event?', 
           options: FOOTWEAR_CHOICE, 
           defaultValue: 'skates'}),
+
+        wheels: fields.select({ 
+          label: 'What Wheels are Allowed?', 
+          options: WHEEL_CHOICE, 
+          defaultValue: 'all-skates'}),
           
       // TEXT BODY
         content: fields.markdoc({

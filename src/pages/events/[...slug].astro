@@ -46,13 +46,14 @@ const lineup = [
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
 
 const ogImage = post.data.eventPoster?.src;
+const title = post.data.eventName;
 
 const base = import.meta.env.BASE_URL;
 --- 
 
 <BaseLayout 
-  title={event.title}
-  description={`Join us in ${event.townCity} for ${event.title}!`}
+  title={title}
+  description={`Join us in ${event.townCity} for ${title}!`}
   image={ogImage} 
 >
 

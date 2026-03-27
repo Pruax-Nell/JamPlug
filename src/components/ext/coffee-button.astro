@@ -3,6 +3,34 @@
 
 </div>
 
+<script is:inline>
+  function initBMC() {
+    // Check if the script is already in the document
+    const oldScript = document.querySelector('script[data-name="bmc-button"]');
+    
+    if (oldScript) {
+      // 1. Remove the existing button if it was left over from a previous page
+      const existingButton = document.querySelector('.bmc-btn-container');
+      if (existingButton) existingButton.remove();
+
+      // 2. Re-insert the script to force the BMC library to run its "init" logic
+      const newScript = document.createElement('script');
+      
+      // Copy all attributes from the old script to the new one
+      Array.from(oldScript.attributes).forEach(attr => {
+        newScript.setAttribute(attr.name, attr.value);
+      });
+
+      // Append to the wrapper
+      document.getElementById('bmc-wrapper').appendChild(newScript);
+      // Remove the old one to keep the DOM clean
+      oldScript.remove();
+    }
+  }
+
+  // Listen for Astro's View Transition event
+  document.addEventListener('astro:page-load', initBMC);
+</script>
 
 <style>
   .coffee-container {

@@ -43,11 +43,14 @@ const lastEditDate = post.data.updated ? formatDate(post.data.updated) : null;
 const blog = mapBlogFull(post);
 // const person = mapPerson(post) ??? Check. 
 const { Content } = await render(post);
+
+const title = post.data.title;
+const description = post.data.description;
 const base = import.meta.env.BASE_URL; 
 
 ---
 
-<BaseLayout title={blog.title} description={blog.description}>
+<BaseLayout title={title} description={description}>
 <nav class="navigation-controls">
   
   <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/blog'"> ← Previous Page </Button>
