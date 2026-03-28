@@ -697,9 +697,9 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     
       {totalPages > 1 && (
         <div className="pagination-controls">
-          <button disabled={!canGoBack} onClick={() => setCurrentPage(p => p - 1)} aria-label="Previous Page">Prev</button>
+          <button disabled={!canGoBack} onClick={() => setCurrentPage(p => p - 1)} aria-label="Previous Page" className='page-button back'>Back</button>
           <span>Page {currentPage} of {totalPages}</span>
-          <button disabled={!canGoForward} onClick={() => setCurrentPage(p => p + 1)} aria-label="Next Page">Next</button>
+          <button disabled={!canGoForward} onClick={() => setCurrentPage(p => p + 1)} aria-label="Next Page" className='page-button forward'>Next</button>
         </div>
       )}
     </div>

@@ -32,7 +32,7 @@ export default defineConfig({
     react(), 
     markdoc(), 
     // edit out keystatic on build for now... 
-    // keystatic(),
+    keystatic(),
     sitemap()],
 
   vite: {

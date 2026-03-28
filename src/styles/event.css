@@ -727,17 +727,32 @@ select option:disabled {
     padding-bottom: 1.5rem;
 }
 
-.pagination button {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--ob-brown);
-  background: var(--main-orange);
-  border-radius: 6px;
-  cursor: pointer;
+
+.pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: none;
 }
 
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.page-button {
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    color: var(--main-brown);
+    border-color: var(--grey);
+    background-color: transparent;
+    border-radius: 5px;
+    font-weight: 650;
+    letter-spacing: .1ch;
+    font-family: var(--font-rose-body);
+}
+.page-button:hover, button:active {
+    border-color: var(--ow-brown);
+}
+
+.page-button.back{
+    border-radius: 10px 5px 5px 10px;
+}
+.page-button.forward{
+    border-radius: 5px 10px 10px 5px;
 }
 
 /* ||-----------------------------------------------50/50 SECTION */
