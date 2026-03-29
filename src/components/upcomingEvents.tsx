@@ -510,6 +510,23 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
     setIsVisible(prev => !prev);
   }
 
+  const topOfListRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    topOfListRef.current?.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }, [currentPage]);
+
+//   useEffect(() => {
+//   window.scrollTo({
+//     top: 0,
+//     left: 0,
+//     behavior: 'smooth' 
+//   });
+// }, [currentPage]);
+
   
   // ------------- CLIENT RETURN/TSX
 
@@ -674,7 +691,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         </div> 
       </div>
 
-      <section className="event-grid">
+      <section ref={topOfListRef} className="event-grid">
         {visibleEvents && (<span className='scroll-hint'> ~ Scroll Start ~ </span>)}
         {visibleEvents.length > 0 ? (
           visibleEvents.map(event => (
