@@ -318,9 +318,9 @@ select option:disabled {
         
     }
 
-    .filter-group{
+    /* .filter-group{
 
-    }
+    } */
  
 }
 
@@ -538,13 +538,14 @@ select option:disabled {
 
  .card-header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: inherit;
     box-shadow: none;
+    text-align: center;
+    margin: 0.3rem 0;
 }
 
 .event-title {
-    margin: 0.5rem 0;
     width: 100%;
     font-size: 1.35rem;
     line-height: 1.2;
@@ -561,6 +562,12 @@ select option:disabled {
     text-overflow: ellipsis;
     height: 3.2rem;
 
+}
+
+.sub-title{
+    color: var(--main-light);
+    color: var(--ow-brown);
+    font-size: var(--fs-footer);
 }
 
 .title-wrap {
@@ -674,23 +681,21 @@ select option:disabled {
     
     }
     
-     .card-header {
+     /* .card-header {
     }
-    
+     */
     .event-title {
         width: 90%;
         font-size: 1.15rem;
     
     }
     
-    .title-wrap {
-    }
+    /* .title-wrap {} */
     
     
-    .card-meta{
-    }
-    .sub-meta {
-    }
+    /* .card-meta{} */
+    /* .sub-meta {
+    } */
     
     
     .meta-item {

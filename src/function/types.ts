@@ -1,4 +1,4 @@
-import type { BlogCategory, SkateDisciplines, SkillLevel, EventType, PostStatus, socialMedia, EventStatus, Footwear, MonthOrder, } from '../data/skate-constants';
+import type { BlogCategory, SkateDisciplines, SkillLevel, EventType, PostStatus, socialMedia, EventStatus, Footwear, MonthOrder, wheels } from '../data/skate-constants';
 import { locationSchema } from './configBlocks/zod-blocks';
 import {z} from 'zod';
 import type { ImageMetadata } from 'astro';
@@ -102,6 +102,8 @@ export interface EventData {
   description?: string;
   startDate: Date;
   endDate?: Date;
+  datesTBC: boolean;
+  // multiDate: array;
 
   // Filter options
   location: EventLocation;
@@ -159,16 +161,20 @@ export interface EventData {
   };
 
   footwear: Footwear; 
+  wheels: wheels;
 }
 
 // SPECIFICS
 export interface EventCardData {
   eventName: string;
+  subheading?: string;
   location: EventLocation;
   townCity: string;
   startDate: string;
   endDate: string | null;
+  datesTBC: boolean;
   footwear: Footwear;
+  wheels: wheels;
   eventType: EventType;
   skateDiscipline?: SkateDisciplines;
   minAge?: string; 

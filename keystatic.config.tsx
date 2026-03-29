@@ -5,6 +5,7 @@ import { ImagePreview } from '@components/previewImage';
 import { EVENT_STATUS, SOCIAL_MEDIA, SKATE_DISCIPLINES, BLOG_CATEGORY, SKILL_LEVEL, EVENT_TYPE, POST_STATUS, FOOTWEAR_CHOICE, INDUSTRY_CAT, COMMUNITY_CAT, SKATE_VENUE, WHEEL_CHOICE } from './src/data/skate-constants';
 
 import { slugify } from './src/function/stringHelper';
+import { formatDate } from './src/function/dateHelper';
 import { locationBlock, mapCoords, PersonListField, socials, createImageGroup } from './src/function/configBlocks/key-block';
 
 // in future, a complete rebuild would be more efficient 
@@ -102,7 +103,7 @@ export default config({
           options: EVENT_STATUS,
           defaultValue: '',
         }),
-      // Main Info
+        // Main Info
         eventName: fields.slug({ name: { label: 'Event Name', validation: { isRequired: true } } }),
         subheading: fields.text({ label: 'Sub Heading'}),
         description: fields.text({
@@ -111,6 +112,9 @@ export default config({
         }),
         startDate: fields.date({ label: 'Start Date', validation: { isRequired: true } }),
         endDate: fields.date({ label: 'End Date' }),
+        datesTBC: fields.checkbox({ label: 'Hide TBC/Tour Dates?' }),
+        
+
     // Secondary key info
         location: locationBlock,
         townCity: fields.text({ 
@@ -139,13 +143,7 @@ export default config({
         }),
         minAge: fields.text({ label: 'Minimum Age' }),
         maxAge: fields.text({ label: 'Maximum Age' }),
-        ...createImageGroup('Poster', 'events', 'eventPoster'),
-        ...createImageGroup('Poster', 'events', 'flyerImage1'),
-        ...createImageGroup('Poster', 'events', 'flyerImage2'),
-        ...createImageGroup('Poster', 'events', 'flyerImage3'),
-        ...createImageGroup('Poster', 'events', 'flyerImage4'),
-        ...createImageGroup('Poster', 'events', 'flyerImage5'),
-
+        
         showStartTime: fields.checkbox({ label: 'Show Start time?', defaultValue: false }),
         startTime: fields.object({
           hour: fields.select({
@@ -195,22 +193,29 @@ export default config({
       coaches: PersonListField('Coach', SOCIAL_MEDIA),
       hosts: PersonListField('Host', SOCIAL_MEDIA),
       partners: PersonListField('Partner', SOCIAL_MEDIA),
-        // TODO future - add rinkReference for business related. make optional! keep old 'rink'
-        // then add conditional logic and fallback if rink = ' ' : rinkReference etc
-        // or use node to automate cleanup
+      // TODO future - add rinkReference for business related. make optional! keep old 'rink'
+      // then add conditional logic and fallback if rink = ' ' : rinkReference etc
+      // or use node to automate cleanup
         rink: fields.text({ label: 'Featured Rink' }),
         venueAddress: fields.text({ label: 'Address' }),
         mapCoordinates: mapCoords,
-
+        
         footwear: fields.select({ 
           label: 'Non Skating Event?', 
           options: FOOTWEAR_CHOICE, 
           defaultValue: 'skates'}),
-
-        wheels: fields.select({ 
-          label: 'What Wheels are Allowed?', 
-          options: WHEEL_CHOICE, 
-          defaultValue: 'all-skates'}),
+          wheels: fields.multiselect({
+            label: 'Wheels Allowed:',
+          description: 'Select all types of skates allowed at this event',
+          options: WHEEL_CHOICE,
+          defaultValue: [],
+        }),
+        ...createImageGroup('Event Poster', 'events', 'eventPoster'),
+        ...createImageGroup('Flyer 1', 'events', 'flyerImage1'),
+        ...createImageGroup('Flyer 2', 'events', 'flyerImage2'),
+        ...createImageGroup('Flyer 3', 'events', 'flyerImage3'),
+        ...createImageGroup('Flyer 4', 'events', 'flyerImage4'),
+        ...createImageGroup('Flyer 5', 'events', 'flyerImage5'),
           
       // TEXT BODY
         content: fields.markdoc({
@@ -222,6 +227,28 @@ export default config({
         }),
       }
     }),
+    // -------------------------------------------- SESSIONS --------------|
+
+    // sessions: collection({
+      //   label: 'Sessons',
+    //   slugField: 'eventName',
+    //   path: 'src/content/sessions/*/',
+    //   format: { contentField: 'content' },
+    //   schema: {
+    //     eventName: fields.text({ label: 'Event Name'}),
+    //     multiDates: fields.array(
+    //               fields.date({ 
+    //                 label: 'Date' 
+    //               }),
+    //               {
+    //                 label: 'Tour Dates',
+    //                 description: 'Add all dates for this tour. The system will automatically show the next upcoming one.',
+    //                 itemLabel: (props) => props.value ? new Date(props.value).toLocaleDateString() : 'Select a date',
+    //               }
+    //             ),
+
+    //   }
+    // }),
 
     // -------------------------------------------- AUTHORS --------------|
     authors: collection({

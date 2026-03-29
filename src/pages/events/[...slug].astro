@@ -9,11 +9,10 @@ import LocationDisplay from '../../components/locationDisplay.astro'
 import Button from '../../components/button.astro';
 
 import { formatEventDate, formatTime, getCalendarUrls } from '../../function/dateHelper';
+import { getLabelFromValue, getLabelsArray } from '../../function/stringHelper';
 import { formatLocation } from '../../data/globe-constants';
 
-import { mapEventToCard, mapToFeaturedCard, mapEventFull } from '../../function/mapEvents';
-import {  mapBlogToCard, mapBlogFull } from '../../function/mapPosts';
-
+import { mapEventFull } from '../../function/mapEvents';
 
 export async function getStaticPaths() {
 
@@ -44,6 +43,24 @@ const lineup = [
 ];
 
 console.log('FULL POST DATA:', JSON.stringify(post.data, null, 2));
+
+const wheels = event.wheels;
+
+let skateMessage = "";
+
+const hasQuads = wheels.includes('quad-skates');
+const hasInlines = wheels.includes('inline-skates');
+const hasOther = wheels.some(w => ['boards', 'scooter', 'bike', 'other'].includes(w));
+
+if (hasQuads && hasInlines && hasOther) {
+  skateMessage = "All Wheels Welcome (Skates, Boards, & More)";
+} else if (hasQuads && hasInlines) {
+  skateMessage = "For Quads and Inlines";
+} else if (hasQuads) {
+  skateMessage = "Only Quad* Skates";
+} else if (hasInlines) {
+  skateMessage = "Only Inline* Skates";
+} else if (!hasQuads && !hasInlines && !hasOther) { skateMessage = ""}
 
 const ogImage = post.data.eventPoster?.src;
 const title = post.data.eventName;
@@ -117,6 +134,10 @@ const base = import.meta.env.BASE_URL;
         <span class="discipline">{event.skateDiscipline}</span>
         {event.skillLevel && (<span class="level"> {event.skillLevel} </span>) }
         {event.footwear && (<span class={`${event.footwear}-required`}> {event.footwear} </span>) }
+        
+      </div>
+      <div class="message">
+         {wheels.length > 0 && skateMessage && (<p>Wheel Req: <span class="wheel-message"> {skateMessage} </span> </p>)}
       </div>
 
     </header>

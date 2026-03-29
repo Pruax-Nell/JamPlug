@@ -1,7 +1,7 @@
 import type { CollectionEntry } from 'astro:content';
 
 import { formatLocation } from "../data/globe-constants";
-import { formatFestivalDate, formatEventDate, formatDate, formatTime } from "./dateHelper";
+import { formatFestivalDate, formatEventDate, formatDate, formatTBCDate, formatTime } from "./dateHelper";
 import { getImageSource } from '../function/sourceHelper';
 import type { KeystaticImage } from './types';
 
@@ -11,8 +11,10 @@ import EventPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg'
 export const mapEventFull = (event: CollectionEntry<'events'>) => {
     const realPoster = !!event.data.eventPoster;
     const location = formatLocation(event.data.location, event.data.townCity);
-    const dates = formatEventDate(event.data.startDate, event.data.endDate);
-    // const startTime = formatTime(event.data.startTime);
+    // const dates = formatEventDate(event.data.startDate, event.data.endDate);
+    const dateLabel = event.data.datesTBC 
+    ? formatTBCDate(event.data.startDate)
+    : formatEventDate(event.data.startDate, event.data.endDate);
     const startTime = event.data.showStartTime ? formatTime(event.data.startTime) : null;
     const endTime = event.data.showEndTime ? formatTime(event.data.endTime) : null;
     const hasStart = !!startTime;
@@ -30,7 +32,6 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
             const alt = event.data[`${key}Alt` as keyof typeof event.data];
             const caption = event.data[`${key}Caption` as keyof typeof event.data];
 
-            // Only return the object if the source image actually exists
             if (!src) return null;
 
             return {
@@ -59,13 +60,15 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
         country: location.country,
         townCity: event.data.townCity,
        
-        dateLabel: dates,
+        datesTBC: event.data.datesTBC ?? false,
+        // dateLabel: dates,
+        dateLabel: dateLabel,
         startDate: event.data.startDate,
         endDate: event.data.endDate,
         startTime: startTime,
         endTime: endTime,
-        // showStart: event.data.showStartTime,
-        // showEnd: event.data.showEndTime,
+        showStart: event.data.showStartTime,
+        showEnd: event.data.showEndTime,
         
         eventType: event.data.eventType,
         skateDiscipline: event.data.skateDiscipline,
@@ -73,6 +76,7 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
         minAge: event.data.minAge,
         maxAge: event.data.maxAge,
         footwear: event.data.footwear,
+        wheels: event.data.wheels,
 
         // Bonus info
         rink: event.data.rink,
@@ -106,7 +110,10 @@ export const mapEventFull = (event: CollectionEntry<'events'>) => {
 // small cards | carosel use 
 export const mapEventToCard = (event: CollectionEntry<'events'>) => {
     const location = formatLocation(event.data.location, event.data.townCity);
-    const dates = formatEventDate(event.data.startDate, event.data.endDate);
+    // const dates = formatEventDate(event.data.startDate, event.data.endDate);
+    const dateLabel = event.data.datesTBC 
+    ? formatTBCDate(event.data.startDate)
+    : formatEventDate(event.data.startDate, event.data.endDate);
     const realPoster = !!event.data.eventPoster;
 
     return{
@@ -125,7 +132,9 @@ export const mapEventToCard = (event: CollectionEntry<'events'>) => {
         locationLabel: location.full, // "London, England, UK"
         eventType: event.data.eventType,
         featured: event.data.isFeatured,
-        dateLabel: dates,
+        // dateLabel: dates,
+        datesTBC: event.data.datesTBC ?? false,
+        dateLabel: dateLabel,
         startDate: event.data.startDate,
         endDate: event.data.endDate
     }
@@ -216,3 +225,35 @@ export interface MappedPerson {
   socials: SocialLink[]; 
   alt: string;
 }
+
+// to be used in future reference !! TODO
+// export const othermapEventToCard = (event: CollectionEntry<'events'>): SerializedEvent => {
+//   const d = event.data;
+//   const isPlaceholder = !d.eventPoster;
+
+//   return {
+//     id: event.id,
+//     slug: event.id,
+//     data: {
+//       eventName: d.eventName,
+//       townCity: d.townCity,
+//       location: d.location,
+//       // Convert Dates to Strings for serialization
+//       startDate: d.startDate.toISOString(),
+//       endDate: d.endDate?.toISOString() || null,
+//       datesTBC: d.datesTBC ?? false,
+      
+//       // Other fields your EventCardData expects
+//       skateDiscipline: d.skateDiscipline,
+//       skillLevel: d.skillLevel,
+//       eventType: d.eventType,
+//       eventPoster: d.eventPoster,
+//       isPlaceholder: isPlaceholder,
+//       minAge: d.minAge,
+//       footwear: d.footwear,
+//       isFeatured: d.isFeatured,
+//       eventStatus: d.eventStatus,
+//       // Add any missing fields like 'wheels' or 'dateLabel' if your interface requires them
+//     }
+//   };
+// };

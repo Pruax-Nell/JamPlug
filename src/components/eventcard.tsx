@@ -2,7 +2,7 @@ import React from 'react';
 import type { ImageMetadata } from 'astro';
 import Image from 'astro/components/Image.astro';
 import type { SerializedEvent, EventCardData, } from '../function/types';
-import { formatEventDate, formatTime } from '../function/dateHelper';
+import { formatEventDate, formatTBCDate, formatTime } from '../function/dateHelper';
 import { formatLocation, hasRegionSelected } from '../data/globe-constants';
 
 import PosterPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg'
@@ -16,8 +16,10 @@ type EventCardProps = SerializedEvent['data'] & {
 export default function EventCard({
   id,
   eventName,
+  subheading,
   townCity,
   location,
+  datesTBC,
   startDate,
   endDate,
   eventPoster,
@@ -38,7 +40,16 @@ const showRegion = hasRegionSelected(location);
 
 const cardClasses = isFeatured ? "event-card featured-event" : "event-card";
 const statusClass = eventStatus ? `status-${eventStatus}` : '';
-const dateRange = formatEventDate(startDate, endDate);
+// const dateRange = formatEventDate(startDate, endDate);
+
+// const isTBC = datesTBC ?? false;
+const isTBC = !!datesTBC;
+
+const dateLabel = isTBC 
+  ? formatTBCDate(startDate) 
+  : formatEventDate(startDate, endDate ?? null);
+
+  console.log(`Event Check:`, { datesTBC, type: typeof datesTBC });
  
   return (
     <a href={`/events/${id}`} className={`event-card-link ${statusClass}`} aria-label={eventName}>
@@ -61,7 +72,7 @@ const dateRange = formatEventDate(startDate, endDate);
         <header className="card-header">
           <h3 className="event-title">{eventName}
           </h3>
-          
+          <span className='sub-title'> {subheading} </span>
         </header> 
 
         <div className="card-meta">
@@ -73,13 +84,12 @@ const dateRange = formatEventDate(startDate, endDate);
             
           </p>
           <p className="meta-item date">
-            <span>📅</span> {dateRange}
+            <span>📅</span> {dateLabel}
           </p>
           <div className='sub-meta'>
             
           {skateDiscipline && ( <p className="meta-item discipline">{skateDiscipline}</p>)}
           {skillLevel && ( <p className="meta-item level">{skillLevel}</p>)}
-           {/* <p className="meta-item level">{skillLevel}</p> */}
           
           </div>
           {eventStatus && (

@@ -14,17 +14,6 @@ export function formatTime(timeObj: any) {
   }
 }
 
-// export function formatDate(date: Date): string {
-//   const options: Intl.DateTimeFormatOptions = {
-//     year: 'numeric',
-//     month: 'long',
-//     day: 'numeric',
-//   };
-
-//   return new Date(date).toLocaleDateString(undefined, options);
-// }
-// src/function/dateHelper.ts
-
 export function formatDate(date: Date | string | null | undefined): string {
   if (!date) return '';
 
@@ -81,6 +70,21 @@ export const formatEventDate = (startStr: string | Date, endStr?: string | Date 
     return 'Date TBC';
   }
 };
+
+export const formatTBCDate = (startStr: string | Date): string => {
+  try {
+    const start = new Date(startStr);
+    if (isNaN(start.getTime())) return 'Date TBC';
+
+    return start.toLocaleDateString('en-GB', { 
+      month: 'short', 
+      year: 'numeric' 
+    });
+  } catch (e) {
+    return 'Date TBC';
+  }
+};
+
 
 export const formatFestivalDate = (startStr: string | Date, endStr?: string | Date | null) => {
   try {

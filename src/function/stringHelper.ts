@@ -23,6 +23,26 @@ export function formatLabel(str: string) {
     .replace(/\b\w/g, l => l.toUpperCase()); 
 }
 
+// Label Maker - constants
+
+/**
+ * @param options - The constant array of objects (e.g., WHEEL_CHOICE)
+ * @param value - The value you are looking for
+ * @returns The label string or the original value if not found
+ */
+export function getLabelFromValue<T extends { readonly value: string; readonly label: string }>(
+  options: readonly T[],
+  value: string
+): string {
+  return options.find((opt) => opt.value === value)?.label ?? value;
+}
+
+export function getLabelsArray<T extends { readonly value: string; readonly label: string }>(
+  options: readonly T[],
+  values: string[]
+): string[] {
+  return values.map(v => getLabelFromValue(options, v));
+}
 // for maps 
 export function formatLocationString(
   coords: { latitudeCoord: number; longitudecoord: number } | null | undefined,

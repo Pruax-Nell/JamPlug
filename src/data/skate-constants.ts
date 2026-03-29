@@ -15,6 +15,9 @@ export const EVENT_STATUS = [
   { label: '-', value: '' },
 ] as const;
 
+export const EVENT_VALUES = EVENT_STATUS.map(option => option.value) as [string, ...string[]];
+export const EVENT_LABELS = EVENT_STATUS.map(option => option.label) as [string, ...string[]];
+
 // ----------------------  MEDIA LIST
 export const SOCIAL_MEDIA = [
   { label: 'Socials', value: 'socials' },
@@ -56,6 +59,10 @@ export const BUSINESS_CATEGORY = [ //
     {value: 'other', label: 'Other'},
 ] as const;
 
+export const BUSINESS_VALUES = BUSINESS_CATEGORY.map(option => option.value) as [string, ...string[]];
+export const BUSINESS_LABELS = BUSINESS_CATEGORY.map(option => option.label) as [string, ...string[]];
+
+
 //  ----------------------  COMMUNITY HUB
 export const COMMUNITY_CAT = [ //
     {value: 'education', label: 'Education'},
@@ -71,6 +78,7 @@ export const INDUSTRY_CAT = [ //
     {value: 'other', label: 'Other'},
 ] as const;
 
+
 //  ----------------------  VENUE TYPE
 export const SKATE_VENUE = [ //
     {value: 'rink', label: 'Full Rink'},
@@ -80,6 +88,8 @@ export const SKATE_VENUE = [ //
     {value: 'outdoor', label: 'Outdoor Court'},
 ] as const;
 
+export const VENUE_VALUES = SKATE_VENUE.map(option => option.value) as [string, ...string[]];
+export const VENUE_LABELS = SKATE_VENUE.map(option => option.label) as [string, ...string[]];
 
 //  ----------------------  BLOG-logic
 export const BLOG_CATEGORY = [
@@ -98,9 +108,11 @@ export const BLOG_CATEGORY = [
     // all others / uncategorised
 ] as const;
 
+export const BLOG_VALUES = BLOG_CATEGORY.map(option => option.value) as [string, ...string[]];
+export const BLOG_LABELS = BLOG_CATEGORY.map(option => option.label) as [string, ...string[]];
+
 // ----------------------  WHEELS ALLOWED
 export const WHEEL_CHOICE = [  //
-    {value:'all-skates', label: 'Skates'},
     {value:'quad-skates', label: 'Quad Skates'},
     {value:'inline-skates', label: 'Inline Skates'},
     {value:'free-skates', label: 'Free Skates'},
@@ -108,6 +120,11 @@ export const WHEEL_CHOICE = [  //
     {value:'scooter', label: 'Scooter'},
     {value:'bike', label: 'Bike'},
 ] as const;
+
+export const WHEEL_VALUES = WHEEL_CHOICE.map(option => option.value) as [string, ...string[]];
+// export const WHEEL_LABELS = WHEEL_CHOICE.map(option => option.label) as [string, ...string[]];
+export const getWheelLabel = (val: string) => 
+  WHEEL_CHOICE.find(option => option.value === val)?.label ?? val;
 // ----------------------  EVENT logic
 export const FOOTWEAR_CHOICE = [ 
     {value:'skates', label: 'Skates'},
@@ -115,6 +132,10 @@ export const FOOTWEAR_CHOICE = [
     {value:'sync', label: 'Sync'},
     {value:'sequence', label: 'sequence'},
 ] as const;
+
+export const FOOTWEAR_VALUES = FOOTWEAR_CHOICE.map(option => option.value) as [string, ...string[]];
+export const FOOTWEAR_LABELS = FOOTWEAR_CHOICE.map(option => option.label) as [string, ...string[]];
+
 
 export const SKATE_DISCIPLINES = [
   {value:'rhythm-style', label: 'Rhythm & Style'},
@@ -132,6 +153,9 @@ export const SKATE_DISCIPLINES = [
   {value: 'other', label: 'Other'},
 ] as const;
 
+export const DISCIPLINE_VALUES = SKATE_DISCIPLINES.map(option => option.value) as [string, ...string[]];
+export const DISCIPLINE_LABELS = SKATE_DISCIPLINES.map(option => option.label) as [string, ...string[]];
+
 export const EVENT_TYPE = [
     { value: 'day-skate', label: 'Day Skate' },
     { value: 'skate-night', label: 'Skate Night' },
@@ -139,9 +163,14 @@ export const EVENT_TYPE = [
     { value: 'festival', label: 'Festival' },
     { value: 'weekend', label: 'Weekend' },
     { value: 'workshop', label: 'Workshop' },
-    { value: 'other', label: 'Other' },
-    // MISCELLANEOUS?
+    { value: 'tour', label: 'Tour' }, // workshop tours 
+    { value: 'sessions', label: 'Sessions' }, // regular session 
+    { value: 'convention', label: 'Convention' }, // roller con
+    { value: 'other', label: 'Other' }, // MISCELLANEOUS?
 ] as const;
+
+export const EVENT_TYPE_VALUES = EVENT_TYPE.map(option => option.value) as [string, ...string[]];
+export const EVENT_TYPE_LABELS = EVENT_TYPE.map(option => option.label) as [string, ...string[]];
 
 export const SKILL_LEVEL =  [
     {value: 'foundational', label: 'Foundational (Beginner)'},
@@ -149,6 +178,9 @@ export const SKILL_LEVEL =  [
     {value: 'proficient', label: 'Proficient (Higher-Intermediate)'},
     {value: 'advanced', label: 'Advanced (Professional)'},
 ] as const;
+
+export const SKILL_VALUES = SKILL_LEVEL.map(option => option.value) as [string, ...string[]];
+export const SKILL_LABELS = SKILL_LEVEL.map(option => option.label) as [string, ...string[]];
 
 
 export const OCCURANCE_REP =  [ //
@@ -160,7 +192,6 @@ export const OCCURANCE_REP =  [ //
 
 // EVENT & BLOG DATA
 export type BlogCategory = (typeof BLOG_CATEGORY)[number]['value'];
-// export type CountryValue = (typeof GROUPED_COUNTRIES)[number]['value'];
 export type SkateDisciplines = (typeof SKATE_DISCIPLINES)[number]['value'];
 export type SkillLevel = (typeof SKILL_LEVEL)[number]['value'];
 export type EventType = (typeof EVENT_TYPE)[number]['value'];
@@ -168,5 +199,6 @@ export type PostStatus = (typeof POST_STATUS)[number]['value'];
 export type socialMedia = (typeof SOCIAL_MEDIA)[number]['value'];
 export type EventStatus = (typeof EVENT_STATUS)[number]['value'];
 export type Footwear = (typeof FOOTWEAR_CHOICE)[number]['value'];
+export type wheels = (typeof WHEEL_CHOICE)[number]['value'];
 export type MonthOrder = (typeof MONTH_ORDER)[number]['value'];
 

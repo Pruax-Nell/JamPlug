@@ -16,12 +16,12 @@ import UpcomingEvents from '../components/upcomingEvents';
 
 const now = new Date();
 now.setHours(0, 0, 0, 0);
+const ages = new Set<string>();
 
 const publishedEvents: CollectionEntry<'events'>[] = await getCollection('events', ({ data }: CollectionEntry<'events'>) => {
   return data.status === 'published';
 });
 
-const ages = new Set<string>();
  
 const clientUpcomingEvents = publishedEvents
   .filter((event) => event.data.startDate >= now)
@@ -29,17 +29,19 @@ const clientUpcomingEvents = publishedEvents
   .map((event) => {
 	  const d = event.data;
 	  const isPlaceholder = !d.eventPoster;
-    if (d.minAge) ages.add(d.minAge);
+    	if (d.minAge) ages.add(d.minAge);
  
     return {
       id: event.id,
 	  slug: event.id,
       data: {
         eventName: d.eventName,
+		subheading: d.subheading,
         townCity: d.townCity,
         location: d.location, 
         startDate: d.startDate.toISOString(),
         endDate: d.endDate?.toISOString() || null,
+		datesTBC: d.datesTBC,
         skateDiscipline: d.skateDiscipline as SkateDisciplines,
         skillLevel: d.skillLevel as SkillLevel,
         eventType: d.eventType as EventType,
@@ -47,12 +49,13 @@ const clientUpcomingEvents = publishedEvents
 		isPlaceholder: isPlaceholder,
         minAge: d.minAge,
         footwear: d.footwear as Footwear,
+		wheels: (d as any).wheels || "None",
         rink: d.rink || ""
       },
     };
   });
 
-	const serverOptions = {
+const serverOptions = {
 	minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b)),
 };
 

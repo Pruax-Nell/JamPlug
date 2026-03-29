@@ -1,3 +1,27 @@
+// Example Logic for your Astro Component
+const now = new Date();
+
+const allEvents = await getCollection('events');
+
+const processedEvents = allEvents.map(event => {
+  let upcomingDate = null;
+
+  if (event.data.type === 'single') {
+    upcomingDate = event.data.date;
+  } else if (event.data.type === 'tour' && event.data.tourDates) {
+    // Find the first date in the array that hasn't passed yet
+    upcomingDate = event.data.tourDates
+      .sort((a, b) => a.getTime() - b.getTime()) // Ensure they are in order
+      .find(d => d >= now);
+  }
+
+  return { ...event, upcomingDate };
+})
+// Filter out events where all dates have passed
+.filter(event => event.upcomingDate !== undefined && event.upcomingDate >= now)
+// Sort the whole list by the next chronological date
+.sort((a, b) => a.upcomingDate.getTime() - b.upcomingDate.getTime());
+
 
 
 
