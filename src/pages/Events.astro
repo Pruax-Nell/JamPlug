@@ -10,9 +10,11 @@ import type { BlogCategory, SkateDisciplines, SkillLevel, EventType, PostStatus,
 import HalfImage from '../assets/test1.jpg'
 import EventsOG from '../../public/admin/events-og-image.jpg'
 import PosterPlaceholder from '../assets/placeholder/placeholder-eventPoster.jpg';
+import CardHolder from "@components/card-holder.astro";
 
 import { getCollection, type CollectionEntry } from "astro:content";
 import UpcomingEvents from '../components/upcomingEvents'; 
+import { mapEventToCard } from "src/function/mapEvents";
 
 const now = new Date();
 now.setHours(0, 0, 0, 0);
@@ -58,6 +60,12 @@ const clientUpcomingEvents = publishedEvents
 const serverOptions = {
 	minAge: Array.from(ages).sort((a, b) => parseInt(a) - parseInt(b)),
 };
+
+const pastEvents = publishedEvents
+	.filter((event) => event.data.startDate <= now)
+	.sort((b, a) => a.data.startDate.valueOf() - b.data.startDate.valueOf())
+	.map((event) => mapEventToCard(event))
+
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -127,15 +135,16 @@ const base = import.meta.env.BASE_URL;
 		<div>
 			<h3>Last Month's Events</h3>
 		</div>
-		<!-- {pastEvents.length > 0 ? (
+		{pastEvents.length > 0 ? (
 		<div class="event-grid"> 
 			{pastEvents.map((post )  =>
-				( <EventCard 
-				/>)
+				<CardHolder 
+                {...post}
+				/>
 			)}
 		</div>) : 
 		(<div class="none-returned"><p>no events found</p></div>)
-		} -->
+		}
 
 	</div>
 </section>

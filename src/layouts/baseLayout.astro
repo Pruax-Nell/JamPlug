@@ -26,6 +26,7 @@ const {
 	description, 
 	SEO, 
 	image, 
+	schema,
 } = Astro.props;
 
 
@@ -63,6 +64,9 @@ const base = import.meta.env.BASE_URL;
 			
 			window.localStorage.setItem('theme', theme);
 		</script>
+		{schema && 
+		<script type="application/ld+json" 
+		set:html={JSON.stringify(schema)} />}
 	</head>
 
 	<body >

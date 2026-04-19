@@ -49,7 +49,7 @@ const dateLabel = isTBC
   ? formatTBCDate(startDate) 
   : formatEventDate(startDate, endDate ?? null);
 
-  console.log(`Event Check:`, { datesTBC, type: typeof datesTBC });
+  // console.log(`Event Check:`, { datesTBC, type: typeof datesTBC });
  
   return (
     <a href={`/events/${id}`} className={`event-card-link ${statusClass}`} aria-label={eventName}>

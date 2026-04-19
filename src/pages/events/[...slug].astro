@@ -65,6 +65,33 @@ if (hasQuads && hasInlines && hasOther) {
 const ogImage = post.data.eventPoster?.src;
 const title = post.data.eventName;
 
+const eventSchema = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": event.title,
+  "organizer": {
+    "@type": "Organization",
+    "name": event.organisers,
+  },
+  "startDate": event.startDate.toISOString(),
+  "location": {
+    "@type": "Place",
+    "name": event.townCity,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": event.townCity,
+      "addressCountry": event.locationLabel,
+      "streetAddress": event.venueAddress || event.townCity,
+    }
+  },
+  "image": event.poster,
+  "url": "https://yourjamplug.uk",
+  "description": event.description,
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "keywords": "roller skating, roller disco, skate jam, roller skater, skate event"
+};
+
 const base = import.meta.env.BASE_URL;
 --- 
 
@@ -72,6 +99,7 @@ const base = import.meta.env.BASE_URL;
   title={title}
   description={`Join us in ${event.townCity} for ${title}!`}
   image={ogImage} 
+  schema={eventSchema}
 >
 
 <nav class="navigation-controls-top">

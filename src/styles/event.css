@@ -565,7 +565,7 @@ select option:disabled {
 }
 
 .sub-title{
-    color: var(--main-light);
+    /* color: var(--main-light); */
     color: var(--ow-brown);
     font-size: var(--fs-footer);
 }
