@@ -48,9 +48,22 @@ const title = post.data.title;
 const description = post.data.description;
 const base = import.meta.env.BASE_URL; 
 
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPost",
+  "abstract": blog.description || blog.caption,
+  "image": blog.poster,
+  "url": "https://yourjamplug.uk",
+  "description": blog.description,
+  "author": blog.authorID,
+  "datePublished": blog.published,
+  "dateModified": blog.updated,
+  "keywords": "roller skating, roller disco, skate jam, roller skater, skate event"
+};
+
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} schema={blogSchema}>
 <nav class="navigation-controls">
   
   <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/blog'"> ← Previous Page </Button>
