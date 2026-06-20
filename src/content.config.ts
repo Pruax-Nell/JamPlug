@@ -70,7 +70,7 @@ const events = defineCollection({
     // Bonus info - option to add multiple lines ideal
         eventLink: z.string().url().optional().or(z.literal('')),
         ticketLink: z.array(
-            z.object({
+          z.object({
                 platform: z.string(),
                 directLink: z.string().url().optional().nullable().or(z.literal('')),
                 disclaimer: z.string().optional(),
@@ -86,14 +86,35 @@ const events = defineCollection({
         rink: z.string().optional(),
         venueAddress: z.string().optional(),
         mapCoordinates: mapCoords.optional().nullable(),
-
+        
         footwear: z.enum( getValues(FOOTWEAR_CHOICE)).default('skates'),
         wheels: z.array(z.enum(WHEEL_VALUES)).default([]),
 
-    })
+      })
+      
+    });
 
-});
+const rinksbasic = defineCollection({
+  loader: glob({pattern: '**/index.mdoc', base: "./src/content/business/rinks"}),
+  schema: ({ image }) => z.object({
+    rinkname: z.string(),
+    location: locationSchema,
 
+    link: z.object({
+      rinkwebsite: z.string().optional(),
+      mainsocial: z.string().optional(),
+    }).optional(),
+    venueAddress: z.string().optional(),
+    ...zodImageGroup('rinklogo', image),
+    ...zodImageGroup('rinkimage-1', image),
+    ...zodImageGroup('rinkimage-2', image),
+    ...zodImageGroup('rinkimage-3', image),
+    ...zodImageGroup('rinkimage-4', image),
+    ...zodImageGroup('rinkimage-5', image),
+    contactdetails: (businessObject),
+
+  })
+})
 
 // const sessions = defineCollection({
 //     loader: glob({pattern: '**/index.mdoc', base: "./src/content/sessions"}),
@@ -124,4 +145,4 @@ const authors = defineCollection({
 
 
 
-export const collections = {posts, events, authors};
+export const collections = {posts, events, authors, rinksbasic};

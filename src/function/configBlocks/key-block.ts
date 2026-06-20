@@ -154,6 +154,8 @@ export const mapCoords = fields.object(
   }
 );
 
+
+
 export const locationBlock = fields.conditional(
   fields.select({
     label: 'Continent',

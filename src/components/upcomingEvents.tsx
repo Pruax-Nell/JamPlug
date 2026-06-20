@@ -312,6 +312,9 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
 
   const { filteredEvents, activeOptions } = useMemo(() => {
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const geography = {
       continents: new Set<string>(),
       countries: new Set<string>(),
@@ -335,7 +338,9 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
       const eventMonth = d.startDate 
       ? new Date(d.startDate).toLocaleString('en-GB', { month: 'long' }).toLowerCase() 
       : 'unknown';
-
+      
+      const eventDate = new Date(d.startDate);
+      const isUpcoming = eventDate >= today;
       const eventContSlug = slugify(d.location.discriminant);
       const filterContSlug = slugify(loc.continent);
 
@@ -367,7 +372,7 @@ export default function UpcomingEvents({ initialEvents, serverOptions }: Upcomin
         if (regionSlug) geography.regions.add(regionSlug);
       }
 
-      if (isLocationMatch) {
+      if (isLocationMatch && isUpcoming) {
         attributes.types.add(d.eventType.toLowerCase());
         attributes.disciplines.add(d.skateDiscipline?.toLowerCase() ?? '');
         attributes.levels.add(d.skillLevel?.toLowerCase() ?? '');

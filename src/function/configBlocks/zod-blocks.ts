@@ -49,21 +49,28 @@ export const personObject = z.object({
   ).optional().nullable().default([]),
 });
 
+export const addressobject = z.object({
+  firstLine: z.string(),
+  secondLine: z.string().optional(),
+  area: z.string().optional(),
+  postCode: z.string(),
+}).optional().nullable();
+
+export const leaderobject = z.object({
+
+});
+
 // FUTURE USE ... rinks etc
 export const businessObject = z.object({
   name: z.string(),
   runBy: z.string(),
-  address: z.object({
-    firstLine: z.string(),
-    area: z.string(),
-    postCode: z.string(),
-  }),
+  address: (addressobject),
   contact: z.object({
       mainNo: z.string(), 
       secondNo: z.string(),
       emailAddress: z.string(),
       otherContact: z.string(),
-      website: z.string(),
+      website: z.string(), 
   }).optional().nullable().nullable(),
 });
 

@@ -147,20 +147,59 @@
     justify-self: center;
 }
 
+/* -------------------- || banner */
+#going-global {
+    background-color: var(--ow-brown);
+    background-color: var(--clear-yellow);
+    color: var(--ow-orange);
+    color: var(--main-brown);
+    color: var(--ob-brown);
+    border-top: .3rem solid var(--second-yellow);
+    border-bottom: .3rem solid var(--second-yellow);
+    padding: .6rem 1rem;
+    text-align: center;
+    text-wrap: balance;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+#going-global h2{
+    padding-bottom: .3rem;
+}
+
+#going-global p{
+    width: 100%;
+    justify-self: auto;
+    text-align: center;
+}
+
+#going-global .banner-highlight {
+    font-size: var(--fs-p1);
+    font-weight: 700;
+}
+
+#going-global a{
+    color: var(--grey-pink);
+}
+#going-global a:hover{
+    color: var(--ob-pink);
+}
+
 
 /* ------ FEATURE SECTION ------ */ 
 
 #feature-section > .carosel {
-    background-color: #fffeff;
     background-color: var(--background-light);
-    border-left: 5px double var(--mid-purple);
-    border-right: 5px double var(--mid-purple);
+    /* border-left: 5px double var(--mid-purple); */
+    /* border-right: 5px double var(--mid-purple); */
     border-top: 0;
     border-bottom: 0;
     border-radius: 100px;
-    box-shadow: 
-    -2rem .1rem 3rem var(--shadow-purple), 
-    2rem .1rem 3rem var(--shadow-purple);
+    /* box-shadow:  */
+    /* -2rem .1rem 3rem var(--shadow-purple),  */
+    /* 2rem .1rem 3rem var(--shadow-purple); */
     scrollbar-width: thin;
     scrollbar-color: var(--mid-brown) var(--shadow-yellow);
     
@@ -175,8 +214,8 @@
 #feature-section h3 {
     text-align: center;
     text-underline-offset: .8rem;
-    color: var(--ob-purple);
-    text-decoration: underline var(--shadow-teal);
+    color: var(--ob-brown);
+    text-decoration: underline var(--shadow-yellow);
     font-size: var(--fs-title-2);
 }
 

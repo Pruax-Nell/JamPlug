@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro";
+import Button from "../components/button.astro";
+
+import "../styles/event.css" ;
+import "../styles/global.css" ;
+
+import { Image } from "astro:assets";
+
+import logo from "../assets/YJP/long-logo-orange.svg"; 
+import Potrait from "../assets/skaterShaneru.jpg";
+
+import { OFFICIAL_LINKS } from "../data/site-config";
+
+const base = import.meta.env.BASE_URL;
+//  color test in spare directory 
+--- 
+
+
+<BaseLayout
+title="Colour Testing Site"
+description="Behind the scenes at YJP">
+<nav class="navigation-controls">
+    <Button  variant="outline" size="xs" theme="brown" class="back-button" onclick="history.length > 1 ? history.back() : window.location.href='/events'" aria-label="Go Back to previous page"> ← Previous Page </Button>
+</nav>
+
+<section>
+    <h1 > Playground to test colours </h1>
+</section>
+
+<section>
+    <div class="test-block colour-one"> <p class="colour-one-b"> Example </p></div>
+    <div class="test-block colour-two"> <p class="colour-two-b"> Example </p></div>
+    <div class="test-block colour-three"> <p class="colour-three-b"> Example </p></div>
+    <div class="test-block colour-four"> <p class="colour-four-b"> Example </p></div>
+    <div class="test-block colour-five"> <p class="colour-five-b"> Example </p></div>
+</section>
+
+
+</BaseLayout>

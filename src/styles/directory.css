@@ -27,6 +27,45 @@
     
 }
 
+/* -------------------- || banner */
+#going-global {
+    background-color: var(--ow-brown);
+    background-color: var(--clear-yellow);
+    color: var(--ow-orange);
+    color: var(--main-brown);
+    color: var(--ob-brown);
+    border-top: .3rem solid var(--second-yellow);
+    border-bottom: .3rem solid var(--second-yellow);
+    padding: .6rem 1rem;
+    text-align: center;
+    text-wrap: balance;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+#going-global h2{
+    padding-bottom: .3rem;
+}
+
+#going-global p{
+    width: 100%;
+    justify-self: auto;
+    text-align: center;
+}
+
+#going-global .banner-highlight {
+    font-size: var(--fs-p1);
+    font-weight: 700;
+}
+
+#going-global a{
+    color: var(--grey-pink);
+}
+#going-global a:hover{
+    color: var(--ob-pink);
+}
 /* -------------------- || page title section */
 
 /* -------------------- || sticky menu */
@@ -196,7 +235,7 @@
 
 }
 
-@media (max-width: 848px) {
+@media (max-width: 878px) {
     .blockList {
         columns: 2;
     }
